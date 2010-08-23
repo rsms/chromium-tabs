@@ -10,6 +10,7 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.m */; };
 		3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
+		3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
 		3A286C081222961200F1BB78 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */; };
 		3A286C9612229A1200F1BB78 /* GoogleToolboxForMac.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */; };
 		3A286CF912229C7F00F1BB78 /* NSBezierPath+MCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286CF612229C7F00F1BB78 /* NSBezierPath+MCAdditions.m */; };
@@ -37,7 +38,6 @@
 		3A286FFC1222D94600F1BB78 /* throbber_waiting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFA1222D94600F1BB78 /* throbber_waiting.png */; };
 		3A286FFE1222D99B00F1BB78 /* sadfavicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFD1222D99B00F1BB78 /* sadfavicon.png */; };
 		3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921DA1221AA4B006D8305 /* page_transition_types.cc */; };
-		3A3921E41221AD0C006D8305 /* TabStripModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921E31221AD0C006D8305 /* TabStripModel.mm */; };
 		3A3921F61221AF68006D8305 /* hover_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921EE1221AF58006D8305 /* hover_button.mm */; };
 		3A3922201221B212006D8305 /* hover_close_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F01221AF58006D8305 /* hover_close_button.mm */; };
 		3A39235D1221BEF2006D8305 /* libbase_i18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3923541221BEE6006D8305 /* libbase_i18n.a */; };
@@ -534,6 +534,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3A236D9E1223375D00D21E66 /* tab_contents_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_contents_controller.h; sourceTree = "<group>"; };
+		3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_contents_controller.mm; sourceTree = "<group>"; };
 		3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleToolboxForMac.framework; path = "chromium/src/third_party/GTM/build/SnowLeopardOrLater-Release/GoogleToolboxForMac.framework"; sourceTree = "<group>"; };
 		3A286CF512229C7F00F1BB78 /* NSBezierPath+MCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+MCAdditions.h"; sourceTree = "<group>"; };
 		3A286CF612229C7F00F1BB78 /* NSBezierPath+MCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+MCAdditions.m"; sourceTree = "<group>"; };
@@ -575,8 +577,6 @@
 		3A286FFD1222D99B00F1BB78 /* sadfavicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sadfavicon.png; path = gfx/sadfavicon.png; sourceTree = "<group>"; };
 		3A3921DA1221AA4B006D8305 /* page_transition_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = page_transition_types.cc; sourceTree = "<group>"; };
 		3A3921DB1221AA4B006D8305 /* page_transition_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = page_transition_types.h; sourceTree = "<group>"; };
-		3A3921E21221AD0C006D8305 /* TabStripModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabStripModel.h; sourceTree = "<group>"; };
-		3A3921E31221AD0C006D8305 /* TabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TabStripModel.mm; sourceTree = "<group>"; };
 		3A3921ED1221AF58006D8305 /* hover_button.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = hover_button.h; sourceTree = "<group>"; };
 		3A3921EE1221AF58006D8305 /* hover_button.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = hover_button.mm; sourceTree = "<group>"; };
 		3A3921EF1221AF58006D8305 /* hover_close_button.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = hover_close_button.h; sourceTree = "<group>"; };
@@ -629,8 +629,6 @@
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* AppDelegate.m */,
-				3A3921E21221AD0C006D8305 /* TabStripModel.h */,
-				3A3921E31221AD0C006D8305 /* TabStripModel.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
 				3AEE19531222DDEB009DA438 /* TabContents.mm */,
 				3A3921D81221AA4B006D8305 /* chrome */,
@@ -799,6 +797,8 @@
 				3A3921F11221AF58006D8305 /* tab_controller.h */,
 				3A286E8C1222C63D00F1BB78 /* tab_controller_target.h */,
 				3A3921F21221AF58006D8305 /* tab_controller.mm */,
+				3A236D9E1223375D00D21E66 /* tab_contents_controller.h */,
+				3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */,
 				3A286F8B1222CAA000F1BB78 /* tab_strip_view.h */,
 				3A286F8C1222CAA000F1BB78 /* tab_strip_view.mm */,
 				3A286FE21222D25400F1BB78 /* tab_strip_controller.h */,
@@ -1420,7 +1420,6 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */,
 				3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */,
-				3A3921E41221AD0C006D8305 /* TabStripModel.mm in Sources */,
 				3A3927131221C596006D8305 /* background_gradient_view.mm in Sources */,
 				3A286CF912229C7F00F1BB78 /* NSBezierPath+MCAdditions.m in Sources */,
 				3A286E741222C09900F1BB78 /* tab_controller.mm in Sources */,
@@ -1434,6 +1433,7 @@
 				3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */,
 				3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */,
 				3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */,
+				3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
