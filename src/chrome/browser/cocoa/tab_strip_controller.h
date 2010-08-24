@@ -12,18 +12,22 @@
 #include "base/scoped_ptr.h"
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/url_drop_target.h"
-#import "third_party/GTM/AppKit/GTMWindowSheetController.h"
+#import <GoogleToolboxForMac/GTMWindowSheetController.h>
 
 @class NewTabButton;
 @class TabContentsController;
 @class TabView;
 @class TabStripView;
 
+@class TabContents;
+@protocol ChromiumTabbedBrowser;
+
+//class Browser;
 class ConstrainedWindowMac;
 class TabStripModelObserverBridge;
 class TabStripModel;
-class TabContents;
-class ToolbarModel;
+//class TabContents;
+//class ToolbarModel;
 
 // A class that handles managing the tab strip in a browser window. It uses
 // a supporting C++ bridge object to register for notifications from the
@@ -49,8 +53,8 @@ class ToolbarModel;
 
   // Tracks the newTabButton_ for rollovers.
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
-  //scoped_ptr<TabStripModelObserverBridge> bridge_;
-  id browser_;  // weak
+  scoped_ptr<TabStripModelObserverBridge> bridge_;
+  id<ChromiumTabbedBrowser> browser_;  // weak
   TabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
@@ -128,7 +132,7 @@ class ToolbarModel;
 // you have retained them.
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
-           browser:(id)browser;
+           browser:(id<ChromiumTabbedBrowser>)browser;
 
 // Return the view for the currently selected tab.
 - (NSView*)selectedTabView;
@@ -219,9 +223,9 @@ class ToolbarModel;
 
   // See comments in browser_window_controller.h for documentation about these
   // functions.
-- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window;
-- (void)removeConstrainedWindow:(ConstrainedWindowMac*)window;
-- (void)updateDevToolsForContents:(TabContents*)contents;
+//- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window;
+//- (void)removeConstrainedWindow:(ConstrainedWindowMac*)window;
+//- (void)updateDevToolsForContents:(TabContents*)contents;
 
 @end
 
