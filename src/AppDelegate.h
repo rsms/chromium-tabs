@@ -1,9 +1,14 @@
 #import <Cocoa/Cocoa.h>
+#import "ChromiumTabbedBrowser.h"
+#import "chrome/browser/tabs/tab_strip_model.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate> {
-	NSWindow *window;
+@class WindowController;
+
+@interface AppDelegate : NSObject <NSApplicationDelegate,
+														       ChromiumTabbedBrowser> {
+	TabStripModel *tab_strip_model_;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+- (WindowController *)spawnNewWindow;
 
 @end

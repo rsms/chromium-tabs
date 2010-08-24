@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */; };
+		3A1CF96112235704008A3B8C /* WindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* WindowController.mm */; };
+		3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
 		3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
 		3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
 		3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE31222D25400F1BB78 /* tab_strip_controller.mm */; };
@@ -537,6 +539,11 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabStripModelDelegate.h; sourceTree = "<group>"; };
+		3A1CF95F12235704008A3B8C /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
+		3A1CF96012235704008A3B8C /* WindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WindowController.mm; sourceTree = "<group>"; };
+		3A1CF98712235CEE008A3B8C /* fast_resize_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fast_resize_view.h; sourceTree = "<group>"; };
+		3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = fast_resize_view.mm; sourceTree = "<group>"; };
 		3A236D9E1223375D00D21E66 /* tab_contents_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_contents_controller.h; sourceTree = "<group>"; };
 		3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_contents_controller.mm; sourceTree = "<group>"; };
 		3A236DAD12233B3400D21E66 /* tab_strip_model_observer_bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model_observer_bridge.h; sourceTree = "<group>"; };
@@ -636,8 +643,11 @@
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				3A236DCA12233EC700D21E66 /* ChromiumTabbedBrowser.h */,
+				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
 				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */,
+				3A1CF95F12235704008A3B8C /* WindowController.h */,
+				3A1CF96012235704008A3B8C /* WindowController.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
 				3AEE19531222DDEB009DA438 /* TabContents.mm */,
 				3A3921D81221AA4B006D8305 /* chrome */,
@@ -820,6 +830,8 @@
 				3A286F8E1222CAA000F1BB78 /* tab_window_controller.mm */,
 				3A236DAD12233B3400D21E66 /* tab_strip_model_observer_bridge.h */,
 				3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */,
+				3A1CF98712235CEE008A3B8C /* fast_resize_view.h */,
+				3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */,
 			);
 			path = cocoa;
 			sourceTree = "<group>";
@@ -1450,6 +1462,8 @@
 				3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */,
 				3A236E041223497500D21E66 /* new_tab_button.mm in Sources */,
 				3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */,
+				3A1CF96112235704008A3B8C /* WindowController.mm in Sources */,
+				3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

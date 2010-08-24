@@ -11,7 +11,10 @@
 #include "chrome/common/page_transition_types.h"
 #include "base/observer_list.h"
 
+#import "TabStripModelDelegate.h"
+
 @class TabContents;
+
 
 //namespace gfx { class Rect; }
 //class Browser;
@@ -163,7 +166,7 @@ class TabStripModelObserver {
 //  the TabStripModel (in our case the Browser object).
 //
 ///////////////////////////////////////////////////////////////////////////////
-class TabStripModelDelegate {
+/*class TabStripModelDelegate {
  public:
   // Adds what the delegate considers to be a blank tab to the model.
   virtual TabContents* AddBlankTab(bool foreground) = 0;
@@ -175,10 +178,10 @@ class TabStripModelDelegate {
   // be docked as identified by |dock_info|. Returns the Browser object
   // representing the newly created window and tab strip. This does not
   // show the window, it's up to the caller to do so.
-  /*virtual Browser* CreateNewStripWithContents(TabContents* contents,
+  virtual Browser* CreateNewStripWithContents(TabContents* contents,
                                               const NSRect window_bounds,
                                               const DockInfo& dock_info,
-                                              bool maximize) = 0;*/
+                                              bool maximize) = 0;
 
   // Creates a new Browser object and window containing the specified
   // |contents|, and continues a drag operation that began within the source
@@ -186,9 +189,9 @@ class TabStripModelDelegate {
   // screen coordinates, used to place the new window, and |tab_bounds| are the
   // bounds of the dragged Tab view in the source window, in screen coordinates,
   // used to place the new Tab in the new window.
-  /*virtual void ContinueDraggingDetachedTab(TabContents* contents,
+  virtual void ContinueDraggingDetachedTab(TabContents* contents,
                                            const gfx::Rect& window_bounds,
-                                           const gfx::Rect& tab_bounds) = 0;*/
+                                           const gfx::Rect& tab_bounds) = 0;
 
   enum {
     TAB_MOVE_ACTION = 1,
@@ -203,13 +206,13 @@ class TabStripModelDelegate {
   // exist for it to be constructed (e.g. a parent HWND).
   // If |defer_load| is true, the navigation controller doesn't load the url.
   // If |instance| is not null, its process is used to render the tab.
-  /*virtual TabContents* CreateTabContentsForURL(
+  virtual TabContents* CreateTabContentsForURL(
       const GURL& url,
       const GURL& referrer,
       Profile* profile,
       PageTransition::Type transition,
       bool defer_load,
-      SiteInstance* instance) const = 0;*/
+      SiteInstance* instance) const = 0;
 
   // Returns whether some contents can be duplicated.
   virtual bool CanDuplicateContentsAt(int index) = 0;
@@ -263,7 +266,9 @@ class TabStripModelDelegate {
 
  protected:
   virtual ~TabStripModelDelegate() {}
-};
+};*/
+
+// Moved to TabStripModelDelegate.h @protocol
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -368,11 +373,11 @@ class TabStripModel /*: public NotificationObserver*/ {
 
   // Construct a TabStripModel with a delegate to help it do certain things
   // (See TabStripModelDelegate documentation). |delegate| cannot be NULL.
-  TabStripModel(TabStripModelDelegate* delegate);
+  TabStripModel(NSObject<TabStripModelDelegate>* delegate);
   virtual ~TabStripModel();
 
   // Retrieves the TabStripModelDelegate associated with this TabStripModel.
-  TabStripModelDelegate* delegate() const { return delegate_; }
+  NSObject<TabStripModelDelegate>* delegate() const { return delegate_; }
 
   // Add and remove observers to changes within this TabStripModel.
   void AddObserver(TabStripModelObserver* observer);
@@ -759,7 +764,7 @@ class TabStripModel /*: public NotificationObserver*/ {
       TabReplaceType type);
 
   // Our delegate.
-  TabStripModelDelegate* delegate_;
+  NSObject<TabStripModelDelegate>* delegate_;
 
   // A hunk of data representing a TabContents and (optionally) the
   // NavigationController that spawned it. This memory only sticks around while

@@ -109,19 +109,19 @@ void TabStripModelObserver::TabStripModelDeleted() {}
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModelDelegate, public:
 
-bool TabStripModelDelegate::CanCloseTab() const {
+/*bool TabStripModelDelegate::CanCloseTab() const {
   return true;
-}
+}*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModel, public:
 
-TabStripModel::TabStripModel(TabStripModelDelegate* delegate)
-    : delegate_(delegate),
-      selected_index_(kNoTab),
+TabStripModel::TabStripModel(NSObject<TabStripModelDelegate>* delegate)
+    : selected_index_(kNoTab),
       closing_all_(false),
       order_controller_(NULL) {
-  DCHECK(delegate_);
+  delegate_ = [delegate retain];
+	DCHECK(delegate_);
 	// TODO replace with nsnotificationcenter?
   /*registrar_.Add(this,
                  NotificationType::TAB_CONTENTS_DESTROYED,
@@ -134,6 +134,9 @@ TabStripModel::TabStripModel(TabStripModelDelegate* delegate)
 TabStripModel::~TabStripModel() {
   FOR_EACH_OBSERVER(TabStripModelObserver, observers_,
                     TabStripModelDeleted());
+
+	[delegate_ release];
+	delegate_ = NULL;
 
   // Before deleting any phantom tabs remove our notification observers so that
   // we don't attempt to notify our delegate or do any processing.
@@ -687,11 +690,12 @@ bool TabStripModel::IsContextMenuCommandEnabled(
   switch (command_id) {
     case CommandNewTab:
     case CommandCloseTab:
-      return delegate_->CanCloseTab();
+			return [delegate_ canCloseTab];
+      //return delegate_->CanCloseTab();
     case CommandReload:
       if (TabContents* contents = GetTabContentsAt(context_index)) {
 				id delegate = contents.delegate;
-				if ([delegate respondsToSelector:@selector(canReloadContents)]) {
+				if ([delegate respondsToSelector:@selector(canReloadContents:)]) {
 					return [delegate canReloadContents:contents];
 				} else {
 					return false;
@@ -712,15 +716,17 @@ bool TabStripModel::IsContextMenuCommandEnabled(
       return count() != IndexOfFirstNonMiniTab() &&
           context_index < (count() - 1);
     case CommandDuplicate:
-      return delegate_->CanDuplicateContentsAt(context_index);
+			return [delegate_ canDuplicateContentsAt:context_index];
+      //return delegate_->CanDuplicateContentsAt(context_index);
     case CommandRestoreTab:
-      return delegate_->CanRestoreTab();
+			return [delegate_ canRestoreTab];
+      //return delegate_->CanRestoreTab();
     case CommandTogglePinned:
       return !IsAppTab(context_index);
-    case CommandBookmarkAllTabs:
-      return delegate_->CanBookmarkAllTabs();
-    case CommandUseVerticalTabs:
-      return true;
+    //case CommandBookmarkAllTabs:
+    //  return delegate_->CanBookmarkAllTabs();
+    //case CommandUseVerticalTabs:
+    //  return true;
     default:
       NOTREACHED();
   }
@@ -731,8 +737,8 @@ bool TabStripModel::IsContextMenuCommandChecked(
     int context_index,
     ContextMenuCommand command_id) const {
   switch (command_id) {
-    case CommandUseVerticalTabs:
-      return delegate()->UseVerticalTabs();
+    //case CommandUseVerticalTabs:
+    //  return delegate()->UseVerticalTabs();
     default:
       NOTREACHED();
       break;
@@ -745,13 +751,15 @@ void TabStripModel::ExecuteContextMenuCommand(
   DCHECK(command_id > CommandFirst && command_id < CommandLast);
   switch (command_id) {
     case CommandNewTab:
-      delegate()->AddBlankTabAt(context_index + 1, true);
+			[delegate_ addBlankTabAt:context_index+1 foreground:true];
+      //delegate()->AddBlankTabAt(context_index + 1, true);
       break;
     case CommandReload:
       [GetContentsAt(context_index).delegate reload];
       break;
     case CommandDuplicate:
-      delegate_->DuplicateContentsAt(context_index);
+			[delegate_ duplicateContentsAt:context_index];
+      //delegate_->DuplicateContentsAt(context_index);
       break;
     case CommandCloseTab:
       CloseTabContentsAt(context_index, CLOSE_CREATE_HISTORICAL_TAB |
@@ -768,7 +776,8 @@ void TabStripModel::ExecuteContextMenuCommand(
       break;
     }
     case CommandRestoreTab: {
-      delegate_->RestoreTab();
+			[delegate_ restoreTab];
+      //delegate_->RestoreTab();
       break;
     }
     case CommandTogglePinned: {
@@ -783,15 +792,16 @@ void TabStripModel::ExecuteContextMenuCommand(
       break;
     }
 
-    case CommandBookmarkAllTabs: {
+    /*case CommandBookmarkAllTabs: {
       delegate_->BookmarkAllTabs();
       break;
-    }
+    }*/
 
-    case CommandUseVerticalTabs: {
+    /*case CommandUseVerticalTabs: {
       delegate()->ToggleUseVerticalTabs();
       break;
-    }
+    }*/
+		
     default:
       NOTREACHED();
   }
@@ -917,7 +927,7 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
     TabContents* detached_contents = GetContentsAt(indices[i]);
     [detached_contents closingOfTabDidStart:this]; // TODO notification
 
-    if (!delegate_->CanCloseContentsAt(indices[i])) {
+    if (![delegate_ canCloseContentsAt:indices[i]]) {
       retval = false;
       continue;
     }
@@ -930,7 +940,8 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
       detached_contents.closedByUserGesture = close_types & CLOSE_USER_GESTURE;
     }
 
-    if (delegate_->RunUnloadListenerBeforeClosing(detached_contents)) {
+    //if (delegate_->RunUnloadListenerBeforeClosing(detached_contents)) {
+		if ([delegate_ runUnloadListenerBeforeClosing:detached_contents]) {
       retval = false;
       continue;
     }
@@ -950,8 +961,10 @@ void TabStripModel::InternalCloseTab(TabContents* contents,
 
   // Ask the delegate to save an entry for this tab in the historical tab
   // database if applicable.
-  if (create_historical_tabs)
+	[delegate_ createHistoricalTab:contents];
+  /*if (create_historical_tabs) {
     delegate_->CreateHistoricalTab(contents);
+	}*/
 
   // Deleting the TabContents will call back to us via NotificationObserver
   // and detach it.
