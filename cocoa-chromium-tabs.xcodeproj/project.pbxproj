@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.m */; };
+		256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */; };
 		3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
 		3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
 		3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE31222D25400F1BB78 /* tab_strip_controller.mm */; };
-		3A236DCE12233F9900D21E66 /* ChromiumTabbedBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DCD12233F9900D21E66 /* ChromiumTabbedBrowser.mm */; };
 		3A236E041223497500D21E66 /* new_tab_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DD81223414F00D21E66 /* new_tab_button.mm */; };
 		3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */; };
 		3A286C081222961200F1BB78 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */; };
@@ -533,7 +532,7 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -543,7 +542,6 @@
 		3A236DAD12233B3400D21E66 /* tab_strip_model_observer_bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model_observer_bridge.h; sourceTree = "<group>"; };
 		3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model_observer_bridge.mm; sourceTree = "<group>"; };
 		3A236DCA12233EC700D21E66 /* ChromiumTabbedBrowser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = ChromiumTabbedBrowser.h; sourceTree = "<group>"; };
-		3A236DCD12233F9900D21E66 /* ChromiumTabbedBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChromiumTabbedBrowser.mm; sourceTree = "<group>"; };
 		3A236DD71223414F00D21E66 /* new_tab_button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = new_tab_button.h; sourceTree = "<group>"; };
 		3A236DD81223414F00D21E66 /* new_tab_button.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = new_tab_button.mm; sourceTree = "<group>"; };
 		3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleToolboxForMac.framework; path = "chromium/src/third_party/GTM/build/SnowLeopardOrLater-Release/GoogleToolboxForMac.framework"; sourceTree = "<group>"; };
@@ -638,9 +636,8 @@
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				3A236DCA12233EC700D21E66 /* ChromiumTabbedBrowser.h */,
-				3A236DCD12233F9900D21E66 /* ChromiumTabbedBrowser.mm */,
 				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* AppDelegate.m */,
+				256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
 				3AEE19531222DDEB009DA438 /* TabContents.mm */,
 				3A3921D81221AA4B006D8305 /* chrome */,
@@ -1434,7 +1431,7 @@
 				3A3922201221B212006D8305 /* hover_close_button.mm in Sources */,
 				3A3921F61221AF68006D8305 /* hover_button.mm in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* AppDelegate.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */,
 				3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */,
 				3A3927131221C596006D8305 /* background_gradient_view.mm in Sources */,
 				3A286CF912229C7F00F1BB78 /* NSBezierPath+MCAdditions.m in Sources */,
@@ -1451,7 +1448,6 @@
 				3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */,
 				3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */,
 				3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */,
-				3A236DCE12233F9900D21E66 /* ChromiumTabbedBrowser.mm in Sources */,
 				3A236E041223497500D21E66 /* new_tab_button.mm in Sources */,
 				3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */,
 			);
