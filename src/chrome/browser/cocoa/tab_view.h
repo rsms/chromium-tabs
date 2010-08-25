@@ -125,6 +125,7 @@ enum AlertState {
 // clear the |tabController_| pointer when it is dying.
 @interface TabView (TabControllerInterface)
 - (void)setController:(TabController*)controller;
+- (TabController*)controller;
 @end
 
 #endif  // CHROME_BROWSER_COCOA_TAB_VIEW_H_

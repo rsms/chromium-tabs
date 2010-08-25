@@ -833,6 +833,7 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)setController:(TabController*)controller {
   tabController_ = controller;
 }
+- (TabController*)controller { return tabController_; }
 
 @end  // @implementation TabView (TabControllerInterface)
 

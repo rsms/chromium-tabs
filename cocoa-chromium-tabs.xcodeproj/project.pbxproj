@@ -53,8 +53,6 @@
 		3A392C991221D206006D8305 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		3A392D521221D20C006D8305 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		3A3ED35112256F06009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
-		3A3ED37312257313009E2908 /* tab_inactive_center.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED37212257313009E2908 /* tab_inactive_center.png */; };
-		3A3ED37A1225759E009E2908 /* theme_toolbar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED3791225759E009E2908 /* theme_toolbar_default.png */; };
 		3AA7188B122479CE005022BE /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
 		3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
 		3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
@@ -613,8 +611,6 @@
 		3A392A961221C855006D8305 /* chrome.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = chrome.xcodeproj; path = chromium/src/chrome/chrome.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3A392BEE1221CAD3006D8305 /* app.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = app.xcodeproj; path = chromium/src/app/app.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3A3ED35012256F06009E2908 /* throbber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber.png; path = gfx/throbber.png; sourceTree = "<group>"; };
-		3A3ED37212257313009E2908 /* tab_inactive_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tab_inactive_center.png; path = gfx/tab_inactive_center.png; sourceTree = "<group>"; };
-		3A3ED3791225759E009E2908 /* theme_toolbar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = theme_toolbar_default.png; path = gfx/theme_toolbar_default.png; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
@@ -779,7 +775,6 @@
 		3A286FF01222D61D00F1BB78 /* gfx */ = {
 			isa = PBXGroup;
 			children = (
-				3A3ED3791225759E009E2908 /* theme_toolbar_default.png */,
 				3A3ED35012256F06009E2908 /* throbber.png */,
 				3A286FFD1222D99B00F1BB78 /* sadfavicon.png */,
 				3A286FFA1222D94600F1BB78 /* throbber_waiting.png */,
@@ -787,7 +782,6 @@
 				3A286FEA1222D61900F1BB78 /* newtab_h.pdf */,
 				3A286FEB1222D61900F1BB78 /* newtab_p.pdf */,
 				3A286FEC1222D61900F1BB78 /* newtab.pdf */,
-				3A3ED37212257313009E2908 /* tab_inactive_center.png */,
 			);
 			name = gfx;
 			sourceTree = "<group>";
@@ -1451,8 +1445,6 @@
 				3A286FFC1222D94600F1BB78 /* throbber_waiting.png in Resources */,
 				3A286FFE1222D99B00F1BB78 /* sadfavicon.png in Resources */,
 				3A3ED35112256F06009E2908 /* throbber.png in Resources */,
-				3A3ED37312257313009E2908 /* tab_inactive_center.png in Resources */,
-				3A3ED37A1225759E009E2908 /* theme_toolbar_default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

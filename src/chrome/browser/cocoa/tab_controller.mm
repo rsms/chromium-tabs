@@ -48,6 +48,9 @@ static NSString* const kBrowserThemeDidChangeNotification =
                       selector:@selector(themeChangedNotification:)
                           name:kBrowserThemeDidChangeNotification
                         object:nil];
+    loge([self view]);
+    loge([[self view] controller]);
+    DCHECK([[self view] controller] == self);
   }
   return self;
 }
