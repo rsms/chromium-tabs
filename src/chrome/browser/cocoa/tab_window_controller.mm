@@ -24,8 +24,8 @@
 }
 
 - (NSPoint)themePatternPhase {
-  if ([self parentWindow])
-    return [[[self parentWindow] windowController] themePatternPhase];
+  //if ([self parentWindow])
+  //  return [[[self parentWindow] windowController] themePatternPhase];
   return NSZeroPoint;
 }
 
@@ -69,7 +69,7 @@
 }
 
 - (void)windowDidLoad {
-	NSLog(@"TabWindowController windowDidLoad");
+	//NSLog(@"TabWindowController windowDidLoad");
   // Cache the difference in height between the window content area and the
   // tab content area.
   NSRect tabFrame = [tabContentArea_ frame];

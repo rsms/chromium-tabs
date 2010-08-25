@@ -794,7 +794,7 @@ class TabStripModel /*: public NotificationObserver*/ {
       //opener = NULL;
     }
 
-    TabContents* contents;
+    TabContents* contents; // weak
     // We use NavigationControllers here since they more closely model the
     // "identity" of a Tab, TabContents can change depending on the URL loaded
     // in the Tab.

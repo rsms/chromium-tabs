@@ -24,7 +24,7 @@ class TabStripModel; // Note: C++ class
 @property(retain, nonatomic) NSString *title;
 @property(retain, nonatomic) NSImage *icon;
 
-//-(void)initWithTabStripModel:()
+-(id)initWithBaseTabContents:(TabContents*)baseContents;
 
 -(void)destroy:(TabStripModel*)sender;
 

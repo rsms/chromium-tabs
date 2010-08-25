@@ -23,20 +23,33 @@ class TabStripModel;
 // The window. Convenience for [windowController window]
 @property(readonly, nonatomic) NSWindow* window;
 
-// Create a new browser with a window. The Browser instance will be added to the
-// internal |browsers| NSSet, so you don't have to manage your own reference.
+// Create a new browser with a window. (autoreleased)
 +(Browser*)browser;
++(Browser*)browserWithWindowFrame:(const NSRect)frame;
 
-// A set of all live browser instances
-+(NSSet*)browsers;
+// Creates and opens a new window. (retained)
++(Browser*)openEmptyWindow;
 
--(TabContents*)appendNewEmptyTab;
-
--(void)loadingStateDidChange:(TabContents*)contents;
+// Commands
+-(void)newWindow;
+-(void)closeWindow;
+-(TabContents*)addTabContents:(TabContents*)contents
+											atIndex:(int)index
+								 inForeground:(BOOL)foreground;
+-(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
+-(TabContents*)addBlankTabInForeground:(BOOL)foreground;
+-(TabContents*)addBlankTab; // InForeground:YES
+-(void)closeTab;
+-(void)selectNextTab;
+-(void)selectPreviousTab;
 
 -(void)executeCommand:(int)cmd
 			withDisposition:(WindowOpenDisposition)disposition;
 -(void)executeCommand:(int)cmd; // withDisposition:CURRENT_TAB
+
+// callbacks
+-(void)loadingStateDidChange:(TabContents*)contents;
+-(void)windowDidBeginToClose;
 
 // TabStripModel convenience helpers
 -(int)tabCount;

@@ -19,6 +19,7 @@
 //#include "chrome/browser/renderer_host/render_process_host.h"
 //#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
+#include "chrome/common/page_transition_types.h"
 //#include "chrome/browser/tab_contents/navigation_controller.h"
 //#include "chrome/browser/tab_contents/tab_contents.h"
 //#include "chrome/browser/tab_contents/tab_contents_delegate.h"
@@ -211,7 +212,7 @@ void TabStripModel::InsertTabContentsAt(int index,
   // otherwise we run into problems when we try to change the selected contents
   // since the old contents and the new contents will be the same...
   TabContents* selected_contents = GetSelectedTabContents();
-  TabContentsData* data = new TabContentsData(contents);
+  TabContentsData* data = new TabContentsData([contents retain]);
   data->pinned = pin;
   if ((add_types & ADD_INHERIT_GROUP) && selected_contents) {
     if (foreground) {
@@ -284,9 +285,8 @@ TabContents* TabStripModel::DetachTabContentsAt(int index) {
   TabStripModelObservers::Iterator iter(observers_);
   while (TabStripModelObserver* obs = iter.GetNext()) {
     obs->TabDetachedAt(removed_contents, index);
-    /*if (!HasNonPhantomTabs())
-      obs->TabStripEmpty();*/
-		obs->TabStripEmpty();
+    if (!HasNonPhantomTabs())
+      obs->TabStripEmpty();
   }
   if (HasNonPhantomTabs()) {
     if (index == selected_index_) {
@@ -753,7 +753,7 @@ void TabStripModel::ExecuteContextMenuCommand(
   DCHECK(command_id > CommandFirst && command_id < CommandLast);
   switch (command_id) {
     case CommandNewTab:
-			[delegate_ addBlankTabAt:context_index+1 foreground:true];
+			[delegate_ addBlankTabAtIndex:context_index+1 inForeground:true];
       //delegate()->AddBlankTabAt(context_index + 1, true);
       break;
     case CommandReload:

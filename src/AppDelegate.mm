@@ -4,10 +4,13 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	// Configure context menu
+	//NSMenu *mainMenu = [NSApp mainMenu];
+	//[mainMenu itemWithTag:#import "BrowserCommands.h"];
+	//commandDispatch
+
 	// Create a browser and show the window
-	Browser *browser = [Browser browser];
-	[browser appendNewEmptyTab];
-	[browser.windowController showWindow:self];
+	[Browser openEmptyWindow];
 }
 
 

@@ -10,8 +10,8 @@ enum {
 
 @protocol TabStripModelDelegate
 // Adds what the delegate considers to be a blank tab to the model.
--(TabContents*)addBlankTab:(BOOL)foreground;
--(TabContents*)addBlankTabAt:(int)index foreground:(BOOL)foreground;
+-(TabContents*)addBlankTabInForeground:(BOOL)foreground;
+-(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
 
 // Asks for a new TabStripModel to be created and the given tab contents to
 // be added to it. Its size and position are reflected in |window_bounds|.

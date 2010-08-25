@@ -70,6 +70,7 @@
 
 
 -(void)dealloc {
+	logd(@"dealloc window controller");
 	// Close all tabs
 	//[browser_ closeAllTabs]; // TODO
 
@@ -82,6 +83,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[browser_ release];
+	delete tabStripObserver_;
 	[super dealloc];
 }
 
@@ -114,10 +116,6 @@
   [targetController.browser executeCommand:[sender tag]];
 }
 
-
--(IBAction)insertTab:(id)sender {
-	[browser_ appendNewEmptyTab];
-}
 
 -(IBAction)closeTab:(id)sender {
 	TabStripModel *tabStripModel = browser_.tabStripModel;
@@ -486,10 +484,61 @@
 
 
 #pragma mark -
+#pragma mark NSWindowController impl
+
+- (BOOL)windowShouldClose:(id)sender {
+  // Disable updates while closing all tabs to avoid flickering.
+  base::ScopedNSDisableScreenUpdates disabler;
+
+  if (browser_.tabStripModel->HasNonPhantomTabs()) {
+    // Tab strip isn't empty.  Hide the frame (so it appears to have closed
+    // immediately) and close all the tabs, allowing them to shut down. When the
+		// tab strip is empty we'll be called back again.
+    [[self window] orderOut:self];
+    [browser_ windowDidBeginToClose];
+    return NO;
+  }
+
+	// the tab strip is empty, it's ok to close the window
+  return YES;
+}
+
+
+#pragma mark -
 #pragma mark Etc (need sorting out)
 
 - (void)focusTabContents {
   [[self window] makeFirstResponder:[tabStripController_ selectedTabView]];
 }
+
+
+#pragma mark -
+#pragma mark TabStripModelObserverBridge impl.
+
+
+/*- (void)insertTabWithContents:(TabContents*)contents
+                      atIndex:(NSInteger)index
+                 inForeground:(bool)inForeground;
+- (void)tabClosingWithContents:(TabContents*)contents
+                       atIndex:(NSInteger)index;
+- (void)tabDetachedWithContents:(TabContents*)contents
+                        atIndex:(NSInteger)index;
+- (void)selectTabWithContents:(TabContents*)newContents
+             previousContents:(TabContents*)oldContents
+                      atIndex:(NSInteger)index
+                  userGesture:(bool)wasUserGesture;
+- (void)tabMovedWithContents:(TabContents*)contents
+                    fromIndex:(NSInteger)from
+                      toIndex:(NSInteger)to;
+- (void)tabChangedWithContents:(TabContents*)contents
+                       atIndex:(NSInteger)index
+                    changeType:(TabChangeType)change;
+- (void)tabMiniStateChangedWithContents:(TabContents*)contents
+                                atIndex:(NSInteger)index;*/
+
+- (void)tabStripEmpty {
+	[browser_ closeWindow];
+}
+
 
 @end

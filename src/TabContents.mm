@@ -13,6 +13,13 @@
 @synthesize title = title_;
 @synthesize icon = icon_;
 
+-(id)initWithBaseTabContents:(TabContents*)baseContents {
+	if (!(self = [super init])) return nil;
+	// subclasses can use baseContents -- the selected TabContents (if any) -- to
+	// perform customized initialization (e.g. inheriting title).
+	return self;
+}
+
 //-(void)dealloc {}
 
 -(void)destroy:(TabStripModel*)sender {

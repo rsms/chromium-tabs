@@ -1,13 +1,14 @@
 #import "Browser.h"
 #import "chrome/browser/tabs/tab_strip_model.h"
 #import "chrome/browser/cocoa/tab_strip_controller.h"
+#import "chrome/common/page_transition_types.h"
 #import "BrowserWindowController.h"
+#import "BrowserCommands.h"
 
 @interface Browser (Private)
 -(void)createWindowController;
 @end;
 
-static NSMutableSet *browsers_;
 
 @implementation Browser
 
@@ -15,20 +16,9 @@ static NSMutableSet *browsers_;
 @synthesize tabStripModel = tabStripModel_;
 
 
-+(void)initialize {
-	browsers_ = [[NSMutableSet alloc] init]; 
-}
-
-
-+(NSSet*)browsers {
-	return browsers_;
-}
-
-
 +(Browser*)browser {
-	Browser *browser = [[[self class] alloc] init];
+	Browser *browser = [[[[self class] alloc] init] autorelease];
 	[browser createWindowController];
-	[browsers_ addObject:browser];
 	// TODO: post notification? BrowserReady(self)
 	return browser;
 }
@@ -41,23 +31,26 @@ static NSMutableSet *browsers_;
 }
 
 
++(Browser*)openEmptyWindow {
+	Browser *browser = [Browser browser];
+	// reference will live as long as the window lives (until closed)
+	[browser addBlankTabInForeground:YES];
+	[browser.windowController showWindow:self];
+	return browser;
+}
+
+
 -(id)init {
-	if (!(self = [super init]))
-		return nil;
-
-	// Setup tab strip
+	if (!(self = [super init])) return nil;
 	tabStripModel_ = new TabStripModel(self);
-
-	// Note: Don't add |self| to browsers_ here. Do it at a higher level.
-
 	return self;
 }
 
 
 -(void)dealloc {
+	logd(@"dealloced browser");
 	delete tabStripModel_;
 	[windowController_ release];
-	[browsers_ removeObject:self];
 	[super dealloc];
 }
 
@@ -103,32 +96,89 @@ static NSMutableSet *browsers_;
 #pragma mark Callbacks
 
 -(void)loadingStateDidChange:(TabContents*)contents {
-	NSLog(@"TODO %s", __func__);
+	logd(@"TODO %s", __func__);
+	loge(contents);
+}
+
+-(void)windowDidBeginToClose {
+	tabStripModel_->CloseAllTabs();
+	// NOTE: in the future the following call could be deferred (i.e. after all
+	// tabs have finalized). But for now we'll just call it again.
+	//[self closeWindow];
 }
 
 
 #pragma mark -
-#pragma mark Creating tabs
+#pragma mark Commands
 
+-(void)newWindow {
+	[Browser openEmptyWindow];
+}
 
--(TabContents*)appendNewEmptyTab {
-	TabContents* contents = [[TabContents alloc] init];
-	contents.title = @"New tab";
-	contents.view = [[NSView alloc] initWithFrame:NSZeroRect];
-	tabStripModel_->AppendTabContents(contents, true);
+-(void)closeWindow {
+	logd(@"closeWindow");
+	loge(self.window);
+	[self.window orderOut:self];
+	[self.window performClose:self];  // Autoreleases the controller.
+}
+
+-(TabContents*)addTabContents:(TabContents*)contents
+											atIndex:(int)index
+								 inForeground:(BOOL)foreground {
+	//tabStripModel_->AppendTabContents(contents, foreground);
+	int addTypes = foreground ? TabStripModel::ADD_SELECTED :
+															TabStripModel::ADD_NONE;
+	tabStripModel_->AddTabContents(contents, index, PageTransition::TYPED,
+	                               addTypes);
+	// By default, content believes it is not hidden.  When adding contents
+	// in the background, tell it that it's hidden.
+	if ((addTypes & TabStripModel::ADD_SELECTED) == 0) {
+		// TabStripModel::AddTabContents invokes HideContents if not foreground.
+		[contents didBecomeHidden];
+	}
 	return contents;
 }
 
+// implementation conforms to TabStripModelDelegate
+-(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
+	TabContents* baseContents = tabStripModel_->GetSelectedTabContents();
+	TabContents* contents =
+			[[TabContents alloc] initWithBaseTabContents:baseContents];
+	contents.title = @"New tab";
+	contents.view = [[NSView alloc] initWithFrame:NSZeroRect];
+	return [self addTabContents:contents atIndex:index inForeground:foreground];
+}
 
-#pragma mark -
-#pragma mark Command execution
+// implementation conforms to TabStripModelDelegate
+-(TabContents*)addBlankTabInForeground:(BOOL)foreground {
+	return [self addBlankTabAtIndex:-1 inForeground:foreground];
+}
 
+-(TabContents*)addBlankTab {
+	return [self addBlankTabInForeground:YES];
+}
 
-// WIP -- porting command execution from browser.cc
+-(void)closeTab {
+  if ([self canCloseTab]) {
+    tabStripModel_->CloseTabContentsAt(
+        tabStripModel_->selected_index(),
+        TabStripModel::CLOSE_USER_GESTURE |
+        TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+  }
+}
+
+-(void)selectNextTab {
+  tabStripModel_->SelectNextTab();
+}
+
+-(void)selectPreviousTab {
+  tabStripModel_->SelectPreviousTab();
+}
+
 
 -(void)executeCommand:(int)cmd
 			withDisposition:(WindowOpenDisposition)disposition {
-	/*
+	loge(cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -136,44 +186,31 @@ static NSMutableSet *browsers_;
   // tab.  However, Ben says he tried removing this before and got lots of
   // crashes, e.g. from Windows sending WM_COMMANDs at random times during
   // window construction.  This probably could use closer examination someday.
-  if (!GetSelectedTabContents())
+  if (![self selectedTabContents])
     return;
 
-  DCHECK(command_updater_.IsCommandEnabled(id)) << "Invalid/disabled command";
-
   // If command execution is blocked then just record the command and return.
-  if (block_command_execution_) {
+  /*if (block_command_execution_) {
     // We actually only allow no more than one blocked command, otherwise some
     // commands maybe lost.
     DCHECK_EQ(last_blocked_command_id_, -1);
     last_blocked_command_id_ = id;
     last_blocked_command_disposition_ = disposition;
     return;
-  }
+  }*/
 
   // The order of commands in this switch statement must match the function
-  // declaration order in browser.h!
-  switch (id) {
-    // Navigation commands
-    case IDC_BACK:                  GoBack(disposition);              break;
-    case IDC_FORWARD:               GoForward(disposition);           break;
-    case IDC_RELOAD:                Reload(disposition);              break;
-    case IDC_RELOAD_IGNORING_CACHE: ReloadIgnoringCache(disposition); break;
-    case IDC_HOME:                  Home(disposition);                break;
-    case IDC_OPEN_CURRENT_URL:      OpenCurrentURL();                 break;
-    case IDC_STOP:                  Stop();                           break;
-
-     // Window management commands
-    case IDC_NEW_WINDOW:            NewWindow();                      break;
-    case IDC_NEW_INCOGNITO_WINDOW:  NewIncognitoWindow();             break;
-    case IDC_CLOSE_WINDOW:          CloseWindow();                    break;
-    case IDC_NEW_TAB:               NewTab();                         break;
-    case IDC_CLOSE_TAB:             CloseTab();                       break;
-    case IDC_SELECT_NEXT_TAB:       SelectNextTab();                  break;
-    case IDC_SELECT_PREVIOUS_TAB:   SelectPreviousTab();              break;
-    case IDC_TABPOSE:               OpenTabpose();                    break;
-    case IDC_MOVE_TAB_NEXT:         MoveTabNext();                    break;
-    case IDC_MOVE_TAB_PREVIOUS:     MoveTabPrevious();                break;
+  // declaration order in BrowserCommands.h
+  switch (cmd) {
+		// Window management commands
+    case IDC_NEW_WINDOW:						[self newWindow]; break;
+    //case IDC_NEW_INCOGNITO_WINDOW: break;
+    case IDC_CLOSE_WINDOW:          [self closeWindow]; break;
+		//case IDC_ALWAYS_ON_TOP: break;
+    case IDC_NEW_TAB:               [self addBlankTab]; break;
+    case IDC_CLOSE_TAB:             [self closeTab]; break;
+    case IDC_SELECT_NEXT_TAB:       [self selectNextTab]; break;
+    case IDC_SELECT_PREVIOUS_TAB:   [self selectPreviousTab]; break;
     case IDC_SELECT_TAB_0:
     case IDC_SELECT_TAB_1:
     case IDC_SELECT_TAB_2:
@@ -181,16 +218,16 @@ static NSMutableSet *browsers_;
     case IDC_SELECT_TAB_4:
     case IDC_SELECT_TAB_5:
     case IDC_SELECT_TAB_6:
-    case IDC_SELECT_TAB_7:          SelectNumberedTab(id - IDC_SELECT_TAB_0);
-                                                                      break;
-    case IDC_SELECT_LAST_TAB:       SelectLastTab();                  break;
-    case IDC_DUPLICATE_TAB:         DuplicateTab();                   break;
-    case IDC_RESTORE_TAB:           RestoreTab();                     break;
-    case IDC_COPY_URL:              WriteCurrentURLToClipboard();     break;
-    case IDC_SHOW_AS_TAB:           ConvertPopupToTabbedBrowser();    break;
-    case IDC_FULLSCREEN:            ToggleFullscreenMode();           break;
-    case IDC_EXIT:                  Exit();                           break;
-	}*/
+    case IDC_SELECT_TAB_7:          logd(@"TODO SelectNumberedTab(id - IDC_SELECT_TAB_0);"); break;
+    case IDC_SELECT_LAST_TAB:       logd(@"TODO SelectLastTab();");                  break;
+    case IDC_DUPLICATE_TAB:         logd(@"TODO DuplicateTab();");                   break;
+    case IDC_RESTORE_TAB:           logd(@"TODO RestoreTab();");                     break;
+    case IDC_SHOW_AS_TAB:           logd(@"TODO ConvertPopupToTabbedBrowser();");    break;
+    case IDC_FULLSCREEN:            logd(@"TODO ToggleFullscreenMode();");           break;
+    case IDC_EXIT:                  [NSApp terminate:self];                           break;
+    case IDC_MOVE_TAB_NEXT:         logd(@"TODO MoveTabNext();");                    break;
+    case IDC_MOVE_TAB_PREVIOUS:     logd(@"TODO MoveTabPrevious();");                break;
+	}
 }
 
 -(void)executeCommand:(int)cmd {
@@ -200,19 +237,6 @@ static NSMutableSet *browsers_;
 
 #pragma mark -
 #pragma mark TabStripModelDelegate protocol implementation
-
-
-// Adds what the delegate considers to be a blank tab to the model.
--(TabContents*)addBlankTab:(BOOL)foreground {
-	DLOG(INFO) << "BrowserWindowController addBlankTab" << foreground;
-	return NULL; // TODO
-}
-
-
--(TabContents*)addBlankTabAt:(int)index foreground:(BOOL)foreground {
-	DLOG(INFO) << "BrowserWindowController addBlankTabAt" << index << foreground;
-	return NULL; // TODO
-}
 
 
 -(Browser*)createNewStripWithContents:(TabContents*)contents
@@ -287,7 +311,7 @@ static NSMutableSet *browsers_;
 // TabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the TabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents {
-	DLOG(INFO) << "BrowserWindowController runUnloadListenerBeforeClosing" << contents;
+	//DLOG(INFO) << "BrowserWindowController runUnloadListenerBeforeClosing" << contents;
 	return false;
 }
 
@@ -313,5 +337,6 @@ static NSMutableSet *browsers_;
 	DLOG(INFO) << "BrowserWindowController canCloseTab";
 	return true;
 }
+
 
 @end
