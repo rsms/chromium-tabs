@@ -1,0 +1,22 @@
+Name: Cocoa extension code from Camino
+URL: http://caminobrowser.org/
+
+Description:
+  This directory contains the following files come from (Mozilla) Camino
+  (src/camino/src/extensions):
+
+    NSPasteboard+Utils.h/mm
+    NSScreen+Utils.h/m
+    NSString+Utils.h/m
+    NSURL+Utils.h/m
+    NSWorkspace+Utils.h/m
+
+Local modifications:
+- NSURL+Utils.m was modified to use non-deprecated Cocoa APIs to allow
+  compilation on future versions of Mac OS X.
+- NSString+Utils.m was renamed to NSString+Utils.mm and modified to use GURL
+  for validation in -[NSString isValidURI].
+- NSPasteboard+Utils.mm was modified to add an argument to
+  -[NSPasteboard getURLs:andTitles:] to determine whether or not filenames in
+  the drag should be converted to file URLs.
+  -[NSPasteboard htmlFromRtf] added to do rtf->html conversion.

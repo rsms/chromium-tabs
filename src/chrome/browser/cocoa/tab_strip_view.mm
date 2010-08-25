@@ -3,10 +3,21 @@
 // found in the LICENSE file.
 
 #import "chrome/browser/cocoa/tab_strip_view.h"
-
-#include "base/logging.h"
-#include "base/mac_util.h"
 #import "chrome/browser/cocoa/tab_strip_controller.h"
+
+// ripped out from libbase mac_util.mm:
+static bool ShouldWindowsMiniaturizeOnDoubleClick() {
+  // We use an undocumented method in Cocoa; if it doesn't exist, default to
+  // |true|. If it ever goes away, we can do (using an undocumented pref key):
+  //   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  //   return ![defaults objectForKey:@"AppleMiniaturizeOnDoubleClick"] ||
+  //          [defaults boolForKey:@"AppleMiniaturizeOnDoubleClick"];
+  BOOL methodImplemented =
+      [NSWindow respondsToSelector:@selector(_shouldMiniaturizeOnDoubleClick)];
+  assert(methodImplemented); // if this happens, se discussion above
+  return !methodImplemented ||
+      [NSWindow performSelector:@selector(_shouldMiniaturizeOnDoubleClick)];
+}
 
 @implementation TabStripView
 
@@ -79,7 +90,7 @@
     // Height we have to work with (insetting on the top).
     CGFloat availableHeight =
         NSMaxY(boundsRect) - arrowTipPos.y - kArrowTopInset;
-    DCHECK(availableHeight >= 5);
+    assert(availableHeight >= 5);
 
     // Based on the knobs above, calculate actual dimensions which we'll need
     // for drawing.
@@ -147,7 +158,7 @@
   // "short" as 0.8 seconds. (Measuring up-to-up isn't enough to properly
   // detect double-clicks, but we're actually using Cocoa for that.)
   if (clickCount == 2 && (timestamp - lastMouseUp_) < 0.8) {
-    if (mac_util::ShouldWindowsMiniaturizeOnDoubleClick())
+    if (ShouldWindowsMiniaturizeOnDoubleClick())
       [[self window] performMiniaturize:self];
   } else {
     [super mouseUp:event];
@@ -160,7 +171,7 @@
 // (URLDropTarget protocol)
 - (id<URLDropTargetController>)urlDropController {
   //BrowserWindowController* windowController = [[self window] windowController];
-  //DCHECK([windowController isKindOfClass:[BrowserWindowController class]]);
+  //assert([windowController isKindOfClass:[BrowserWindowController class]]);
   //return [windowController tabStripController];
 	return nil;
 }

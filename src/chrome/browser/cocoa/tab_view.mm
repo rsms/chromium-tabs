@@ -4,12 +4,32 @@
 
 #import "chrome/browser/cocoa/tab_view.h"
 
-#include "base/logging.h"
-#import "base/mac_util.h"
 #include "base/scoped_cftyperef.h"
 #import "chrome/browser/cocoa/tab_controller.h"
 #import "chrome/browser/cocoa/tab_window_controller.h"
 #import "chrome/browser/cocoa/themed_window.h"
+
+// ripped out from mac_util.mm:
+static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,
+                                        CFStringRef key,
+                                        CFTypeID expected_type) {
+  CFTypeRef value = CFDictionaryGetValue(dict, key);
+  if (!value)
+    return value;
+
+  if (CFGetTypeID(value) != expected_type) {
+    scoped_cftyperef<CFStringRef> expected_type_ref(
+        CFCopyTypeIDDescription(expected_type));
+    scoped_cftyperef<CFStringRef> actual_type_ref(
+        CFCopyTypeIDDescription(CFGetTypeID(value)));
+    NSLog(@"warning: Expected value for key %@ to be %@ but it was %@ instead",
+          key, expected_type_ref.get(), actual_type_ref.get());
+    return NULL;
+  }
+
+  return value;
+}
+
 
 namespace {
 
@@ -331,7 +351,7 @@ const CGFloat kRapidCloseDist = 2.5;
       // (and maybe even others?) for reasons I don't understand. So we
       // explicitly check for both events we're expecting, and log others. We
       // should figure out what's going on.
-      LOG(WARNING) << "Spurious event received of type " << type << ".";
+      WLOG("Spurious event received of type %@", type);
     }
   }
 }
@@ -561,7 +581,7 @@ const CGFloat kRapidCloseDist = 2.5;
   if (draggingWithinTabStrip_) {
     if (tabWasDragged_) {
       // Move tab to new location.
-      DCHECK([sourceController_ numberOfTabs]);
+      assert([sourceController_ numberOfTabs]);
       TabWindowController* dropController = sourceController_;
       [dropController moveTabView:[dropController selectedTabView]
                    fromController:nil];
@@ -944,21 +964,21 @@ const CGFloat kRapidCloseDist = 2.5;
       NULL, reinterpret_cast<const void **>(&windowID), 1, NULL));
   scoped_cftyperef<CFArrayRef> descriptions(
       CGWindowListCreateDescriptionFromArray(windowIDs));
-  DCHECK(CFArrayGetCount(descriptions.get()) <= 1);
+  assert(CFArrayGetCount(descriptions.get()) <= 1);
   if (CFArrayGetCount(descriptions.get()) > 0) {
     CFDictionaryRef dict = static_cast<CFDictionaryRef>(
         CFArrayGetValueAtIndex(descriptions.get(), 0));
-    DCHECK(CFGetTypeID(dict) == CFDictionaryGetTypeID());
+    assert(CFGetTypeID(dict) == CFDictionaryGetTypeID());
 
     // Sanity check the ID.
-    CFNumberRef otherIDRef = (CFNumberRef)mac_util::GetValueFromDictionary(
+    CFNumberRef otherIDRef = (CFNumberRef)GetValueFromDictionary(
         dict, kCGWindowNumber, CFNumberGetTypeID());
     CGWindowID otherID;
     if (otherIDRef &&
         CFNumberGetValue(otherIDRef, kCGWindowIDCFNumberType, &otherID) &&
         otherID == windowID) {
       // And then get the workspace.
-      CFNumberRef workspaceRef = (CFNumberRef)mac_util::GetValueFromDictionary(
+      CFNumberRef workspaceRef = (CFNumberRef)GetValueFromDictionary(
           dict, kCGWindowWorkspace, CFNumberGetTypeID());
       if (!workspaceRef ||
           !CFNumberGetValue(workspaceRef, kCFNumberIntType, &workspace)) {

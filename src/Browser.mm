@@ -47,7 +47,7 @@
 
 
 -(void)dealloc {
-	logd(@"dealloced browser");
+	DLOG("dealloced browser");
 	delete tabStripModel_;
 	[windowController_ release];
 	[super dealloc];
@@ -56,7 +56,7 @@
 
 // private
 -(void)createWindowController {
-	DCHECK(!windowController_);
+	assert(!windowController_);
 	windowController_ =
 			[[BrowserWindowController alloc] initWithWindowNibName:@"BrowserWindow" 
 																										 browser:self];
@@ -95,8 +95,8 @@
 #pragma mark Callbacks
 
 -(void)loadingStateDidChange:(TabContents*)contents {
-	logd(@"TODO %s", __func__);
-	loge(contents);
+	DLOG("TODO %s", __func__);
+	EXPRLOG(contents);
 }
 
 -(void)windowDidBeginToClose {
@@ -200,7 +200,7 @@
 
 -(void)executeCommand:(int)cmd
 			withDisposition:(WindowOpenDisposition)disposition {
-	loge(cmd);
+	EXPRLOG(  cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -248,7 +248,7 @@
     case IDC_DUPLICATE_TAB:         [self duplicateTab]; break;
     //case IDC_RESTORE_TAB:         break;
     //case IDC_SHOW_AS_TAB:         break;
-    case IDC_FULLSCREEN:            logd(@"TODO ToggleFullscreenMode();"); break;
+    case IDC_FULLSCREEN:            DLOG("TODO ToggleFullscreenMode();"); break;
     case IDC_EXIT:                  [NSApp terminate:self]; break;
     case IDC_MOVE_TAB_NEXT:         [self moveTabNext]; break;
     case IDC_MOVE_TAB_PREVIOUS:     [self moveTabPrevious]; break;
@@ -267,7 +267,7 @@
 -(Browser*)createNewStripWithContents:(TabContents*)contents
 												 windowBounds:(const NSRect)windowBounds
 														 maximize:(BOOL)maximize {
-  //DCHECK(CanSupportWindowFeature(FEATURE_TABSTRIP));
+  //assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
 
   //gfx::Rect new_window_bounds = window_bounds;
   //if (dock_info.GetNewWindowBounds(&new_window_bounds, &maximize))
@@ -308,26 +308,26 @@
 
 // Returns whether some contents can be duplicated.
 -(BOOL)canDuplicateContentsAt:(int)index {
-	DLOG(INFO) << "BrowserWindowController canDuplicateContentsAt" << index;
+	DLOG("BrowserWindowController canDuplicateContentsAt %d", index);
 	return false;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
 -(void)duplicateContentsAt:(int)index {
-	DLOG(INFO) << "BrowserWindowController duplicateContentsAt" << index;
+	DLOG("BrowserWindowController duplicateContentsAt %d", index);
 }
 
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
 -(void)closeFrameAfterDragSession {
-	DLOG(INFO) << "BrowserWindowController closeFrameAfterDragSession";
+	DLOG("BrowserWindowController closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // TabContents.
 -(void)createHistoricalTab:(TabContents*)contents {
-	DLOG(INFO) << "BrowserWindowController createHistoricalTab" << contents;
+	DLOG("BrowserWindowController createHistoricalTab %@", contents);
 }
 
 // Runs any unload listeners associated with the specified TabContents before
@@ -336,30 +336,30 @@
 // TabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the TabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents {
-	//DLOG(INFO) << "BrowserWindowController runUnloadListenerBeforeClosing" << contents;
+	//DLOG("BrowserWindowController runUnloadListenerBeforeClosing %@" contents);
 	return false;
 }
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab {
-	DLOG(INFO) << "BrowserWindowController canRestoreTab";
+	DLOG("BrowserWindowController canRestoreTab");
 	return false;
 }
 
 // Restores the last closed tab if CanRestoreTab would return true.
 -(void)restoreTab {
-	DLOG(INFO) << "BrowserWindowController restoreTab";
+	DLOG("BrowserWindowController restoreTab");
 }
 
 // Returns whether some contents can be closed.
 -(BOOL)canCloseContentsAt:(int)index {
-	DLOG(INFO) << "BrowserWindowController canCloseContentsAt" << index;
+	DLOG("BrowserWindowController canCloseContentsAt %d", index);
 	return true;
 }
 
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
-	DLOG(INFO) << "BrowserWindowController canCloseTab";
+	DLOG("BrowserWindowController canCloseTab");
 	return true;
 }
 

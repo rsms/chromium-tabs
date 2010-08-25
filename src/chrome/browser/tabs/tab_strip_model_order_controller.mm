@@ -67,7 +67,7 @@ int TabStripModelOrderController::DetermineNewSelectedIndex(
     int removing_index,
     bool is_remove) const {
   int tab_count = tab_strip_model_->count();
-  DCHECK(removing_index >= 0 && removing_index < tab_count);
+  assert(removing_index >= 0 && removing_index < tab_count);
   /*NavigationController* parent_opener =
       tab_strip_model_->GetOpenerOfTabContentsAt(removing_index);
   // First see if the index being removed has any "child" tabs. If it does, we
@@ -106,7 +106,7 @@ void TabStripModelOrderController::TabSelectedAt(TabContents* old_contents,
                                                  TabContents* new_contents,
                                                  int index,
                                                  bool user_gesture) {
-	DLOG(INFO) << "TabStripModelOrderController::TabSelectedAt" << index;
+	DLOG("TabSelectedAt %d", index);
   /*NavigationController* old_opener = NULL;
   if (old_contents) {
     int index = tab_strip_model_->GetIndexOfTabContents(old_contents);

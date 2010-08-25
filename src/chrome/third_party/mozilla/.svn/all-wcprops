@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/48962/trunk/src/third_party/mozilla
+END
+README.chromium
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/48962/trunk/src/third_party/mozilla/README.chromium
+END
+NSWorkspace+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSWorkspace+Utils.h
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/44666/trunk/src/third_party/mozilla/LICENSE
+END
+NSScreen+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSScreen+Utils.h
+END
+NSURL+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSURL+Utils.h
+END
+NSWorkspace+Utils.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSWorkspace+Utils.m
+END
+NSPasteboard+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/48962/trunk/src/third_party/mozilla/NSPasteboard+Utils.h
+END
+NSScreen+Utils.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSScreen+Utils.m
+END
+NSPasteboard+Utils.mm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/48962/trunk/src/third_party/mozilla/NSPasteboard+Utils.mm
+END
+NSString+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSString+Utils.h
+END
+NSURL+Utils.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/44655/trunk/src/third_party/mozilla/NSURL+Utils.m
+END
+NSString+Utils.mm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/46318/trunk/src/third_party/mozilla/NSString+Utils.mm
+END

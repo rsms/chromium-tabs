@@ -451,7 +451,7 @@ willPositionSheet:(NSWindow*)sheet
     }
   }
   
-  logd(@"Failed to find info for sheet of type %@", [systemSheet class]);
+  DLOG("Failed to find info for sheet of type %@", [systemSheet class]);
   return nil;
 }
 

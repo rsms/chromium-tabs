@@ -3,7 +3,8 @@
 
 @implementation AppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+  DLOG("applicationDidFinishLaunching %@", notification);
 	// Configure context menu
 	//NSMenu *mainMenu = [NSApp mainMenu];
 	//[mainMenu itemWithTag:#import "BrowserCommands.h"];

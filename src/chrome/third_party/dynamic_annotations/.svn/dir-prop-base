@@ -1,0 +1,15 @@
+K 10
+svn:ignore
+V 242
+dynamic_annotations.xcodeproj
+dynamic_annotations.sln
+dynamic_annotations.vcproj
+dynamic_annotations_win64.vcproj
+dynamic_annotations.scons
+SConstruct
+dynamic_annotations_main.scons
+dynamic_annotations.target.mk
+dynamic_annotations.Makefile
+
+
+END

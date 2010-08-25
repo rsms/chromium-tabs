@@ -5,8 +5,6 @@
 #import <Cocoa/Cocoa.h>
 #import "chrome/browser/cocoa/fast_resize_view.h"
 
-#include "base/logging.h"
-
 @interface FastResizeView (PrivateMethods)
 // Lays out this views subviews.  If fast resize mode is on, does not resize any
 // subviews and instead pegs them to the top left.  If fast resize mode is off,
@@ -46,7 +44,7 @@
   // in the process of switching tabs or closing the window.  In those cases, no
   // layout is needed.
   NSArray* subviews = [self subviews];
-  DCHECK([subviews count] <= 1);
+  assert([subviews count] <= 1);
   if ([subviews count] < 1)
     return;
 

@@ -11,11 +11,11 @@
 #include <limits>
 #include <string>
 
-#include "app/l10n_util.h"
-#include "app/resource_bundle.h"
-#include "base/mac_util.h"
-#include "base/nsimage_cache_mac.h"
-#include "base/sys_string_conversions.h"
+//#include "app/l10n_util.h"
+//#include "app/resource_bundle.h"
+//#include "base/mac_util.h"
+//#include "base/nsimage_cache_mac.h"
+//#include "base/sys_string_conversions.h"
 //#include "chrome/app/chrome_dll_resource.h"
 //#include "chrome/browser/browser.h"
 //#include "chrome/browser/find_bar.h"
@@ -42,7 +42,7 @@
 //#include "grit/generated_resources.h"
 //#include "grit/theme_resources.h"
 //#include "skia/ext/skia_utils_mac.h"
-#import "third-party/gtm-subset/GTMNSAnimation+Duration.h"
+#import "third_party/gtm-subset/GTMNSAnimation+Duration.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
@@ -217,7 +217,7 @@ private:
 - (id)initWithTabStrip:(TabStripController*)strip
          tabController:(TabController*)controller {
   if ((self == [super init])) {
-    DCHECK(strip && controller);
+    assert(strip && controller);
     strip_ = strip;
     controller_ = controller;
   }
@@ -280,7 +280,7 @@ private:
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
            browser:(Browser*)browser {
-  DCHECK(view && switchView && browser);
+  assert(view && switchView && browser);
   if ((self = [super init])) {
     tabStripView_.reset([view retain]);
     switchView_ = switchView;
@@ -309,9 +309,9 @@ private:
     [newTabButton_ setTag:IDC_NEW_TAB];
     // Set the images from code because Cocoa fails to find them in our sub
     // bundle during tests.
-    [newTabButton_ setImage:nsimage_cache::ImageNamed(kNewTabImage)];
+    [newTabButton_ setImage:[NSImage imageNamed:kNewTabImage]];
     [newTabButton_
-        setAlternateImage:nsimage_cache::ImageNamed(kNewTabPressedImage)];
+        setAlternateImage:[NSImage imageNamed:kNewTabPressedImage]];
     newTabButtonShowingHoverImage_ = NO;
     newTabTrackingArea_.reset(
         [[NSTrackingArea alloc] initWithRect:[newTabButton_ bounds]
@@ -429,7 +429,7 @@ private:
 // model and swaps out the sole child of the contentArea to display its
 // contents.
 - (void)swapInTabAtIndex:(NSInteger)modelIndex {
-  DCHECK(modelIndex >= 0 && modelIndex < tabStripModel_->count());
+  assert(modelIndex >= 0 && modelIndex < tabStripModel_->count());
   NSInteger index = [self indexFromModelIndex:modelIndex];
   TabContentsController* controller = [tabContentsArray_ objectAtIndex:index];
 
@@ -458,13 +458,13 @@ private:
   // Make sure the new tabs's sheets are visible (necessary when a background
   // tab opened a sheet while it was in the background and now becomes active).
   TabContents* newTab = tabStripModel_->GetTabContentsAt(modelIndex);
-  DCHECK(newTab);
+  assert(newTab);
 	// TODO: Possibly need to implement this for sheets to function properly
   /*if (newTab) {
     TabContents::ConstrainedWindowList::iterator it, end;
     end = newTab->constrained_window_end();
     NSWindowController* controller = [[newView window] windowController];
-    DCHECK([controller isKindOfClass:[BrowserWindowController class]]);
+    assert([controller isKindOfClass:[BrowserWindowController class]]);
 
     for (it = newTab->constrained_window_begin(); it != end; ++it) {
       ConstrainedWindow* constrainedWindow = *it;
@@ -520,14 +520,14 @@ private:
 // |index|, this returns |index| + 2. If there are no closing tabs, this will
 // return |index|.
 - (NSInteger)indexFromModelIndex:(NSInteger)index {
-  DCHECK(index >= 0);
+  assert(index >= 0);
   if (index < 0)
     return index;
 
   NSInteger i = 0;
   for (TabController* controller in tabArray_.get()) {
     if ([closingControllers_ containsObject:controller]) {
-      DCHECK([(TabView*)[controller view] isClosing]);
+      assert([(TabView*)[controller view] isClosing]);
       ++index;
     }
     if (i == index)  // No need to check anything after, it has no effect.
@@ -593,7 +593,7 @@ private:
 // Called when the user clicks a tab. Tell the model the selection has changed,
 // which feeds back into us via a notification.
 - (void)selectTab:(id)sender {
-  DCHECK([sender isKindOfClass:[NSView class]]);
+  assert([sender isKindOfClass:[NSView class]]);
   int index = [self modelIndexForTabView:sender];
   if (tabStripModel_->ContainsIndex(index))
     tabStripModel_->SelectTabContentsAt(index, true);
@@ -602,7 +602,7 @@ private:
 // Called when the user closes a tab. Asks the model to close the tab. |sender|
 // is the TabView that is potentially going away.
 - (void)closeTab:(id)sender {
-  DCHECK([sender isKindOfClass:[TabView class]]);
+  assert([sender isKindOfClass:[TabView class]]);
   if ([hoveredTab_ isEqual:sender]) {
     hoveredTab_ = nil;
   }
@@ -688,7 +688,7 @@ private:
 // tabs would cause an overflow. http://crbug.com/188
 - (void)layoutTabsWithAnimation:(BOOL)animate
              regenerateSubviews:(BOOL)doUpdate {
-  DCHECK([NSThread isMainThread]);
+  assert([NSThread isMainThread]);
   if (![tabArray_ count])
     return;
 
@@ -936,8 +936,8 @@ private:
 - (void)insertTabWithContents:(TabContents*)contents
                       atIndex:(NSInteger)modelIndex
                  inForeground:(bool)inForeground {
-  DCHECK(contents);
-  DCHECK(modelIndex == TabStripModel::kNoTab ||
+  assert(contents);
+  assert(modelIndex == TabStripModel::kNoTab ||
          tabStripModel_->ContainsIndex(modelIndex));
 
   // Take closing tabs into account.
@@ -1096,7 +1096,7 @@ private:
 // where to move the tab to. Registers a delegate to call back when the
 // animation is complete in order to remove the tab from the model.
 - (void)startClosingTabWithAnimation:(TabController*)closingTab {
-  DCHECK([NSThread isMainThread]);
+  assert([NSThread isMainThread]);
   // Save off the controller into the set of animating tabs. This alerts
   // the layout method to not do anything with it and allows us to correctly
   // calculate offsets when working with indices into the model.
@@ -1290,7 +1290,7 @@ private:
                           atIndex:to];
   scoped_nsobject<TabController> movedTabController(
       [[tabArray_ objectAtIndex:from] retain]);
-  DCHECK([movedTabController isKindOfClass:[TabController class]]);
+  assert([movedTabController isKindOfClass:[TabController class]]);
   [tabArray_ removeObjectAtIndex:from];
   [tabArray_ insertObject:movedTabController.get() atIndex:to];
 
@@ -1306,7 +1306,7 @@ private:
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
   TabController* tabController = [tabArray_ objectAtIndex:index];
-  DCHECK([tabController isKindOfClass:[TabController class]]);
+  assert([tabController isKindOfClass:[TabController class]]);
   [tabController setMini:tabStripModel_->IsMiniTab(modelIndex)];
   [tabController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
   [tabController setApp:tabStripModel_->IsAppTab(modelIndex)];
@@ -1413,8 +1413,8 @@ private:
 // the individual tabs to update their hover states correctly.
 // Only generates the event if the cursor is in the tab strip.
 - (void)tabUpdateTracking:(NSNotification*)notification {
-  DCHECK([[notification object] isKindOfClass:[TabView class]]);
-  DCHECK(mouseInside_);
+  assert([[notification object] isKindOfClass:[TabView class]]);
+  assert(mouseInside_);
   NSWindow* window = [tabStripView_ window];
   NSPoint location = [window mouseLocationOutsideOfEventStream];
   if (NSPointInRect(location, [tabStripView_ frame])) {
@@ -1522,10 +1522,10 @@ private:
 - (void)setNewTabButtonHoverState:(BOOL)shouldShowHover {
   if (shouldShowHover && !newTabButtonShowingHoverImage_) {
     newTabButtonShowingHoverImage_ = YES;
-    [newTabButton_ setImage:nsimage_cache::ImageNamed(kNewTabHoverImage)];
+    [newTabButton_ setImage:[NSImage imageNamed:kNewTabHoverImage]];
   } else if (!shouldShowHover && newTabButtonShowingHoverImage_) {
     newTabButtonShowingHoverImage_ = NO;
-    [newTabButton_ setImage:nsimage_cache::ImageNamed(kNewTabImage)];
+    [newTabButton_ setImage:[NSImage imageNamed:kNewTabImage]];
   }
 }
 
@@ -1558,7 +1558,7 @@ private:
   for (TabController* tab in [tabArray_ reverseObjectEnumerator]) {
     NSView* tabView = [tab view];
     if ([tab selected]) {
-      DCHECK(!selectedTabView);
+      assert(!selectedTabView);
       selectedTabView = tabView;
     } else {
       [subviews addObject:tabView];
@@ -1583,11 +1583,11 @@ private:
   const double kMiddleProportion = 0.5;
   const double kLRProportion = (1.0 - kMiddleProportion) / 2.0;
 
-  DCHECK(index && disposition);
+  assert(index && disposition);
   NSInteger i = 0;
   for (TabController* tab in tabArray_.get()) {
     NSView* view = [tab view];
-    DCHECK([view isKindOfClass:[TabView class]]);
+    assert([view isKindOfClass:[TabView class]]);
 
     // Recall that |-[NSView frame]| is in its superview's coordinates, so a
     // |TabView|'s frame is in the coordinates of the |TabStripView| (which
@@ -1688,7 +1688,7 @@ private:
   NSPoint arrowPos = NSMakePoint(0, arrowBaseY);
   if (index == -1) {
     // Append a tab at the end.
-    DCHECK(disposition == NEW_FOREGROUND_TAB);
+    assert(disposition == NEW_FOREGROUND_TAB);
     NSInteger lastIndex = [tabArray_ count] - 1;
     NSRect overRect = [[[tabArray_ objectAtIndex:lastIndex] view] frame];
     arrowPos.x = overRect.origin.x + overRect.size.width - kTabOverlap / 2.0;
@@ -1755,7 +1755,7 @@ private:
 
   // ...and raise a tab with a sheet.
   NSInteger index = [self modelIndexForContentsView:view];
-  DCHECK(index >= 0);
+  assert(index >= 0);
   if (index >= 0)
     tabStripModel_->SelectTabContentsAt(index, false /* not a user gesture */);
 }
@@ -1782,8 +1782,8 @@ private:
   NSInteger index = [self indexFromModelIndex:modelIndex];
   BrowserWindowController* controller =
       (BrowserWindowController*)[[switchView_ window] windowController];
-  DCHECK(controller != nil);
-  DCHECK(index >= 0);
+  assert(controller != nil);
+  assert(index >= 0);
   if (index >= 0) {
     [controller setTab:[self viewAtIndex:index] isDraggable:NO];
   }
@@ -1800,7 +1800,7 @@ private:
   NSInteger index = [self indexFromModelIndex:modelIndex];
   BrowserWindowController* controller =
       (BrowserWindowController*)[[switchView_ window] windowController];
-  DCHECK(index >= 0);
+  assert(index >= 0);
   if (index >= 0) {
     [controller setTab:[self viewAtIndex:index] isDraggable:YES];
   }

@@ -5,8 +5,6 @@
 #import "chrome/browser/cocoa/tab_contents_controller.h"
 #import "TabContents.h"
 
-#include "base/mac_util.h"
-
 // Default offset of the contents splitter in pixels.
 static const int kDefaultContentsSplitOffset = 400;
 

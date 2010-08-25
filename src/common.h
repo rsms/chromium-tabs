@@ -1,6 +1,14 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+// Adds defines about the platform we're currently building on
+#include "build_config.h"
+
+// Foundation is nice to have
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+#endif
+
 // Filename macro
 #ifndef __FILENAME__
   #define __FILENAME__ ((strrchr(__FILE__, '/') ?: __FILE__ - 1) + 1)
@@ -8,34 +16,42 @@
 #define __SRC_FILENAME__ \
 	((common_strrstr(__FILE__, "/src/") ?: __FILE__ - 1) + 1)
 
-// Debug/development utilities
-#if !defined(_DEBUG) && defined(DEBUG)
-#define _DEBUG DEBUG
+// log info, warning and error message
+// DLOG(format[, ...]) -- log a debug message
+#if defined(__OBJC__)
+  #define _LOG(prefixch, fmt, ...) \
+      NSLog((NSString*)(CFSTR("%c [%s:%d] " fmt)), prefixch, \
+            __SRC_FILENAME__, __LINE__, ##__VA_ARGS__)
+#else
+  #define _LOG(prefixch, fmt, ...) \
+      fprintf(stderr, "%c [%s:%d] " fmt, prefixch, \
+              __SRC_FILENAME__, __LINE__, ##__VA_ARGS__)
 #endif
-	
-#if _DEBUG
+#ifdef LOG_SILENT
+  #define ILOG(...) do{}while(0)
+#else
+  #define ILOG(...) _LOG('I', __VA_ARGS__)
+#endif
+#define WLOG(...) _LOG('W', __VA_ARGS__)
+#define ELOG(...) _LOG('E', __VA_ARGS__)
+
+// Debug/development utilities
+#if !defined(NDEBUG)
+  #ifndef _DEBUG
+    #define _DEBUG 1
+  #endif
 	// shorthand to include and evaluate <x> only for debug builds
-	#define IFDEBUG(x) x
+	#define IFDEBUG(x) do{ x }while(0)
+  #define DLOG(...) _LOG('D', __VA_ARGS__)
 	#ifdef __OBJC__
-		// logd(format[, ...]) -- log a debug message
-		#define logd(fmt, ...) NSLog(@"D [%s:%d] " fmt, __SRC_FILENAME__, \
-																 __LINE__, ##__VA_ARGS__)
-		// logmark -- log a "mark"
-		#define logmark				 NSLog(@"M [%s:%d] %s", __SRC_FILENAME__, __LINE__, \
-																 __PRETTY_FUNCTION__)
+    #define MARKLOG _LOG('M', @"%s", __PRETTY_FUNCTION__)
 	#else
-		// logd(format[, ...]) -- log a debug message
-		#define logd(fmt, ...) fprintf(stderr, "%s [%d] D [%s:%d] " fmt "\n", \
-																	 __FILENAME__, getpid(), __SRC_FILENAME__, \
-																	 __LINE__, ##__VA_ARGS__)
-		// logmark -- log a "mark"
-		#define logmark	 fprintf(stderr, "%s [%d] M [%s:%d] %s\n", __FILENAME__, \
-														 getpid(), __SRC_FILENAME__, __LINE__, \
-														 __PRETTY_FUNCTION__)
+    #define MARKLOG _LOG('M', "%s", __PRETTY_FUNCTION__)
 	#endif
 	// log an expression
 	#ifdef __OBJC__
-		#define loge(_X_) do{\
+    NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);
+		#define EXPRLOG(_X_) do{\
 			__typeof__(_X_) _Y_ = (_X_);\
 			const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
 			NSString *_STR_ = VTPG_DDToStringFromTypeAndValue(_TYPE_CODE_, &_Y_);\
@@ -46,18 +62,36 @@
 				      _TYPE_CODE_, #_X_, __func__, __SRC_FILENAME__, __LINE__);\
 			}}while(0)
 	#else // __OBJC__
-		#define loge(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
+		#define EXPRLOG(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
 															__FILENAME__, getpid(), __SRC_FILENAME__, __LINE__, \
 															#_X_, "<TODO:common.h>")
 		// TODO eval expression ---------------^
 	#endif // __OBJC__
-#else // _DEBUG
-	#define IFDEBUG(x)
-	#define logd(...)
-	#define logmark
-	#define loge(...)
-#endif // _DEBUG
+#else // !defined(NDEBUG)
+	#define IFDEBUG(x)    do{}while(0)
+	#define DLOG(...)     do{}while(0)
+	#define MARKLOG       do{}while(0)
+	#define EXPRLOG(...)  do{}while(0)
+#endif // !defined(NDEBUG)
 
+// libbase compatible assertion macros
+#define DCHECK assert
+#define DCHECK_OP(op, val1, val2) assert((val1) op (val2))
+#define DCHECK_EQ(val1, val2) DCHECK_OP(==, val1, val2)
+#define DCHECK_NE(val1, val2) DCHECK_OP(!=, val1, val2)
+#define DCHECK_LE(val1, val2) DCHECK_OP(<=, val1, val2)
+#define DCHECK_LT(val1, val2) DCHECK_OP(< , val1, val2)
+#define DCHECK_GE(val1, val2) DCHECK_OP(>=, val1, val2)
+#define DCHECK_GT(val1, val2) DCHECK_OP(> , val1, val2)
+
+// log an error for unimplemented things
+#include <err.h>
+#define NOTIMPLEMENTED() warnx("Not implemented reached in %s", \
+                               __PRETTY_FUNCTION__)
+
+#define NOTREACHED() assert(false && "Should not have been reached")
+
+// strrstr
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -65,15 +99,5 @@ const char *common_strrstr(const char *string, const char *find);
 #ifdef __cplusplus
 }
 #endif
-
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
-NSString *VTPG_DDToStringFromTypeAndValue(const char *typeCode, void *value);
-static inline BOOL IsEmpty(id thing) {
-	return thing == nil ||
-  ([thing respondsToSelector:@selector(length)] && [(NSData *)thing length] == 0) ||
-  ([thing respondsToSelector:@selector(count)]  && [(NSArray *)thing count] == 0);
-}
-#endif // __OBJC__
 
 #endif // COMMON_H_

@@ -6,8 +6,6 @@
 
 #include <set>
 
-#include "base/logging.h"
-
 static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 
 @interface ThrobberView(PrivateMethods)
@@ -49,12 +47,12 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
     // Ensure that the height divides evenly into the width. Cache the
     // number of frames in the animation for later.
     NSSize imageSize = [image size];
-    DCHECK(imageSize.height && imageSize.width);
+    assert(imageSize.height && imageSize.width);
     if (!imageSize.height)
       return nil;
-    DCHECK((int)imageSize.width % (int)imageSize.height == 0);
+    assert((int)imageSize.width % (int)imageSize.height == 0);
     numFrames_ = (int)imageSize.width / (int)imageSize.height;
-    DCHECK(numFrames_);
+    assert(numFrames_);
     image_.reset([image retain]);
   }
   return self;
@@ -234,13 +232,13 @@ typedef std::set<ThrobberView*> ThrobberSet;
 }
 
 - (void)addThrobber:(ThrobberView*)throbber {
-  DCHECK([NSThread currentThread] == validThread_);
+  assert([NSThread currentThread] == validThread_);
   throbbers_.insert(throbber);
   [self maintainTimer];
 }
 
 - (void)removeThrobber:(ThrobberView*)throbber {
-  DCHECK([NSThread currentThread] == validThread_);
+  assert([NSThread currentThread] == validThread_);
   throbbers_.erase(throbber);
   [self maintainTimer];
 }

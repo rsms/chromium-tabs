@@ -7,7 +7,7 @@
 TabStripModelObserverBridge::TabStripModelObserverBridge(TabStripModel* model,
                                                          id controller)
     : controller_(controller), model_(model) {
-  DCHECK(model && controller);
+  assert(model && controller);
   // Register to be a listener on the model so we can get updates and tell
   // |controller_| about them in the future.
   model_->AddObserver(this);

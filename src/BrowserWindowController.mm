@@ -1,4 +1,3 @@
-#include "base/logging.h"
 #import "BrowserWindowController.h"
 
 #import "chrome/browser/tabs/tab_strip_model.h"
@@ -71,7 +70,7 @@
 
 
 -(void)dealloc {
-	logd(@"dealloc window controller");
+	DLOG("dealloc window controller");
 	// Close all tabs
 	//[browser_ closeAllTabs]; // TODO
 
@@ -103,7 +102,7 @@
 // the command is supported and doesn't check, otherwise it would have been
 // disabled in the UI in validateUserInterfaceItem:.
 - (void)commandDispatch:(id)sender {
-  DCHECK(sender);
+  assert(sender);
   // Identify the actual BWC to which the command should be dispatched. It might
   // belong to a background window, yet this controller gets it because it is
   // the foreground window's controller and thus in the responder chain. Some
@@ -113,7 +112,7 @@
   BrowserWindowController* targetController = self;
   if ([sender respondsToSelector:@selector(window)])
     targetController = [[sender window] windowController];
-  DCHECK([targetController isKindOfClass:[BrowserWindowController class]]);
+  assert([targetController isKindOfClass:[BrowserWindowController class]]);
   [targetController.browser executeCommand:[sender tag]];
 }
 
@@ -158,7 +157,7 @@
     // model from the source window's model.
     BOOL isBrowser =
         [dragController isKindOfClass:[BrowserWindowController class]];
-    DCHECK(isBrowser);
+    assert(isBrowser);
     if (!isBrowser) return;
     BrowserWindowController* dragBWC = (BrowserWindowController*)dragController;
     int index = [dragBWC->tabStripController_ modelIndexForTabView:view];
@@ -271,7 +270,7 @@
   // Get the new controller by asking the new window for its delegate.
   BrowserWindowController* controller =
       reinterpret_cast<BrowserWindowController*>([newBrowser.window delegate]);
-  DCHECK(controller && [controller isKindOfClass:[TabWindowController class]]);
+  assert(controller && [controller isKindOfClass:[TabWindowController class]]);
 
   // Force the added tab to the right size (remove stretching.)
   tabRect.size.height = [TabStripController defaultTabHeight];

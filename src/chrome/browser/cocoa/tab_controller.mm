@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/logging.h"
-#include "base/mac_util.h"
 #import "chrome/browser/cocoa/tab_controller.h"
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/tab_view.h"
@@ -35,8 +33,8 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 - (id)init {
-  self = [super initWithNibName:@"TabView" bundle:mac_util::MainAppBundle()];
-	DCHECK(self);
+  self = [super initWithNibName:@"TabView" bundle:[NSBundle mainBundle]];
+	assert(self);
   if (self != nil) {
     isIconShowing_ = YES;
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
@@ -64,7 +62,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 - (void)internalSetSelected:(BOOL)selected {
   selected_ = selected;
   TabView* tabView = static_cast<TabView*>([self view]);
-  DCHECK([tabView isKindOfClass:[TabView class]]);
+  assert([tabView isKindOfClass:[TabView class]]);
   [tabView setState:selected];
   [tabView cancelAlert];
   [self updateVisibility];
@@ -114,7 +112,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
   [[self view] setToolTip:title];
   if ([self mini] && ![self selected]) {
     TabView* tabView = static_cast<TabView*>([self view]);
-    DCHECK([tabView isKindOfClass:[TabView class]]);
+    assert([tabView isKindOfClass:[TabView class]]);
     [tabView startAlert];
   }
   [super setTitle:title];

@@ -4,7 +4,7 @@
 
 #import "chrome/browser/cocoa/tab_window_controller.h"
 
-#include "base/logging.h"
+//#include "base/logging.h"
 #import "chrome/browser/cocoa/tab_strip_view.h"
 #import "chrome/browser/cocoa/themed_window.h"
 
@@ -175,7 +175,7 @@
                                              object:nil];
   NSWindow* window = [self window];
   if (useOverlay && !overlayWindow_) {
-    DCHECK(!cachedContentView_);
+    assert(!cachedContentView_);
     overlayWindow_ = [[TabWindowOverlayWindow alloc]
                          initWithContentRect:[window frame]
                                    styleMask:NSBorderlessWindowMask
@@ -190,7 +190,7 @@
     [self moveViewsBetweenWindowAndOverlay:useOverlay];
     [overlayWindow_ orderFront:nil];
   } else if (!useOverlay && overlayWindow_) {
-    DCHECK(cachedContentView_);
+    assert(cachedContentView_);
     [window setContentView:cachedContentView_];
     [self moveViewsBetweenWindowAndOverlay:useOverlay];
     [window makeFirstResponder:cachedContentView_];

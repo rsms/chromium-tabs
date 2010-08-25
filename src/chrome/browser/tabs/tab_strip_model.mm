@@ -6,10 +6,10 @@
 
 #include <algorithm>
 
-#include "base/command_line.h"
+//#include "base/command_line.h"
 #include "base/stl_util-inl.h"
-#include "base/string_util.h"
-#include "build/build_config.h"
+//#include "base/string_util.h"
+//#include "build/build_config.h" // included in precompiled header
 //#include "chrome/browser/bookmarks/bookmark_model.h"
 //#include "chrome/browser/browser_shutdown.h"
 //#include "chrome/browser/defaults.h"
@@ -122,7 +122,7 @@ TabStripModel::TabStripModel(NSObject<TabStripModelDelegate>* delegate)
       closing_all_(false),
       order_controller_(NULL) {
   delegate_ = [delegate retain];
-	DCHECK(delegate_);
+	assert(delegate_);
 	// TODO replace with nsnotificationcenter?
   /*registrar_.Add(this,
                  NotificationType::TAB_CONTENTS_DESTROYED,
@@ -272,7 +272,7 @@ TabContents* TabStripModel::DetachTabContentsAt(int index) {
   if (contents_data_.empty())
     return NULL;
 
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
 
   TabContents* removed_contents = GetContentsAt(index);
   int next_selected_index =
@@ -301,13 +301,13 @@ TabContents* TabStripModel::DetachTabContentsAt(int index) {
 }
 
 void TabStripModel::SelectTabContentsAt(int index, bool user_gesture) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   ChangeSelectedContentsFrom(GetSelectedTabContents(), index, user_gesture);
 }
 
 void TabStripModel::MoveTabContentsAt(int index, int to_position,
                                       bool select_after_move) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   if (index == to_position)
     return;
 
@@ -355,7 +355,7 @@ int TabStripModel::GetIndexOfTabContents(const TabContents* contents) const {
 
 void TabStripModel::UpdateTabContentsStateAt(int index,
                                              TabChangeType change_type) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   FOR_EACH_OBSERVER(TabStripModelObserver, observers_,
       TabChangedAt(GetContentsAt(index), index, change_type));
 }
@@ -387,14 +387,14 @@ bool TabStripModel::TabsAreLoading() const {
 }
 
 /*NavigationController* TabStripModel::GetOpenerOfTabContentsAt(int index) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   return contents_data_.at(index)->opener;
 }*/
 
 /*int TabStripModel::GetIndexOfNextTabContentsOpenedBy(
     const NavigationController* opener, int start_index, bool use_group) const {
-  DCHECK(opener);
-  DCHECK(ContainsIndex(start_index));
+  assert(opener);
+  assert(ContainsIndex(start_index));
 
   // Check tabs after start_index first.
   for (int i = start_index + 1; i < count(); ++i) {
@@ -416,8 +416,8 @@ bool TabStripModel::TabsAreLoading() const {
 /*int TabStripModel::GetIndexOfFirstTabContentsOpenedBy(
     const NavigationController* opener,
     int start_index) const {
-  DCHECK(opener);
-  DCHECK(ContainsIndex(start_index));
+  assert(opener);
+  assert(ContainsIndex(start_index));
 
   for (int i = 0; i < start_index; ++i) {
     if (contents_data_[i]->opener == opener && !IsPhantomTab(i))
@@ -428,8 +428,8 @@ bool TabStripModel::TabsAreLoading() const {
 
 /*int TabStripModel::GetIndexOfLastTabContentsOpenedBy(
     const NavigationController* opener, int start_index) const {
-  DCHECK(opener);
-  DCHECK(ContainsIndex(start_index));
+  assert(opener);
+  assert(ContainsIndex(start_index));
 
   TabContentsDataVector::const_iterator end =
       contents_data_.begin() + start_index;
@@ -479,19 +479,19 @@ void TabStripModel::ForgetAllOpeners() {
 
 /*void TabStripModel::ForgetGroup(TabContents* contents) {
   int index = GetIndexOfTabContents(contents);
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   contents_data_.at(index)->SetGroup(NULL);
   contents_data_.at(index)->ForgetOpener();
 }
 
 bool TabStripModel::ShouldResetGroupOnSelect(TabContents* contents) const {
   int index = GetIndexOfTabContents(contents);
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   return contents_data_.at(index)->reset_group_on_select;
 }*/
 
 void TabStripModel::SetTabBlocked(int index, bool blocked) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   if (contents_data_[index]->blocked == blocked)
     return;
   contents_data_[index]->blocked = blocked;
@@ -501,7 +501,7 @@ void TabStripModel::SetTabBlocked(int index, bool blocked) {
 }
 
 void TabStripModel::SetTabPinned(int index, bool pinned) {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
   if (contents_data_[index]->pinned == pinned)
     return;
 
@@ -688,7 +688,7 @@ void TabStripModel::MoveTabPrevious() {
 // Context menu functions.
 bool TabStripModel::IsContextMenuCommandEnabled(
     int context_index, ContextMenuCommand command_id) const {
-  DCHECK(command_id > CommandFirst && command_id < CommandLast);
+  assert(command_id > CommandFirst && command_id < CommandLast);
   switch (command_id) {
     case CommandNewTab:
     case CommandCloseTab:
@@ -750,7 +750,7 @@ bool TabStripModel::IsContextMenuCommandChecked(
 
 void TabStripModel::ExecuteContextMenuCommand(
     int context_index, ContextMenuCommand command_id) {
-  DCHECK(command_id > CommandFirst && command_id < CommandLast);
+  assert(command_id > CommandFirst && command_id < CommandLast);
   switch (command_id) {
     case CommandNewTab:
 			[delegate_ addBlankTabAtIndex:context_index+1 inForeground:true];
@@ -813,7 +813,7 @@ void TabStripModel::ExecuteContextMenuCommand(
 std::vector<int> TabStripModel::GetIndicesClosedByCommand(
     int index,
     ContextMenuCommand id) const {
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
 
   // NOTE: some callers assume indices are sorted in reverse order.
   std::vector<int> indices;
@@ -994,14 +994,14 @@ void TabStripModel::InternalCloseTab(TabContents* contents,
 }
 
 TabContents* TabStripModel::GetContentsAt(int index) const {
-  CHECK(ContainsIndex(index)) <<
-      "Failed to find: " << index << " in: " << count() << " entries.";
+  assert(ContainsIndex(index));
+      //<< "Failed to find: " << index << " in: " << count() << " entries.";
   return contents_data_.at(index)->contents;
 }
 
 void TabStripModel::ChangeSelectedContentsFrom(
     TabContents* old_contents, int to_index, bool user_gesture) {
-  DCHECK(ContainsIndex(to_index));
+  assert(ContainsIndex(to_index));
   TabContents* new_contents = GetContentsAt(to_index);
   if (old_contents == new_contents)
     return;
@@ -1066,7 +1066,7 @@ bool TabStripModel::ShouldMakePhantomOnClose(int index) {
 		return false;
 
     //Extension* extension_app = GetTabContentsAt(index)->extension_app();
-    //DCHECK(extension_app);
+    //assert(extension_app);
 
     // Only allow the tab to be made phantom if the extension still exists.
     //return extension_service->GetExtensionById(extension_app->id(),
@@ -1131,7 +1131,7 @@ TabContents* TabStripModel::ReplaceTabContentsAtImpl(
     TabReplaceType type) {
   // TODO: this should reset group/opener of any tabs that point at
   // old_contents.
-  DCHECK(ContainsIndex(index));
+  assert(ContainsIndex(index));
 
   TabContents* old_contents = GetContentsAt(index);
 
