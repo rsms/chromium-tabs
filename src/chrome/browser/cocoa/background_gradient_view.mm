@@ -32,8 +32,8 @@
 
 - (void)drawBackground {
   BOOL isKey = [[self window] isKeyWindow];
-
-
+	
+	// TODO: cache the resulting NSGradient
 	NSColor* base_color = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 	BOOL faded = !isKey;
 	NSColor* start_color =

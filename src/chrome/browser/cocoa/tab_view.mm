@@ -89,7 +89,7 @@ const CGFloat kRapidCloseDist = 2.5;
   if ([[self window] attachedSheet])
     return nil;
 
-  return [controller_ menu];
+  return [tabController_ menu];
 }
 
 // Overridden so that mouse clicks come to this view (the parent of the
@@ -241,7 +241,7 @@ const CGFloat kRapidCloseDist = 2.5;
   // we may get incorrectly hit with a mouse down. If it should have gone to the
   // close button, we send it there -- it should then track the mouse, so we
   // don't have to worry about mouse ups.
-  if (closeButtonActive && [controller_ inRapidClosureMode]) {
+  if (closeButtonActive && [tabController_ inRapidClosureMode]) {
     NSPoint hitLocation = [[self superview] convertPoint:downLocation
                                                 fromView:nil];
     if ([self hitTest:hitLocation] == closeButton_) {
@@ -251,8 +251,8 @@ const CGFloat kRapidCloseDist = 2.5;
   }
 
   // Fire the action to select the tab.
-  if ([[controller_ target] respondsToSelector:[controller_ action]])
-    [[controller_ target] performSelector:[controller_ action]
+  if ([[tabController_ target] respondsToSelector:[tabController_ action]])
+    [[tabController_ target] performSelector:[tabController_ action]
                                withObject:self];
 
   [self resetDragControllers];
@@ -292,7 +292,7 @@ const CGFloat kRapidCloseDist = 2.5;
   // strip and then deallocated. This will also result in *us* being
   // deallocated. Both these are bad, so we prevent this by retaining the
   // controller.
-  scoped_nsobject<TabController> controller([controller_ retain]);
+  scoped_nsobject<TabController> controller([tabController_ retain]);
 
   // Because we move views between windows, we need to handle the event loop
   // ourselves. Ideally we should use the standard event loop.
@@ -610,14 +610,14 @@ const CGFloat kRapidCloseDist = 2.5;
     // If the mouse up occurred in our view or over the close button, then
     // close.
     if ([self hitTest:upLocation])
-      [controller_ closeTab:self];
+      [tabController_ closeTab:self];
   }
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
   // If this tab is phantom, do not draw the tab background itself. The only UI
   // element that will represent this tab is the favicon.
-  if ([controller_ phantom])
+  if ([tabController_ phantom])
     return;
 
   NSGraphicsContext* context = [NSGraphicsContext currentContext];
@@ -695,7 +695,7 @@ const CGFloat kRapidCloseDist = 2.5;
 																															 alpha:1.0];
   // Draw the top inner highlight within the currently selected tab if using
   // the default theme.
-  if (selected) {
+  /*if (selected && themeProvider && themeProvider->UsingDefaultTheme()) {
     NSAffineTransform* highlightTransform = [NSAffineTransform transform];
     [highlightTransform translateXBy:1.0 yBy:-1.0];
     scoped_nsobject<NSBezierPath> highlightPath([path copy]);
@@ -707,7 +707,7 @@ const CGFloat kRapidCloseDist = 2.5;
     [highlightTransform translateXBy:-2.0 yBy:0.0];
     [highlightPath transformUsingAffineTransform:highlightTransform];
     [highlightPath stroke];
-  }
+  }*/
 
   [context restoreGraphicsState];
 
@@ -739,7 +739,7 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)viewDidMoveToWindow {
   [super viewDidMoveToWindow];
   if ([self window]) {
-    [controller_ updateTitleColor];
+    [tabController_ updateTitleColor];
   }
 }
 
@@ -805,7 +805,7 @@ const CGFloat kRapidCloseDist = 2.5;
     return NSAccessibilityButtonRole;
 
   if ([attribute isEqual:NSAccessibilityTitleAttribute])
-    return [controller_ title];
+    return [tabController_ title];
 
   if ([attribute isEqual:NSAccessibilityEnabledAttribute])
     return [NSNumber numberWithBool:YES];
@@ -831,7 +831,7 @@ const CGFloat kRapidCloseDist = 2.5;
 @implementation TabView (TabControllerInterface)
 
 - (void)setController:(TabController*)controller {
-  controller_ = controller;
+  tabController_ = controller;
 }
 
 @end  // @implementation TabView (TabControllerInterface)

@@ -57,6 +57,7 @@
 	if ([window respondsToSelector:@selector(setBottomCornerRounded:)]) {
 		[window setBottomCornerRounded:NO];
 	}
+  [[window contentView] setAutoresizesSubviews:YES];
 
 	// Create a tab strip controller
   tabStripController_ =
@@ -281,6 +282,36 @@
 }
 
 
+- (void)insertPlaceholderForTab:(TabView*)tab
+                          frame:(NSRect)frame
+                      yStretchiness:(CGFloat)yStretchiness {
+  [super insertPlaceholderForTab:tab frame:frame yStretchiness:yStretchiness];
+  [tabStripController_ insertPlaceholderForTab:tab
+                                         frame:frame
+                                 yStretchiness:yStretchiness];
+}
+
+- (void)removePlaceholder {
+  [super removePlaceholder];
+  [tabStripController_ insertPlaceholderForTab:nil
+                                         frame:NSZeroRect
+                                 yStretchiness:0];
+}
+
+- (BOOL)tabDraggingAllowed {
+  return [tabStripController_ tabDraggingAllowed];
+}
+
+// Default implementation of the below are both YES. Until we have fullscreen
+// support these will always be true.
+/*- (BOOL)tabTearingAllowed {
+  return ![self isFullscreen];
+}
+- (BOOL)windowMovementAllowed {
+  return ![self isFullscreen];
+}*/
+
+
 - (void)showNewTabButton:(BOOL)show {
   [tabStripController_ showNewTabButton:show];
 }
@@ -366,11 +397,11 @@
   // of the window's content area and sizes it to take the entire vertical
   // height. All that's needed here is to push everything over to the right,
   // if necessary.
-  if ([self useVerticalTabs]) {
-    const CGFloat sideTabWidth = [[self tabStripView] bounds].size.width;
-    minX += sideTabWidth;
-    width -= sideTabWidth;
-  }
+  //if ([self useVerticalTabs]) {
+  //  const CGFloat sideTabWidth = [[self tabStripView] bounds].size.width;
+  //  minX += sideTabWidth;
+  //  width -= sideTabWidth;
+  //}
 
   // Place the toolbar at the top of the reserved area.
   //maxY = [self layoutToolbarAtMinX:minX maxY:maxY width:width];

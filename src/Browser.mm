@@ -144,7 +144,9 @@
 	TabContents* contents =
 			[[TabContents alloc] initWithBaseTabContents:baseContents];
 	contents.title = @"New tab";
-	contents.view = [[NSView alloc] initWithFrame:NSZeroRect];
+  NSRect frame = [windowController_.window frame];
+  frame.origin.x  = frame.origin.y = 0.0;
+	contents.view = [[NSTextView alloc] initWithFrame:frame];
 	return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 

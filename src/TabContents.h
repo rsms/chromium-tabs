@@ -24,10 +24,14 @@ class TabStripModel; // Note: C++ class
 @property(retain, nonatomic) NSString *title;
 @property(retain, nonatomic) NSImage *icon;
 
--(id)initWithBaseTabContents:(TabContents*)baseContents;
+// If this returns true, special icons like throbbers and "crashed" is
+// displayed, even if |icon| is nil. By default this returns true.
+@property(readonly, nonatomic) BOOL hasIcon;
 
+-(id)initWithBaseTabContents:(TabContents*)baseContents;
 -(void)destroy:(TabStripModel*)sender;
 
+// Invoked when this tab is closing
 -(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel;
 
 // Invoked when the tab contents becomes selected. If you override, be sure

@@ -15,17 +15,28 @@
 
 -(id)initWithBaseTabContents:(TabContents*)baseContents {
 	if (!(self = [super init])) return nil;
+
 	// subclasses can use baseContents -- the selected TabContents (if any) -- to
 	// perform customized initialization (e.g. inheriting title).
+
+	// Example icon:
+	//icon_ = [NSImage imageNamed:NSImageNameBluetoothTemplate];
+
 	return self;
 }
 
-//-(void)dealloc {}
+-(void)dealloc {
+	[super dealloc];
+}
 
 -(void)destroy:(TabStripModel*)sender {
 	// TODO: notify "disconnected"
 	sender->TabContentsWasDestroyed(self); // TODO: NSNotification
 	[self release];
+}
+
+-(BOOL)hasIcon {
+	return YES;
 }
 
 -(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel {

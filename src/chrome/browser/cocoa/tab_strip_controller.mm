@@ -1176,7 +1176,7 @@ private:
   static NSImage* throbberWaitingImage =
 			[NSImage imageNamed:@"throbber_waiting"];
   static NSImage* throbberLoadingImage =
-			[NSImage imageNamed:@"throbber_light"];
+			[NSImage imageNamed:@"throbber"];
   static NSImage* sadFaviconImage =
 			[NSImage imageNamed:@"sadfavicon"];
 
@@ -1192,7 +1192,7 @@ private:
   }
 
   bool oldHasIcon = [tabController iconView] != nil;
-  bool newHasIcon = !!contents.icon ||
+  bool newHasIcon = contents.hasIcon ||
       tabStripModel_->IsMiniTab(modelIndex);  // Always show icon if mini.
 
   TabLoadingState oldState = [tabController loadingState];

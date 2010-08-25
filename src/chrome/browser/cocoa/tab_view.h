@@ -43,7 +43,7 @@ enum AlertState {
 
 @interface TabView : BackgroundGradientView {
  @private
-  IBOutlet TabController* controller_;
+  IBOutlet TabController* tabController_;
   // TODO(rohitrao): Add this button to a CoreAnimation layer so we can fade it
   // in and out on mouseovers.
   IBOutlet HoverCloseButton* closeButton_;
@@ -119,10 +119,10 @@ enum AlertState {
 
 @end
 
-// The TabController |controller_| is not the only owner of this view. If the
+// The TabController |tabController_| is not the only owner of this view. If the
 // controller is released before this view, then we could be hanging onto a
 // garbage pointer. To prevent this, the TabController uses this interface to
-// clear the |controller_| pointer when it is dying.
+// clear the |tabController_| pointer when it is dying.
 @interface TabView (TabControllerInterface)
 - (void)setController:(TabController*)controller;
 @end
