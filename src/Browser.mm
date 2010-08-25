@@ -115,8 +115,6 @@
 }
 
 -(void)closeWindow {
-	logd(@"closeWindow");
-	loge(self.window);
 	[self.window orderOut:self];
 	[self.window performClose:self];  // Autoreleases the controller.
 }
@@ -176,6 +174,29 @@
   tabStripModel_->SelectPreviousTab();
 }
 
+-(void)moveTabNext {
+  tabStripModel_->MoveTabNext();
+}
+
+-(void)moveTabPrevious {
+  tabStripModel_->MoveTabPrevious();
+}
+
+-(void)selectTabAtIndex:(int)index {
+  if (index < tabStripModel_->count()) {
+    tabStripModel_->SelectTabContentsAt(index, true);
+  }
+}
+
+-(void)selectLastTab {
+  tabStripModel_->SelectLastTab();
+}
+
+-(void)duplicateTab {
+  //[self duplicateContentsAt:tabStripModel_->selected_index()];
+  // can't do this currently
+}
+
 
 -(void)executeCommand:(int)cmd
 			withDisposition:(WindowOpenDisposition)disposition {
@@ -219,15 +240,18 @@
     case IDC_SELECT_TAB_4:
     case IDC_SELECT_TAB_5:
     case IDC_SELECT_TAB_6:
-    case IDC_SELECT_TAB_7:          logd(@"TODO SelectNumberedTab(id - IDC_SELECT_TAB_0);"); break;
-    case IDC_SELECT_LAST_TAB:       logd(@"TODO SelectLastTab();");                  break;
-    case IDC_DUPLICATE_TAB:         logd(@"TODO DuplicateTab();");                   break;
-    case IDC_RESTORE_TAB:           logd(@"TODO RestoreTab();");                     break;
-    case IDC_SHOW_AS_TAB:           logd(@"TODO ConvertPopupToTabbedBrowser();");    break;
-    case IDC_FULLSCREEN:            logd(@"TODO ToggleFullscreenMode();");           break;
-    case IDC_EXIT:                  [NSApp terminate:self];                           break;
-    case IDC_MOVE_TAB_NEXT:         logd(@"TODO MoveTabNext();");                    break;
-    case IDC_MOVE_TAB_PREVIOUS:     logd(@"TODO MoveTabPrevious();");                break;
+    case IDC_SELECT_TAB_7: {
+      [self selectTabAtIndex:cmd - IDC_SELECT_TAB_0];
+      break;
+    }
+    case IDC_SELECT_LAST_TAB:       [self selectLastTab]; break;
+    case IDC_DUPLICATE_TAB:         [self duplicateTab]; break;
+    //case IDC_RESTORE_TAB:         break;
+    //case IDC_SHOW_AS_TAB:         break;
+    case IDC_FULLSCREEN:            logd(@"TODO ToggleFullscreenMode();"); break;
+    case IDC_EXIT:                  [NSApp terminate:self]; break;
+    case IDC_MOVE_TAB_NEXT:         [self moveTabNext]; break;
+    case IDC_MOVE_TAB_PREVIOUS:     [self moveTabPrevious]; break;
 	}
 }
 

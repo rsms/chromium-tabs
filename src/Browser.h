@@ -43,6 +43,11 @@ class TabStripModel;
 -(void)closeTab;
 -(void)selectNextTab;
 -(void)selectPreviousTab;
+-(void)moveTabNext;
+-(void)moveTabPrevious;
+-(void)selectTabAtIndex:(int)index;
+-(void)selectLastTab;
+-(void)duplicateTab;
 
 -(void)executeCommand:(int)cmd
 			withDisposition:(WindowOpenDisposition)disposition;

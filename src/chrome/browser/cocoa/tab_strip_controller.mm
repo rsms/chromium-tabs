@@ -1041,7 +1041,7 @@ private:
 
   if (newContents) {
     [newContents didBecomeSelected];
-    //newContents->view()->RestoreFocus();
+    //newContents->view()->RestoreFocus(); // TODO
 
     /*if (newContents->find_ui_active())
       browser_->GetFindBarController()->find_bar()->SetFocusAndSelection();*/
