@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */; };
-		3A1168C51225405000757641 /* common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C21225404F00757641 /* common.cc */; };
+		3A1168C51225405000757641 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C21225404F00757641 /* common.c */; };
 		3A1168C61225405000757641 /* common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C41225404F00757641 /* common.mm */; };
 		3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* BrowserWindowController.mm */; };
 		3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
@@ -18,14 +18,9 @@
 		3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE31222D25400F1BB78 /* tab_strip_controller.mm */; };
 		3A236E041223497500D21E66 /* new_tab_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DD81223414F00D21E66 /* new_tab_button.mm */; };
 		3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */; };
-		3A286C081222961200F1BB78 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */; };
-		3A286C9612229A1200F1BB78 /* GoogleToolboxForMac.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */; };
 		3A286CF912229C7F00F1BB78 /* NSBezierPath+MCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286CF612229C7F00F1BB78 /* NSBezierPath+MCAdditions.m */; };
 		3A286E741222C09900F1BB78 /* tab_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F21221AF58006D8305 /* tab_controller.mm */; };
 		3A286EA61222C8EA00F1BB78 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286EA51222C8EA00F1BB78 /* Carbon.framework */; };
-		3A286F761222C9AD00F1BB78 /* libicudata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286F6B1222C98600F1BB78 /* libicudata.a */; };
-		3A286F771222C9AD00F1BB78 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286F6D1222C98600F1BB78 /* libicui18n.a */; };
-		3A286F781222C9AD00F1BB78 /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286F6F1222C98600F1BB78 /* libicuuc.a */; };
 		3A286F841222CA2300F1BB78 /* tab_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* tab_view.mm */; };
 		3A286F931222CADC00F1BB78 /* themed_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F921222CADC00F1BB78 /* themed_window.mm */; };
 		3A286FA11222CDBE00F1BB78 /* BrowserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */; };
@@ -45,14 +40,15 @@
 		3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921DA1221AA4B006D8305 /* page_transition_types.cc */; };
 		3A3921F61221AF68006D8305 /* hover_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921EE1221AF58006D8305 /* hover_button.mm */; };
 		3A3922201221B212006D8305 /* hover_close_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F01221AF58006D8305 /* hover_close_button.mm */; };
-		3A39235D1221BEF2006D8305 /* libbase_i18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3923541221BEE6006D8305 /* libbase_i18n.a */; };
 		3A39235E1221BEF2006D8305 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A39235C1221BEE6006D8305 /* libbase.a */; };
 		3A3927131221C596006D8305 /* background_gradient_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3927121221C596006D8305 /* background_gradient_view.mm */; };
-		3A392BFE1221CAF3006D8305 /* libapp_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A392BFB1221CAD3006D8305 /* libapp_base.a */; };
 		3A392C991221D206006D8305 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		3A392D521221D20C006D8305 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		3A3ED35112256F06009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
 		3A3ED4B812258A47009E2908 /* libdynamic_annotations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED4AB12258A30009E2908 /* libdynamic_annotations.a */; };
+		3A3ED59E1225B849009E2908 /* GTMNSAnimation+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED5981225B849009E2908 /* GTMNSAnimation+Duration.m */; };
+		3A3ED59F1225B849009E2908 /* GTMNSColor+Luminance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED59A1225B849009E2908 /* GTMNSColor+Luminance.m */; };
+		3A3ED5A01225B849009E2908 /* GTMWindowSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED59C1225B849009E2908 /* GTMWindowSheetController.m */; };
 		3AA7188B122479CE005022BE /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
 		3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
 		3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
@@ -80,27 +76,6 @@
 			containerPortal = 3A286F631222C98600F1BB78 /* icu.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 47A48DEFDFDD22CF05CDA95B;
-			remoteInfo = icuuc;
-		};
-		3A286F7B1222C9E900F1BB78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A286F631222C98600F1BB78 /* icu.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F46C1033BA316E88C6721A96;
-			remoteInfo = icudata;
-		};
-		3A286F7D1222C9E900F1BB78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A286F631222C98600F1BB78 /* icu.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 438C51A5B19300095C141CAB;
-			remoteInfo = icui18n;
-		};
-		3A286F7F1222C9E900F1BB78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A286F631222C98600F1BB78 /* icu.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A8365F341FF32481B097DC30;
 			remoteInfo = icuuc;
 		};
 		3A3923531221BEE6006D8305 /* PBXContainerItemProxy */ = {
@@ -138,40 +113,12 @@
 			remoteGlobalIDString = A24F8E8AF59B46B92FF23F23;
 			remoteInfo = base;
 		};
-		3A39235F1221BF01006D8305 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A3923261221BEE6006D8305 /* base.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B78E79DD534E18A557220584;
-			remoteInfo = base_i18n;
-		};
 		3A3923611221BF01006D8305 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3A3923261221BEE6006D8305 /* base.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 5272CB5A73F54B4A0E227C3D;
 			remoteInfo = base;
-		};
-		3A392BF81221CAD3006D8305 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A392BEE1221CAD3006D8305 /* app.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0103407FF6DFF60CFEED7546;
-			remoteInfo = app_unittests;
-		};
-		3A392BFA1221CAD3006D8305 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A392BEE1221CAD3006D8305 /* app.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EA94E392591A8E57D3051492;
-			remoteInfo = app_base;
-		};
-		3A392BFC1221CADF006D8305 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3A392BEE1221CAD3006D8305 /* app.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 395C00C575F34B3020A989A3;
-			remoteInfo = app_base;
 		};
 		3A3ED4AA12258A30009E2908 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -196,7 +143,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3A286C9612229A1200F1BB78 /* GoogleToolboxForMac.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,7 +159,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		3A1168C21225404F00757641 /* common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cc; sourceTree = "<group>"; };
+		3A1168C21225404F00757641 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
 		3A1168C31225404F00757641 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		3A1168C41225404F00757641 /* common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = common.mm; sourceTree = "<group>"; };
 		3A1168D6122543A900757641 /* BrowserCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserCommands.h; sourceTree = "<group>"; };
@@ -278,9 +224,14 @@
 		3A39270B1221C566006D8305 /* tab_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_view.mm; sourceTree = "<group>"; };
 		3A3927111221C596006D8305 /* background_gradient_view.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = background_gradient_view.h; sourceTree = "<group>"; };
 		3A3927121221C596006D8305 /* background_gradient_view.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = background_gradient_view.mm; sourceTree = "<group>"; };
-		3A392BEE1221CAD3006D8305 /* app.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = app.xcodeproj; path = chromium/src/app/app.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3A3ED35012256F06009E2908 /* throbber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber.png; path = gfx/throbber.png; sourceTree = "<group>"; };
 		3A3ED4A612258A30009E2908 /* dynamic_annotations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dynamic_annotations.xcodeproj; path = chromium/src/base/third_party/dynamic_annotations/dynamic_annotations.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3A3ED5971225B849009E2908 /* GTMNSAnimation+Duration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSAnimation+Duration.h"; sourceTree = "<group>"; };
+		3A3ED5981225B849009E2908 /* GTMNSAnimation+Duration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSAnimation+Duration.m"; sourceTree = "<group>"; };
+		3A3ED5991225B849009E2908 /* GTMNSColor+Luminance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSColor+Luminance.h"; sourceTree = "<group>"; };
+		3A3ED59A1225B849009E2908 /* GTMNSColor+Luminance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSColor+Luminance.m"; sourceTree = "<group>"; };
+		3A3ED59B1225B849009E2908 /* GTMWindowSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMWindowSheetController.h; sourceTree = "<group>"; };
+		3A3ED59C1225B849009E2908 /* GTMWindowSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMWindowSheetController.m; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
@@ -300,15 +251,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3ED4B812258A47009E2908 /* libdynamic_annotations.a in Frameworks */,
-				3A286F761222C9AD00F1BB78 /* libicudata.a in Frameworks */,
-				3A286F771222C9AD00F1BB78 /* libicui18n.a in Frameworks */,
-				3A286F781222C9AD00F1BB78 /* libicuuc.a in Frameworks */,
-				3A392BFE1221CAF3006D8305 /* libapp_base.a in Frameworks */,
-				3A39235D1221BEF2006D8305 /* libbase_i18n.a in Frameworks */,
 				3A39235E1221BEF2006D8305 /* libbase.a in Frameworks */,
 				3A392D521221D20C006D8305 /* Foundation.framework in Frameworks */,
 				3A392C991221D206006D8305 /* AppKit.framework in Frameworks */,
-				3A286C081222961200F1BB78 /* GoogleToolboxForMac.framework in Frameworks */,
 				3A286EA61222C8EA00F1BB78 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,9 +264,10 @@
 		080E96DDFE201D6D7F000001 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3A3ED53E1225B63F009E2908 /* third-party */,
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				3A1168C31225404F00757641 /* common.h */,
-				3A1168C21225404F00757641 /* common.cc */,
+				3A1168C21225404F00757641 /* common.c */,
 				3A1168C41225404F00757641 /* common.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
@@ -519,7 +465,6 @@
 				3A286656122292E800F1BB78 /* third-party */,
 				3A3ED4A612258A30009E2908 /* dynamic_annotations.xcodeproj */,
 				3A286F631222C98600F1BB78 /* icu.xcodeproj */,
-				3A392BEE1221CAD3006D8305 /* app.xcodeproj */,
 				3A3923261221BEE6006D8305 /* base.xcodeproj */,
 			);
 			name = chromium;
@@ -538,21 +483,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3A392BEF1221CAD3006D8305 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3A392BF91221CAD3006D8305 /* app_unittests */,
-				3A392BFB1221CAD3006D8305 /* libapp_base.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3A3ED4A712258A30009E2908 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				3A3ED4AB12258A30009E2908 /* libdynamic_annotations.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3A3ED53E1225B63F009E2908 /* third-party */ = {
+			isa = PBXGroup;
+			children = (
+				3A3ED5951225B849009E2908 /* gtm-subset */,
+			);
+			path = "third-party";
+			sourceTree = "<group>";
+		};
+		3A3ED5951225B849009E2908 /* gtm-subset */ = {
+			isa = PBXGroup;
+			children = (
+				3A3ED5971225B849009E2908 /* GTMNSAnimation+Duration.h */,
+				3A3ED5981225B849009E2908 /* GTMNSAnimation+Duration.m */,
+				3A3ED5991225B849009E2908 /* GTMNSColor+Luminance.h */,
+				3A3ED59A1225B849009E2908 /* GTMNSColor+Luminance.m */,
+				3A3ED59B1225B849009E2908 /* GTMWindowSheetController.h */,
+				3A3ED59C1225B849009E2908 /* GTMWindowSheetController.m */,
+			);
+			path = "gtm-subset";
 			sourceTree = "<group>";
 		};
 		3AEE19401222DC5B009DA438 /* tabs */ = {
@@ -581,12 +538,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				3A3923601221BF01006D8305 /* PBXTargetDependency */,
 				3A3923621221BF01006D8305 /* PBXTargetDependency */,
-				3A392BFD1221CADF006D8305 /* PBXTargetDependency */,
-				3A286F7C1222C9E900F1BB78 /* PBXTargetDependency */,
-				3A286F7E1222C9E900F1BB78 /* PBXTargetDependency */,
-				3A286F801222C9E900F1BB78 /* PBXTargetDependency */,
 				3A3ED4BA12258A51009E2908 /* PBXTargetDependency */,
 			);
 			name = "Chromium Tabs";
@@ -606,10 +558,6 @@
 			mainGroup = 29B97314FDCFA39411CA2CEA /* cocoa-chromium-tabs */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 3A392BEF1221CAD3006D8305 /* Products */;
-					ProjectRef = 3A392BEE1221CAD3006D8305 /* app.xcodeproj */;
-				},
 				{
 					ProductGroup = 3A3923271221BEE6006D8305 /* Products */;
 					ProjectRef = 3A3923261221BEE6006D8305 /* base.xcodeproj */;
@@ -687,20 +635,6 @@
 			remoteRef = 3A39235B1221BEE6006D8305 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3A392BF91221CAD3006D8305 /* app_unittests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = app_unittests;
-			remoteRef = 3A392BF81221CAD3006D8305 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3A392BFB1221CAD3006D8305 /* libapp_base.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libapp_base.a;
-			remoteRef = 3A392BFA1221CAD3006D8305 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3A3ED4AB12258A30009E2908 /* libdynamic_annotations.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -737,7 +671,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A1168C51225405000757641 /* common.cc in Sources */,
+				3A1168C51225405000757641 /* common.c in Sources */,
 				3A1168C61225405000757641 /* common.mm in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				3A3922201221B212006D8305 /* hover_close_button.mm in Sources */,
@@ -764,41 +698,19 @@
 				3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */,
 				3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */,
 				3AA7188B122479CE005022BE /* Browser.mm in Sources */,
+				3A3ED59E1225B849009E2908 /* GTMNSAnimation+Duration.m in Sources */,
+				3A3ED59F1225B849009E2908 /* GTMNSColor+Luminance.m in Sources */,
+				3A3ED5A01225B849009E2908 /* GTMWindowSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3A286F7C1222C9E900F1BB78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = icudata;
-			targetProxy = 3A286F7B1222C9E900F1BB78 /* PBXContainerItemProxy */;
-		};
-		3A286F7E1222C9E900F1BB78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = icui18n;
-			targetProxy = 3A286F7D1222C9E900F1BB78 /* PBXContainerItemProxy */;
-		};
-		3A286F801222C9E900F1BB78 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = icuuc;
-			targetProxy = 3A286F7F1222C9E900F1BB78 /* PBXContainerItemProxy */;
-		};
-		3A3923601221BF01006D8305 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = base_i18n;
-			targetProxy = 3A39235F1221BF01006D8305 /* PBXContainerItemProxy */;
-		};
 		3A3923621221BF01006D8305 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = base;
 			targetProxy = 3A3923611221BF01006D8305 /* PBXContainerItemProxy */;
-		};
-		3A392BFD1221CADF006D8305 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = app_base;
-			targetProxy = 3A392BFC1221CADF006D8305 /* PBXContainerItemProxy */;
 		};
 		3A3ED4BA12258A51009E2908 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

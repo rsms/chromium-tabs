@@ -5,7 +5,7 @@
 #include "chrome/browser/cocoa/background_gradient_view.h"
 //#import "chrome/browser/browser_theme_provider.h"
 //#import "chrome/browser/cocoa/themed_window.h"
-#import <GoogleToolboxForMac/GTMNSColor+Luminance.h>
+#import "third-party/gtm-subset/GTMNSColor+Luminance.h"
 
 #define kToolbarTopOffset 12
 #define kToolbarMaxHeight 100

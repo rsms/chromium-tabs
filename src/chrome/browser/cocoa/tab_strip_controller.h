@@ -12,7 +12,7 @@
 #include "base/scoped_ptr.h"
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/url_drop_target.h"
-#import <GoogleToolboxForMac/GTMWindowSheetController.h>
+#import "third-party/gtm-subset/GTMWindowSheetController.h"
 #import "WindowOpenDisposition.h"
 
 @class NewTabButton;

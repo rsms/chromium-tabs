@@ -58,7 +58,13 @@
 	#define loge(...)
 #endif // _DEBUG
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 const char *common_strrstr(const char *string, const char *find);
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>

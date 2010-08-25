@@ -19,8 +19,7 @@ static const int kMinWebHeight = 50;
 
 - (id)initWithNibName:(NSString*)name /* @"TabContents" */
              contents:(TabContents*)contents {
-  if ((self = [super initWithNibName:name
-                              bundle:mac_util::MainAppBundle()])) {
+  if ((self = [super initWithNibName:name bundle:[NSBundle mainBundle]])) {
     contents_ = contents;
   }
   return self;

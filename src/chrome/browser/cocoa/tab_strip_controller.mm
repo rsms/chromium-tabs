@@ -42,7 +42,7 @@
 //#include "grit/generated_resources.h"
 //#include "grit/theme_resources.h"
 //#include "skia/ext/skia_utils_mac.h"
-#import <GoogleToolboxForMac/GTMNSAnimation+Duration.h>
+#import "third-party/gtm-subset/GTMNSAnimation+Duration.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
