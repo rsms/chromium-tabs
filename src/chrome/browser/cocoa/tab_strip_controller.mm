@@ -306,7 +306,7 @@ private:
     [self addSubviewToPermanentList:newTabButton_];
     [newTabButton_ setTarget:nil];
     [newTabButton_ setAction:@selector(commandDispatch:)];
-    //[newTabButton_ setTag:IDC_NEW_TAB]; // TODO: might be useful
+    [newTabButton_ setTag:IDC_NEW_TAB];
     // Set the images from code because Cocoa fails to find them in our sub
     // bundle during tests.
     [newTabButton_ setImage:nsimage_cache::ImageNamed(kNewTabImage)];

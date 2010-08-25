@@ -2,6 +2,7 @@
 #import "chrome/browser/tabs/tab_strip_model.h"
 #import "TabStripModelDelegate.h"
 #import "WindowOpenDisposition.h"
+#import "BrowserCommands.h"
 
 class TabStripModel;
 @class BrowserWindowController;
@@ -51,7 +52,7 @@ class TabStripModel;
 -(void)loadingStateDidChange:(TabContents*)contents;
 -(void)windowDidBeginToClose;
 
-// TabStripModel convenience helpers
+// Convenience helpers (proxy for TabStripModel)
 -(int)tabCount;
 -(int)selectedTabIndex;
 -(TabContents*)selectedTabContents;

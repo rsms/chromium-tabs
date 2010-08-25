@@ -3,7 +3,6 @@
 #import "chrome/browser/cocoa/tab_strip_controller.h"
 #import "chrome/common/page_transition_types.h"
 #import "BrowserWindowController.h"
-#import "BrowserCommands.h"
 
 @interface Browser (Private)
 -(void)createWindowController;

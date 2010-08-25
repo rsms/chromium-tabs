@@ -3,4 +3,6 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
 }
 
+- (void)commandDispatch:(id)sender;
+
 @end
