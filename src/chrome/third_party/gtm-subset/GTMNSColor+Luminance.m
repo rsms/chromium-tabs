@@ -122,7 +122,7 @@ static const CGFloat kGTMLuminanceDarkCutoff = 0.6;
       color = [self gtm_colorByAdjustingLuminance:-0.25];
       break;
     default:
-      NSLog(@"%s: Invalid Coloration Use %d", __FILE__, use);
+      NSLog(@"%s: Invalid Coloration Use %zd", __FILE__, use);
       color = self;
       break;
   }

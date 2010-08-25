@@ -53,6 +53,7 @@
 		3A3ED74E1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED74D1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m */; };
 		3A3ED7691225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED7681225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m */; };
 		3A3ED8A71225DF45009E2908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		3A3ED9761225E0A7009E2908 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9751225E0A7009E2908 /* QuartzCore.framework */; };
 		3AA7188B122479CE005022BE /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
 		3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
 		3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
@@ -169,6 +170,7 @@
 		3A3ED74F1225DDF2009E2908 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMFadeTruncatingTextFieldCell.h; sourceTree = "<group>"; };
 		3A3ED7681225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMFadeTruncatingTextFieldCell.m; sourceTree = "<group>"; };
+		3A3ED9751225E0A7009E2908 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			files = (
 				3A3ED8A71225DF45009E2908 /* Cocoa.framework in Frameworks */,
 				3A286EA61222C8EA00F1BB78 /* Carbon.framework in Frameworks */,
+				3A3ED9761225E0A7009E2908 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +263,7 @@
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				3A3ED9751225E0A7009E2908 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -568,7 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_CW_ASM_SYNTAX = NO;
@@ -611,7 +615,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_CW_ASM_SYNTAX = NO;
