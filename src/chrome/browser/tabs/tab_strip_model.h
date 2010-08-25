@@ -681,6 +681,8 @@ class TabStripModel /*: public NotificationObserver*/ {
   /*virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details);*/
+	// TODO replace with NSNotification if possible:
+	void TabContentsWasDestroyed(TabContents *contents);
 
  private:
   // We cannot be constructed without a delegate.

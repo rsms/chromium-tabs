@@ -167,7 +167,7 @@ bool TabStripModel::HasNonPhantomTabs() const {
       return true;
   }
   return false;*/
-	return true;
+	return !!count();
 }
 
 void TabStripModel::SetInsertionPolicy(InsertionPolicy policy) {
@@ -249,7 +249,9 @@ void TabStripModel::ReplaceTabContentsAt(
     int index,
     TabContents* new_contents,
     TabReplaceType type) {
-  delete ReplaceTabContentsAtImpl(index, new_contents, type);
+  TabContents* old_contents =
+			ReplaceTabContentsAtImpl(index, new_contents, type);
+	[old_contents destroy:this];
 }
 
 /*void TabStripModel::ReplaceNavigationControllerAt(
@@ -830,6 +832,26 @@ std::vector<int> TabStripModel::GetIndicesClosedByCommand(
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModel, NotificationObserver implementation:
 
+// TODO replace with NSNotification if possible
+// Invoked by TabContents when they dealloc
+void TabStripModel::TabContentsWasDestroyed(TabContents *contents) {
+	// Sometimes, on qemu, it seems like a TabContents object can be destroyed
+	// while we still have a reference to it. We need to break this reference
+	// here so we don't crash later.
+	int index = GetIndexOfTabContents(contents);
+	if (index != TabStripModel::kNoTab) {
+		// Note that we only detach the contents here, not close it - it's
+		// already been closed. We just want to undo our bookkeeping.
+		//if (ShouldMakePhantomOnClose(index)) {
+		//	// We don't actually allow pinned tabs to close. Instead they become
+		//	// phantom.
+		//	MakePhantom(index);
+		//} else {
+		DetachTabContentsAt(index);
+		//}
+	}
+}
+
 /*void TabStripModel::Observe(NotificationType type,
                             const NotificationSource& source,
                             const NotificationDetails& details) {
@@ -961,14 +983,14 @@ void TabStripModel::InternalCloseTab(TabContents* contents,
 
   // Ask the delegate to save an entry for this tab in the historical tab
   // database if applicable.
-	[delegate_ createHistoricalTab:contents];
-  /*if (create_historical_tabs) {
-    delegate_->CreateHistoricalTab(contents);
-	}*/
+  if (create_historical_tabs) {
+		[delegate_ createHistoricalTab:contents];
+    //delegate_->CreateHistoricalTab(contents);
+	}
 
   // Deleting the TabContents will call back to us via NotificationObserver
   // and detach it.
-  delete contents;
+  [contents destroy:this];
 }
 
 TabContents* TabStripModel::GetContentsAt(int index) const {

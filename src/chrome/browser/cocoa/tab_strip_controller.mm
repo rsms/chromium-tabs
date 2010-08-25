@@ -6,7 +6,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "TabContents.h"
-#import "ChromiumTabbedBrowser.h"
+#import "Browser.h"
 
 #include <limits>
 #include <string>
@@ -43,21 +43,6 @@
 //#include "grit/theme_resources.h"
 //#include "skia/ext/skia_utils_mac.h"
 #import <GoogleToolboxForMac/GTMNSAnimation+Duration.h>
-
-// ripped out from webkit/glue/window_open_disposition.h
-enum WindowOpenDisposition {
-  SUPPRESS_OPEN,
-  CURRENT_TAB,
-  // Indicates that only one tab with the url should exist in the same window.
-  SINGLETON_TAB,
-  NEW_FOREGROUND_TAB,
-  NEW_BACKGROUND_TAB,
-  NEW_POPUP,
-  NEW_WINDOW,
-  SAVE_TO_DISK,
-  OFF_THE_RECORD,
-  IGNORE_ACTION
-};
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
@@ -294,7 +279,7 @@ private:
 
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
-           browser:(id<ChromiumTabbedBrowser>)browser {
+           browser:(Browser*)browser {
   DCHECK(view && switchView && browser);
   if ((self = [super init])) {
     tabStripView_.reset([view retain]);

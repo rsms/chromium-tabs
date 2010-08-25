@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */; };
-		3A1CF96112235704008A3B8C /* WindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* WindowController.mm */; };
+		3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* BrowserWindowController.mm */; };
 		3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
 		3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
 		3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
@@ -51,6 +51,7 @@
 		3A392BFE1221CAF3006D8305 /* libapp_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A392BFB1221CAD3006D8305 /* libapp_base.a */; };
 		3A392C991221D206006D8305 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		3A392D521221D20C006D8305 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
+		3AA7188B122479CE005022BE /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
 		3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
 		3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -540,15 +541,14 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabStripModelDelegate.h; sourceTree = "<group>"; };
-		3A1CF95F12235704008A3B8C /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
-		3A1CF96012235704008A3B8C /* WindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WindowController.mm; sourceTree = "<group>"; };
+		3A1CF95F12235704008A3B8C /* BrowserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWindowController.h; sourceTree = "<group>"; };
+		3A1CF96012235704008A3B8C /* BrowserWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowserWindowController.mm; sourceTree = "<group>"; };
 		3A1CF98712235CEE008A3B8C /* fast_resize_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fast_resize_view.h; sourceTree = "<group>"; };
 		3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = fast_resize_view.mm; sourceTree = "<group>"; };
 		3A236D9E1223375D00D21E66 /* tab_contents_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_contents_controller.h; sourceTree = "<group>"; };
 		3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_contents_controller.mm; sourceTree = "<group>"; };
 		3A236DAD12233B3400D21E66 /* tab_strip_model_observer_bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model_observer_bridge.h; sourceTree = "<group>"; };
 		3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model_observer_bridge.mm; sourceTree = "<group>"; };
-		3A236DCA12233EC700D21E66 /* ChromiumTabbedBrowser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = ChromiumTabbedBrowser.h; sourceTree = "<group>"; };
 		3A236DD71223414F00D21E66 /* new_tab_button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = new_tab_button.h; sourceTree = "<group>"; };
 		3A236DD81223414F00D21E66 /* new_tab_button.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = new_tab_button.mm; sourceTree = "<group>"; };
 		3A286C071222961200F1BB78 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleToolboxForMac.framework; path = "chromium/src/third_party/GTM/build/SnowLeopardOrLater-Release/GoogleToolboxForMac.framework"; sourceTree = "<group>"; };
@@ -605,6 +605,9 @@
 		3A3927121221C596006D8305 /* background_gradient_view.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = background_gradient_view.mm; sourceTree = "<group>"; };
 		3A392A961221C855006D8305 /* chrome.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = chrome.xcodeproj; path = chromium/src/chrome/chrome.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3A392BEE1221CAD3006D8305 /* app.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = app.xcodeproj; path = chromium/src/app/app.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
+		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
+		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* tab_strip_model.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model.mm; sourceTree = "<group>"; };
 		3AEE19421222DC5B009DA438 /* tab_strip_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model.h; sourceTree = "<group>"; };
 		3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model_order_controller.mm; sourceTree = "<group>"; };
@@ -642,12 +645,14 @@
 			children = (
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
-				3A236DCA12233EC700D21E66 /* ChromiumTabbedBrowser.h */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
+				3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */,
 				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */,
-				3A1CF95F12235704008A3B8C /* WindowController.h */,
-				3A1CF96012235704008A3B8C /* WindowController.mm */,
+				3AA71889122479CE005022BE /* Browser.h */,
+				3AA7188A122479CE005022BE /* Browser.mm */,
+				3A1CF95F12235704008A3B8C /* BrowserWindowController.h */,
+				3A1CF96012235704008A3B8C /* BrowserWindowController.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
 				3AEE19531222DDEB009DA438 /* TabContents.mm */,
 				3A3921D81221AA4B006D8305 /* chrome */,
@@ -1462,8 +1467,9 @@
 				3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */,
 				3A236E041223497500D21E66 /* new_tab_button.mm in Sources */,
 				3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */,
-				3A1CF96112235704008A3B8C /* WindowController.mm in Sources */,
+				3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */,
 				3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */,
+				3AA7188B122479CE005022BE /* Browser.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

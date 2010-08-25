@@ -18,11 +18,15 @@ class TabStripModel; // Note: C++ class
 @property(assign, nonatomic) BOOL isLoading;
 @property(assign, nonatomic) BOOL isCrashed;
 @property(assign, nonatomic) BOOL isWaitingForResponse;
-@property(assign, nonatomic) id delegate;
+@property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
-@property(assign, nonatomic) NSView *view;
-@property(assign, nonatomic) NSString *title;
-@property(assign, nonatomic) NSImage *icon;
+@property(retain, nonatomic) NSView *view;
+@property(retain, nonatomic) NSString *title;
+@property(retain, nonatomic) NSImage *icon;
+
+//-(void)initWithTabStripModel:()
+
+-(void)destroy:(TabStripModel*)sender;
 
 -(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel;
 
@@ -33,6 +37,9 @@ class TabStripModel; // Note: C++ class
 // Invoked when the tab contents becomes hidden.
 // NOTE: If you override this, call the superclass version too!
 -(void)didBecomeHidden;
+
+// Invoked when the frame has changed, normally due to the window being resized.
+-(void)viewFrameDidChange:(NSRect)newFrame;
 
 @end
 

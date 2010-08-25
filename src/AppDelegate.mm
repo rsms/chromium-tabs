@@ -1,27 +1,14 @@
 #import "AppDelegate.h"
-#import "WindowController.h"
+#import "Browser.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Setup tab strip
-	tab_strip_model_ = new TabStripModel(self);
-
-	// Create a new window
-	WindowController *wc = [self spawnNewWindow];
-	[wc showWindow:self];
+	// Create a browser and show the window
+	Browser *browser = [Browser browser];
+	[browser appendNewEmptyTab];
+	[browser.windowController showWindow:self];
 }
 
-- (WindowController *)spawnNewWindow {
-	WindowController *wc =
-			[[WindowController alloc] initWithWindowNibName:@"BrowserWindow" 
-																chromiumTabbedBrowser:self];
-	// Can be accessed through [NSApp windows]
-	return wc;
-}
-
--(TabStripModel*)tabStripModel {
-	return tab_strip_model_;
-}
 
 @end

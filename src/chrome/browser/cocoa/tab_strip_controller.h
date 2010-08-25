@@ -13,6 +13,7 @@
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/url_drop_target.h"
 #import <GoogleToolboxForMac/GTMWindowSheetController.h>
+#import "WindowOpenDisposition.h"
 
 @class NewTabButton;
 @class TabContentsController;
@@ -20,7 +21,7 @@
 @class TabStripView;
 
 @class TabContents;
-@protocol ChromiumTabbedBrowser;
+@class Browser;
 
 //class Browser;
 class ConstrainedWindowMac;
@@ -54,7 +55,7 @@ class TabStripModel;
   // Tracks the newTabButton_ for rollovers.
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
   scoped_ptr<TabStripModelObserverBridge> bridge_;
-  id<ChromiumTabbedBrowser> browser_;  // weak
+  Browser *browser_;  // weak
   TabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
@@ -132,7 +133,7 @@ class TabStripModel;
 // you have retained them.
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
-           browser:(id<ChromiumTabbedBrowser>)browser;
+           browser:(Browser*)browser;
 
 // Return the view for the currently selected tab.
 - (NSView*)selectedTabView;

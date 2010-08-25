@@ -36,6 +36,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 
 - (id)init {
   self = [super initWithNibName:@"TabView" bundle:mac_util::MainAppBundle()];
+	DCHECK(self);
   if (self != nil) {
     isIconShowing_ = YES;
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
