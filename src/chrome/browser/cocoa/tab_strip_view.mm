@@ -39,9 +39,9 @@
   [[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
   NSRectFillUsingOperation(borderRect, NSCompositeSourceOver);
   NSDivideRect(bounds, &borderRect, &contentRect, 1, NSMinYEdge);
-
-  static NSColor* bezelColor = [NSColor colorWithCalibratedWhite:0xf7/0xff
-																													 alpha:1.0];
+  // TODO: cache this color
+  NSColor* bezelColor = [NSColor colorWithCalibratedWhite:0xf7/255.0
+                                                    alpha:1.0];
   [bezelColor set];
   NSRectFill(borderRect);
   NSRectFillUsingOperation(borderRect, NSCompositeSourceOver);
@@ -105,6 +105,7 @@
     [arrow closePath];
 
     // Draw and fill the arrow.
+    // TODO: cache colors
     [[NSColor colorWithCalibratedWhite:0 alpha:0.67] set];
     [arrow stroke];
     [[NSColor colorWithCalibratedWhite:1 alpha:0.67] setFill];

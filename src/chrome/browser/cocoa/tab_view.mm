@@ -690,12 +690,12 @@ const CGFloat kRapidCloseDist = 2.5;
 
   BOOL active = [[self window] isKeyWindow] || [[self window] isMainWindow];
   CGFloat borderAlpha = selected ? (active ? 0.3 : 0.2) : 0.2;
+  // TODO: cache colors
   NSColor* borderColor = [NSColor colorWithDeviceWhite:0.0 alpha:borderAlpha];
-  static NSColor* highlightColor = [NSColor colorWithCalibratedWhite:0xf7/0xff
-																															 alpha:1.0];
+  NSColor* highlightColor = [NSColor colorWithCalibratedWhite:0xf7/255.0 alpha:1.0];
   // Draw the top inner highlight within the currently selected tab if using
   // the default theme.
-  /*if (selected && themeProvider && themeProvider->UsingDefaultTheme()) {
+  if (selected) {
     NSAffineTransform* highlightTransform = [NSAffineTransform transform];
     [highlightTransform translateXBy:1.0 yBy:-1.0];
     scoped_nsobject<NSBezierPath> highlightPath([path copy]);
@@ -707,7 +707,7 @@ const CGFloat kRapidCloseDist = 2.5;
     [highlightTransform translateXBy:-2.0 yBy:0.0];
     [highlightPath transformUsingAffineTransform:highlightTransform];
     [highlightPath stroke];
-  }*/
+  }
 
   [context restoreGraphicsState];
 
