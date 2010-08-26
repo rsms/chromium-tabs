@@ -159,7 +159,7 @@
 		3A3ED6841225CE7A009E2908 /* GTMNSColor+Luminance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSColor+Luminance.m"; sourceTree = "<group>"; };
 		3A3ED6851225CE7A009E2908 /* GTMWindowSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMWindowSheetController.h; sourceTree = "<group>"; };
 		3A3ED6861225CE7A009E2908 /* GTMWindowSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMWindowSheetController.m; sourceTree = "<group>"; };
-		3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+MCAdditions.h"; sourceTree = "<group>"; };
+		3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+MCAdditions.h"; path = "src/third_party/molokocacao/NSBezierPath+MCAdditions.h"; sourceTree = SOURCE_ROOT; };
 		3A3ED68A1225CE7A009E2908 /* NSBezierPath+MCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+MCAdditions.m"; sourceTree = "<group>"; };
 		3A3ED6A11225CEB1009E2908 /* NSPasteboard+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPasteboard+Utils.h"; sourceTree = "<group>"; };
 		3A3ED6A21225CEB1009E2908 /* NSPasteboard+Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSPasteboard+Utils.mm"; sourceTree = "<group>"; };
@@ -238,6 +238,7 @@
 		080E96DDFE201D6D7F000001 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				3A3ED7071225D7A6009E2908 /* build_config.h */,
 				3A1168C31225404F00757641 /* common.h */,
@@ -247,7 +248,6 @@
 				3A3EDA9C1225EF84009E2908 /* util.m */,
 				3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */,
 				3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */,
-				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
 				3A1168D6122543A900757641 /* BrowserCommands.h */,
 				3AA71889122479CE005022BE /* CTBrowser.h */,

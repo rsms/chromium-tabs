@@ -1,5 +1,5 @@
 #import "CTTabContents.h"
-#import "chrome/browser/tabs/tab_strip_model.h"
+#import "tab_strip_model.h"
 
 @implementation CTTabContents
 

@@ -1,14 +1,14 @@
 #import "CTBrowserWindowController.h"
 
-#import "chrome/browser/tabs/tab_strip_model.h"
+#import "tab_strip_model.h"
 
-#import "chrome/browser/cocoa/tab_strip_controller.h"
-#import "chrome/browser/cocoa/tab_strip_model_observer_bridge.h"
-#import "chrome/browser/cocoa/tab_view.h"
-#import "chrome/browser/cocoa/tab_strip_view.h"
-#import "chrome/browser/cocoa/fast_resize_view.h"
+#import "tab_strip_controller.h"
+#import "tab_strip_model_observer_bridge.h"
+#import "tab_view.h"
+#import "tab_strip_view.h"
+#import "fast_resize_view.h"
 
-#import "base/scoped_nsdisable_screen_updates.h"
+#import "scoped_nsdisable_screen_updates.h"
 
 
 @interface NSWindow (ThingsThatMightBeImplemented)

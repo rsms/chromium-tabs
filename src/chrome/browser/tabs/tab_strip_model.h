@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "chrome/common/page_transition_types.h"
+#include "page_transition_types.h"
 #include "base/observer_list.h"
 
 #import "TabStripModelDelegate.h"

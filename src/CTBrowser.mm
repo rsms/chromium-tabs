@@ -1,7 +1,7 @@
 #import "CTBrowser.h"
-#import "chrome/browser/tabs/tab_strip_model.h"
-#import "chrome/browser/cocoa/tab_strip_controller.h"
-#import "chrome/common/page_transition_types.h"
+#import "tab_strip_model.h"
+#import "tab_strip_controller.h"
+#import "page_transition_types.h"
 #import "CTBrowserWindowController.h"
 #import "util.h"
 

@@ -6,8 +6,7 @@
 //
 
 #import "NSBezierPath+MCAdditions.h"
-
-#import "third_party/gtm-subset/GTMNSBezierPath+CGPath.h"
+#import "GTMNSBezierPath+CGPath.h"
 
 // remove/comment out this line of you don't want to use undocumented functions
 #define MCBEZIER_USE_PRIVATE_FUNCTION
