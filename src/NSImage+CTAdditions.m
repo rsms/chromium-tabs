@@ -1,7 +1,7 @@
-#import "NSImage+ChromiumTabsAdditions.h"
+#import "NSImage+CTAdditions.h"
 #import "util.h"
 
-@implementation NSImage (ChromiumTabsAdditions)
+@implementation NSImage (CTAdditions)
 
 +(NSImage*)imageWithPath:(NSString *)path {
   return [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
