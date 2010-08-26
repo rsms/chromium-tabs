@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
-#import "chrome/browser/cocoa/url_drop_target.h"
+#import "scoped_nsobject.h"
+#import "url_drop_target.h"
 
 @class NewTabButton;
 

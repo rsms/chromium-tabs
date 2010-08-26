@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/tab_strip_controller.h"
+#import "tab_strip_controller.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import "CTTabContents.h"
@@ -10,40 +10,40 @@
 #import "util.h"
 #import "NSImage+ChromiumTabsAdditions.h"
 
-#include <limits>
-#include <string>
+#import <limits>
+#import <string>
 
-//#include "app/l10n_util.h"
-//#include "app/resource_bundle.h"
-//#include "base/mac_util.h"
-//#include "base/nsimage_cache_mac.h"
-//#include "base/sys_string_conversions.h"
-//#include "chrome/app/chrome_dll_resource.h"
-//#include "chrome/browser/browser.h"
-//#include "chrome/browser/find_bar.h"
-//#include "chrome/browser/find_bar_controller.h"
-//#include "chrome/browser/metrics/user_metrics.h"
-//#include "chrome/browser/profile.h"
-//#import "chrome/browser/cocoa/browser_window_controller.h"
-//#import "chrome/browser/cocoa/constrained_window_mac.h"
-#import "chrome/browser/cocoa/new_tab_button.h"
-#import "chrome/browser/cocoa/tab_strip_view.h"
-#import "chrome/browser/cocoa/tab_contents_controller.h"
-#import "chrome/browser/cocoa/tab_controller.h"
-#import "chrome/browser/cocoa/tab_strip_model_observer_bridge.h"
-#import "chrome/browser/cocoa/tab_view.h"
-#import "chrome/browser/cocoa/throbber_view.h"
-//#include "chrome/browser/debugger/devtools_window.h"
-//#include "chrome/browser/net/url_fixer_upper.h"
-//#include "chrome/browser/tab_contents/navigation_controller.h"
-//#include "chrome/browser/tab_contents/navigation_entry.h"
-//#include "chrome/browser/tab_contents/tab_contents.h"
-//#include "chrome/browser/tab_contents/tab_contents_view.h"
-#include "chrome/browser/tabs/tab_strip_model.h"
-//#include "grit/app_resources.h"
-//#include "grit/generated_resources.h"
-//#include "grit/theme_resources.h"
-//#include "skia/ext/skia_utils_mac.h"
+//#import "app/l10n_util.h"
+//#import "app/resource_bundle.h"
+//#import "mac_util.h"
+//#import "nsimage_cache_mac.h"
+//#import "sys_string_conversions.h"
+//#import "chrome/app/chrome_dll_resource.h"
+//#import "chrome/browser/browser.h"
+//#import "chrome/browser/find_bar.h"
+//#import "chrome/browser/find_bar_controller.h"
+//#import "chrome/browser/metrics/user_metrics.h"
+//#import "chrome/browser/profile.h"
+//#import "browser_window_controller.h"
+//#import "constrained_window_mac.h"
+#import "new_tab_button.h"
+#import "tab_strip_view.h"
+#import "tab_contents_controller.h"
+#import "tab_controller.h"
+#import "tab_strip_model_observer_bridge.h"
+#import "tab_view.h"
+#import "throbber_view.h"
+//#import "chrome/browser/debugger/devtools_window.h"
+//#import "chrome/browser/net/url_fixer_upper.h"
+//#import "chrome/browser/tab_contents/navigation_controller.h"
+//#import "chrome/browser/tab_contents/navigation_entry.h"
+//#import "chrome/browser/tab_contents/tab_contents.h"
+//#import "chrome/browser/tab_contents/tab_contents_view.h"
+#import "tab_strip_model.h"
+//#import "grit/app_resources.h"
+//#import "grit/generated_resources.h"
+//#import "grit/theme_resources.h"
+//#import "skia/ext/skia_utils_mac.h"
 #import "third_party/gtm-subset/GTMNSAnimation+Duration.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
@@ -1665,7 +1665,7 @@ private:
     case NEW_FOREGROUND_TAB:
       UserMetrics::RecordAction(UserMetricsAction("Tab_DropURLBetweenTabs"),
                                 browser_->profile());
-      browser_->AddTabWithURL(url, GURL(), PageTransition::TYPED, index,
+      browser_->AddTabWithURL(url, GURL(), CTPageTransitionTyped, index,
                               TabStripModel::ADD_SELECTED |
                                   TabStripModel::ADD_FORCE_INDEX,
                               NULL, std::string(), NULL);
@@ -1674,7 +1674,7 @@ private:
       UserMetrics::RecordAction(UserMetricsAction("Tab_DropURLOnTab"),
                                 browser_->profile());
       tabStripModel_->GetTabContentsAt(index)->OpenURL(url, GURL(), CURRENT_TAB,
-                                                       PageTransition::TYPED);
+                                                       CTPageTransitionTyped);
       tabStripModel_->SelectTabContentsAt(index, true);
       break;
     default:

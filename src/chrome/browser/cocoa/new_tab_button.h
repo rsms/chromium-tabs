@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
+#import "scoped_nsobject.h"
 
 // Overrides hit-test behavior to only accept clicks inside the image of the
 // button, not just inside the bounding box. This could be abstracted to general

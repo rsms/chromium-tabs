@@ -8,10 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
-#include "base/scoped_ptr.h"
-#import "chrome/browser/cocoa/tab_controller_target.h"
-#import "chrome/browser/cocoa/url_drop_target.h"
+#import "scoped_nsobject.h"
+#import "scoped_ptr.h"
+#import "tab_controller_target.h"
+#import "url_drop_target.h"
 #import "third_party/gtm-subset/GTMWindowSheetController.h"
 
 @class NewTabButton;

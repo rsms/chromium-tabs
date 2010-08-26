@@ -6,10 +6,10 @@
 #define CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H_
 #pragma once
 
-#include <vector>
+#import <vector>
 
-#include "page_transition_types.h"
-#include "base/observer_list.h"
+#import "CTPageTransition.h"
+#import "observer_list.h"
 
 #import "TabStripModelDelegate.h"
 
@@ -210,7 +210,7 @@ class TabStripModelObserver {
       const GURL& url,
       const GURL& referrer,
       Profile* profile,
-      PageTransition::Type transition,
+      CTPageTransition transition,
       bool defer_load,
       SiteInstance* instance) const = 0;
 
@@ -548,7 +548,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   // CTTabContents. Depending on the tab, and the transition type of the
   // navigation, the TabStripModel may adjust its selection and grouping
   // behavior.
-  void TabNavigating(CTTabContents* contents, PageTransition::Type transition);
+  void TabNavigating(CTTabContents* contents, CTPageTransition transition);
 
   // Forget all Opener relationships that are stored (but _not_ group
   // relationships!) This is to reduce unpredictable tab switching behavior
@@ -623,7 +623,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   // InsertTabContentsAt to do the actual inertion.
   void AddTabContents(CTTabContents* contents,
                       int index,
-                      PageTransition::Type transition,
+                      CTPageTransition transition,
                       int add_types);
 
   // Closes the selected CTTabContents.

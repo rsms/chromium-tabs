@@ -6,8 +6,8 @@
 #define CHROME_BROWSER_TABS_TAB_STRIP_MODEL_ORDER_CONTROLLER_H_
 #pragma once
 
-#include "chrome/browser/tabs/tab_strip_model.h"
-#include "chrome/common/page_transition_types.h"
+#import "tab_strip_model.h"
+#import "CTPageTransition.h"
 
 @class CTTabContents;
 
@@ -33,7 +33,7 @@ class TabStripModelOrderController : public TabStripModelObserver {
   // Determine where to place a newly opened tab by using the supplied
   // transition and foreground flag to figure out how it was opened.
   int DetermineInsertionIndex(CTTabContents* new_contents,
-                              PageTransition::Type transition,
+                              CTPageTransition transition,
                               bool foreground);
 
   // Returns the index to append tabs at.

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/cocoa/tab_strip_model_observer_bridge.h"
+#import "tab_strip_model_observer_bridge.h"
 
 TabStripModelObserverBridge::TabStripModelObserverBridge(TabStripModel* model,
                                                          id controller)

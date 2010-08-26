@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/tab_window_controller.h"
+#import "tab_window_controller.h"
 
-//#include "base/logging.h"
-#import "chrome/browser/cocoa/tab_strip_view.h"
-#import "chrome/browser/cocoa/themed_window.h"
+//#import "logging.h"
+#import "tab_strip_view.h"
+#import "themed_window.h"
 
 @interface TabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;

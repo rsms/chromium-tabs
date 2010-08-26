@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <string.h>
+#import <stdio.h>
+#import <sys/types.h>
+#import <string.h>
 
 /*
  * find the last occurrance of find in string

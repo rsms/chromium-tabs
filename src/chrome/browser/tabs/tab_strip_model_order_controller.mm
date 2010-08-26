@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/tabs/tab_strip_model_order_controller.h"
-#include "CTTabContents.h"
+#import "tab_strip_model_order_controller.h"
+#import "CTTabContents.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModelOrderController, public:
@@ -21,7 +21,7 @@ TabStripModelOrderController::~TabStripModelOrderController() {
 
 int TabStripModelOrderController::DetermineInsertionIndex(
     CTTabContents* new_contents,
-    PageTransition::Type transition,
+    CTPageTransition transition,
     bool foreground) {
   int tab_count = tab_strip_model_->count();
   if (!tab_count)
@@ -29,7 +29,7 @@ int TabStripModelOrderController::DetermineInsertionIndex(
 
   // NOTE: TabStripModel enforces that all non-mini-tabs occur after mini-tabs,
   // so we don't have to check here too.
-  if (transition == PageTransition::LINK &&
+  if (transition == CTPageTransitionLink &&
       tab_strip_model_->selected_index() != -1) {
     int delta = (insertion_policy_ == TabStripModel::INSERT_AFTER) ? 1 : 0;
     if (foreground) {

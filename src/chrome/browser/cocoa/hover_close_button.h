@@ -4,8 +4,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
-#include "chrome/browser/cocoa/hover_button.h"
+#import "scoped_nsobject.h"
+#import "hover_button.h"
 
 // The standard close button for our Mac UI which is the "x" that changes to a
 // dark circle with the "x" when you hover over it. At this time it is used by

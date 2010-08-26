@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/hover_close_button.h"
-#include "base/scoped_nsobject.h"
+#import "hover_close_button.h"
+#import "scoped_nsobject.h"
 #import "third_party/molokocacao/NSBezierPath+MCAdditions.h"
 
 namespace  {

@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_COCOA_TAB_CONTENTS_CONTROLLER_H_
 #pragma once
 
-#include <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
 
 @class CTTabContents;
 

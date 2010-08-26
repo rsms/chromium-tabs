@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/tab_strip_view.h"
-#import "chrome/browser/cocoa/tab_strip_controller.h"
+#import "tab_strip_view.h"
+#import "tab_strip_controller.h"
 
 // ripped out from libbase mac_util.mm:
 static bool ShouldWindowsMiniaturizeOnDoubleClick() {

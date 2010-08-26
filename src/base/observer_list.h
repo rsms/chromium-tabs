@@ -6,11 +6,11 @@
 #define BASE_OBSERVER_LIST_H__
 #pragma once
 
-#include <algorithm>
-#include <limits>
-#include <vector>
+#import <algorithm>
+#import <limits>
+#import <vector>
 
-#include "basictypes.h"
+#import "basictypes.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //

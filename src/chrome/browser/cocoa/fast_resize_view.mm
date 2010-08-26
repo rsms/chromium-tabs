@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #import <Cocoa/Cocoa.h>
-#import "chrome/browser/cocoa/fast_resize_view.h"
+#import "fast_resize_view.h"
 
 @interface FastResizeView (PrivateMethods)
 // Lays out this views subviews.  If fast resize mode is on, does not resize any

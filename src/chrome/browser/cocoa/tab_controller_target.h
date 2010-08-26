@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_
 #pragma once
 
-//#include "chrome/browser/tabs/tab_strip_model.h"
+//#import "tab_strip_model.h"
 
 @class TabController;
 

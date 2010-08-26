@@ -28,8 +28,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "base/cocoa_protocols_mac.h"
-#include "base/scoped_nsobject.h"
+#import "cocoa_protocols_mac.h"
+#import "scoped_nsobject.h"
 
 @class FastResizeView;
 @class TabStripView;

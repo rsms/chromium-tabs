@@ -9,12 +9,12 @@
 #define BASE_STL_UTIL_INL_H_
 #pragma once
 
-#include <string.h>  // for memcpy
-#include <functional>
-#include <set>
-#include <string>
-#include <vector>
-#include <cassert>
+#import <string.h>  // for memcpy
+#import <functional>
+#import <set>
+#import <string>
+#import <vector>
+#import <cassert>
 
 // Clear internal memory of an STL object.
 // STL clear()/reserve(0) does not always free internal memory allocated

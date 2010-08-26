@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/cocoa/background_gradient_view.h"
+#import "background_gradient_view.h"
 //#import "chrome/browser/browser_theme_provider.h"
-//#import "chrome/browser/cocoa/themed_window.h"
+//#import "themed_window.h"
 #import "third_party/gtm-subset/GTMNSColor+Luminance.h"
 
 #define kToolbarTopOffset 12

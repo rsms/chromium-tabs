@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "basictypes.h"
+#import "basictypes.h"
 
 namespace base {
 

@@ -7,9 +7,9 @@
 #pragma once
 
 #import <Foundation/Foundation.h>
-#include "basictypes.h"
+#import "basictypes.h"
 
-//[RA]#include "base/compiler_specific.h"
+//[RA]#import "compiler_specific.h"
 #define WARN_UNUSED_RESULT // nothing
 
 // scoped_nsobject<> is patterned after scoped_ptr<>, but maintains ownership

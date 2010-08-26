@@ -11,9 +11,9 @@
 
 #import <map>
 
-#import "base/scoped_nsobject.h"
-#import "chrome/browser/cocoa/background_gradient_view.h"
-#import "chrome/browser/cocoa/hover_close_button.h"
+#import "scoped_nsobject.h"
+#import "background_gradient_view.h"
+#import "hover_close_button.h"
 
 namespace tabs {
 

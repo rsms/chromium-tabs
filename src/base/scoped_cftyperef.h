@@ -6,9 +6,9 @@
 #define BASE_SCOPED_CFTYPEREF_H_
 #pragma once
 
-#include <CoreFoundation/CoreFoundation.h>
-#include "basictypes.h"
-//[RA]#include "base/compiler_specific.h"
+#import <CoreFoundation/CoreFoundation.h>
+#import "basictypes.h"
+//[RA]#import "compiler_specific.h"
 #define WARN_UNUSED_RESULT // nothing
 
 // scoped_cftyperef<> is patterned after scoped_ptr<>, but maintains ownership

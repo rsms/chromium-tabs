@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
+#import "scoped_nsobject.h"
 
 @protocol ThrobberDataDelegate;
 

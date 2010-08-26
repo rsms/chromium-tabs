@@ -2,22 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/common/page_transition_types.h"
+#import "CTPageTransition.h"
+#import <stdlib.h>
 
-// static
-PageTransition::Type PageTransition::FromInt(int32 type) {
-  if (!ValidType(type)) {
-    //NOTREACHED() << "Invalid transition type " << type; [RA]
-
-    // Return a safe default so we don't have corrupt data in release mode.
-    return LINK;
-  }
-  return static_cast<Type>(type);
-}
-
-// static
-const char* PageTransition::CoreTransitionString(Type type) {
-  switch (type & PageTransition::CORE_MASK) {
+const char* CTPageTransitionCoreString(CTPageTransition type) {
+  switch (type & CTPageTransitionCoreMask) {
     case 0: return "link";
     case 1: return "typed";
     case 2: return "auto_bookmark";

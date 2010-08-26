@@ -7,7 +7,7 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
-#import "chrome/browser/cocoa/hover_close_button.h"
+#import "hover_close_button.h"
 
 // The loading/waiting state of the tab.
 enum TabLoadingState {

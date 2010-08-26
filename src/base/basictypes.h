@@ -6,15 +6,15 @@
 #define BASE_BASICTYPES_H_
 #pragma once
 
-#include <limits.h>         // So we can set the bounds of our types
-#include <stddef.h>         // For size_t
-#include <string.h>         // for memcpy
+#import <limits.h>         // So we can set the bounds of our types
+#import <stddef.h>         // For size_t
+#import <string.h>         // for memcpy
 
-//[RA]#include "base/port.h"    // Types that only need exist on certain systems
+//[RA]#import "port.h"    // Types that only need exist on certain systems
 
 #ifndef COMPILER_MSVC
 // stdint.h is part of C99 but MSVC doesn't have it.
-#include <stdint.h>         // For intptr_t.
+#import <stdint.h>         // For intptr_t.
 #endif
 
 typedef signed char         schar;

@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/tab_view.h"
+#import "tab_view.h"
 
-#include "base/scoped_cftyperef.h"
-#import "chrome/browser/cocoa/tab_controller.h"
-#import "chrome/browser/cocoa/tab_window_controller.h"
-#import "chrome/browser/cocoa/themed_window.h"
+#import "scoped_cftyperef.h"
+#import "tab_controller.h"
+#import "tab_window_controller.h"
+#import "themed_window.h"
 
 // ripped out from mac_util.mm:
 static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,

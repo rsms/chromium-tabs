@@ -1,7 +1,7 @@
 #import "CTBrowser.h"
 #import "tab_strip_model.h"
 #import "tab_strip_controller.h"
-#import "page_transition_types.h"
+#import "CTPageTransition.h"
 #import "CTBrowserWindowController.h"
 #import "util.h"
 
@@ -133,7 +133,7 @@
   //tabStripModel_->AppendTabContents(contents, foreground);
   int addTypes = foreground ? TabStripModel::ADD_SELECTED :
                               TabStripModel::ADD_NONE;
-  tabStripModel_->AddTabContents(contents, index, PageTransition::TYPED,
+  tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
                                  addTypes);
   // By default, content believes it is not hidden.  When adding contents
   // in the background, tell it that it's hidden.

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/new_tab_button.h"
+#import "new_tab_button.h"
 
 @implementation NewTabButton
 

@@ -18,11 +18,11 @@
 
 // ============================================================================
 
-#include <AvailabilityMacros.h>
-#include <TargetConditionals.h>
+#import <AvailabilityMacros.h>
+#import <TargetConditionals.h>
 
 #if TARGET_OS_IPHONE
-#include <Availability.h>
+#import <Availability.h>
 #endif //  TARGET_OS_IPHONE
 
 // Not all MAC_OS_X_VERSION_10_X macros defined in past SDKs

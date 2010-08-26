@@ -4,7 +4,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/scoped_nsobject.h"
+#import "scoped_nsobject.h"
 
 // A button that changes when you hover over it and click it.
 @interface HoverButton : NSButton {

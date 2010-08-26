@@ -2,32 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/tabs/tab_strip_model.h"
+#import "tab_strip_model.h"
 
-#include <algorithm>
+#import <algorithm>
 
-//#include "base/command_line.h"
-#include "base/stl_util-inl.h"
-//#include "base/string_util.h"
-//#include "build/build_config.h" // included in precompiled header
-//#include "chrome/browser/bookmarks/bookmark_model.h"
-//#include "chrome/browser/browser_shutdown.h"
-//#include "chrome/browser/defaults.h"
-//#include "chrome/browser/extensions/extensions_service.h"
-//#include "chrome/browser/metrics/user_metrics.h"
-//#include "chrome/browser/profile.h"
-//#include "chrome/browser/renderer_host/render_process_host.h"
-//#include "chrome/browser/sessions/tab_restore_service.h"
-#include "chrome/browser/tabs/tab_strip_model_order_controller.h"
-#include "chrome/common/page_transition_types.h"
-//#include "chrome/browser/tab_contents/navigation_controller.h"
-//#include "chrome/browser/tab_contents/tab_contents.h"
-//#include "chrome/browser/tab_contents/tab_contents_delegate.h"
-//#include "chrome/browser/tab_contents/tab_contents_view.h"
-//#include "chrome/common/chrome_switches.h"
-//#include "chrome/common/extensions/extension.h"
-//#include "chrome/common/notification_service.h"
-//#include "chrome/common/url_constants.h"
+//#import "command_line.h"
+#import "stl_util-inl.h"
+//#import "string_util.h"
+//#import "build/build_config.h" // included in precompiled header
+//#import "chrome/browser/bookmarks/bookmark_model.h"
+//#import "chrome/browser/browser_shutdown.h"
+//#import "chrome/browser/defaults.h"
+//#import "chrome/browser/extensions/extensions_service.h"
+//#import "chrome/browser/metrics/user_metrics.h"
+//#import "chrome/browser/profile.h"
+//#import "chrome/browser/renderer_host/render_process_host.h"
+//#import "chrome/browser/sessions/tab_restore_service.h"
+#import "tab_strip_model_order_controller.h"
+#import "CTPageTransition.h"
+//#import "chrome/browser/tab_contents/navigation_controller.h"
+//#import "chrome/browser/tab_contents/tab_contents.h"
+//#import "chrome/browser/tab_contents/tab_contents_delegate.h"
+//#import "chrome/browser/tab_contents/tab_contents_view.h"
+//#import "chrome/common/chrome_switches.h"
+//#import "chrome/common/extensions/extension.h"
+//#import "chrome/common/notification_service.h"
+//#import "chrome/common/url_constants.h"
 
 #import "CTTabContents.h"
 
@@ -38,12 +38,12 @@ namespace {
 // forgotten. This is generally any navigation that isn't a link click (i.e.
 // any navigation that can be considered to be the start of a new task distinct
 // from what had previously occurred in that tab).
-bool ShouldForgetOpenersForTransition(PageTransition::Type transition) {
-  return transition == PageTransition::TYPED ||
-      transition == PageTransition::AUTO_BOOKMARK ||
-      transition == PageTransition::GENERATED ||
-      transition == PageTransition::KEYWORD ||
-      transition == PageTransition::START_PAGE;
+bool ShouldForgetOpenersForTransition(CTPageTransition transition) {
+  return transition == CTPageTransitionTyped ||
+      transition == CTPageTransitionAutoBookmark ||
+      transition == CTPageTransitionGenerated ||
+      transition == CTPageTransitionKeyword ||
+      transition == CTPageTransitionStartPage;
 }
 
 }  // namespace
@@ -448,7 +448,7 @@ bool TabStripModel::TabsAreLoading() const {
 }*/
 
 void TabStripModel::TabNavigating(CTTabContents* contents,
-                                  PageTransition::Type transition) {
+                                  CTPageTransition transition) {
   if (ShouldForgetOpenersForTransition(transition)) {
     // Don't forget the openers if this tab is a New Tab page opened at the
     // end of the TabStrip (e.g. by pressing Ctrl+T). Give the user one
@@ -596,14 +596,14 @@ int TabStripModel::GetNonPhantomTabCount() const {
 
 void TabStripModel::AddTabContents(CTTabContents* contents,
                                    int index,
-                                   PageTransition::Type transition,
+                                   CTPageTransition transition,
                                    int add_types) {
   // If the newly-opened tab is part of the same task as the parent tab, we want
   // to inherit the parent's "group" attribute, so that if this tab is then
   // closed we'll jump back to the parent tab.
   bool inherit_group = (add_types & ADD_INHERIT_GROUP) == ADD_INHERIT_GROUP;
 
-  if (transition == PageTransition::LINK &&
+  if (transition == CTPageTransitionLink &&
       (add_types & ADD_FORCE_INDEX) == 0) {
     // We assume tabs opened via link clicks are part of the same task as their
     // parent.  Note that when |force_index| is true (e.g. when the user
@@ -620,7 +620,7 @@ void TabStripModel::AddTabContents(CTTabContents* contents,
       index = order_controller_->DetermineInsertionIndexForAppending();
   }
 
-  if (transition == PageTransition::TYPED && index == count()) {
+  if (transition == CTPageTransitionTyped && index == count()) {
     // Also, any tab opened at the end of the TabStrip with a "TYPED"
     // transition inherit group as well. This covers the cases where the user
     // creates a New Tab (e.g. Ctrl+T, or clicks the New Tab button), or types
@@ -635,7 +635,7 @@ void TabStripModel::AddTabContents(CTTabContents* contents,
   // Reset the index, just in case insert ended up moving it on us.
   index = GetIndexOfTabContents(contents);
 
-  /*if (inherit_group && transition == PageTransition::TYPED)
+  /*if (inherit_group && transition == CTPageTransitionTyped)
     contents_data_.at(index)->reset_group_on_select = true;*/
 
   // TODO(sky): figure out why this is here and not in InsertTabContentsAt. When

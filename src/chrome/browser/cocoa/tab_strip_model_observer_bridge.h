@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "chrome/browser/tabs/tab_strip_model.h"
+#import "tab_strip_model.h"
 
 @class CTTabContents;
 //class CTTabContents;

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/themed_window.h"
+#import "themed_window.h"
 
 // Default implementations; used mostly for tests so that the hosting windows
 // don't needs to know about the theming machinery.

@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/cocoa/throbber_view.h"
+#import "throbber_view.h"
 
-#include <set>
+#import <set>
 
 static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 

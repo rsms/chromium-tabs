@@ -41,11 +41,11 @@
 // implementation of the scoped_ptr class, and its closely-related brethren,
 // scoped_array, scoped_ptr_malloc.
 
-#include <assert.h>
-#include <stdlib.h>
-#include <cstddef>
+#import <assert.h>
+#import <stdlib.h>
+#import <cstddef>
 
-//[RA]#include "base/compiler_specific.h"
+//[RA]#import "compiler_specific.h"
 #define WARN_UNUSED_RESULT // nothing
 
 // A scoped_ptr<T> is like a T*, except that the destructor of scoped_ptr<T>
