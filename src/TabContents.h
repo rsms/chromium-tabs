@@ -9,9 +9,9 @@ class TabStripModel; // Note: C++ class
   BOOL isCrashed_;
   id delegate_;
   unsigned int closedByUserGesture_; // TabStripModel::CloseTypes
-	NSView *view_; // the actual content
-	NSString *title_; // title of this tab
-	NSImage *icon_; // tab icon (nil means no or default icon)
+  NSView *view_; // the actual content
+  NSString *title_; // title of this tab
+  NSImage *icon_; // tab icon (nil means no or default icon)
 }
 
 @property(assign, nonatomic) BOOL isApp;

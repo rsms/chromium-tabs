@@ -122,8 +122,8 @@ TabStripModel::TabStripModel(NSObject<TabStripModelDelegate>* delegate)
       closing_all_(false),
       order_controller_(NULL) {
   delegate_ = [delegate retain];
-	assert(delegate_);
-	// TODO replace with nsnotificationcenter?
+  assert(delegate_);
+  // TODO replace with nsnotificationcenter?
   /*registrar_.Add(this,
                  NotificationType::TAB_CONTENTS_DESTROYED,
                  NotificationService::AllSources());
@@ -136,12 +136,12 @@ TabStripModel::~TabStripModel() {
   FOR_EACH_OBSERVER(TabStripModelObserver, observers_,
                     TabStripModelDeleted());
 
-	[delegate_ release];
-	delegate_ = NULL;
+  [delegate_ release];
+  delegate_ = NULL;
 
   // Before deleting any phantom tabs remove our notification observers so that
   // we don't attempt to notify our delegate or do any processing.
-	//TODO: replace with nsnotificationcenter unregs
+  //TODO: replace with nsnotificationcenter unregs
   //registrar_.RemoveAll();
 
   // Phantom tabs still have valid TabConents that we own and need to delete.
@@ -168,7 +168,7 @@ bool TabStripModel::HasNonPhantomTabs() const {
       return true;
   }
   return false;*/
-	return !!count();
+  return !!count();
 }
 
 void TabStripModel::SetInsertionPolicy(InsertionPolicy policy) {
@@ -251,8 +251,8 @@ void TabStripModel::ReplaceTabContentsAt(
     TabContents* new_contents,
     TabReplaceType type) {
   TabContents* old_contents =
-			ReplaceTabContentsAtImpl(index, new_contents, type);
-	[old_contents destroy:this];
+      ReplaceTabContentsAtImpl(index, new_contents, type);
+  [old_contents destroy:this];
 }
 
 /*void TabStripModel::ReplaceNavigationControllerAt(
@@ -555,7 +555,7 @@ bool TabStripModel::IsAppTab(int index) const {
 bool TabStripModel::IsPhantomTab(int index) const {
   /*return IsTabPinned(index) &&
          GetTabContentsAt(index)->controller().needs_reload();*/
-	return false;
+  return false;
 }
 
 bool TabStripModel::IsTabBlocked(int index) const {
@@ -591,7 +591,7 @@ int TabStripModel::GetNonPhantomTabCount() const {
       ++tabs;
   }
   return tabs;*/
-	return count();
+  return count();
 }
 
 void TabStripModel::AddTabContents(TabContents* contents,
@@ -692,16 +692,16 @@ bool TabStripModel::IsContextMenuCommandEnabled(
   switch (command_id) {
     case CommandNewTab:
     case CommandCloseTab:
-			return [delegate_ canCloseTab];
+      return [delegate_ canCloseTab];
       //return delegate_->CanCloseTab();
     case CommandReload:
       if (TabContents* contents = GetTabContentsAt(context_index)) {
-				id delegate = contents.delegate;
-				if ([delegate respondsToSelector:@selector(canReloadContents:)]) {
-					return [delegate canReloadContents:contents];
-				} else {
-					return false;
-				}
+        id delegate = contents.delegate;
+        if ([delegate respondsToSelector:@selector(canReloadContents:)]) {
+          return [delegate canReloadContents:contents];
+        } else {
+          return false;
+        }
         //return contents->delegate()->CanReloadContents(contents);
       } else {
         return false;
@@ -718,10 +718,10 @@ bool TabStripModel::IsContextMenuCommandEnabled(
       return count() != IndexOfFirstNonMiniTab() &&
           context_index < (count() - 1);
     case CommandDuplicate:
-			return [delegate_ canDuplicateContentsAt:context_index];
+      return [delegate_ canDuplicateContentsAt:context_index];
       //return delegate_->CanDuplicateContentsAt(context_index);
     case CommandRestoreTab:
-			return [delegate_ canRestoreTab];
+      return [delegate_ canRestoreTab];
       //return delegate_->CanRestoreTab();
     case CommandTogglePinned:
       return !IsAppTab(context_index);
@@ -753,14 +753,14 @@ void TabStripModel::ExecuteContextMenuCommand(
   assert(command_id > CommandFirst && command_id < CommandLast);
   switch (command_id) {
     case CommandNewTab:
-			[delegate_ addBlankTabAtIndex:context_index+1 inForeground:true];
+      [delegate_ addBlankTabAtIndex:context_index+1 inForeground:true];
       //delegate()->AddBlankTabAt(context_index + 1, true);
       break;
     case CommandReload:
       [GetContentsAt(context_index).delegate reload];
       break;
     case CommandDuplicate:
-			[delegate_ duplicateContentsAt:context_index];
+      [delegate_ duplicateContentsAt:context_index];
       //delegate_->DuplicateContentsAt(context_index);
       break;
     case CommandCloseTab:
@@ -778,7 +778,7 @@ void TabStripModel::ExecuteContextMenuCommand(
       break;
     }
     case CommandRestoreTab: {
-			[delegate_ restoreTab];
+      [delegate_ restoreTab];
       //delegate_->RestoreTab();
       break;
     }
@@ -803,7 +803,7 @@ void TabStripModel::ExecuteContextMenuCommand(
       delegate()->ToggleUseVerticalTabs();
       break;
     }*/
-		
+    
     default:
       NOTREACHED();
   }
@@ -835,21 +835,21 @@ std::vector<int> TabStripModel::GetIndicesClosedByCommand(
 // TODO replace with NSNotification if possible
 // Invoked by TabContents when they dealloc
 void TabStripModel::TabContentsWasDestroyed(TabContents *contents) {
-	// Sometimes, on qemu, it seems like a TabContents object can be destroyed
-	// while we still have a reference to it. We need to break this reference
-	// here so we don't crash later.
-	int index = GetIndexOfTabContents(contents);
-	if (index != TabStripModel::kNoTab) {
-		// Note that we only detach the contents here, not close it - it's
-		// already been closed. We just want to undo our bookkeeping.
-		//if (ShouldMakePhantomOnClose(index)) {
-		//	// We don't actually allow pinned tabs to close. Instead they become
-		//	// phantom.
-		//	MakePhantom(index);
-		//} else {
-		DetachTabContentsAt(index);
-		//}
-	}
+  // Sometimes, on qemu, it seems like a TabContents object can be destroyed
+  // while we still have a reference to it. We need to break this reference
+  // here so we don't crash later.
+  int index = GetIndexOfTabContents(contents);
+  if (index != TabStripModel::kNoTab) {
+    // Note that we only detach the contents here, not close it - it's
+    // already been closed. We just want to undo our bookkeeping.
+    //if (ShouldMakePhantomOnClose(index)) {
+    //  // We don't actually allow pinned tabs to close. Instead they become
+    //  // phantom.
+    //  MakePhantom(index);
+    //} else {
+    DetachTabContentsAt(index);
+    //}
+  }
 }
 
 /*void TabStripModel::Observe(NotificationType type,
@@ -901,7 +901,7 @@ void TabStripModel::TabContentsWasDestroyed(TabContents *contents) {
 // TabStripModel, private:
 
 bool TabStripModel::IsNewTabAtEndOfTabStrip(TabContents* contents) const {
-	return !contents || contents == GetContentsAt(count() - 1);
+  return !contents || contents == GetContentsAt(count() - 1);
   /*return LowerCaseEqualsASCII(contents->GetURL().spec(),
                               chrome::kChromeUINewTabURL) &&
       contents == GetContentsAt(count() - 1) &&
@@ -963,7 +963,7 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
     }
 
     //if (delegate_->RunUnloadListenerBeforeClosing(detached_contents)) {
-		if ([delegate_ runUnloadListenerBeforeClosing:detached_contents]) {
+    if ([delegate_ runUnloadListenerBeforeClosing:detached_contents]) {
       retval = false;
       continue;
     }
@@ -984,9 +984,9 @@ void TabStripModel::InternalCloseTab(TabContents* contents,
   // Ask the delegate to save an entry for this tab in the historical tab
   // database if applicable.
   if (create_historical_tabs) {
-		[delegate_ createHistoricalTab:contents];
+    [delegate_ createHistoricalTab:contents];
     //delegate_->CreateHistoricalTab(contents);
-	}
+  }
 
   // Deleting the TabContents will call back to us via NotificationObserver
   // and detach it.
@@ -1057,13 +1057,13 @@ const bool kPhantomTabsEnabled = false;
 
 bool TabStripModel::ShouldMakePhantomOnClose(int index) {
   if (kPhantomTabsEnabled && IsTabPinned(index) && !IsPhantomTab(index) &&
-		  !closing_all_) {
+      !closing_all_) {
     if (!IsAppTab(index))
       return true;  // Always make non-app tabs go phantom.
 
     //ExtensionsService* extension_service = profile()->GetExtensionsService();
     //if (!extension_service)
-		return false;
+    return false;
 
     //Extension* extension_app = GetTabContentsAt(index)->extension_app();
     //assert(extension_app);

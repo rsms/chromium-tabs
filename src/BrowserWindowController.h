@@ -7,18 +7,18 @@
 class TabStripModelObserverBridge;
 
 @interface BrowserWindowController : TabWindowController {
-	Browser* browser_;
-	TabStripController *tabStripController_;
-	TabStripModelObserverBridge *tabStripObserver_;
+  Browser* browser_;
+  TabStripController *tabStripController_;
+  TabStripModelObserverBridge *tabStripObserver_;
  @private
-	BOOL initializing_; // true if the instance is initializing
+  BOOL initializing_; // true if the instance is initializing
 }
 
 @property(readonly, nonatomic) TabStripController *tabStripController;
 @property(readonly, nonatomic) Browser *browser;
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
-										browser:(Browser*)browser;
+- (id)initWithWindowNibPath:(NSString *)windowNibPath
+                    browser:(Browser*)browser;
 
 // Make the (currently-selected) tab contents the first responder, if possible.
 - (void)focusTabContents;

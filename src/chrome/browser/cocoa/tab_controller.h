@@ -102,7 +102,7 @@ enum TabLoadingState {
 
 @interface TabController(TestingAPI)
 - (NSString*)toolTip;
-- (int)iconCapacity;
+- (CGFloat)iconCapacity;
 - (BOOL)shouldShowIcon;
 - (BOOL)shouldShowCloseButton;
 @end  // TabController(TestingAPI)

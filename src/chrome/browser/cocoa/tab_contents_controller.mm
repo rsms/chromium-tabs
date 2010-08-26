@@ -4,6 +4,7 @@
 
 #import "chrome/browser/cocoa/tab_contents_controller.h"
 #import "TabContents.h"
+#import "util.h"
 
 // Default offset of the contents splitter in pixels.
 static const int kDefaultContentsSplitOffset = 400;
@@ -15,9 +16,17 @@ static const int kMinWebHeight = 50;
 
 @implementation TabContentsController
 
-- (id)initWithNibName:(NSString*)name /* @"TabContents" */
+- (id)initWithContents:(TabContents*)contents {
+  // subclasses might override this to load a different nib
+  return [self initWithNibName:@"TabContents"
+                        bundle:[util bundleForResource:@"TabView" ofType:@"nib"]
+                      contents:contents];
+}
+
+- (id)initWithNibName:(NSString*)name
+               bundle:(NSBundle*)bundle
              contents:(TabContents*)contents {
-  if ((self = [super initWithNibName:name bundle:[NSBundle mainBundle]])) {
+  if ((self = [super initWithNibName:name bundle:bundle])) {
     contents_ = contents;
   }
   return self;

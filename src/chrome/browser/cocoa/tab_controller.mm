@@ -5,9 +5,10 @@
 #import "chrome/browser/cocoa/tab_controller.h"
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/tab_view.h"
+#import "util.h"
 
 static NSString* const kBrowserThemeDidChangeNotification =
-	@"BrowserThemeDidChangeNotification";
+  @"BrowserThemeDidChangeNotification";
 
 @implementation TabController
 
@@ -33,8 +34,11 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 - (id)init {
-  self = [super initWithNibName:@"TabView" bundle:[NSBundle mainBundle]];
-	assert(self);
+  // TODO: make it possible to load a custom nib (i.e. by providing a factory
+  // method which can be overridden)
+  NSBundle *bundle = [util bundleForResource:@"TabView" ofType:@"nib"];
+  self = [super initWithNibName:@"TabView" bundle:bundle];
+  assert(self);
   if (self != nil) {
     isIconShowing_ = YES;
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
@@ -98,7 +102,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
       [[MenuController alloc] initWithModel:contextMenuModel_.get()
                      useWithPopUpButtonCell:NO]);
   return [contextMenuController_ menu];*/
-	return nil;
+  return nil;
 }
 
 - (IBAction)closeTab:(id)sender {
@@ -159,7 +163,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 // Return a rough approximation of the number of icons we could fit in the
 // tab. We never actually do this, but it's a helpful guide for determining
 // how much space we have available.
-- (int)iconCapacity {
+- (CGFloat)iconCapacity {
   CGFloat width = NSMaxX([closeButton_ frame]) - NSMinX(originalIconFrame_);
   CGFloat iconWidth = NSWidth(originalIconFrame_);
 
@@ -177,10 +181,10 @@ static NSString* const kBrowserThemeDidChangeNotification =
   if ([self mini])
     return YES;
 
-  int iconCapacity = [self iconCapacity];
+  CGFloat iconCapacity = [self iconCapacity];
   if ([self selected])
-    return iconCapacity >= 2;
-  return iconCapacity >= 1;
+    return iconCapacity >= 2.0;
+  return iconCapacity >= 1.0;
 }
 
 // Returns YES if we should be showing the close button. The selected tab
@@ -188,7 +192,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 - (BOOL)shouldShowCloseButton {
   if ([self mini])
     return NO;
-  return ([self selected] || [self iconCapacity] >= 3);
+  return ([self selected] || [self iconCapacity] >= 3.0);
 }
 
 - (void)updateVisibility {
@@ -240,7 +244,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 
 - (void)updateTitleColor {
   NSColor* titleColor = [self selected] ? [NSColor blackColor] :
-																					[NSColor darkGrayColor];
+                                          [NSColor darkGrayColor];
   [titleView_ setTextColor:titleColor];
 }
 

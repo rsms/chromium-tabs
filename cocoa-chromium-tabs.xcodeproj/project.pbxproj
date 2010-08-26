@@ -3,63 +3,77 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */; };
-		3A1168C51225405000757641 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C21225404F00757641 /* common.c */; };
-		3A1168C61225405000757641 /* common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C41225404F00757641 /* common.mm */; };
-		3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* BrowserWindowController.mm */; };
-		3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
-		3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
-		3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
-		3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE31222D25400F1BB78 /* tab_strip_controller.mm */; };
-		3A236E041223497500D21E66 /* new_tab_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DD81223414F00D21E66 /* new_tab_button.mm */; };
-		3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */; };
-		3A286E741222C09900F1BB78 /* tab_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F21221AF58006D8305 /* tab_controller.mm */; };
-		3A286EA61222C8EA00F1BB78 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286EA51222C8EA00F1BB78 /* Carbon.framework */; };
-		3A286F841222CA2300F1BB78 /* tab_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* tab_view.mm */; };
-		3A286F931222CADC00F1BB78 /* themed_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F921222CADC00F1BB78 /* themed_window.mm */; };
-		3A286FA11222CDBE00F1BB78 /* BrowserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */; };
-		3A286FA21222CDBE00F1BB78 /* TabContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286F9F1222CDBE00F1BB78 /* TabContents.xib */; };
-		3A286FA31222CDBE00F1BB78 /* TabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FA01222CDBE00F1BB78 /* TabView.xib */; };
-		3A286FAE1222CFC200F1BB78 /* tab_window_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8E1222CAA000F1BB78 /* tab_window_controller.mm */; };
-		3A286FB51222D05400F1BB78 /* tab_strip_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8C1222CAA000F1BB78 /* tab_strip_view.mm */; };
-		3A286FC21222D10700F1BB78 /* url_drop_target.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.mm */; };
-		3A286FE91222D53500F1BB78 /* throbber_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* throbber_view.mm */; };
-		3A286FED1222D61900F1BB78 /* newtab_h.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEA1222D61900F1BB78 /* newtab_h.pdf */; };
-		3A286FEE1222D61900F1BB78 /* newtab_p.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEB1222D61900F1BB78 /* newtab_p.pdf */; };
-		3A286FEF1222D61900F1BB78 /* newtab.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEC1222D61900F1BB78 /* newtab.pdf */; };
-		3A286FF81222D85300F1BB78 /* nav.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FF71222D85300F1BB78 /* nav.pdf */; };
-		3A286FFC1222D94600F1BB78 /* throbber_waiting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFA1222D94600F1BB78 /* throbber_waiting.png */; };
-		3A286FFE1222D99B00F1BB78 /* sadfavicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFD1222D99B00F1BB78 /* sadfavicon.png */; };
-		3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921DA1221AA4B006D8305 /* page_transition_types.cc */; };
-		3A3921F61221AF68006D8305 /* hover_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921EE1221AF58006D8305 /* hover_button.mm */; };
-		3A3922201221B212006D8305 /* hover_close_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F01221AF58006D8305 /* hover_close_button.mm */; };
-		3A3927131221C596006D8305 /* background_gradient_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3927121221C596006D8305 /* background_gradient_view.mm */; };
-		3A3ED35112256F06009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
-		3A3ED68D1225CE7A009E2908 /* dynamic_annotations.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6771225CE7A009E2908 /* dynamic_annotations.c */; };
-		3A3ED6921225CE7A009E2908 /* GTMNSAnimation+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */; };
-		3A3ED6931225CE7A009E2908 /* GTMNSColor+Luminance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6841225CE7A009E2908 /* GTMNSColor+Luminance.m */; };
-		3A3ED6941225CE7A009E2908 /* GTMWindowSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6861225CE7A009E2908 /* GTMWindowSheetController.m */; };
-		3A3ED6961225CE7A009E2908 /* NSBezierPath+MCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED68A1225CE7A009E2908 /* NSBezierPath+MCAdditions.m */; };
-		3A3ED6AD1225CEB1009E2908 /* NSPasteboard+Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A21225CEB1009E2908 /* NSPasteboard+Utils.mm */; };
-		3A3ED6AE1225CEB1009E2908 /* NSScreen+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A41225CEB1009E2908 /* NSScreen+Utils.m */; };
-		3A3ED6AF1225CEB1009E2908 /* NSString+Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A61225CEB1009E2908 /* NSString+Utils.mm */; };
-		3A3ED6B01225CEB1009E2908 /* NSURL+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A81225CEB1009E2908 /* NSURL+Utils.m */; };
-		3A3ED6B11225CEB1009E2908 /* NSWorkspace+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6AA1225CEB1009E2908 /* NSWorkspace+Utils.m */; };
-		3A3ED74E1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED74D1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m */; };
-		3A3ED7691225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED7681225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m */; };
 		3A3ED8A71225DF45009E2908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		3A3ED9761225E0A7009E2908 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9751225E0A7009E2908 /* QuartzCore.framework */; };
-		3AA7188B122479CE005022BE /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
-		3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
-		3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
-		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		3A3ED9BE1225E320009E2908 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		3A3ED9BF1225E320009E2908 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A286EA51222C8EA00F1BB78 /* Carbon.framework */; };
+		3A3ED9C01225E320009E2908 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9751225E0A7009E2908 /* QuartzCore.framework */; };
+		3A3ED9C11225E32A009E2908 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C21225404F00757641 /* common.c */; };
+		3A3ED9C21225E32A009E2908 /* common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C41225404F00757641 /* common.mm */; };
+		3A3ED9C41225E32A009E2908 /* hover_close_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F01221AF58006D8305 /* hover_close_button.mm */; };
+		3A3ED9C51225E32A009E2908 /* hover_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921EE1221AF58006D8305 /* hover_button.mm */; };
+		3A3ED9C71225E32A009E2908 /* page_transition_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921DA1221AA4B006D8305 /* page_transition_types.cc */; };
+		3A3ED9C81225E32A009E2908 /* background_gradient_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3927121221C596006D8305 /* background_gradient_view.mm */; };
+		3A3ED9C91225E32A009E2908 /* tab_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F21221AF58006D8305 /* tab_controller.mm */; };
+		3A3ED9CA1225E32A009E2908 /* tab_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* tab_view.mm */; };
+		3A3ED9CB1225E32A009E2908 /* tab_window_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8E1222CAA000F1BB78 /* tab_window_controller.mm */; };
+		3A3ED9CC1225E32A009E2908 /* tab_strip_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8C1222CAA000F1BB78 /* tab_strip_view.mm */; };
+		3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F921222CADC00F1BB78 /* themed_window.mm */; };
+		3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.mm */; };
+		3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* throbber_view.mm */; };
+		3A3ED9D01225E32A009E2908 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
+		3A3ED9D11225E32A009E2908 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
+		3A3ED9D21225E32A009E2908 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
+		3A3ED9D31225E32A009E2908 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
+		3A3ED9D41225E32A009E2908 /* tab_strip_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE31222D25400F1BB78 /* tab_strip_controller.mm */; };
+		3A3ED9D51225E32A009E2908 /* new_tab_button.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DD81223414F00D21E66 /* new_tab_button.mm */; };
+		3A3ED9D61225E32A009E2908 /* tab_strip_model_observer_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */; };
+		3A3ED9D71225E32A009E2908 /* BrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* BrowserWindowController.mm */; };
+		3A3ED9D81225E32A009E2908 /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
+		3A3ED9D91225E32A009E2908 /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
+		3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */; };
+		3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6841225CE7A009E2908 /* GTMNSColor+Luminance.m */; };
+		3A3ED9DD1225E32A009E2908 /* GTMWindowSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6861225CE7A009E2908 /* GTMWindowSheetController.m */; };
+		3A3ED9DE1225E32A009E2908 /* NSBezierPath+MCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED68A1225CE7A009E2908 /* NSBezierPath+MCAdditions.m */; };
+		3A3ED9DF1225E32A009E2908 /* NSPasteboard+Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A21225CEB1009E2908 /* NSPasteboard+Utils.mm */; };
+		3A3ED9E01225E32A009E2908 /* NSScreen+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A41225CEB1009E2908 /* NSScreen+Utils.m */; };
+		3A3ED9E11225E32A009E2908 /* NSString+Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A61225CEB1009E2908 /* NSString+Utils.mm */; };
+		3A3ED9E21225E32A009E2908 /* NSURL+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6A81225CEB1009E2908 /* NSURL+Utils.m */; };
+		3A3ED9E31225E32A009E2908 /* NSWorkspace+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6AA1225CEB1009E2908 /* NSWorkspace+Utils.m */; };
+		3A3ED9E41225E32A009E2908 /* GTMNSBezierPath+CGPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED74D1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m */; };
+		3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED7681225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m */; };
+		3A3ED9E81225E3C2009E2908 /* BrowserWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */; };
+		3A3ED9E91225E3C2009E2908 /* TabContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286F9F1222CDBE00F1BB78 /* TabContents.xib */; };
+		3A3ED9EA1225E3C2009E2908 /* TabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FA01222CDBE00F1BB78 /* TabView.xib */; };
+		3A3ED9EB1225E3C2009E2908 /* newtab_h.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEA1222D61900F1BB78 /* newtab_h.pdf */; };
+		3A3ED9EC1225E3C2009E2908 /* newtab_p.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEB1222D61900F1BB78 /* newtab_p.pdf */; };
+		3A3ED9ED1225E3C2009E2908 /* newtab.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEC1222D61900F1BB78 /* newtab.pdf */; };
+		3A3ED9EE1225E3C2009E2908 /* nav.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FF71222D85300F1BB78 /* nav.pdf */; };
+		3A3ED9EF1225E3C2009E2908 /* throbber_waiting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFA1222D94600F1BB78 /* throbber_waiting.png */; };
+		3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFD1222D99B00F1BB78 /* sadfavicon.png */; };
+		3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
+		3A3EDA501225EAE7009E2908 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
+		3A3EDA521225EAEA009E2908 /* ChromiumTabs.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
+		3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.mm */; };
+		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
+		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
+		3A3EDA9D1225EF84009E2908 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* util.h */; };
+		3A3EDA9E1225EF84009E2908 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* util.m */; };
+		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3A3EDA541225EB02009E2908 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A3ED9821225E27E009E2908 /* ChromiumTabs */;
+			remoteInfo = ChromiumTabs;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3A286CE912229A3400F1BB78 /* Copy Frameworks */ = {
@@ -68,6 +82,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3A3EDA521225EAEA009E2908 /* ChromiumTabs.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,13 +90,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		256AC3D80F4B6AC300CF3369 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3A1168C21225404F00757641 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
@@ -135,13 +145,6 @@
 		3A3927111221C596006D8305 /* background_gradient_view.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = background_gradient_view.h; sourceTree = "<group>"; };
 		3A3927121221C596006D8305 /* background_gradient_view.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = background_gradient_view.mm; sourceTree = "<group>"; };
 		3A3ED35012256F06009E2908 /* throbber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber.png; path = gfx/throbber.png; sourceTree = "<group>"; };
-		3A3ED6421225C817009E2908 /* basictypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basictypes.h; path = base/basictypes.h; sourceTree = "<group>"; };
-		3A3ED64C1225C93E009E2908 /* scoped_nsdisable_screen_updates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scoped_nsdisable_screen_updates.h; path = base/scoped_nsdisable_screen_updates.h; sourceTree = "<group>"; };
-		3A3ED64D1225C93E009E2908 /* scoped_nsobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scoped_nsobject.h; path = base/scoped_nsobject.h; sourceTree = "<group>"; };
-		3A3ED6551225CA89009E2908 /* scoped_cftyperef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scoped_cftyperef.h; path = base/scoped_cftyperef.h; sourceTree = "<group>"; };
-		3A3ED6601225CB0E009E2908 /* cocoa_protocols_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocoa_protocols_mac.h; path = base/cocoa_protocols_mac.h; sourceTree = "<group>"; };
-		3A3ED6771225CE7A009E2908 /* dynamic_annotations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dynamic_annotations.c; sourceTree = "<group>"; };
-		3A3ED6791225CE7A009E2908 /* dynamic_annotations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dynamic_annotations.h; sourceTree = "<group>"; };
 		3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSAnimation+Duration.h"; sourceTree = "<group>"; };
 		3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSAnimation+Duration.m"; sourceTree = "<group>"; };
 		3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSColor+Luminance.h"; sourceTree = "<group>"; };
@@ -160,9 +163,6 @@
 		3A3ED6A81225CEB1009E2908 /* NSURL+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Utils.m"; sourceTree = "<group>"; };
 		3A3ED6A91225CEB1009E2908 /* NSWorkspace+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWorkspace+Utils.h"; sourceTree = "<group>"; };
 		3A3ED6AA1225CEB1009E2908 /* NSWorkspace+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWorkspace+Utils.m"; sourceTree = "<group>"; };
-		3A3ED6DE1225CFAD009E2908 /* observer_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = observer_list.h; path = base/observer_list.h; sourceTree = "<group>"; };
-		3A3ED7031225D6A3009E2908 /* scoped_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scoped_ptr.h; path = base/scoped_ptr.h; sourceTree = "<group>"; };
-		3A3ED7061225D730009E2908 /* stl_util-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "stl_util-inl.h"; path = "base/stl_util-inl.h"; sourceTree = "<group>"; };
 		3A3ED7071225D7A6009E2908 /* build_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = build_config.h; sourceTree = "<group>"; };
 		3A3ED74B1225DDBE009E2908 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		3A3ED74C1225DDBE009E2908 /* GTMNSBezierPath+CGPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSBezierPath+CGPath.h"; sourceTree = "<group>"; };
@@ -171,6 +171,26 @@
 		3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMFadeTruncatingTextFieldCell.h; sourceTree = "<group>"; };
 		3A3ED7681225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMFadeTruncatingTextFieldCell.m; sourceTree = "<group>"; };
 		3A3ED9751225E0A7009E2908 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3A3ED97D1225E116009E2908 /* ChromiumTabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromiumTabs.h; sourceTree = "<group>"; };
+		3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ChromiumTabs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A3ED9841225E27E009E2908 /* ChromiumTabs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChromiumTabs-Info.plist"; sourceTree = "<group>"; };
+		3A3EDA331225E911009E2908 /* basictypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basictypes.h; sourceTree = "<group>"; };
+		3A3EDA341225E911009E2908 /* cocoa_protocols_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoa_protocols_mac.h; sourceTree = "<group>"; };
+		3A3EDA351225E911009E2908 /* observer_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = observer_list.h; sourceTree = "<group>"; };
+		3A3EDA361225E911009E2908 /* scoped_cftyperef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_cftyperef.h; sourceTree = "<group>"; };
+		3A3EDA371225E911009E2908 /* scoped_nsdisable_screen_updates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_nsdisable_screen_updates.h; sourceTree = "<group>"; };
+		3A3EDA381225E911009E2908 /* scoped_nsobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_nsobject.h; sourceTree = "<group>"; };
+		3A3EDA391225E911009E2908 /* scoped_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_ptr.h; sourceTree = "<group>"; };
+		3A3EDA3A1225E911009E2908 /* stl_util-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "stl_util-inl.h"; sourceTree = "<group>"; };
+		3A3EDA701225EBBB009E2908 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3A3EDA711225EBBB009E2908 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		3A3EDA731225EBBB009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3A3EDA751225EBBB009E2908 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3A3EDA761225EBBB009E2908 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A3EDA771225EBBB009E2908 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A3EDA9B1225EF84009E2908 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		3A3EDA9C1225EF84009E2908 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
+		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
@@ -180,18 +200,26 @@
 		3AEE19441222DC5B009DA438 /* tab_strip_model_order_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model_order_controller.h; sourceTree = "<group>"; };
 		3AEE19521222DDEB009DA438 /* TabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabContents.h; sourceTree = "<group>"; };
 		3AEE19531222DDEB009DA438 /* TabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TabContents.mm; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* example-app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "example-app-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3A3ED9811225E27E009E2908 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3ED9BE1225E320009E2908 /* Cocoa.framework in Frameworks */,
+				3A3ED9BF1225E320009E2908 /* Carbon.framework in Frameworks */,
+				3A3ED9C01225E320009E2908 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3A3ED8A71225DF45009E2908 /* Cocoa.framework in Frameworks */,
-				3A286EA61222C8EA00F1BB78 /* Carbon.framework in Frameworks */,
-				3A3ED9761225E0A7009E2908 /* QuartzCore.framework in Frameworks */,
+				3A3EDA501225EAE7009E2908 /* ChromiumTabs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,18 +234,20 @@
 				3A1168C31225404F00757641 /* common.h */,
 				3A1168C21225404F00757641 /* common.c */,
 				3A1168C41225404F00757641 /* common.mm */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
+				3A3EDA9B1225EF84009E2908 /* util.h */,
+				3A3EDA9C1225EF84009E2908 /* util.m */,
+				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
 				3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */,
 				3A1168D6122543A900757641 /* BrowserCommands.h */,
-				256AC3D80F4B6AC300CF3369 /* AppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* AppDelegate.mm */,
 				3AA71889122479CE005022BE /* Browser.h */,
 				3AA7188A122479CE005022BE /* Browser.mm */,
 				3A1CF95F12235704008A3B8C /* BrowserWindowController.h */,
 				3A1CF96012235704008A3B8C /* BrowserWindowController.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
 				3AEE19531222DDEB009DA438 /* TabContents.mm */,
+				3A3EDA321225E911009E2908 /* base */,
+				3A3ED6741225CE7A009E2908 /* third_party */,
 				3A3921D81221AA4B006D8305 /* chrome */,
 			);
 			path = src;
@@ -227,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* Chromium Tabs.app */,
+				3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -234,6 +265,7 @@
 		29B97314FDCFA39411CA2CEA /* cocoa-chromium-tabs */ = {
 			isa = PBXGroup;
 			children = (
+				3A3EDA6E1225EBBB009E2908 /* examples */,
 				080E96DDFE201D6D7F000001 /* src */,
 				29B97317FDCFA39411CA2CEA /* resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -246,12 +278,11 @@
 			isa = PBXGroup;
 			children = (
 				3A286FF01222D61D00F1BB78 /* gfx */,
-				8D1107310486CEB800E47090 /* example-app-Info.plist */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				3A3ED9841225E27E009E2908 /* ChromiumTabs-Info.plist */,
 				3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */,
 				3A286F9F1222CDBE00F1BB78 /* TabContents.xib */,
 				3A286FA01222CDBE00F1BB78 /* TabView.xib */,
+				3A3EDAA71225F192009E2908 /* Localizable.strings */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -285,8 +316,6 @@
 		3A3921D81221AA4B006D8305 /* chrome */ = {
 			isa = PBXGroup;
 			children = (
-				3A3ED6741225CE7A009E2908 /* third_party */,
-				3A3ED6391225C7E9009E2908 /* base */,
 				3A3921EB1221AF58006D8305 /* browser */,
 				3A3921D91221AA4B006D8305 /* common */,
 			);
@@ -349,39 +378,14 @@
 			path = cocoa;
 			sourceTree = "<group>";
 		};
-		3A3ED6391225C7E9009E2908 /* base */ = {
-			isa = PBXGroup;
-			children = (
-				3A3ED6421225C817009E2908 /* basictypes.h */,
-				3A3ED64D1225C93E009E2908 /* scoped_nsobject.h */,
-				3A3ED6551225CA89009E2908 /* scoped_cftyperef.h */,
-				3A3ED7031225D6A3009E2908 /* scoped_ptr.h */,
-				3A3ED64C1225C93E009E2908 /* scoped_nsdisable_screen_updates.h */,
-				3A3ED7061225D730009E2908 /* stl_util-inl.h */,
-				3A3ED6601225CB0E009E2908 /* cocoa_protocols_mac.h */,
-				3A3ED6DE1225CFAD009E2908 /* observer_list.h */,
-			);
-			name = base;
-			sourceTree = "<group>";
-		};
 		3A3ED6741225CE7A009E2908 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
 				3A3ED69E1225CEB1009E2908 /* mozilla */,
-				3A3ED6761225CE7A009E2908 /* dynamic_annotations */,
 				3A3ED67F1225CE7A009E2908 /* gtm-subset */,
 				3A3ED6871225CE7A009E2908 /* molokocacao */,
 			);
 			path = third_party;
-			sourceTree = "<group>";
-		};
-		3A3ED6761225CE7A009E2908 /* dynamic_annotations */ = {
-			isa = PBXGroup;
-			children = (
-				3A3ED6771225CE7A009E2908 /* dynamic_annotations.c */,
-				3A3ED6791225CE7A009E2908 /* dynamic_annotations.h */,
-			);
-			path = dynamic_annotations;
 			sourceTree = "<group>";
 		};
 		3A3ED67F1225CE7A009E2908 /* gtm-subset */ = {
@@ -429,6 +433,42 @@
 			path = mozilla;
 			sourceTree = "<group>";
 		};
+		3A3EDA321225E911009E2908 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				3A3EDA331225E911009E2908 /* basictypes.h */,
+				3A3EDA341225E911009E2908 /* cocoa_protocols_mac.h */,
+				3A3EDA351225E911009E2908 /* observer_list.h */,
+				3A3EDA361225E911009E2908 /* scoped_cftyperef.h */,
+				3A3EDA371225E911009E2908 /* scoped_nsdisable_screen_updates.h */,
+				3A3EDA381225E911009E2908 /* scoped_nsobject.h */,
+				3A3EDA391225E911009E2908 /* scoped_ptr.h */,
+				3A3EDA3A1225E911009E2908 /* stl_util-inl.h */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		3A3EDA6E1225EBBB009E2908 /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				3A3EDA6F1225EBBB009E2908 /* simple-app */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		3A3EDA6F1225EBBB009E2908 /* simple-app */ = {
+			isa = PBXGroup;
+			children = (
+				3A3EDA701225EBBB009E2908 /* AppDelegate.h */,
+				3A3EDA711225EBBB009E2908 /* AppDelegate.mm */,
+				3A3EDA721225EBBB009E2908 /* InfoPlist.strings */,
+				3A3EDA741225EBBB009E2908 /* MainMenu.xib */,
+				3A3EDA761225EBBB009E2908 /* Info.plist */,
+				3A3EDA771225EBBB009E2908 /* main.m */,
+			);
+			path = "simple-app";
+			sourceTree = "<group>";
+		};
 		3AEE19401222DC5B009DA438 /* tabs */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,7 +482,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		3A3ED97E1225E27E009E2908 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3EDA9D1225EF84009E2908 /* util.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		3A3ED9821225E27E009E2908 /* ChromiumTabs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A3ED9871225E27F009E2908 /* Build configuration list for PBXNativeTarget "ChromiumTabs" */;
+			buildPhases = (
+				3A3ED97E1225E27E009E2908 /* Headers */,
+				3A3ED97F1225E27E009E2908 /* Resources */,
+				3A3ED9801225E27E009E2908 /* Sources */,
+				3A3ED9811225E27E009E2908 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChromiumTabs;
+			productName = ChromiumTabs;
+			productReference = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		8D1107260486CEB800E47090 /* Chromium Tabs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Chromium Tabs" */;
@@ -455,6 +524,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3A3EDA551225EB02009E2908 /* PBXTargetDependency */,
 			);
 			name = "Chromium Tabs";
 			productInstallPath = "$(HOME)/Applications";
@@ -467,107 +537,215 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocoa-chromium-tabs" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* cocoa-chromium-tabs */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Chromium Tabs */,
+				3A3ED9821225E27E009E2908 /* ChromiumTabs */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3A3ED97F1225E27E009E2908 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3ED9E81225E3C2009E2908 /* BrowserWindow.xib in Resources */,
+				3A3ED9E91225E3C2009E2908 /* TabContents.xib in Resources */,
+				3A3ED9EA1225E3C2009E2908 /* TabView.xib in Resources */,
+				3A3ED9EB1225E3C2009E2908 /* newtab_h.pdf in Resources */,
+				3A3ED9EC1225E3C2009E2908 /* newtab_p.pdf in Resources */,
+				3A3ED9ED1225E3C2009E2908 /* newtab.pdf in Resources */,
+				3A3ED9EE1225E3C2009E2908 /* nav.pdf in Resources */,
+				3A3ED9EF1225E3C2009E2908 /* throbber_waiting.png in Resources */,
+				3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */,
+				3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */,
+				3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				3A286FA11222CDBE00F1BB78 /* BrowserWindow.xib in Resources */,
-				3A286FA21222CDBE00F1BB78 /* TabContents.xib in Resources */,
-				3A286FA31222CDBE00F1BB78 /* TabView.xib in Resources */,
-				3A286FED1222D61900F1BB78 /* newtab_h.pdf in Resources */,
-				3A286FEE1222D61900F1BB78 /* newtab_p.pdf in Resources */,
-				3A286FEF1222D61900F1BB78 /* newtab.pdf in Resources */,
-				3A286FF81222D85300F1BB78 /* nav.pdf in Resources */,
-				3A286FFC1222D94600F1BB78 /* throbber_waiting.png in Resources */,
-				3A286FFE1222D99B00F1BB78 /* sadfavicon.png in Resources */,
-				3A3ED35112256F06009E2908 /* throbber.png in Resources */,
+				3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3A3ED9801225E27E009E2908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3ED9C11225E32A009E2908 /* common.c in Sources */,
+				3A3ED9C21225E32A009E2908 /* common.mm in Sources */,
+				3A3ED9C41225E32A009E2908 /* hover_close_button.mm in Sources */,
+				3A3ED9C51225E32A009E2908 /* hover_button.mm in Sources */,
+				3A3ED9C71225E32A009E2908 /* page_transition_types.cc in Sources */,
+				3A3ED9C81225E32A009E2908 /* background_gradient_view.mm in Sources */,
+				3A3ED9C91225E32A009E2908 /* tab_controller.mm in Sources */,
+				3A3ED9CA1225E32A009E2908 /* tab_view.mm in Sources */,
+				3A3ED9CB1225E32A009E2908 /* tab_window_controller.mm in Sources */,
+				3A3ED9CC1225E32A009E2908 /* tab_strip_view.mm in Sources */,
+				3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */,
+				3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */,
+				3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */,
+				3A3ED9D01225E32A009E2908 /* TabContents.mm in Sources */,
+				3A3ED9D11225E32A009E2908 /* tab_strip_model.mm in Sources */,
+				3A3ED9D21225E32A009E2908 /* tab_strip_model_order_controller.mm in Sources */,
+				3A3ED9D31225E32A009E2908 /* tab_contents_controller.mm in Sources */,
+				3A3ED9D41225E32A009E2908 /* tab_strip_controller.mm in Sources */,
+				3A3ED9D51225E32A009E2908 /* new_tab_button.mm in Sources */,
+				3A3ED9D61225E32A009E2908 /* tab_strip_model_observer_bridge.mm in Sources */,
+				3A3ED9D71225E32A009E2908 /* BrowserWindowController.mm in Sources */,
+				3A3ED9D81225E32A009E2908 /* fast_resize_view.mm in Sources */,
+				3A3ED9D91225E32A009E2908 /* Browser.mm in Sources */,
+				3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */,
+				3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */,
+				3A3ED9DD1225E32A009E2908 /* GTMWindowSheetController.m in Sources */,
+				3A3ED9DE1225E32A009E2908 /* NSBezierPath+MCAdditions.m in Sources */,
+				3A3ED9DF1225E32A009E2908 /* NSPasteboard+Utils.mm in Sources */,
+				3A3ED9E01225E32A009E2908 /* NSScreen+Utils.m in Sources */,
+				3A3ED9E11225E32A009E2908 /* NSString+Utils.mm in Sources */,
+				3A3ED9E21225E32A009E2908 /* NSURL+Utils.m in Sources */,
+				3A3ED9E31225E32A009E2908 /* NSWorkspace+Utils.m in Sources */,
+				3A3ED9E41225E32A009E2908 /* GTMNSBezierPath+CGPath.m in Sources */,
+				3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
+				3A3EDA9E1225EF84009E2908 /* util.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A1168C51225405000757641 /* common.c in Sources */,
-				3A1168C61225405000757641 /* common.mm in Sources */,
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				3A3922201221B212006D8305 /* hover_close_button.mm in Sources */,
-				3A3921F61221AF68006D8305 /* hover_button.mm in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* AppDelegate.mm in Sources */,
-				3A3921DC1221AA4B006D8305 /* page_transition_types.cc in Sources */,
-				3A3927131221C596006D8305 /* background_gradient_view.mm in Sources */,
-				3A286E741222C09900F1BB78 /* tab_controller.mm in Sources */,
-				3A286F841222CA2300F1BB78 /* tab_view.mm in Sources */,
-				3A286FAE1222CFC200F1BB78 /* tab_window_controller.mm in Sources */,
-				3A286FB51222D05400F1BB78 /* tab_strip_view.mm in Sources */,
-				3A286F931222CADC00F1BB78 /* themed_window.mm in Sources */,
-				3A286FC21222D10700F1BB78 /* url_drop_target.mm in Sources */,
-				3A286FE91222D53500F1BB78 /* throbber_view.mm in Sources */,
-				3AEE19541222DDEB009DA438 /* TabContents.mm in Sources */,
-				3AEE19451222DC5B009DA438 /* tab_strip_model.mm in Sources */,
-				3A236D7B1223328D00D21E66 /* tab_strip_model_order_controller.mm in Sources */,
-				3A236DA01223375D00D21E66 /* tab_contents_controller.mm in Sources */,
-				3A236DA812233A2E00D21E66 /* tab_strip_controller.mm in Sources */,
-				3A236E041223497500D21E66 /* new_tab_button.mm in Sources */,
-				3A236E07122349A500D21E66 /* tab_strip_model_observer_bridge.mm in Sources */,
-				3A1CF96112235704008A3B8C /* BrowserWindowController.mm in Sources */,
-				3A1CF98912235CEE008A3B8C /* fast_resize_view.mm in Sources */,
-				3AA7188B122479CE005022BE /* Browser.mm in Sources */,
-				3A3ED68D1225CE7A009E2908 /* dynamic_annotations.c in Sources */,
-				3A3ED6921225CE7A009E2908 /* GTMNSAnimation+Duration.m in Sources */,
-				3A3ED6931225CE7A009E2908 /* GTMNSColor+Luminance.m in Sources */,
-				3A3ED6941225CE7A009E2908 /* GTMWindowSheetController.m in Sources */,
-				3A3ED6961225CE7A009E2908 /* NSBezierPath+MCAdditions.m in Sources */,
-				3A3ED6AD1225CEB1009E2908 /* NSPasteboard+Utils.mm in Sources */,
-				3A3ED6AE1225CEB1009E2908 /* NSScreen+Utils.m in Sources */,
-				3A3ED6AF1225CEB1009E2908 /* NSString+Utils.mm in Sources */,
-				3A3ED6B01225CEB1009E2908 /* NSURL+Utils.m in Sources */,
-				3A3ED6B11225CEB1009E2908 /* NSWorkspace+Utils.m in Sources */,
-				3A3ED74E1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m in Sources */,
-				3A3ED7691225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
+				3A3EDA7C1225EBFF009E2908 /* main.m in Sources */,
+				3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3A3EDA551225EB02009E2908 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A3ED9821225E27E009E2908 /* ChromiumTabs */;
+			targetProxy = 3A3EDA541225EB02009E2908 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
-		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+		3A3EDA721225EBBB009E2908 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C165DFE840E0CC02AAC07 /* InfoPlist.strings */,
+				3A3EDA731225EBBB009E2908 /* English */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+		3A3EDA741225EBBB009E2908 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1DDD58150DA1D0A300B32029 /* MainMenu.xib */,
+				3A3EDA751225EBBB009E2908 /* English */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3A3EDAA71225F192009E2908 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A3EDAA81225F192009E2908 /* English */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3A3ED9851225E27F009E2908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = src;
+				INFOPLIST_FILE = "resources/ChromiumTabs-Info.plist";
+				INSTALL_PATH = "@rpath";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = ChromiumTabs;
+			};
+			name = Debug;
+		};
+		3A3ED9861225E27F009E2908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = YES;
+				GCC_ENABLE_SSE42_EXTENSIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = src;
+				INFOPLIST_FILE = "resources/ChromiumTabs-Info.plist";
+				INSTALL_PATH = "@rpath";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ChromiumTabs;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -595,11 +773,8 @@
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					src,
-					src/chrome,
-				);
-				INFOPLIST_FILE = "resources/example-app-Info.plist";
+				HEADER_SEARCH_PATHS = src;
+				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -636,11 +811,8 @@
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					src,
-					src/chrome,
-				);
-				INFOPLIST_FILE = "resources/example-app-Info.plist";
+				HEADER_SEARCH_PATHS = src;
+				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -681,6 +853,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3A3ED9871225E27F009E2908 /* Build configuration list for PBXNativeTarget "ChromiumTabs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A3ED9851225E27F009E2908 /* Debug */,
+				3A3ED9861225E27F009E2908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Chromium Tabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

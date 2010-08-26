@@ -1,0 +1,7 @@
+/* 
+Strings are used by the framework through the L10n function in util.h
+*/
+
+/* Default title of an empty tab */
+"New Tab" = "New Tab";
+

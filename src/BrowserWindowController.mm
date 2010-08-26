@@ -30,49 +30,49 @@
 
 // Load the browser window nib and do initialization. Note that the nib also
 // sets this controller up as the window's delegate.
-- (id)initWithWindowNibName:(NSString *)windowNibName
-										browser:(Browser*)browser {
-	if (!(self = [super initWithWindowNibName:windowNibName owner:self]))
-		return nil;
+- (id)initWithWindowNibPath:(NSString *)windowNibPath
+                    browser:(Browser*)browser {
+  if (!(self = [super initWithWindowNibPath:windowNibPath owner:self]))
+    return nil;
 
-	// Set initialization boolean state so subroutines can act accordingly
-	initializing_ = YES;
+  // Set initialization boolean state so subroutines can act accordingly
+  initializing_ = YES;
 
-	// Keep a reference to the browser
-	browser_ = [browser retain];
+  // Keep a reference to the browser
+  browser_ = [browser retain];
 
-	// Observe tabs
-	tabStripObserver_ = 
-			new TabStripModelObserverBridge([browser_ tabStripModel], self);
+  // Observe tabs
+  tabStripObserver_ = 
+      new TabStripModelObserverBridge([browser_ tabStripModel], self);
 
-	// Note: the below statement including [self window] implicitly loads the
-	// window and thus initializes IBOutlets, needed later. If [self window] is
-	// not called (i.e. code removed), substitute the loading with a call to
-	// [self loadWindow]
+  // Note: the below statement including [self window] implicitly loads the
+  // window and thus initializes IBOutlets, needed later. If [self window] is
+  // not called (i.e. code removed), substitute the loading with a call to
+  // [self loadWindow]
 
-	// Sets the window to not have rounded corners, which prevents the resize
-	// control from being inset slightly and looking ugly.
-	NSWindow *window = [self window];
-	if ([window respondsToSelector:@selector(setBottomCornerRounded:)]) {
-		[window setBottomCornerRounded:NO];
-	}
+  // Sets the window to not have rounded corners, which prevents the resize
+  // control from being inset slightly and looking ugly.
+  NSWindow *window = [self window];
+  if ([window respondsToSelector:@selector(setBottomCornerRounded:)]) {
+    [window setBottomCornerRounded:NO];
+  }
   [[window contentView] setAutoresizesSubviews:YES];
 
-	// Create a tab strip controller
+  // Create a tab strip controller
   tabStripController_ =
-			[[TabStripController alloc] initWithView:self.tabStripView
+      [[TabStripController alloc] initWithView:self.tabStripView
                                     switchView:self.tabContentArea
                                        browser:browser_];
 
-	initializing_ = NO;
-	return self;
+  initializing_ = NO;
+  return self;
 }
 
 
 -(void)dealloc {
-	DLOG("dealloc window controller");
-	// Close all tabs
-	//[browser_ closeAllTabs]; // TODO
+  DLOG("dealloc window controller");
+  // Close all tabs
+  //[browser_ closeAllTabs]; // TODO
 
   // Explicitly release |fullscreenController_| here, as it may call back to
   // this BWC in |-dealloc|.  We are required to call |-exitFullscreen| before
@@ -80,16 +80,16 @@
   //[fullscreenController_ exitFullscreen]; // TODO
   //fullscreenController_.reset();
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[browser_ release];
-	delete tabStripObserver_;
-	[super dealloc];
+  [browser_ release];
+  delete tabStripObserver_;
+  [super dealloc];
 }
 
 
 - (BOOL)isFullscreen {
-	return NO; // TODO fullscreen capabilities
+  return NO; // TODO fullscreen capabilities
 }
 
 
@@ -118,10 +118,10 @@
 
 
 -(IBAction)closeTab:(id)sender {
-	TabStripModel *tabStripModel = browser_.tabStripModel;
-	//tabStripModel->CloseAllTabs();
-	tabStripModel->CloseTabContentsAt(tabStripModel->selected_index(),
-																		TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+  TabStripModel *tabStripModel = browser_.tabStripModel;
+  //tabStripModel->CloseAllTabs();
+  tabStripModel->CloseTabContentsAt(tabStripModel->selected_index(),
+                                    TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
 }
 
 
@@ -134,8 +134,8 @@
     return NO;
   }
 
-	// here we could for instance check (and deny) dragging a tab from a normal
-	// window into a special window (e.g. pop-up or similar)
+  // here we could for instance check (and deny) dragging a tab from a normal
+  // window into a special window (e.g. pop-up or similar)
 
   return YES;
 }
@@ -224,8 +224,8 @@
   // Disable screen updates so that this appears as a single visual change.
   base::ScopedNSDisableScreenUpdates disabler;
 
-	// Keep a local ref to the tab strip model object
-	TabStripModel *tabStripModel = [browser_ tabStripModel];
+  // Keep a local ref to the tab strip model object
+  TabStripModel *tabStripModel = [browser_ tabStripModel];
 
   // Fetch the tab contents for the tab being dragged.
   int index = [tabStripController_ modelIndexForTabView:tabView];
@@ -239,7 +239,7 @@
   NSScreen* screen = [sourceWindow screen];
   windowRect.origin.y =
       [screen frame].size.height - windowRect.size.height - windowRect.origin.y;
-	
+  
   //gfx::Rect browserRect(windowRect.origin.x, windowRect.origin.y,
   //                      windowRect.size.width, windowRect.size.height);
 
@@ -258,10 +258,10 @@
   // dragged.
   //DockInfo dockInfo;
   Browser* newBrowser =
-			[tabStripModel->delegate() createNewStripWithContents:contents
-																							 windowBounds:windowRect
-																									 maximize:false];
-	//CreateNewStripWithContents(contents, windowRect, dockInfo, false);
+      [tabStripModel->delegate() createNewStripWithContents:contents
+                                               windowBounds:windowRect
+                                                   maximize:false];
+  //CreateNewStripWithContents(contents, windowRect, dockInfo, false);
 
   // Propagate the tab pinned state of the new tab (which is the only tab in
   // this new window).
@@ -373,7 +373,7 @@
   //CGFloat floatingBarHeight = [self floatingBarHeight];
   // In fullscreen mode, |yOffset| accounts for the sliding position of the
   // floating bar and the extra offset needed to dodge the menu bar.
-	CGFloat yOffset = 0;
+  CGFloat yOffset = 0;
   //CGFloat yOffset = isFullscreen ?
   //    (floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
   //        [fullscreenController_ floatingBarVerticalOffset]) : 0;
@@ -470,7 +470,7 @@
   // If the relayout shifts the content area up or down, let the renderer know.
   if (contentShifted) {
     if (TabContents* contents = [browser_ selectedTabContents]) {
-			[contents viewFrameDidChange:newFrame];
+      [contents viewFrameDidChange:newFrame];
     }
   }
 }
@@ -523,13 +523,13 @@
   if (browser_.tabStripModel->HasNonPhantomTabs()) {
     // Tab strip isn't empty.  Hide the frame (so it appears to have closed
     // immediately) and close all the tabs, allowing them to shut down. When the
-		// tab strip is empty we'll be called back again.
+    // tab strip is empty we'll be called back again.
     [[self window] orderOut:self];
     [browser_ windowDidBeginToClose];
     return NO;
   }
 
-	// the tab strip is empty, it's ok to close the window
+  // the tab strip is empty, it's ok to close the window
   return YES;
 }
 
@@ -567,7 +567,7 @@
                                 atIndex:(NSInteger)index;*/
 
 - (void)tabStripEmpty {
-	[browser_ closeWindow];
+  [browser_ closeWindow];
 }
 
 

@@ -162,9 +162,9 @@
 // Returns the host's OS version as returned by the 'sysv' gestalt selector,
 // 10.x.y = 0x000010xy
 //
-+ (long)systemVersion
++ (int32_t)systemVersion
 {
-  static long sSystemVersion = 0;
+  static int32_t sSystemVersion = 0;
   if (!sSystemVersion)
     Gestalt(gestaltSystemVersion, &sSystemVersion);
   return sSystemVersion;

@@ -11,8 +11,8 @@ class TabStripModel;
 // A Browser instance has one TabStripModel.
 
 @interface Browser : NSObject <TabStripModelDelegate> {
-	TabStripModel *tabStripModel_;
-	BrowserWindowController *windowController_;
+  TabStripModel *tabStripModel_;
+  BrowserWindowController *windowController_;
 }
 
 // The tab strip model
@@ -31,12 +31,19 @@ class TabStripModel;
 // Creates and opens a new window. (retained)
 +(Browser*)openEmptyWindow;
 
+// Creates a new window controller. The default implementation will create a
+// controller loaded with a nib called "BrowserWindow". If the nib can't be
+// found in the main bundle, a fallback nib will be loaded from the framework.
+// This is usually enough since all UI which normally is customized is comprised
+// within each tab (TabContents view).
+-(BrowserWindowController *)createWindowController;
+
 // Commands
 -(void)newWindow;
 -(void)closeWindow;
 -(TabContents*)addTabContents:(TabContents*)contents
-											atIndex:(int)index
-								 inForeground:(BOOL)foreground;
+                      atIndex:(int)index
+                 inForeground:(BOOL)foreground;
 -(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
 -(TabContents*)addBlankTabInForeground:(BOOL)foreground;
 -(TabContents*)addBlankTab; // InForeground:YES
@@ -50,7 +57,7 @@ class TabStripModel;
 -(void)duplicateTab;
 
 -(void)executeCommand:(int)cmd
-			withDisposition:(WindowOpenDisposition)disposition;
+      withDisposition:(WindowOpenDisposition)disposition;
 -(void)executeCommand:(int)cmd; // withDisposition:CURRENT_TAB
 
 // callbacks

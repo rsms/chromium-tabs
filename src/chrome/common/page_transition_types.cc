@@ -4,8 +4,6 @@
 
 #include "chrome/common/page_transition_types.h"
 
-//#include "base/logging.h" [RA]
-
 // static
 PageTransition::Type PageTransition::FromInt(int32 type) {
   if (!ValidType(type)) {

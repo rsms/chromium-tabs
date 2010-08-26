@@ -459,7 +459,7 @@ private:
   // tab opened a sheet while it was in the background and now becomes active).
   TabContents* newTab = tabStripModel_->GetTabContentsAt(modelIndex);
   assert(newTab);
-	// TODO: Possibly need to implement this for sheets to function properly
+  // TODO: Possibly need to implement this for sheets to function properly
   /*if (newTab) {
     TabContents::ConstrainedWindowList::iterator it, end;
     end = newTab->constrained_window_end();
@@ -946,9 +946,7 @@ private:
   // Make a new tab. Load the contents of this tab from the nib and associate
   // the new controller with |contents| so it can be looked up later.
   TabContentsController* contentsController =
-      [[[TabContentsController alloc] initWithNibName:@"TabContents"
-                                             contents:contents]
-          autorelease];
+      [[[TabContentsController alloc] initWithContents:contents] autorelease];
   [tabContentsArray_ insertObject:contentsController atIndex:index];
 
   // Make a new tab and add it to the strip. Keep track of its controller.
@@ -1002,7 +1000,7 @@ private:
 
   if (oldContents) {
     int oldModelIndex = tabStripModel_->GetIndexOfTabContents(oldContents);
-		//browser_->GetIndexOfController(&(oldContents->controller()));
+    //browser_->GetIndexOfController(&(oldContents->controller()));
     if (oldModelIndex != -1) {  // When closing a tab, the old tab may be gone.
       NSInteger oldIndex = [self indexFromModelIndex:oldModelIndex];
       TabContentsController* oldController =
@@ -1155,7 +1153,7 @@ private:
 // A helper routine for creating an NSImageView to hold the fav icon or app icon
 // for |contents|.
 - (NSImageView*)iconImageViewForContents:(TabContents*)contents {
-	NSImage* image = contents.icon;
+  NSImage* image = contents.icon;
   // Either we don't have a valid favicon or there was some issue converting it
   // from an SkBitmap. Either way, just show the default.
   if (!image)
@@ -1174,11 +1172,11 @@ private:
     return;
 
   static NSImage* throbberWaitingImage =
-			[NSImage imageNamed:@"throbber_waiting"];
+      [NSImage imageNamed:@"throbber_waiting"];
   static NSImage* throbberLoadingImage =
-			[NSImage imageNamed:@"throbber"];
+      [NSImage imageNamed:@"throbber"];
   static NSImage* sadFaviconImage =
-			[NSImage imageNamed:@"sadfavicon"];
+      [NSImage imageNamed:@"sadfavicon"];
 
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
@@ -1628,8 +1626,8 @@ private:
 // (URLDropTargetController protocol)
 - (void)dropURLs:(NSArray*)urls inView:(NSView*)view at:(NSPoint)point {
   DCHECK_EQ(view, tabStripView_.get());
-	// TODO implement this, maybe...
-	NOTIMPLEMENTED();
+  // TODO implement this, maybe...
+  NOTIMPLEMENTED();
   /*if ([urls count] < 1) {
     NOTREACHED();
     return;

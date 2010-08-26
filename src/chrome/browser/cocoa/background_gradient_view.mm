@@ -32,61 +32,61 @@
 
 - (void)drawBackground {
   BOOL isKey = [[self window] isKeyWindow];
-	
-	// TODO: cache the resulting NSGradient
-	NSColor* base_color = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-	BOOL faded = !isKey;
-	NSColor* start_color =
-			[base_color gtm_colorAdjustedFor:GTMColorationLightHighlight
-																 faded:faded];
-	NSColor* mid_color =
-			[base_color gtm_colorAdjustedFor:GTMColorationLightMidtone
-																 faded:faded];
-	NSColor* end_color =
-			[base_color gtm_colorAdjustedFor:GTMColorationLightShadow
-																 faded:faded];
-	NSColor* glow_color =
-			[base_color gtm_colorAdjustedFor:GTMColorationLightPenumbra
-																 faded:faded];
+  
+  // TODO: cache the resulting NSGradient
+  NSColor* base_color = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+  BOOL faded = !isKey;
+  NSColor* start_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightHighlight
+                                 faded:faded];
+  NSColor* mid_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightMidtone
+                                 faded:faded];
+  NSColor* end_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightShadow
+                                 faded:faded];
+  NSColor* glow_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightPenumbra
+                                 faded:faded];
 
-	NSGradient *gradient =
-			[[NSGradient alloc] initWithColorsAndLocations:start_color, 0.0,
-																										 mid_color, 0.25,
-																										 end_color, 0.5,
-																										 glow_color, 0.75,
-																										 nil];
+  NSGradient *gradient =
+      [[NSGradient alloc] initWithColorsAndLocations:start_color, 0.0,
+                                                     mid_color, 0.25,
+                                                     end_color, 0.5,
+                                                     glow_color, 0.75,
+                                                     nil];
 
 
-	CGFloat winHeight = NSHeight([[self window] frame]);
-	NSPoint startPoint =
-			[self convertPoint:NSMakePoint(0, winHeight - kToolbarTopOffset)
-								fromView:nil];
-	NSPoint endPoint =
-			NSMakePoint(0, winHeight - kToolbarTopOffset - kToolbarMaxHeight);
-	endPoint = [self convertPoint:endPoint fromView:nil];
+  CGFloat winHeight = NSHeight([[self window] frame]);
+  NSPoint startPoint =
+      [self convertPoint:NSMakePoint(0, winHeight - kToolbarTopOffset)
+                fromView:nil];
+  NSPoint endPoint =
+      NSMakePoint(0, winHeight - kToolbarTopOffset - kToolbarMaxHeight);
+  endPoint = [self convertPoint:endPoint fromView:nil];
 
-	[gradient drawFromPoint:startPoint
-									toPoint:endPoint
-									options:(NSGradientDrawsBeforeStartingLocation |
-													 NSGradientDrawsAfterEndingLocation)];
+  [gradient drawFromPoint:startPoint
+                  toPoint:endPoint
+                  options:(NSGradientDrawsBeforeStartingLocation |
+                           NSGradientDrawsAfterEndingLocation)];
 
-	if (showsDivider_) {
-		// Draw bottom stroke
-		[[self strokeColor] set];
-		NSRect borderRect, contentRect;
-		NSDivideRect([self bounds], &borderRect, &contentRect, 1, NSMinYEdge);
-		NSRectFillUsingOperation(borderRect, NSCompositeSourceOver);
-	}
+  if (showsDivider_) {
+    // Draw bottom stroke
+    [[self strokeColor] set];
+    NSRect borderRect, contentRect;
+    NSDivideRect([self bounds], &borderRect, &contentRect, 1, NSMinYEdge);
+    NSRectFillUsingOperation(borderRect, NSCompositeSourceOver);
+  }
 }
 
 - (NSColor*)strokeColor {
-	static NSColor* kDefaultColorToolbarStroke =
-		[NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0];
-	static NSColor* kDefaultColorToolbarStrokeInactive =
-		[NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0];
+  static NSColor* kDefaultColorToolbarStroke =
+    [NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0];
+  static NSColor* kDefaultColorToolbarStrokeInactive =
+    [NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0];
   BOOL isKey = [[self window] isKeyWindow];
   return isKey ? kDefaultColorToolbarStroke :
-							   kDefaultColorToolbarStrokeInactive;
+                 kDefaultColorToolbarStrokeInactive;
 }
 
 @end

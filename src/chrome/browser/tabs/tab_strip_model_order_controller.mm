@@ -30,7 +30,7 @@ int TabStripModelOrderController::DetermineInsertionIndex(
   // NOTE: TabStripModel enforces that all non-mini-tabs occur after mini-tabs,
   // so we don't have to check here too.
   if (transition == PageTransition::LINK &&
-	    tab_strip_model_->selected_index() != -1) {
+      tab_strip_model_->selected_index() != -1) {
     int delta = (insertion_policy_ == TabStripModel::INSERT_AFTER) ? 1 : 0;
     if (foreground) {
       // If the page was opened in the foreground by a link click in another
@@ -76,14 +76,14 @@ int TabStripModelOrderController::DetermineNewSelectedIndex(
   NavigationController* removed_controller =
       &tab_strip_model_->GetTabContentsAt(removing_index)->controller();
   int index = tab_strip_model_->GetIndexOfNextTabContentsOpenedBy(
-			removed_controller, removing_index, false);
+      removed_controller, removing_index, false);
   if (index != TabStripModel::kNoTab)
     return GetValidIndex(index, removing_index, is_remove);
 
   if (parent_opener) {
     // If the tab was in a group, shift selection to the next tab in the group.
     int index = tab_strip_model_->GetIndexOfNextTabContentsOpenedBy(
-				parent_opener, removing_index, false);
+        parent_opener, removing_index, false);
     if (index != TabStripModel::kNoTab)
       return GetValidIndex(index, removing_index, is_remove);
 
@@ -106,7 +106,7 @@ void TabStripModelOrderController::TabSelectedAt(TabContents* old_contents,
                                                  TabContents* new_contents,
                                                  int index,
                                                  bool user_gesture) {
-	DLOG("TabSelectedAt %d", index);
+  DLOG("TabSelectedAt %d", index);
   /*NavigationController* old_opener = NULL;
   if (old_contents) {
     int index = tab_strip_model_->GetIndexOfTabContents(old_contents);

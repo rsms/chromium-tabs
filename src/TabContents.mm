@@ -14,45 +14,48 @@
 @synthesize icon = icon_;
 
 -(id)initWithBaseTabContents:(TabContents*)baseContents {
-	if (!(self = [super init])) return nil;
+  if (!(self = [super init])) return nil;
 
-	// subclasses can use baseContents -- the selected TabContents (if any) -- to
-	// perform customized initialization (e.g. inheriting title).
+  // subclasses can use baseContents -- the selected TabContents (if any) -- to
+  // perform customized initialization (e.g. inheriting title).
 
-	// Example icon:
-	//icon_ = [NSImage imageNamed:NSImageNameBluetoothTemplate];
+  // Example icon:
+  //icon_ = [NSImage imageNamed:NSImageNameBluetoothTemplate];
 
-	return self;
+  return self;
 }
 
 -(void)dealloc {
-	[super dealloc];
+  [super dealloc];
 }
 
 -(void)destroy:(TabStripModel*)sender {
-	// TODO: notify "disconnected"
-	sender->TabContentsWasDestroyed(self); // TODO: NSNotification
-	[self release];
+  // TODO: notify "disconnected"
+  sender->TabContentsWasDestroyed(self); // TODO: NSNotification
+  [self release];
 }
 
 -(BOOL)hasIcon {
-	return YES;
+  return YES;
 }
 
 -(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel {
-	NSLog(@"TabContents closingOfTabDidStart");
+  // subclasses can implement this
+  //NSLog(@"TabContents closingOfTabDidStart");
 }
 
 -(void)didBecomeSelected {
-	NSLog(@"TabContents didBecomeSelected");
+  // subclasses can implement this
+  //NSLog(@"TabContents didBecomeSelected");
 }
 
 -(void)didBecomeHidden {
-	NSLog(@"TabContents didBecomeHidden");
+  // subclasses can implement this
+  //NSLog(@"TabContents didBecomeHidden");
 }
 
 -(void)viewFrameDidChange:(NSRect)newFrame {
-	[view_ setFrame:newFrame];
+  [view_ setFrame:newFrame];
 }
 
 @end

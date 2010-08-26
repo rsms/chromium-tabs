@@ -28,23 +28,23 @@ class TabStripModel;
 
 // Enumeration of the possible values supplied to TabChangedAt.
 enum TabChangeType {
-	// Only the loading state changed.
-	LOADING_ONLY,
+  // Only the loading state changed.
+  LOADING_ONLY,
 
-	// Only the title changed and page isn't loading.
-	TITLE_NOT_LOADING,
+  // Only the title changed and page isn't loading.
+  TITLE_NOT_LOADING,
 
-	// Change not characterized by LOADING_ONLY or TITLE_NOT_LOADING.
-	ALL
+  // Change not characterized by LOADING_ONLY or TITLE_NOT_LOADING.
+  ALL
 };
 
 // Enum used by ReplaceTabContentsAt.
 enum TabReplaceType {
-	// The replace is the result of the tab being made phantom.
-	REPLACE_MADE_PHANTOM,
+  // The replace is the result of the tab being made phantom.
+  REPLACE_MADE_PHANTOM,
 
-	// The replace is the result of the match preview being committed.
-	REPLACE_MATCH_PREVIEW
+  // The replace is the result of the match preview being committed.
+  REPLACE_MATCH_PREVIEW
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -681,8 +681,8 @@ class TabStripModel /*: public NotificationObserver*/ {
   /*virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details);*/
-	// TODO replace with NSNotification if possible:
-	void TabContentsWasDestroyed(TabContents *contents);
+  // TODO replace with NSNotification if possible:
+  void TabContentsWasDestroyed(TabContents *contents);
 
  private:
   // We cannot be constructed without a delegate.

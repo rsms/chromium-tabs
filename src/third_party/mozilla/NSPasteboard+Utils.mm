@@ -80,7 +80,7 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
                                         kCorePasteboardFlavorType_url,
                                         kCorePasteboardFlavorType_urln,
                                         nil]];
-	return [self declareTypes:allTypes owner:newOwner];
+  return [self declareTypes:allTypes owner:newOwner];
 }
 
 //

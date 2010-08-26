@@ -3,10 +3,11 @@
 #import "chrome/browser/cocoa/tab_strip_controller.h"
 #import "chrome/common/page_transition_types.h"
 #import "BrowserWindowController.h"
+#import "util.h"
 
 @interface Browser (Private)
--(void)createWindowController;
-@end;
+-(void)createWindowControllerInstance;
+@end
 
 
 @implementation Browser
@@ -16,50 +17,57 @@
 
 
 +(Browser*)browser {
-	Browser *browser = [[[[self class] alloc] init] autorelease];
-	[browser createWindowController];
-	// TODO: post notification? BrowserReady(self)
-	return browser;
+  Browser *browser = [[[[self class] alloc] init] autorelease];
+  [browser createWindowControllerInstance];
+  // TODO: post notification? BrowserReady(self)
+  return browser;
 }
 
 
 +(Browser*)browserWithWindowFrame:(const NSRect)frame {
-	Browser* browser = [self browser];
-	[browser.window setFrame:frame display:NO];
-	return browser;
+  Browser* browser = [self browser];
+  [browser.window setFrame:frame display:NO];
+  return browser;
 }
 
 
 +(Browser*)openEmptyWindow {
-	Browser *browser = [Browser browser];
-	// reference will live as long as the window lives (until closed)
-	[browser addBlankTabInForeground:YES];
-	[browser.windowController showWindow:self];
-	return browser;
+  Browser *browser = [Browser browser];
+  // reference will live as long as the window lives (until closed)
+  [browser addBlankTabInForeground:YES];
+  [browser.windowController showWindow:self];
+  return browser;
 }
 
 
 -(id)init {
-	if (!(self = [super init])) return nil;
-	tabStripModel_ = new TabStripModel(self);
-	return self;
+  if (!(self = [super init])) return nil;
+  tabStripModel_ = new TabStripModel(self);
+  return self;
 }
 
 
 -(void)dealloc {
-	DLOG("dealloced browser");
-	delete tabStripModel_;
-	[windowController_ release];
-	[super dealloc];
+  DLOG("deallocing browser %@", self);
+  delete tabStripModel_;
+  [windowController_ release];
+  [super dealloc];
 }
 
 
 // private
--(void)createWindowController {
-	assert(!windowController_);
-	windowController_ =
-			[[BrowserWindowController alloc] initWithWindowNibName:@"BrowserWindow" 
-																										 browser:self];
+-(void)createWindowControllerInstance {
+  assert(!windowController_);
+  windowController_ = [self createWindowController];
+  assert(windowController_);
+}
+
+
+-(BrowserWindowController *)createWindowController {
+  NSString *windowNibPath = [util pathForResource:@"BrowserWindow"
+                                           ofType:@"nib"];
+  return [[BrowserWindowController alloc] initWithWindowNibPath:windowNibPath 
+                                                        browser:self];
 }
 
 
@@ -67,43 +75,43 @@
 #pragma mark Accessors
 
 -(NSWindow*)window {
-	return [windowController_ window];
+  return [windowController_ window];
 }
 
 // TabStripModel convenience helpers
 
 -(int)tabCount {
-	return tabStripModel_->count();
+  return tabStripModel_->count();
 }
 -(int)selectedTabIndex {
-	return tabStripModel_->selected_index();
+  return tabStripModel_->selected_index();
 }
 -(TabContents*)selectedTabContents {
-	return tabStripModel_->GetSelectedTabContents();
+  return tabStripModel_->GetSelectedTabContents();
 }
 -(TabContents*)tabContentsAtIndex:(int)index {
-	return tabStripModel_->GetTabContentsAt(index);
+  return tabStripModel_->GetTabContentsAt(index);
 }
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
-	tabStripModel_->SelectTabContentsAt(index, userGesture);
+  tabStripModel_->SelectTabContentsAt(index, userGesture);
 }
 -(void)closeAllTabs {
-	tabStripModel_->CloseAllTabs();
+  tabStripModel_->CloseAllTabs();
 }
 
 #pragma mark -
 #pragma mark Callbacks
 
 -(void)loadingStateDidChange:(TabContents*)contents {
-	DLOG("TODO %s", __func__);
-	EXPRLOG(contents);
+  DLOG("TODO %s", __func__);
+  EXPRLOG(contents);
 }
 
 -(void)windowDidBeginToClose {
-	tabStripModel_->CloseAllTabs();
-	// NOTE: in the future the following call could be deferred (i.e. after all
-	// tabs have finalized). But for now we'll just call it again.
-	//[self closeWindow];
+  tabStripModel_->CloseAllTabs();
+  // NOTE: in the future the following call could be deferred (i.e. after all
+  // tabs have finalized). But for now we'll just call it again.
+  //[self closeWindow];
 }
 
 
@@ -111,50 +119,51 @@
 #pragma mark Commands
 
 -(void)newWindow {
-	[Browser openEmptyWindow];
+  [Browser openEmptyWindow];
 }
 
 -(void)closeWindow {
-	[self.window orderOut:self];
-	[self.window performClose:self];  // Autoreleases the controller.
+  [self.window orderOut:self];
+  [self.window performClose:self];  // Autoreleases the controller.
 }
 
 -(TabContents*)addTabContents:(TabContents*)contents
-											atIndex:(int)index
-								 inForeground:(BOOL)foreground {
-	//tabStripModel_->AppendTabContents(contents, foreground);
-	int addTypes = foreground ? TabStripModel::ADD_SELECTED :
-															TabStripModel::ADD_NONE;
-	tabStripModel_->AddTabContents(contents, index, PageTransition::TYPED,
-	                               addTypes);
-	// By default, content believes it is not hidden.  When adding contents
-	// in the background, tell it that it's hidden.
-	if ((addTypes & TabStripModel::ADD_SELECTED) == 0) {
-		// TabStripModel::AddTabContents invokes HideContents if not foreground.
-		[contents didBecomeHidden];
-	}
-	return contents;
+                      atIndex:(int)index
+                 inForeground:(BOOL)foreground {
+  //tabStripModel_->AppendTabContents(contents, foreground);
+  int addTypes = foreground ? TabStripModel::ADD_SELECTED :
+                              TabStripModel::ADD_NONE;
+  tabStripModel_->AddTabContents(contents, index, PageTransition::TYPED,
+                                 addTypes);
+  // By default, content believes it is not hidden.  When adding contents
+  // in the background, tell it that it's hidden.
+  if ((addTypes & TabStripModel::ADD_SELECTED) == 0) {
+    // TabStripModel::AddTabContents invokes HideContents if not foreground.
+    [contents didBecomeHidden];
+  }
+  return contents;
 }
+
 
 // implementation conforms to TabStripModelDelegate
 -(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
-	TabContents* baseContents = tabStripModel_->GetSelectedTabContents();
-	TabContents* contents =
-			[[TabContents alloc] initWithBaseTabContents:baseContents];
-	contents.title = @"New tab";
+  TabContents* baseContents = tabStripModel_->GetSelectedTabContents();
+  TabContents* contents =
+      [[TabContents alloc] initWithBaseTabContents:baseContents];
+  contents.title = L10n(@"New tab");
   NSRect frame = [windowController_.window frame];
   frame.origin.x  = frame.origin.y = 0.0;
-	contents.view = [[NSTextView alloc] initWithFrame:frame];
-	return [self addTabContents:contents atIndex:index inForeground:foreground];
+  contents.view = [[NSTextView alloc] initWithFrame:frame];
+  return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
 // implementation conforms to TabStripModelDelegate
 -(TabContents*)addBlankTabInForeground:(BOOL)foreground {
-	return [self addBlankTabAtIndex:-1 inForeground:foreground];
+  return [self addBlankTabAtIndex:-1 inForeground:foreground];
 }
 
 -(TabContents*)addBlankTab {
-	return [self addBlankTabInForeground:YES];
+  return [self addBlankTabInForeground:YES];
 }
 
 -(void)closeTab {
@@ -199,8 +208,8 @@
 
 
 -(void)executeCommand:(int)cmd
-			withDisposition:(WindowOpenDisposition)disposition {
-	EXPRLOG(  cmd);
+      withDisposition:(WindowOpenDisposition)disposition {
+  EXPRLOG(  cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -224,11 +233,11 @@
   // The order of commands in this switch statement must match the function
   // declaration order in BrowserCommands.h
   switch (cmd) {
-		// Window management commands
-    case IDC_NEW_WINDOW:						[self newWindow]; break;
+    // Window management commands
+    case IDC_NEW_WINDOW:            [self newWindow]; break;
     //case IDC_NEW_INCOGNITO_WINDOW: break;
     case IDC_CLOSE_WINDOW:          [self closeWindow]; break;
-		//case IDC_ALWAYS_ON_TOP: break;
+    //case IDC_ALWAYS_ON_TOP: break;
     case IDC_NEW_TAB:               [self addBlankTab]; break;
     case IDC_CLOSE_TAB:             [self closeTab]; break;
     case IDC_SELECT_NEXT_TAB:       [self selectNextTab]; break;
@@ -252,11 +261,11 @@
     case IDC_EXIT:                  [NSApp terminate:self]; break;
     case IDC_MOVE_TAB_NEXT:         [self moveTabNext]; break;
     case IDC_MOVE_TAB_PREVIOUS:     [self moveTabPrevious]; break;
-	}
+  }
 }
 
 -(void)executeCommand:(int)cmd {
-	[self executeCommand:cmd withDisposition:CURRENT_TAB];
+  [self executeCommand:cmd withDisposition:CURRENT_TAB];
 }
 
 
@@ -265,8 +274,8 @@
 
 
 -(Browser*)createNewStripWithContents:(TabContents*)contents
-												 windowBounds:(const NSRect)windowBounds
-														 maximize:(BOOL)maximize {
+                         windowBounds:(const NSRect)windowBounds
+                             maximize:(BOOL)maximize {
   //assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
 
   //gfx::Rect new_window_bounds = window_bounds;
@@ -275,11 +284,11 @@
 
   // Create an empty new browser window the same size as the old one.
   Browser* browser = [Browser browserWithWindowFrame:windowBounds];
-	browser.tabStripModel->AppendTabContents(contents, true);
-	[browser loadingStateDidChange:contents];
-	[browser.windowController showWindow:self];
+  browser.tabStripModel->AppendTabContents(contents, true);
+  [browser loadingStateDidChange:contents];
+  [browser.windowController showWindow:self];
 
-	// Orig impl:
+  // Orig impl:
   //browser->set_override_bounds(new_window_bounds);
   //browser->set_maximized_state(
   //    maximize ? MAXIMIZED_STATE_MAXIMIZED : MAXIMIZED_STATE_UNMAXIMIZED);
@@ -300,34 +309,34 @@
 // bounds of the dragged Tab view in the source window, in screen coordinates,
 // used to place the new Tab in the new window.
 -(void)continueDraggingDetachedTab:(TabContents*)contents
-											windowBounds:(const NSRect)windowBounds
-											   tabBounds:(const NSRect)tabBounds {
-	NOTIMPLEMENTED();
+                      windowBounds:(const NSRect)windowBounds
+                         tabBounds:(const NSRect)tabBounds {
+  NOTIMPLEMENTED();
 }
 
 
 // Returns whether some contents can be duplicated.
 -(BOOL)canDuplicateContentsAt:(int)index {
-	DLOG("BrowserWindowController canDuplicateContentsAt %d", index);
-	return false;
+  DLOG("BrowserWindowController canDuplicateContentsAt %d", index);
+  return false;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
 -(void)duplicateContentsAt:(int)index {
-	DLOG("BrowserWindowController duplicateContentsAt %d", index);
+  DLOG("BrowserWindowController duplicateContentsAt %d", index);
 }
 
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
 -(void)closeFrameAfterDragSession {
-	DLOG("BrowserWindowController closeFrameAfterDragSession");
+  DLOG("BrowserWindowController closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // TabContents.
 -(void)createHistoricalTab:(TabContents*)contents {
-	DLOG("BrowserWindowController createHistoricalTab %@", contents);
+  DLOG("BrowserWindowController createHistoricalTab %@", contents);
 }
 
 // Runs any unload listeners associated with the specified TabContents before
@@ -336,31 +345,31 @@
 // TabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the TabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents {
-	//DLOG("BrowserWindowController runUnloadListenerBeforeClosing %@" contents);
-	return false;
+  //DLOG("BrowserWindowController runUnloadListenerBeforeClosing %@" contents);
+  return false;
 }
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab {
-	DLOG("BrowserWindowController canRestoreTab");
-	return false;
+  DLOG("BrowserWindowController canRestoreTab");
+  return false;
 }
 
 // Restores the last closed tab if CanRestoreTab would return true.
 -(void)restoreTab {
-	DLOG("BrowserWindowController restoreTab");
+  DLOG("BrowserWindowController restoreTab");
 }
 
 // Returns whether some contents can be closed.
 -(BOOL)canCloseContentsAt:(int)index {
-	DLOG("BrowserWindowController canCloseContentsAt %d", index);
-	return true;
+  DLOG("BrowserWindowController canCloseContentsAt %d", index);
+  return true;
 }
 
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
-	DLOG("BrowserWindowController canCloseTab");
-	return true;
+  DLOG("BrowserWindowController canCloseTab");
+  return true;
 }
 
 

@@ -36,7 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#import <AppKit/AppKit.h>		// for NSStringDrawing.h
+#import <AppKit/AppKit.h>    // for NSStringDrawing.h
 
 #import "NSString+Utils.h"
 //#include "googleurl/src/gurl.h"

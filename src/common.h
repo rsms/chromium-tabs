@@ -14,7 +14,7 @@
   #define __FILENAME__ ((strrchr(__FILE__, '/') ?: __FILE__ - 1) + 1)
 #endif
 #define __SRC_FILENAME__ \
-	((common_strrstr(__FILE__, "/src/") ?: __FILE__ - 1) + 1)
+  ((common_strrstr(__FILE__, "/src/") ?: __FILE__ - 1) + 1)
 
 // log info, warning and error message
 // DLOG(format[, ...]) -- log a debug message
@@ -40,38 +40,38 @@
   #ifndef _DEBUG
     #define _DEBUG 1
   #endif
-	// shorthand to include and evaluate <x> only for debug builds
-	#define IFDEBUG(x) do{ x }while(0)
+  // shorthand to include and evaluate <x> only for debug builds
+  #define IFDEBUG(x) do{ x }while(0)
   #define DLOG(...) _LOG('D', __VA_ARGS__)
-	#ifdef __OBJC__
+  #ifdef __OBJC__
     #define MARKLOG _LOG('M', @"%s", __PRETTY_FUNCTION__)
-	#else
+  #else
     #define MARKLOG _LOG('M', "%s", __PRETTY_FUNCTION__)
-	#endif
-	// log an expression
-	#ifdef __OBJC__
+  #endif
+  // log an expression
+  #ifdef __OBJC__
     NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);
-		#define EXPRLOG(_X_) do{\
-			__typeof__(_X_) _Y_ = (_X_);\
-			const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
-			NSString *_STR_ = VTPG_DDToStringFromTypeAndValue(_TYPE_CODE_, &_Y_);\
-			if(_STR_){\
-				NSLog(@"X [%s:%d] %s = %@", __SRC_FILENAME__, __LINE__, #_X_, _STR_);\
-			}else{\
-				NSLog(@"Unknown _TYPE_CODE_: %s for expression %s in function %s, file %s, line %d",\
-				      _TYPE_CODE_, #_X_, __func__, __SRC_FILENAME__, __LINE__);\
-			}}while(0)
-	#else // __OBJC__
-		#define EXPRLOG(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
-															__FILENAME__, getpid(), __SRC_FILENAME__, __LINE__, \
-															#_X_, "<TODO:common.h>")
-		// TODO eval expression ---------------^
-	#endif // __OBJC__
+    #define EXPRLOG(_X_) do{\
+      __typeof__(_X_) _Y_ = (_X_);\
+      const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
+      NSString *_STR_ = VTPG_DDToStringFromTypeAndValue(_TYPE_CODE_, &_Y_);\
+      if(_STR_){\
+        NSLog(@"X [%s:%d] %s = %@", __SRC_FILENAME__, __LINE__, #_X_, _STR_);\
+      }else{\
+        NSLog(@"Unknown _TYPE_CODE_: %s for expression %s in function %s, file %s, line %d",\
+              _TYPE_CODE_, #_X_, __func__, __SRC_FILENAME__, __LINE__);\
+      }}while(0)
+  #else // __OBJC__
+    #define EXPRLOG(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
+                              __FILENAME__, getpid(), __SRC_FILENAME__, __LINE__, \
+                              #_X_, "<TODO:common.h>")
+    // TODO eval expression ---------------^
+  #endif // __OBJC__
 #else // !defined(NDEBUG)
-	#define IFDEBUG(x)    do{}while(0)
-	#define DLOG(...)     do{}while(0)
-	#define MARKLOG       do{}while(0)
-	#define EXPRLOG(...)  do{}while(0)
+  #define IFDEBUG(x)    do{}while(0)
+  #define DLOG(...)     do{}while(0)
+  #define MARKLOG       do{}while(0)
+  #define EXPRLOG(...)  do{}while(0)
 #endif // !defined(NDEBUG)
 
 // libbase compatible assertion macros

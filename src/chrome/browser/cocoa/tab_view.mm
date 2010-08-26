@@ -652,13 +652,13 @@ const CGFloat kRapidCloseDist = 2.5;
   // Don't draw the window/tab bar background when selected, since the tab
   // background overlay drawn over it (see below) will be fully opaque.
   if (!selected) {
-		// Use the window's background color rather than |[NSColor
-		// windowBackgroundColor]|, which gets confused by the fullscreen window.
-		// (The result is the same for normal, non-fullscreen windows.)
-		[[[self window] backgroundColor] set];
-		[path fill];
-		[[NSColor colorWithCalibratedWhite:1.0 alpha:0.3] set];
-		[path fill];
+    // Use the window's background color rather than |[NSColor
+    // windowBackgroundColor]|, which gets confused by the fullscreen window.
+    // (The result is the same for normal, non-fullscreen windows.)
+    [[[self window] backgroundColor] set];
+    [path fill];
+    [[NSColor colorWithCalibratedWhite:1.0 alpha:0.3] set];
+    [path fill];
   }
 
   [context saveGraphicsState];
@@ -687,21 +687,21 @@ const CGFloat kRapidCloseDist = 2.5;
 
     // Draw a mouse hover gradient for the default themes.
     if (!selected && hoverAlpha > 0) {
-			scoped_nsobject<NSGradient> glow([NSGradient alloc]);
-			[glow initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0
-																			alpha:1.0 * hoverAlpha]
-											endingColor:[NSColor colorWithCalibratedWhite:1.0
-																															alpha:0.0]];
+      scoped_nsobject<NSGradient> glow([NSGradient alloc]);
+      [glow initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0
+                                      alpha:1.0 * hoverAlpha]
+                      endingColor:[NSColor colorWithCalibratedWhite:1.0
+                                                              alpha:0.0]];
 
-			NSPoint point = hoverPoint_;
-			point.y = NSHeight(rect);
-			[glow drawFromCenter:point
-										radius:0.0
-									toCenter:point
-										radius:NSWidth(rect) / 3.0
-									 options:NSGradientDrawsBeforeStartingLocation];
+      NSPoint point = hoverPoint_;
+      point.y = NSHeight(rect);
+      [glow drawFromCenter:point
+                    radius:0.0
+                  toCenter:point
+                    radius:NSWidth(rect) / 3.0
+                   options:NSGradientDrawsBeforeStartingLocation];
 
-			[glow drawInBezierPath:path relativeCenterPosition:hoverPoint_];
+      [glow drawInBezierPath:path relativeCenterPosition:hoverPoint_];
     }
 
     CGContextEndTransparencyLayer(cgContext);

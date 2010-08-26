@@ -32,7 +32,20 @@ class TabStripModel;
 // Create the contents of a tab represented by |contents| and loaded from the
 // nib given by |name|.
 - (id)initWithNibName:(NSString*)name
+               bundle:(NSBundle*)bundle
              contents:(TabContents*)contents;
+
+// Create the contents of a tab represented by |contents| and loaded from a nib
+// called "TabContents".
+//
+// Will first try to find a nib named "TabContents" in the main bundle. If the
+// "TabContents" nib could not be found in the main bulde it is loaded from the
+// framework bundle.
+//
+// If you use a nib with another name you should override the implementation in
+// your subclass and delegate the internal initialization to
+// initWithNibName:bundle:contents
+- (id)initWithContents:(TabContents*)contents;
 
 // Called when the tab contents is the currently selected tab and is about to be
 // removed from the view hierarchy.
