@@ -1,8 +1,14 @@
+#pragma once
 #import <Cocoa/Cocoa.h>
 #import "chrome/browser/tabs/tab_strip_model.h"
 #import "TabStripModelDelegate.h"
-#import "WindowOpenDisposition.h"
 #import "BrowserCommands.h"
+
+enum CTWindowOpenDisposition {
+  CURRENT_TAB,
+  NEW_FOREGROUND_TAB,
+  NEW_BACKGROUND_TAB,
+};
 
 class TabStripModel;
 @class CTBrowserWindowController;
@@ -57,7 +63,7 @@ class TabStripModel;
 -(void)duplicateTab;
 
 -(void)executeCommand:(int)cmd
-      withDisposition:(WindowOpenDisposition)disposition;
+      withDisposition:(CTWindowOpenDisposition)disposition;
 -(void)executeCommand:(int)cmd; // withDisposition:CURRENT_TAB
 
 // callbacks

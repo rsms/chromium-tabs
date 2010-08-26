@@ -13,7 +13,6 @@
 #import "chrome/browser/cocoa/tab_controller_target.h"
 #import "chrome/browser/cocoa/url_drop_target.h"
 #import "third_party/gtm-subset/GTMWindowSheetController.h"
-#import "WindowOpenDisposition.h"
 
 @class NewTabButton;
 @class TabContentsController;

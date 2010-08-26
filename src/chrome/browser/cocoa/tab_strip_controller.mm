@@ -140,7 +140,7 @@ private:
 - (void)setTabTrackingAreasEnabled:(BOOL)enabled;
 - (void)droppingURLsAt:(NSPoint)point
             givesIndex:(NSInteger*)index
-           disposition:(WindowOpenDisposition*)disposition;
+           disposition:(CTWindowOpenDisposition*)disposition;
 - (void)setNewTabButtonHoverState:(BOOL)showHover;
 @end
 
@@ -1588,7 +1588,7 @@ private:
 // to the left, it inserts to the left, and similarly for the right.
 - (void)droppingURLsAt:(NSPoint)point
             givesIndex:(NSInteger*)index
-           disposition:(WindowOpenDisposition*)disposition {
+           disposition:(CTWindowOpenDisposition*)disposition {
   // Proportion of the tab which is considered the "middle" (and causes things
   // to drop on that tab).
   const double kMiddleProportion = 0.5;
@@ -1655,7 +1655,7 @@ private:
 
   // Get the index and disposition.
   NSInteger index;
-  WindowOpenDisposition disposition;
+  CTWindowOpenDisposition disposition;
   [self droppingURLsAt:point
             givesIndex:&index
            disposition:&disposition];
@@ -1690,7 +1690,7 @@ private:
   const CGFloat arrowBaseY = 25;
 
   NSInteger index;
-  WindowOpenDisposition disposition;
+  CTWindowOpenDisposition disposition;
   [self droppingURLsAt:point
             givesIndex:&index
            disposition:&disposition];

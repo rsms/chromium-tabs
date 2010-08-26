@@ -208,7 +208,7 @@
 
 
 -(void)executeCommand:(int)cmd
-      withDisposition:(WindowOpenDisposition)disposition {
+      withDisposition:(CTWindowOpenDisposition)disposition {
   EXPRLOG(  cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either

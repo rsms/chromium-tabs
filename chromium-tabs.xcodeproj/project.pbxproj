@@ -65,7 +65,6 @@
 		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
 		3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED97D1225E116009E2908 /* ChromiumTabs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168D6122543A900757641 /* BrowserCommands.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* CTBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF95F12235704008A3B8C /* CTBrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -204,7 +203,6 @@
 		3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+ChromiumTabsAdditions.m"; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
-		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* tab_strip_model.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model.mm; sourceTree = "<group>"; };
 		3AEE19421222DC5B009DA438 /* tab_strip_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model.h; sourceTree = "<group>"; };
 		3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model_order_controller.mm; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 				3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */,
 				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
-				3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */,
 				3A1168D6122543A900757641 /* BrowserCommands.h */,
 				3AA71889122479CE005022BE /* CTBrowser.h */,
 				3AA7188A122479CE005022BE /* CTBrowser.mm */,
@@ -502,7 +499,6 @@
 			files = (
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
 				3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */,
-				3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */,
 				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
