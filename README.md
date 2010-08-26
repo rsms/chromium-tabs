@@ -22,7 +22,7 @@ Then you need to do at least two things:
 
 The example application (in `examples/simple-app/`) illustrates basic usage and likes to be inspected while you drink coffee. It looks like this:
 
-<img src="http://farm5.static.flickr.com/4082/4927836567_69bb9c669a_o.png" alt="A slightly boring screenshot of the example application">
+<img src="http://farm5.static.flickr.com/4082/4927836567_7b9f577af4_o.png" alt="A slightly boring screenshot of the example application">
 
 ## Building
 
