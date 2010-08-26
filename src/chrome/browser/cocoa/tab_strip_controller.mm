@@ -297,7 +297,7 @@ private:
     [self addSubviewToPermanentList:newTabButton_];
     [newTabButton_ setTarget:nil];
     [newTabButton_ setAction:@selector(commandDispatch:)];
-    [newTabButton_ setTag:IDC_NEW_TAB];
+    [newTabButton_ setTag:CTBrowserCommandNewTab];
     // Set the images from code because Cocoa fails to find them in our sub
     // bundle during tests.
     [newTabButton_ setImage:kNewTabImage];
@@ -1591,7 +1591,7 @@ private:
     // Drop in a new tab to the left of tab |i|?
     if (point.x < (frame.origin.x + kLRProportion * frame.size.width)) {
       *index = i;
-      *disposition = NEW_FOREGROUND_TAB;
+      *disposition = CTWindowOpenDispositionNewForegroundTab;
       return;
     }
 
@@ -1599,7 +1599,7 @@ private:
     if (point.x <= (frame.origin.x +
                        (1.0 - kLRProportion) * frame.size.width)) {
       *index = i;
-      *disposition = CURRENT_TAB;
+      *disposition = CTWindowOpenDispositionCurrentTab;
       return;
     }
 
@@ -1610,7 +1610,7 @@ private:
 
   // If we've made it here, we want to append a new tab to the end.
   *index = -1;
-  *disposition = NEW_FOREGROUND_TAB;
+  *disposition = CTWindowOpenDispositionNewForegroundTab;
 }
 
 // (URLDropTargetController protocol)
@@ -1675,18 +1675,18 @@ private:
   NSPoint arrowPos = NSMakePoint(0, arrowBaseY);
   if (index == -1) {
     // Append a tab at the end.
-    assert(disposition == NEW_FOREGROUND_TAB);
+    assert(disposition == CTWindowOpenDispositionNewForegroundTab);
     NSInteger lastIndex = [tabArray_ count] - 1;
     NSRect overRect = [[[tabArray_ objectAtIndex:lastIndex] view] frame];
     arrowPos.x = overRect.origin.x + overRect.size.width - kTabOverlap / 2.0;
   } else {
     NSRect overRect = [[[tabArray_ objectAtIndex:index] view] frame];
     switch (disposition) {
-      case NEW_FOREGROUND_TAB:
+      case CTWindowOpenDispositionNewForegroundTab:
         // Insert tab (to the left of the given tab).
         arrowPos.x = overRect.origin.x + kTabOverlap / 2.0;
         break;
-      case CURRENT_TAB:
+      case CTWindowOpenDispositionCurrentTab:
         // Overwrite the given tab.
         arrowPos.x = overRect.origin.x + overRect.size.width / 2.0;
         break;

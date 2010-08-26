@@ -18,9 +18,9 @@
   assert(sender);
   switch ([sender tag]) {
     // Window management commands
-    case IDC_NEW_WINDOW:
-    case IDC_NEW_TAB:     [CTBrowser openEmptyWindow]; break;
-    case IDC_EXIT:       [NSApp terminate:self]; break;
+    case CTBrowserCommandNewWindow:
+    case CTBrowserCommandNewTab:     [CTBrowser openEmptyWindow]; break;
+    case CTBrowserCommandExit:       [NSApp terminate:self]; break;
   }
 }
 

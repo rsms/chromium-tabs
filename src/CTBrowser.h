@@ -2,12 +2,12 @@
 #import <Cocoa/Cocoa.h>
 #import "tab_strip_model.h"
 #import "CTTabStripModelDelegate.h"
-#import "BrowserCommands.h"
+#import "CTBrowserCommand.h"
 
 enum CTWindowOpenDisposition {
-  CURRENT_TAB,
-  NEW_FOREGROUND_TAB,
-  NEW_BACKGROUND_TAB,
+  CTWindowOpenDispositionCurrentTab,
+  CTWindowOpenDispositionNewForegroundTab,
+  CTWindowOpenDispositionNewBackgroundTab,
 };
 
 class TabStripModel;

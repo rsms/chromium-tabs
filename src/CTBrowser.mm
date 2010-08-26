@@ -234,38 +234,38 @@
   // declaration order in BrowserCommands.h
   switch (cmd) {
     // Window management commands
-    case IDC_NEW_WINDOW:            [self newWindow]; break;
-    //case IDC_NEW_INCOGNITO_WINDOW: break;
-    case IDC_CLOSE_WINDOW:          [self closeWindow]; break;
-    //case IDC_ALWAYS_ON_TOP: break;
-    case IDC_NEW_TAB:               [self addBlankTab]; break;
-    case IDC_CLOSE_TAB:             [self closeTab]; break;
-    case IDC_SELECT_NEXT_TAB:       [self selectNextTab]; break;
-    case IDC_SELECT_PREVIOUS_TAB:   [self selectPreviousTab]; break;
-    case IDC_SELECT_TAB_0:
-    case IDC_SELECT_TAB_1:
-    case IDC_SELECT_TAB_2:
-    case IDC_SELECT_TAB_3:
-    case IDC_SELECT_TAB_4:
-    case IDC_SELECT_TAB_5:
-    case IDC_SELECT_TAB_6:
-    case IDC_SELECT_TAB_7: {
-      [self selectTabAtIndex:cmd - IDC_SELECT_TAB_0];
+    case CTBrowserCommandNewWindow:            [self newWindow]; break;
+    //case CTBrowserCommandNewIncognitoWindow: break;
+    case CTBrowserCommandCloseWindow:          [self closeWindow]; break;
+    //case CTBrowserCommandAlwaysOnTop: break;
+    case CTBrowserCommandNewTab:               [self addBlankTab]; break;
+    case CTBrowserCommandCloseTab:             [self closeTab]; break;
+    case CTBrowserCommandSelectNextTab:       [self selectNextTab]; break;
+    case CTBrowserCommandSelectPreviousTab:   [self selectPreviousTab]; break;
+    case CTBrowserCommandSelectTab0:
+    case CTBrowserCommandSelectTab1:
+    case CTBrowserCommandSelectTab2:
+    case CTBrowserCommandSelectTab3:
+    case CTBrowserCommandSelectTab4:
+    case CTBrowserCommandSelectTab5:
+    case CTBrowserCommandSelectTab6:
+    case CTBrowserCommandSelectTab7: {
+      [self selectTabAtIndex:cmd - CTBrowserCommandSelectTab0];
       break;
     }
-    case IDC_SELECT_LAST_TAB:       [self selectLastTab]; break;
-    case IDC_DUPLICATE_TAB:         [self duplicateTab]; break;
-    //case IDC_RESTORE_TAB:         break;
-    //case IDC_SHOW_AS_TAB:         break;
-    case IDC_FULLSCREEN:            DLOG("TODO ToggleFullscreenMode();"); break;
-    case IDC_EXIT:                  [NSApp terminate:self]; break;
-    case IDC_MOVE_TAB_NEXT:         [self moveTabNext]; break;
-    case IDC_MOVE_TAB_PREVIOUS:     [self moveTabPrevious]; break;
+    case CTBrowserCommandSelectLastTab:    [self selectLastTab]; break;
+    case CTBrowserCommandDuplicateTab:     [self duplicateTab]; break;
+    //case CTBrowserCommandRestoreTab:     break;
+    //case CTBrowserCommandShowAsTab:      break;
+    //case CTBrowserCommandFullscreen:     DLOG("TODO ToggleFullscreenMode();"); break;
+    case CTBrowserCommandExit:             [NSApp terminate:self]; break;
+    case CTBrowserCommandMoveTabNext:      [self moveTabNext]; break;
+    case CTBrowserCommandMoveTabPrevious:  [self moveTabPrevious]; break;
   }
 }
 
 -(void)executeCommand:(int)cmd {
-  [self executeCommand:cmd withDisposition:CURRENT_TAB];
+  [self executeCommand:cmd withDisposition:CTWindowOpenDispositionCurrentTab];
 }
 
 
