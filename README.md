@@ -20,7 +20,9 @@ Then you need to do at least two things:
 1. `#import <ChromiumTabs/ChromiumTabs.h>`
 2. `[Browser openEmptyWindow]` when your application has started (e.g. in the application delegates' `applicationDidFinishLaunching:`)
 
-The example application (in `examples/simple-app/`) illustrates basic usage and likes to be inspected while you drink coffee.
+The example application (in `examples/simple-app/`) illustrates basic usage and likes to be inspected while you drink coffee. It looks like this:
+
+<img src="http://farm5.static.flickr.com/4082/4927836567_69bb9c669a_o.png" alt="A slightly boring screenshot of the example application">
 
 ## Building
 
