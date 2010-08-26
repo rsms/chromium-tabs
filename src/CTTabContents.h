@@ -38,7 +38,7 @@ class CTTabStripModel; // Note: C++ class
 // Invoked when the tab should be destroyed (involves some finalization).
 -(void)destroy:(CTTabStripModel*)sender;
 
-// Invoked when this tab is closing
+// Invoked when this tab is closing.
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel;
 
 // Invoked when the tab contents becomes selected. If you override, be sure

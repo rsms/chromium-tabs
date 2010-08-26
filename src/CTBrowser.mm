@@ -145,15 +145,23 @@
 }
 
 
+-(CTTabContents*)createTabContentsBasedOn:(CTTabContents*)baseContents {
+  // subclasses should override this to provide a custom CTTabContents type
+  return [[CTTabContents alloc] initWithBaseTabContents:baseContents];
+}
+
+
 // implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
   CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
-  CTTabContents* contents =
-      [[CTTabContents alloc] initWithBaseTabContents:baseContents];
-  contents.title = L10n(@"New tab");
-  NSRect frame = [windowController_.window frame];
+  CTTabContents* contents = [self createTabContentsBasedOn:baseContents];
+  if (!contents.title)
+    contents.title = L10n(@"New tab");
+  //if (!contents.t)
+  /*NSRect frame = [windowController_.window frame];
   frame.origin.x  = frame.origin.y = 0.0;
   contents.view = [[NSTextView alloc] initWithFrame:frame];
+  */
   return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
@@ -209,7 +217,7 @@
 
 -(void)executeCommand:(int)cmd
       withDisposition:(CTWindowOpenDisposition)disposition {
-  EXPRLOG(  cmd);
+  EXPRLOG(cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that

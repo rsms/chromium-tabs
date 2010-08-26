@@ -44,6 +44,12 @@ class CTTabStripModel;
 // within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
 
+// Creates a new CTTabContents instance.
+// |baseContents| represents the CTTabContents which is currently in the
+// foreground. It might be nil.
+// Subclasses could override this to provide a custom CTTabContents type.
+-(CTTabContents*)createTabContentsBasedOn:(CTTabContents*)baseContents;
+
 // Commands
 -(void)newWindow;
 -(void)closeWindow;

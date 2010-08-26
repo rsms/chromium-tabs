@@ -14,10 +14,8 @@
 @synthesize icon = icon_;
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
-  if (!(self = [super init])) return nil;
-  // Example icon:
-  //icon_ = [NSImage imageNamed:NSImageNameBluetoothTemplate];
-  return self;
+  // subclasses should probably override this
+  return [super init];
 }
 
 -(void)dealloc {
@@ -25,7 +23,7 @@
 }
 
 -(void)destroy:(CTTabStripModel*)sender {
-  // TODO: notify "disconnected"
+  // TODO: notify "disconnected"?
   sender->TabContentsWasDestroyed(self); // TODO: NSNotification
   [self release];
 }

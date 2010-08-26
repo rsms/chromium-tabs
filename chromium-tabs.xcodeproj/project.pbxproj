@@ -198,6 +198,7 @@
 		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CTAdditions.h"; sourceTree = "<group>"; };
 		3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
+		3A928A771226E01900DA7E43 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
@@ -456,6 +457,7 @@
 		3A3EDA6E1225EBBB009E2908 /* examples */ = {
 			isa = PBXGroup;
 			children = (
+				3A928A771226E01900DA7E43 /* prefix.pch */,
 				3A3EDA6F1225EBBB009E2908 /* simple-app */,
 			);
 			path = examples;
@@ -773,7 +775,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_PREFIX_HEADER = examples/prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"\"V8_REPORT_EXECUTABLE_MEMORY_USAGE\"",
 					"\"CHROMIUM_BUILD\"",
@@ -810,7 +812,7 @@
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_PREFIX_HEADER = examples/prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"\"V8_REPORT_EXECUTABLE_MEMORY_USAGE\"",
 					"\"CHROMIUM_BUILD\"",

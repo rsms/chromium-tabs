@@ -81,10 +81,10 @@
 #define DCHECK_GE(val1, val2) DCHECK_OP(>=, val1, val2)
 #define DCHECK_GT(val1, val2) DCHECK_OP(> , val1, val2)
 
-// log an error for unimplemented things
+// log an error and exit when reaching unimplemented parts
 #import <err.h>
-#define NOTIMPLEMENTED() warnx("Not implemented reached in %s", \
-                               __PRETTY_FUNCTION__)
+#define NOTIMPLEMENTED() errx(4, "Not implemented reached in %s (%s:%d)", \
+                              __PRETTY_FUNCTION__, __SRC_FILENAME__, __LINE__)
 
 #define NOTREACHED() assert(false && "Should not have been reached")
 

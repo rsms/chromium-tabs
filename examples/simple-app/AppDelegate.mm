@@ -4,12 +4,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-  DLOG("applicationDidFinishLaunching %@", notification);
-  // Configure context menu
-  //NSMenu *mainMenu = [NSApp mainMenu];
-  //[mainMenu itemWithTag:#import "BrowserCommands.h"];
-  //commandDispatch
-
+  NSLog(@"applicationDidFinishLaunching");
   // Create a browser and show the window
   [CTBrowser openEmptyWindow];
 }
