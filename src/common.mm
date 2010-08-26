@@ -10,8 +10,8 @@
 // http://www.dribin.org/dave/blog/archives/2008/09/22/convert_to_nsstring/
 //
 static BOOL TypeCodeIsCharArray(const char *typeCode){
-	int lastCharOffset = strlen(typeCode) - 1;
-	int secondToLastCharOffset = lastCharOffset - 1 ;
+	size_t lastCharOffset = strlen(typeCode) - 1;
+	size_t secondToLastCharOffset = lastCharOffset - 1 ;
 	
 	BOOL isCharArray = typeCode[0] == '[' &&
   typeCode[secondToLastCharOffset] == 'c' && typeCode[lastCharOffset] == ']';
