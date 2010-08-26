@@ -1,7 +1,7 @@
 #pragma once
 
 @class CTBrowser;
-#import "TabContents.h"
+#import "CTTabContents.h"
 
 enum {
   TAB_MOVE_ACTION = 1,
@@ -10,8 +10,8 @@ enum {
 
 @protocol TabStripModelDelegate
 // Adds what the delegate considers to be a blank tab to the model.
--(TabContents*)addBlankTabInForeground:(BOOL)foreground;
--(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTabInForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
 
 // Asks for a new TabStripModel to be created and the given tab contents to
 // be added to it. Its size and position are reflected in |window_bounds|.
@@ -19,7 +19,7 @@ enum {
 // be docked as identified by |dock_info|. Returns the CTBrowser object
 // representing the newly created window and tab strip. This does not
 // show the window, it's up to the caller to do so.
--(CTBrowser*)createNewStripWithContents:(TabContents*)contents
+-(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents
                          windowBounds:(const NSRect)windowBounds
                              maximize:(BOOL)maximize;
 
@@ -29,7 +29,7 @@ enum {
 // screen coordinates, used to place the new window, and |tab_bounds| are the
 // bounds of the dragged Tab view in the source window, in screen coordinates,
 // used to place the new Tab in the new window.
--(void)continueDraggingDetachedTab:(TabContents*)contents
+-(void)continueDraggingDetachedTab:(CTTabContents*)contents
                       windowBounds:(const NSRect)windowBounds
                          tabBounds:(const NSRect)tabBounds;
 
@@ -45,15 +45,15 @@ enum {
 -(void)closeFrameAfterDragSession;
 
 // Creates an entry in the historical tab database for the specified
-// TabContents.
--(void)createHistoricalTab:(TabContents*)contents;
+// CTTabContents.
+-(void)createHistoricalTab:(CTTabContents*)contents;
 
-// Runs any unload listeners associated with the specified TabContents before
+// Runs any unload listeners associated with the specified CTTabContents before
 // it is closed. If there are unload listeners that need to be run, this
 // function returns true and the TabStripModel will wait before closing the
-// TabContents. If it returns false, there are no unload listeners and the
-// TabStripModel can close the TabContents immediately.
--(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents;
+// CTTabContents. If it returns false, there are no unload listeners and the
+// TabStripModel can close the CTTabContents immediately.
+-(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents;
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab;

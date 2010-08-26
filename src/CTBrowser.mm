@@ -86,10 +86,10 @@
 -(int)selectedTabIndex {
   return tabStripModel_->selected_index();
 }
--(TabContents*)selectedTabContents {
+-(CTTabContents*)selectedTabContents {
   return tabStripModel_->GetSelectedTabContents();
 }
--(TabContents*)tabContentsAtIndex:(int)index {
+-(CTTabContents*)tabContentsAtIndex:(int)index {
   return tabStripModel_->GetTabContentsAt(index);
 }
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
@@ -102,7 +102,7 @@
 #pragma mark -
 #pragma mark Callbacks
 
--(void)loadingStateDidChange:(TabContents*)contents {
+-(void)loadingStateDidChange:(CTTabContents*)contents {
   DLOG("TODO %s", __func__);
   EXPRLOG(contents);
 }
@@ -127,7 +127,7 @@
   [self.window performClose:self];  // Autoreleases the controller.
 }
 
--(TabContents*)addTabContents:(TabContents*)contents
+-(CTTabContents*)addTabContents:(CTTabContents*)contents
                       atIndex:(int)index
                  inForeground:(BOOL)foreground {
   //tabStripModel_->AppendTabContents(contents, foreground);
@@ -146,10 +146,10 @@
 
 
 // implementation conforms to TabStripModelDelegate
--(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
-  TabContents* baseContents = tabStripModel_->GetSelectedTabContents();
-  TabContents* contents =
-      [[TabContents alloc] initWithBaseTabContents:baseContents];
+-(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
+  CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
+  CTTabContents* contents =
+      [[CTTabContents alloc] initWithBaseTabContents:baseContents];
   contents.title = L10n(@"New tab");
   NSRect frame = [windowController_.window frame];
   frame.origin.x  = frame.origin.y = 0.0;
@@ -158,11 +158,11 @@
 }
 
 // implementation conforms to TabStripModelDelegate
--(TabContents*)addBlankTabInForeground:(BOOL)foreground {
+-(CTTabContents*)addBlankTabInForeground:(BOOL)foreground {
   return [self addBlankTabAtIndex:-1 inForeground:foreground];
 }
 
--(TabContents*)addBlankTab {
+-(CTTabContents*)addBlankTab {
   return [self addBlankTabInForeground:YES];
 }
 
@@ -273,7 +273,7 @@
 #pragma mark TabStripModelDelegate protocol implementation
 
 
--(CTBrowser*)createNewStripWithContents:(TabContents*)contents
+-(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents
                          windowBounds:(const NSRect)windowBounds
                              maximize:(BOOL)maximize {
   //assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
@@ -308,7 +308,7 @@
 // screen coordinates, used to place the new window, and |tab_bounds| are the
 // bounds of the dragged Tab view in the source window, in screen coordinates,
 // used to place the new Tab in the new window.
--(void)continueDraggingDetachedTab:(TabContents*)contents
+-(void)continueDraggingDetachedTab:(CTTabContents*)contents
                       windowBounds:(const NSRect)windowBounds
                          tabBounds:(const NSRect)tabBounds {
   NOTIMPLEMENTED();
@@ -334,17 +334,17 @@
 }
 
 // Creates an entry in the historical tab database for the specified
-// TabContents.
--(void)createHistoricalTab:(TabContents*)contents {
+// CTTabContents.
+-(void)createHistoricalTab:(CTTabContents*)contents {
   DLOG("CTBrowserWindowController createHistoricalTab %@", contents);
 }
 
-// Runs any unload listeners associated with the specified TabContents before
+// Runs any unload listeners associated with the specified CTTabContents before
 // it is closed. If there are unload listeners that need to be run, this
 // function returns true and the TabStripModel will wait before closing the
-// TabContents. If it returns false, there are no unload listeners and the
-// TabStripModel can close the TabContents immediately.
--(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents {
+// CTTabContents. If it returns false, there are no unload listeners and the
+// TabStripModel can close the CTTabContents immediately.
+-(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
   //DLOG("CTBrowserWindowController runUnloadListenerBeforeClosing %@" contents);
   return false;
 }

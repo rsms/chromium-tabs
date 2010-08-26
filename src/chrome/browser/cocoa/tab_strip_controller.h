@@ -19,7 +19,7 @@
 @class TabView;
 @class TabStripView;
 
-@class TabContents;
+@class CTTabContents;
 @class CTBrowser;
 
 //class Browser;
@@ -45,7 +45,7 @@ class TabStripModel;
   BOOL verticalLayout_;
 
  @private
-  TabContents* currentTab_;   // weak, tab for which we're showing state
+  CTTabContents* currentTab_;   // weak, tab for which we're showing state
   scoped_nsobject<TabStripView> tabStripView_;
   NSView* switchView_;  // weak
   scoped_nsobject<NSView> dragBlockingView_;  // avoid bad window server drags
@@ -144,16 +144,16 @@ class TabStripModel;
 // current placeholder.
 - (void)moveTabFromIndex:(NSInteger)from;
 
-// Drop a given TabContents at the location of the current placeholder. If there
+// Drop a given CTTabContents at the location of the current placeholder. If there
 // is no placeholder, it will go at the end. Used when dragging from another
-// window when we don't have access to the TabContents as part of our strip.
+// window when we don't have access to the CTTabContents as part of our strip.
 // |frame| is in the coordinate system of the tab strip view and represents
 // where the user dropped the new tab so it can be animated into its correct
 // location when the tab is added to the model. If the tab was pinned in its
 // previous window, setting |pinned| to YES will propagate that state to the
 // new window. Mini-tabs are either app or pinned tabs; the app state is stored
 // by the |contents|, but the |pinned| state is the caller's responsibility.
-- (void)dropTabContents:(TabContents*)contents
+- (void)dropTabContents:(CTTabContents*)contents
               withFrame:(NSRect)frame
             asPinnedTab:(BOOL)pinned;
 
@@ -225,7 +225,7 @@ class TabStripModel;
   // functions.
 //- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window;
 //- (void)removeConstrainedWindow:(ConstrainedWindowMac*)window;
-//- (void)updateDevToolsForContents:(TabContents*)contents;
+//- (void)updateDevToolsForContents:(CTTabContents*)contents;
 
 @end
 

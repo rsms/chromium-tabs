@@ -9,7 +9,7 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/common/page_transition_types.h"
 
-@class TabContents;
+@class CTTabContents;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModelOrderController
@@ -32,7 +32,7 @@ class TabStripModelOrderController : public TabStripModelObserver {
 
   // Determine where to place a newly opened tab by using the supplied
   // transition and foreground flag to figure out how it was opened.
-  int DetermineInsertionIndex(TabContents* new_contents,
+  int DetermineInsertionIndex(CTTabContents* new_contents,
                               PageTransition::Type transition,
                               bool foreground);
 
@@ -46,8 +46,8 @@ class TabStripModelOrderController : public TabStripModelObserver {
                                 bool is_remove) const;
 
   // Overridden from TabStripModelObserver:
-  virtual void TabSelectedAt(TabContents* old_contents,
-                             TabContents* new_contents,
+  virtual void TabSelectedAt(CTTabContents* old_contents,
+                             CTTabContents* new_contents,
                              int index,
                              bool user_gesture);
 

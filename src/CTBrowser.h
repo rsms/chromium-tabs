@@ -41,18 +41,18 @@ class TabStripModel;
 // controller loaded with a nib called "BrowserWindow". If the nib can't be
 // found in the main bundle, a fallback nib will be loaded from the framework.
 // This is usually enough since all UI which normally is customized is comprised
-// within each tab (TabContents view).
+// within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
 
 // Commands
 -(void)newWindow;
 -(void)closeWindow;
--(TabContents*)addTabContents:(TabContents*)contents
+-(CTTabContents*)addTabContents:(CTTabContents*)contents
                       atIndex:(int)index
                  inForeground:(BOOL)foreground;
--(TabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
--(TabContents*)addBlankTabInForeground:(BOOL)foreground;
--(TabContents*)addBlankTab; // InForeground:YES
+-(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTabInForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTab; // InForeground:YES
 -(void)closeTab;
 -(void)selectNextTab;
 -(void)selectPreviousTab;
@@ -67,14 +67,14 @@ class TabStripModel;
 -(void)executeCommand:(int)cmd; // withDisposition:CURRENT_TAB
 
 // callbacks
--(void)loadingStateDidChange:(TabContents*)contents;
+-(void)loadingStateDidChange:(CTTabContents*)contents;
 -(void)windowDidBeginToClose;
 
 // Convenience helpers (proxy for TabStripModel)
 -(int)tabCount;
 -(int)selectedTabIndex;
--(TabContents*)selectedTabContents;
--(TabContents*)tabContentsAtIndex:(int)index;
+-(CTTabContents*)selectedTabContents;
+-(CTTabContents*)tabContentsAtIndex:(int)index;
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture;
 -(void)closeAllTabs;
 

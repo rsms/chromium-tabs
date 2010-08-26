@@ -153,7 +153,7 @@
 - (void)moveTabView:(NSView*)view
      fromController:(TabWindowController*)dragController {
   if (dragController) {
-    // Moving between windows. Figure out the TabContents to drop into our tab
+    // Moving between windows. Figure out the CTTabContents to drop into our tab
     // model from the source window's model.
     BOOL isBrowser =
         [dragController isKindOfClass:[CTBrowserWindowController class]];
@@ -161,7 +161,7 @@
     if (!isBrowser) return;
     CTBrowserWindowController* dragBWC = (CTBrowserWindowController*)dragController;
     int index = [dragBWC->tabStripController_ modelIndexForTabView:view];
-    TabContents* contents =
+    CTTabContents* contents =
         [dragBWC->browser_ tabStripModel]->GetTabContentsAt(index);
     // The tab contents may have gone away if given a window.close() while it
     // is being dragged. If so, bail, we've got nothing to drop.
@@ -187,7 +187,7 @@
 
     // Now that we have enough information about the tab, we can remove it from
     // the dragging window. We need to do this *before* we add it to the new
-    // window as this will remove the TabContents' delegate.
+    // window as this will remove the CTTabContents' delegate.
     [dragController detachTabView:view];
 
     // Deposit it into our model at the appropriate location (it already knows
@@ -229,7 +229,7 @@
 
   // Fetch the tab contents for the tab being dragged.
   int index = [tabStripController_ modelIndexForTabView:tabView];
-  TabContents* contents = tabStripModel->GetTabContentsAt(index);
+  CTTabContents* contents = tabStripModel->GetTabContentsAt(index);
 
   // Set the window size. Need to do this before we detach the tab so it's
   // still in the window. We have to flip the coordinates as that's what
@@ -250,7 +250,7 @@
 
   // Detach it from the source window, which just updates the model without
   // deleting the tab contents. This needs to come before creating the new
-  // CTBrowser because it clears the TabContents' delegate, which gets hooked
+  // CTBrowser because it clears the CTTabContents' delegate, which gets hooked
   // up during creation of the new window.
   tabStripModel->DetachTabContentsAt(index);
 
@@ -336,7 +336,7 @@
 
 
 - (NSString*)selectedTabTitle {
-  TabContents* contents = [browser_ tabStripModel]->GetSelectedTabContents();
+  CTTabContents* contents = [browser_ tabStripModel]->GetSelectedTabContents();
   return contents.title;
 }
 
@@ -469,7 +469,7 @@
 
   // If the relayout shifts the content area up or down, let the renderer know.
   if (contentShifted) {
-    if (TabContents* contents = [browser_ selectedTabContents]) {
+    if (CTTabContents* contents = [browser_ selectedTabContents]) {
       [contents viewFrameDidChange:newFrame];
     }
   }
@@ -546,24 +546,24 @@
 #pragma mark TabStripModelObserverBridge impl.
 
 
-/*- (void)insertTabWithContents:(TabContents*)contents
+/*- (void)insertTabWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)inForeground;
-- (void)tabClosingWithContents:(TabContents*)contents
+- (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index;
-- (void)tabDetachedWithContents:(TabContents*)contents
+- (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index;
-- (void)selectTabWithContents:(TabContents*)newContents
-             previousContents:(TabContents*)oldContents
+- (void)selectTabWithContents:(CTTabContents*)newContents
+             previousContents:(CTTabContents*)oldContents
                       atIndex:(NSInteger)index
                   userGesture:(bool)wasUserGesture;
-- (void)tabMovedWithContents:(TabContents*)contents
+- (void)tabMovedWithContents:(CTTabContents*)contents
                     fromIndex:(NSInteger)from
                       toIndex:(NSInteger)to;
-- (void)tabChangedWithContents:(TabContents*)contents
+- (void)tabChangedWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index
                     changeType:(TabChangeType)change;
-- (void)tabMiniStateChangedWithContents:(TabContents*)contents
+- (void)tabMiniStateChangedWithContents:(CTTabContents*)contents
                                 atIndex:(NSInteger)index;*/
 
 - (void)tabStripEmpty {

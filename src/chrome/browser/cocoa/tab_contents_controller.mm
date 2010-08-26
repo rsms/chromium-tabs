@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #import "chrome/browser/cocoa/tab_contents_controller.h"
-#import "TabContents.h"
+#import "CTTabContents.h"
 #import "util.h"
 
 // Default offset of the contents splitter in pixels.
@@ -16,16 +16,16 @@ static const int kMinWebHeight = 50;
 
 @implementation TabContentsController
 
-- (id)initWithContents:(TabContents*)contents {
+- (id)initWithContents:(CTTabContents*)contents {
   // subclasses might override this to load a different nib
-  return [self initWithNibName:@"TabContents"
+  return [self initWithNibName:@"CTTabContents"
                         bundle:[util bundleForResource:@"TabView" ofType:@"nib"]
                       contents:contents];
 }
 
 - (id)initWithNibName:(NSString*)name
                bundle:(NSBundle*)bundle
-             contents:(TabContents*)contents {
+             contents:(CTTabContents*)contents {
   if ((self = [super initWithNibName:name bundle:bundle])) {
     contents_ = contents;
   }
@@ -68,7 +68,7 @@ static const int kMinWebHeight = 50;
     rvh->Focus();*/
 }
 
-- (void)tabDidChange:(TabContents*)updatedContents {
+- (void)tabDidChange:(CTTabContents*)updatedContents {
   // Calling setContentView: here removes any first responder status
   // the view may have, so avoid changing the view hierarchy unless
   // the view is different.
@@ -78,7 +78,7 @@ static const int kMinWebHeight = 50;
   }
 }
 
-/*- (void)showDevToolsContents:(TabContents*)devToolsContents {
+/*- (void)showDevToolsContents:(CTTabContents*)devToolsContents {
   NSArray* subviews = [contentsContainer_ subviews];
   if (devToolsContents) {
     DCHECK_GE([subviews count], 1u);

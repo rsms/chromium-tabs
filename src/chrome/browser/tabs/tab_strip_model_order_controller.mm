@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
-#include "TabContents.h"
+#include "CTTabContents.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModelOrderController, public:
@@ -20,7 +20,7 @@ TabStripModelOrderController::~TabStripModelOrderController() {
 }
 
 int TabStripModelOrderController::DetermineInsertionIndex(
-    TabContents* new_contents,
+    CTTabContents* new_contents,
     PageTransition::Type transition,
     bool foreground) {
   int tab_count = tab_strip_model_->count();
@@ -102,8 +102,8 @@ int TabStripModelOrderController::DetermineNewSelectedIndex(
   return selected_index;
 }
 
-void TabStripModelOrderController::TabSelectedAt(TabContents* old_contents,
-                                                 TabContents* new_contents,
+void TabStripModelOrderController::TabSelectedAt(CTTabContents* old_contents,
+                                                 CTTabContents* new_contents,
                                                  int index,
                                                  bool user_gesture) {
   DLOG("TabSelectedAt %d", index);

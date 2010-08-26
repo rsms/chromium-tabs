@@ -8,13 +8,13 @@
 
 #include <Cocoa/Cocoa.h>
 
-@class TabContents;
+@class CTTabContents;
 
 class TabContentsCommandObserver;
 class TabStripModel;
 
 // A class that controls the web contents of a tab. It manages displaying the
-// native view for a given TabContents and optionally its docked devtools in
+// native view for a given CTTabContents and optionally its docked devtools in
 // |contentsContainer_|.
 // Note that just creating the class does not display the view in
 // |contentsContainer_|. We defer inserting it until the box is the correct size
@@ -24,7 +24,7 @@ class TabStripModel;
 @interface TabContentsController : NSViewController {
  @private
   TabContentsCommandObserver* observer_;  // nil if |commands_| is nil
-  TabContents* contents_;  // weak
+  CTTabContents* contents_;  // weak
 
   IBOutlet NSSplitView* contentsContainer_;
 }
@@ -33,7 +33,7 @@ class TabStripModel;
 // nib given by |name|.
 - (id)initWithNibName:(NSString*)name
                bundle:(NSBundle*)bundle
-             contents:(TabContents*)contents;
+             contents:(CTTabContents*)contents;
 
 // Create the contents of a tab represented by |contents| and loaded from a nib
 // called "TabContents".
@@ -45,7 +45,7 @@ class TabStripModel;
 // If you use a nib with another name you should override the implementation in
 // your subclass and delegate the internal initialization to
 // initWithNibName:bundle:contents
-- (id)initWithContents:(TabContents*)contents;
+- (id)initWithContents:(CTTabContents*)contents;
 
 // Called when the tab contents is the currently selected tab and is about to be
 // removed from the view hierarchy.
@@ -63,13 +63,13 @@ class TabStripModel;
 // Called when the tab contents is updated in some non-descript way (the
 // notification from the model isn't specific). |updatedContents| could reflect
 // an entirely new tab contents object.
-- (void)tabDidChange:(TabContents*)updatedContents;
+- (void)tabDidChange:(CTTabContents*)updatedContents;
 
 // Shows |devToolsContents| in a split view, or removes the bottom view in the
 // split viewif |devToolsContents| is NULL.
 // TODO(thakis): Either move this to tab_window or move infobar handling to here
 // too -- http://crbug.com/31633 .
-//- (void)showDevToolsContents:(TabContents*)devToolsContents;
+//- (void)showDevToolsContents:(CTTabContents*)devToolsContents;
 
 // Returns the height required by devtools and divider, or 0 if no devtools are
 // docked to the tab.

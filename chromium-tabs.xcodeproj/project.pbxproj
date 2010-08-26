@@ -24,7 +24,7 @@
 		3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F921222CADC00F1BB78 /* themed_window.mm */; };
 		3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.mm */; };
 		3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* throbber_view.mm */; };
-		3A3ED9D01225E32A009E2908 /* TabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* TabContents.mm */; };
+		3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* CTTabContents.mm */; };
 		3A3ED9D11225E32A009E2908 /* tab_strip_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* tab_strip_model.mm */; };
 		3A3ED9D21225E32A009E2908 /* tab_strip_model_order_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */; };
 		3A3ED9D31225E32A009E2908 /* tab_contents_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* tab_contents_controller.mm */; };
@@ -68,7 +68,7 @@
 		3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168D6122543A900757641 /* BrowserCommands.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* CTBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF95F12235704008A3B8C /* CTBrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* TabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF41225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */; };
 		3A3EDAF51225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */; };
 /* End PBXBuildFile section */
@@ -207,8 +207,8 @@
 		3AEE19421222DC5B009DA438 /* tab_strip_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model.h; sourceTree = "<group>"; };
 		3AEE19431222DC5B009DA438 /* tab_strip_model_order_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model_order_controller.mm; sourceTree = "<group>"; };
 		3AEE19441222DC5B009DA438 /* tab_strip_model_order_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model_order_controller.h; sourceTree = "<group>"; };
-		3AEE19521222DDEB009DA438 /* TabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabContents.h; sourceTree = "<group>"; };
-		3AEE19531222DDEB009DA438 /* TabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TabContents.mm; sourceTree = "<group>"; };
+		3AEE19521222DDEB009DA438 /* CTTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContents.h; sourceTree = "<group>"; };
+		3AEE19531222DDEB009DA438 /* CTTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabContents.mm; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -254,8 +254,8 @@
 				3AA7188A122479CE005022BE /* CTBrowser.mm */,
 				3A1CF95F12235704008A3B8C /* CTBrowserWindowController.h */,
 				3A1CF96012235704008A3B8C /* CTBrowserWindowController.mm */,
-				3AEE19521222DDEB009DA438 /* TabContents.h */,
-				3AEE19531222DDEB009DA438 /* TabContents.mm */,
+				3AEE19521222DDEB009DA438 /* CTTabContents.h */,
+				3AEE19531222DDEB009DA438 /* CTTabContents.mm */,
 				3A3EDA321225E911009E2908 /* base */,
 				3A3ED6741225CE7A009E2908 /* third_party */,
 				3A3921D81221AA4B006D8305 /* chrome */,
@@ -502,7 +502,7 @@
 				3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */,
 				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
-				3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */,
+				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
 				3A3EDA9D1225EF84009E2908 /* util.h in Headers */,
 				3A3EDAF41225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h in Headers */,
 			);
@@ -617,7 +617,7 @@
 				3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */,
 				3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */,
 				3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */,
-				3A3ED9D01225E32A009E2908 /* TabContents.mm in Sources */,
+				3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */,
 				3A3ED9D11225E32A009E2908 /* tab_strip_model.mm in Sources */,
 				3A3ED9D21225E32A009E2908 /* tab_strip_model_order_controller.mm in Sources */,
 				3A3ED9D31225E32A009E2908 /* tab_contents_controller.mm in Sources */,
@@ -791,10 +791,10 @@
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = src;
 				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fvisibility=hidden",
 					"$(OTHER_CFLAGS)",
@@ -829,10 +829,10 @@
 				);
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = src;
 				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fvisibility=hidden",
 					"$(OTHER_CFLAGS)",

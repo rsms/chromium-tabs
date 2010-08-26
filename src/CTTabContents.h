@@ -3,7 +3,7 @@
 
 class TabStripModel; // Note: C++ class
 
-@interface TabContents : NSObject {
+@interface CTTabContents : NSObject {
   BOOL isApp_;
   BOOL isLoading_;
   BOOL isWaitingForResponse_;
@@ -29,11 +29,11 @@ class TabStripModel; // Note: C++ class
 // displayed, even if |icon| is nil. By default this returns true.
 @property(readonly, nonatomic) BOOL hasIcon;
 
-// Initialize a new TabContents object.
+// Initialize a new CTTabContents object.
 // The default implementation does nothing with |baseContents| but subclasses
-// can use |baseContents| (the selected TabContents, if any) to perform
+// can use |baseContents| (the selected CTTabContents, if any) to perform
 // customized initialization.
--(id)initWithBaseTabContents:(TabContents*)baseContents;
+-(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
 // Invoked when the tab should be destroyed (involves some finalization).
 -(void)destroy:(TabStripModel*)sender;
@@ -55,7 +55,7 @@ class TabStripModel; // Note: C++ class
 @end
 
 @protocol TabContentsDelegate
--(BOOL)canReloadContents:(TabContents*)contents;
+-(BOOL)canReloadContents:(CTTabContents*)contents;
 -(BOOL)reload; // should set contents->isLoading_ = YES
 @end
 

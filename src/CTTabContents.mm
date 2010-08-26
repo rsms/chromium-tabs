@@ -1,7 +1,7 @@
-#import "TabContents.h"
+#import "CTTabContents.h"
 #import "chrome/browser/tabs/tab_strip_model.h"
 
-@implementation TabContents
+@implementation CTTabContents
 
 @synthesize isApp = isApp_;
 @synthesize isLoading = isLoading_;
@@ -13,7 +13,7 @@
 @synthesize title = title_;
 @synthesize icon = icon_;
 
--(id)initWithBaseTabContents:(TabContents*)baseContents {
+-(id)initWithBaseTabContents:(CTTabContents*)baseContents {
   if (!(self = [super init])) return nil;
   // Example icon:
   //icon_ = [NSImage imageNamed:NSImageNameBluetoothTemplate];
@@ -36,17 +36,17 @@
 
 -(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel {
   // subclasses can implement this
-  //NSLog(@"TabContents closingOfTabDidStart");
+  //NSLog(@"CTTabContents closingOfTabDidStart");
 }
 
 -(void)didBecomeSelected {
   // subclasses can implement this
-  //NSLog(@"TabContents didBecomeSelected");
+  //NSLog(@"CTTabContents didBecomeSelected");
 }
 
 -(void)didBecomeHidden {
   // subclasses can implement this
-  //NSLog(@"TabContents didBecomeHidden");
+  //NSLog(@"CTTabContents didBecomeHidden");
 }
 
 -(void)viewFrameDidChange:(NSRect)newFrame {
