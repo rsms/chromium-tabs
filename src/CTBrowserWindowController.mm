@@ -2,10 +2,10 @@
 
 #import "CTTabStripModel.h"
 
-#import "tab_strip_controller.h"
-#import "tab_strip_model_observer_bridge.h"
+#import "CTTabStripController.h"
+#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
-#import "tab_strip_view.h"
+#import "CTTabStripView.h"
 #import "fast_resize_view.h"
 
 #import "scoped_nsdisable_screen_updates.h"

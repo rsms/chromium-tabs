@@ -1,12 +1,12 @@
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// found in the LICENSE-chromium file.
 
 #import "CTTabView.h"
 
 #import "scoped_cftyperef.h"
 #import "CTTabController.h"
-#import "tab_window_controller.h"
+#import "CTTabWindowController.h"
 
 // ripped out from mac_util.mm:
 static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,

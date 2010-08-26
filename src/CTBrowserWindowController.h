@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CTBrowser.h"
 #import "CTTabStripModelDelegate.h"
-#import "tab_window_controller.h"
+#import "CTTabWindowController.h"
 
 @class CTTabStripController;
 class CTTabStripModelObserverBridge;

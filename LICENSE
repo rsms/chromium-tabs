@@ -3,7 +3,7 @@ created by (origins from) a third party. The third party material used by
 Chromium Tabs are:
 
   - Chromium, located under src/chrome and src/base, copyright Google, Inc. BSD
-    license.
+    license. See LICENSE-chromium.
 
   - Google Toolbox for Mac, located under src/third_party/gtm-subset, copyright
     by Google, Inc. Apache 2.0 license.

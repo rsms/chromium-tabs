@@ -1,6 +1,6 @@
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// found in the LICENSE-chromium file.
 
 #ifndef CHROME_COMMON_PAGE_TRANSITION_TYPES_H__
 #define CHROME_COMMON_PAGE_TRANSITION_TYPES_H__

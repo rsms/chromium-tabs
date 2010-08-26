@@ -1,8 +1,8 @@
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// found in the LICENSE-chromium file.
 
-#import "tab_strip_model_observer_bridge.h"
+#import "CTTabStripModelObserverBridge.h"
 
 CTTabStripModelObserverBridge::CTTabStripModelObserverBridge(CTTabStripModel* model,
                                                          id controller)
