@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "Browser.h"
+#import <ChromiumTabs/ChromiumTabs.h>
 
 @implementation AppDelegate
 

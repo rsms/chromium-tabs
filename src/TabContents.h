@@ -28,7 +28,13 @@ class TabStripModel; // Note: C++ class
 // displayed, even if |icon| is nil. By default this returns true.
 @property(readonly, nonatomic) BOOL hasIcon;
 
+// Initialize a new TabContents object.
+// The default implementation does nothing with |baseContents| but subclasses
+// can use |baseContents| (the selected TabContents, if any) to perform
+// customized initialization.
 -(id)initWithBaseTabContents:(TabContents*)baseContents;
+
+// Invoked when the tab should be destroyed (involves some finalization).
 -(void)destroy:(TabStripModel*)sender;
 
 // Invoked when this tab is closing

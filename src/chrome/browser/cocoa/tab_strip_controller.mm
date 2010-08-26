@@ -7,6 +7,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "TabContents.h"
 #import "Browser.h"
+#import "util.h"
+#import "NSImage+ChromiumTabsAdditions.h"
 
 #include <limits>
 #include <string>
@@ -49,9 +51,12 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 namespace {
 
 // The images names used for different states of the new tab button.
-NSString* const kNewTabHoverImage = @"newtab_h.pdf";
-NSString* const kNewTabImage = @"newtab.pdf";
-NSString* const kNewTabPressedImage = @"newtab_p.pdf";
+static NSImage* kNewTabHoverImage = nil;
+static NSImage* kNewTabImage = nil;
+static NSImage* kNewTabPressedImage = nil;
+
+// Image used to display default icon (when contents.hasIcon && !contents.icon)
+static NSImage* kDefaultIconImage = nil;
 
 // A value to indicate tab layout should use the full available width of the
 // view.
@@ -277,6 +282,15 @@ private:
 
 @synthesize indentForControls = indentForControls_;
 
++(void)initialize {
+  #define PIMG(name) [[NSImage imageInAppOrFrameworkNamed:name] retain]
+  kNewTabHoverImage = PIMG(@"newtab_h.pdf");
+  kNewTabImage = PIMG(@"newtab.pdf");
+  kNewTabPressedImage = PIMG(@"newtab_p.pdf");
+  kDefaultIconImage = PIMG(@"default-icon");
+  #undef PIMG
+}
+
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
            browser:(Browser*)browser {
@@ -295,7 +309,7 @@ private:
     permanentSubviews_.reset([[NSMutableArray alloc] init]);
 
     //ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-    defaultFavIcon_.reset([[NSImage imageNamed:@"nav"] retain]);
+    defaultFavIcon_.reset(kDefaultIconImage);
 
     [self setIndentForControls:[[self class] defaultIndentForControls]];
 
@@ -309,9 +323,8 @@ private:
     [newTabButton_ setTag:IDC_NEW_TAB];
     // Set the images from code because Cocoa fails to find them in our sub
     // bundle during tests.
-    [newTabButton_ setImage:[NSImage imageNamed:kNewTabImage]];
-    [newTabButton_
-        setAlternateImage:[NSImage imageNamed:kNewTabPressedImage]];
+    [newTabButton_ setImage:kNewTabImage];
+    [newTabButton_ setAlternateImage:kNewTabPressedImage];
     newTabButtonShowingHoverImage_ = NO;
     newTabTrackingArea_.reset(
         [[NSTrackingArea alloc] initWithRect:[newTabButton_ bounds]
@@ -1172,11 +1185,11 @@ private:
     return;
 
   static NSImage* throbberWaitingImage =
-      [NSImage imageNamed:@"throbber_waiting"];
+      [NSImage imageInAppOrFrameworkNamed:@"throbber_waiting"];
   static NSImage* throbberLoadingImage =
-      [NSImage imageNamed:@"throbber"];
+      [NSImage imageInAppOrFrameworkNamed:@"throbber"];
   static NSImage* sadFaviconImage =
-      [NSImage imageNamed:@"sadfavicon"];
+      [NSImage imageInAppOrFrameworkNamed:@"sadfavicon"];
 
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
@@ -1520,10 +1533,10 @@ private:
 - (void)setNewTabButtonHoverState:(BOOL)shouldShowHover {
   if (shouldShowHover && !newTabButtonShowingHoverImage_) {
     newTabButtonShowingHoverImage_ = YES;
-    [newTabButton_ setImage:[NSImage imageNamed:kNewTabHoverImage]];
+    [newTabButton_ setImage:kNewTabHoverImage];
   } else if (!shouldShowHover && newTabButtonShowingHoverImage_) {
     newTabButtonShowingHoverImage_ = NO;
-    [newTabButton_ setImage:[NSImage imageNamed:kNewTabImage]];
+    [newTabButton_ setImage:kNewTabImage];
   }
 }
 

@@ -51,7 +51,7 @@
 		3A3ED9EB1225E3C2009E2908 /* newtab_h.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEA1222D61900F1BB78 /* newtab_h.pdf */; };
 		3A3ED9EC1225E3C2009E2908 /* newtab_p.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEB1222D61900F1BB78 /* newtab_p.pdf */; };
 		3A3ED9ED1225E3C2009E2908 /* newtab.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FEC1222D61900F1BB78 /* newtab.pdf */; };
-		3A3ED9EE1225E3C2009E2908 /* nav.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FF71222D85300F1BB78 /* nav.pdf */; };
+		3A3ED9EE1225E3C2009E2908 /* default-icon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FF71222D85300F1BB78 /* default-icon.pdf */; };
 		3A3ED9EF1225E3C2009E2908 /* throbber_waiting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFA1222D94600F1BB78 /* throbber_waiting.png */; };
 		3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFD1222D99B00F1BB78 /* sadfavicon.png */; };
 		3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
@@ -60,9 +60,18 @@
 		3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.mm */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
 		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
-		3A3EDA9D1225EF84009E2908 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* util.h */; };
+		3A3EDA9D1225EF84009E2908 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDA9E1225EF84009E2908 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* util.m */; };
 		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
+		3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED97D1225E116009E2908 /* ChromiumTabs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168D6122543A900757641 /* BrowserCommands.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD31225FACA009E2908 /* Browser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* Browser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD41225FACA009E2908 /* BrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF95F12235704008A3B8C /* BrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* TabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAF41225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */; };
+		3A3EDAF51225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,7 +138,7 @@
 		3A286FEA1222D61900F1BB78 /* newtab_h.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab_h.pdf; path = gfx/newtab_h.pdf; sourceTree = "<group>"; };
 		3A286FEB1222D61900F1BB78 /* newtab_p.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab_p.pdf; path = gfx/newtab_p.pdf; sourceTree = "<group>"; };
 		3A286FEC1222D61900F1BB78 /* newtab.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab.pdf; path = gfx/newtab.pdf; sourceTree = "<group>"; };
-		3A286FF71222D85300F1BB78 /* nav.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = nav.pdf; path = gfx/nav.pdf; sourceTree = "<group>"; };
+		3A286FF71222D85300F1BB78 /* default-icon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "default-icon.pdf"; path = "gfx/default-icon.pdf"; sourceTree = "<group>"; };
 		3A286FFA1222D94600F1BB78 /* throbber_waiting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber_waiting.png; path = gfx/throbber_waiting.png; sourceTree = "<group>"; };
 		3A286FFD1222D99B00F1BB78 /* sadfavicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sadfavicon.png; path = gfx/sadfavicon.png; sourceTree = "<group>"; };
 		3A3921DA1221AA4B006D8305 /* page_transition_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = page_transition_types.cc; sourceTree = "<group>"; };
@@ -191,6 +200,8 @@
 		3A3EDA9B1225EF84009E2908 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		3A3EDA9C1225EF84009E2908 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
 		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+ChromiumTabsAdditions.h"; sourceTree = "<group>"; };
+		3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+ChromiumTabsAdditions.m"; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
@@ -236,6 +247,8 @@
 				3A1168C41225404F00757641 /* common.mm */,
 				3A3EDA9B1225EF84009E2908 /* util.h */,
 				3A3EDA9C1225EF84009E2908 /* util.m */,
+				3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */,
+				3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */,
 				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
 				3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */,
@@ -305,7 +318,7 @@
 				3A3ED35012256F06009E2908 /* throbber.png */,
 				3A286FFD1222D99B00F1BB78 /* sadfavicon.png */,
 				3A286FFA1222D94600F1BB78 /* throbber_waiting.png */,
-				3A286FF71222D85300F1BB78 /* nav.pdf */,
+				3A286FF71222D85300F1BB78 /* default-icon.pdf */,
 				3A286FEA1222D61900F1BB78 /* newtab_h.pdf */,
 				3A286FEB1222D61900F1BB78 /* newtab_p.pdf */,
 				3A286FEC1222D61900F1BB78 /* newtab.pdf */,
@@ -487,7 +500,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
+				3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */,
+				3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */,
+				3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */,
+				3A3EDAD31225FACA009E2908 /* Browser.h in Headers */,
+				3A3EDAD41225FACA009E2908 /* BrowserWindowController.h in Headers */,
+				3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */,
 				3A3EDA9D1225EF84009E2908 /* util.h in Headers */,
+				3A3EDAF41225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,7 +585,7 @@
 				3A3ED9EB1225E3C2009E2908 /* newtab_h.pdf in Resources */,
 				3A3ED9EC1225E3C2009E2908 /* newtab_p.pdf in Resources */,
 				3A3ED9ED1225E3C2009E2908 /* newtab.pdf in Resources */,
-				3A3ED9EE1225E3C2009E2908 /* nav.pdf in Resources */,
+				3A3ED9EE1225E3C2009E2908 /* default-icon.pdf in Resources */,
 				3A3ED9EF1225E3C2009E2908 /* throbber_waiting.png in Resources */,
 				3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */,
 				3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */,
@@ -622,6 +643,7 @@
 				3A3ED9E41225E32A009E2908 /* GTMNSBezierPath+CGPath.m in Sources */,
 				3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
 				3A3EDA9E1225EF84009E2908 /* util.m in Sources */,
+				3A3EDAF51225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,7 +712,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SHADOW = NO;
@@ -725,7 +747,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SHADOW = NO;
