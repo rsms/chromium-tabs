@@ -11,7 +11,7 @@
 #import "CTPageTransition.h"
 #import "observer_list.h"
 
-#import "TabStripModelDelegate.h"
+#import "CTTabStripModelDelegate.h"
 
 @class CTTabContents;
 
@@ -156,7 +156,7 @@ class TabStripModelObserver {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// TabStripModelDelegate
+// CTTabStripModelDelegate
 //
 //  A delegate interface that the TabStripModel uses to perform work that it
 //  can't do itself, such as obtain a container HWND for creating new
@@ -166,7 +166,7 @@ class TabStripModelObserver {
 //  the TabStripModel (in our case the CTBrowser object).
 //
 ///////////////////////////////////////////////////////////////////////////////
-/*class TabStripModelDelegate {
+/*class CTTabStripModelDelegate {
  public:
   // Adds what the delegate considers to be a blank tab to the model.
   virtual CTTabContents* AddBlankTab(bool foreground) = 0;
@@ -265,10 +265,10 @@ class TabStripModelObserver {
   virtual bool LargeIconsPermitted() const = 0;
 
  protected:
-  virtual ~TabStripModelDelegate() {}
+  virtual ~CTTabStripModelDelegate() {}
 };*/
 
-// Moved to TabStripModelDelegate.h @protocol
+// Moved to CTTabStripModelDelegate.h @protocol
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -372,12 +372,12 @@ class TabStripModel /*: public NotificationObserver*/ {
   static const int kNoTab = -1;
 
   // Construct a TabStripModel with a delegate to help it do certain things
-  // (See TabStripModelDelegate documentation). |delegate| cannot be NULL.
-  TabStripModel(NSObject<TabStripModelDelegate>* delegate);
+  // (See CTTabStripModelDelegate documentation). |delegate| cannot be NULL.
+  TabStripModel(NSObject<CTTabStripModelDelegate>* delegate);
   virtual ~TabStripModel();
 
-  // Retrieves the TabStripModelDelegate associated with this TabStripModel.
-  NSObject<TabStripModelDelegate>* delegate() const { return delegate_; }
+  // Retrieves the CTTabStripModelDelegate associated with this TabStripModel.
+  NSObject<CTTabStripModelDelegate>* delegate() const { return delegate_; }
 
   // Add and remove observers to changes within this TabStripModel.
   void AddObserver(TabStripModelObserver* observer);
@@ -766,7 +766,7 @@ class TabStripModel /*: public NotificationObserver*/ {
       TabReplaceType type);
 
   // Our delegate.
-  NSObject<TabStripModelDelegate>* delegate_;
+  NSObject<CTTabStripModelDelegate>* delegate_;
 
   // A hunk of data representing a CTTabContents and (optionally) the
   // NavigationController that spawned it. This memory only sticks around while

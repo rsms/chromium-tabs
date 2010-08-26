@@ -1,7 +1,7 @@
 #pragma once
 #import <Cocoa/Cocoa.h>
 #import "tab_strip_model.h"
-#import "TabStripModelDelegate.h"
+#import "CTTabStripModelDelegate.h"
 #import "BrowserCommands.h"
 
 enum CTWindowOpenDisposition {
@@ -16,7 +16,7 @@ class TabStripModel;
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
-@interface CTBrowser : NSObject <TabStripModelDelegate> {
+@interface CTBrowser : NSObject <CTTabStripModelDelegate> {
   TabStripModel *tabStripModel_;
   CTBrowserWindowController *windowController_;
 }

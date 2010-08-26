@@ -145,7 +145,7 @@
 }
 
 
-// implementation conforms to TabStripModelDelegate
+// implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
   CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
   CTTabContents* contents =
@@ -157,7 +157,7 @@
   return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
-// implementation conforms to TabStripModelDelegate
+// implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabInForeground:(BOOL)foreground {
   return [self addBlankTabAtIndex:-1 inForeground:foreground];
 }
@@ -270,7 +270,7 @@
 
 
 #pragma mark -
-#pragma mark TabStripModelDelegate protocol implementation
+#pragma mark CTTabStripModelDelegate protocol implementation
 
 
 -(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents

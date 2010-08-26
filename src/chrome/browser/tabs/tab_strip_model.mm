@@ -108,16 +108,16 @@ void TabStripModelObserver::TabStripEmpty() {}
 void TabStripModelObserver::TabStripModelDeleted() {}
 
 ///////////////////////////////////////////////////////////////////////////////
-// TabStripModelDelegate, public:
+// CTTabStripModelDelegate, public:
 
-/*bool TabStripModelDelegate::CanCloseTab() const {
+/*bool CTTabStripModelDelegate::CanCloseTab() const {
   return true;
 }*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModel, public:
 
-TabStripModel::TabStripModel(NSObject<TabStripModelDelegate>* delegate)
+TabStripModel::TabStripModel(NSObject<CTTabStripModelDelegate>* delegate)
     : selected_index_(kNoTab),
       closing_all_(false),
       order_controller_(NULL) {
