@@ -70,6 +70,7 @@
 		3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */; };
 		3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */; };
+		3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +200,8 @@
 		3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CTAdditions.h"; sourceTree = "<group>"; };
 		3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
 		3A928A771226E01900DA7E43 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
+		3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBrowser.h; sourceTree = "<group>"; };
+		3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyBrowser.mm; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
@@ -466,12 +469,14 @@
 		3A3EDA6F1225EBBB009E2908 /* simple-app */ = {
 			isa = PBXGroup;
 			children = (
-				3A3EDA701225EBBB009E2908 /* AppDelegate.h */,
-				3A3EDA711225EBBB009E2908 /* AppDelegate.mm */,
 				3A3EDA721225EBBB009E2908 /* InfoPlist.strings */,
 				3A3EDA741225EBBB009E2908 /* MainMenu.xib */,
 				3A3EDA761225EBBB009E2908 /* Info.plist */,
 				3A3EDA771225EBBB009E2908 /* main.m */,
+				3A3EDA701225EBBB009E2908 /* AppDelegate.h */,
+				3A3EDA711225EBBB009E2908 /* AppDelegate.mm */,
+				3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */,
+				3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */,
 			);
 			path = "simple-app";
 			sourceTree = "<group>";
@@ -645,6 +650,7 @@
 			files = (
 				3A3EDA7C1225EBFF009E2908 /* main.m in Sources */,
 				3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */,
+				3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

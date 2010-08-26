@@ -917,7 +917,7 @@ private:
   if (contents)
     titleString = contents.title;
   if (!titleString || ![titleString length])
-    titleString = @"Untitled";
+    titleString = L10n(@"New Tab");
   [tab setTitle:titleString];
 }
 

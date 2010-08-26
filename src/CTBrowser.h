@@ -37,18 +37,18 @@ class CTTabStripModel;
 // Creates and opens a new window. (retained)
 +(CTBrowser*)openEmptyWindow;
 
-// Creates a new window controller. The default implementation will create a
+// Create a new window controller. The default implementation will create a
 // controller loaded with a nib called "BrowserWindow". If the nib can't be
 // found in the main bundle, a fallback nib will be loaded from the framework.
 // This is usually enough since all UI which normally is customized is comprised
 // within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
 
-// Creates a new CTTabContents instance.
+// Create a new default/blank CTTabContents.
 // |baseContents| represents the CTTabContents which is currently in the
 // foreground. It might be nil.
 // Subclasses could override this to provide a custom CTTabContents type.
--(CTTabContents*)createTabContentsBasedOn:(CTTabContents*)baseContents;
+-(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents;
 
 // Commands
 -(void)newWindow;

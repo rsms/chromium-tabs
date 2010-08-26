@@ -6,14 +6,6 @@
 #import "CTTabContents.h"
 #import "util.h"
 
-// Default offset of the contents splitter in pixels.
-static const int kDefaultContentsSplitOffset = 400;
-
-// Never make the web part of the tab contents smaller than this (needed if the
-// window is only a few pixels high).
-static const int kMinWebHeight = 50;
-
-
 @implementation CTTabContentsController
 
 - (id)initWithContents:(CTTabContents*)contents {
@@ -71,6 +63,7 @@ static const int kMinWebHeight = 50;
   // Calling setContentView: here removes any first responder status
   // the view may have, so avoid changing the view hierarchy unless
   // the view is different.
+  NSLog(@"tabDidChange");
   if (contents_ != updatedContents) {
     contents_ = updatedContents;
     [self ensureContentsVisible];

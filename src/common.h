@@ -48,7 +48,7 @@
   // log an expression
   #ifdef __OBJC__
     NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);
-    #define EXPRLOG(_X_) do{\
+    #define DLOG_EXPR(_X_) do{\
       __typeof__(_X_) _Y_ = (_X_);\
       const char * _TYPE_CODE_ = @encode(__typeof__(_X_));\
       NSString *_STR_ = VTPG_DDToStringFromTypeAndValue(_TYPE_CODE_, &_Y_);\
@@ -59,7 +59,7 @@
               _TYPE_CODE_, #_X_, __func__, __SRC_FILENAME__, __LINE__);\
       }}while(0)
   #else // __OBJC__
-    #define EXPRLOG(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
+    #define DLOG_EXPR(_X_) fprintf(stderr, "%s [%d] X [%s:%d] %s = %s\n",\
                               __FILENAME__, getpid(), __SRC_FILENAME__, __LINE__, \
                               #_X_, "<TODO:common.h>")
     // TODO eval expression ---------------^
@@ -68,7 +68,7 @@
   #define IFDEBUG(x)    do{}while(0)
   #define DLOG(...)     do{}while(0)
   #define MARKLOG       do{}while(0)
-  #define EXPRLOG(...)  do{}while(0)
+  #define DLOG_EXPR(...)  do{}while(0)
 #endif // !defined(NDEBUG)
 
 // libbase compatible assertion macros

@@ -32,7 +32,7 @@
 
 
 +(CTBrowser*)openEmptyWindow {
-  CTBrowser *browser = [CTBrowser browser];
+  CTBrowser *browser = [self browser];
   // reference will live as long as the window lives (until closed)
   [browser addBlankTabInForeground:YES];
   [browser.windowController showWindow:self];
@@ -64,6 +64,7 @@
 
 
 -(CTBrowserWindowController *)createWindowController {
+  // subclasses could override this
   NSString *windowNibPath = [util pathForResource:@"BrowserWindow"
                                            ofType:@"nib"];
   return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath 
@@ -104,7 +105,7 @@
 
 -(void)loadingStateDidChange:(CTTabContents*)contents {
   DLOG("TODO %s", __func__);
-  EXPRLOG(contents);
+  DLOG_EXPR(contents);
 }
 
 -(void)windowDidBeginToClose {
@@ -119,7 +120,7 @@
 #pragma mark Commands
 
 -(void)newWindow {
-  [CTBrowser openEmptyWindow];
+  [isa openEmptyWindow];
 }
 
 -(void)closeWindow {
@@ -145,8 +146,9 @@
 }
 
 
--(CTTabContents*)createTabContentsBasedOn:(CTTabContents*)baseContents {
+-(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
   // subclasses should override this to provide a custom CTTabContents type
+  // and/or initialization
   return [[CTTabContents alloc] initWithBaseTabContents:baseContents];
 }
 
@@ -154,15 +156,7 @@
 // implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
   CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
-  CTTabContents* contents = [self createTabContentsBasedOn:baseContents];
-  if (!contents.title)
-    contents.title = L10n(@"New tab");
-  //if (!contents.t)
-  /*NSRect frame = [windowController_.window frame];
-  frame.origin.x  = frame.origin.y = 0.0;
-  contents.view = [[NSTextView alloc] initWithFrame:frame];
-  */
-  contents.view = [[NSTextView alloc] initWithFrame:NSZeroRect];
+  CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
   return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
@@ -218,7 +212,7 @@
 
 -(void)executeCommand:(int)cmd
       withDisposition:(CTWindowOpenDisposition)disposition {
-  EXPRLOG(cmd);
+  DLOG_EXPR(cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -292,7 +286,7 @@
   //  dock_info.AdjustOtherWindowBounds();
 
   // Create an empty new browser window the same size as the old one.
-  CTBrowser* browser = [CTBrowser browserWithWindowFrame:windowBounds];
+  CTBrowser* browser = [isa browserWithWindowFrame:windowBounds];
   browser.tabStripModel->AppendTabContents(contents, true);
   [browser loadingStateDidChange:contents];
   [browser.windowController showWindow:self];
