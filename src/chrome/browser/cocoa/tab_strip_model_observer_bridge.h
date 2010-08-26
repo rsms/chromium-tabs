@@ -46,7 +46,7 @@ class TabStripModelObserverBridge : public TabStripModelObserver {
 
  private:
   id controller_;  // weak, owns me
-  TabStripModel* model_;  // weak, owned by Browser
+  TabStripModel* model_;  // weak, owned by CTBrowser
 };
 
 // A collection of methods which can be selectively implemented by any

@@ -1,6 +1,6 @@
 #pragma once
 
-@class Browser;
+@class CTBrowser;
 #import "TabContents.h"
 
 enum {
@@ -16,14 +16,14 @@ enum {
 // Asks for a new TabStripModel to be created and the given tab contents to
 // be added to it. Its size and position are reflected in |window_bounds|.
 // If |dock_info|'s type is other than NONE, the newly created window should
-// be docked as identified by |dock_info|. Returns the Browser object
+// be docked as identified by |dock_info|. Returns the CTBrowser object
 // representing the newly created window and tab strip. This does not
 // show the window, it's up to the caller to do so.
--(Browser*)createNewStripWithContents:(TabContents*)contents
+-(CTBrowser*)createNewStripWithContents:(TabContents*)contents
                          windowBounds:(const NSRect)windowBounds
                              maximize:(BOOL)maximize;
 
-// Creates a new Browser object and window containing the specified
+// Creates a new CTBrowser object and window containing the specified
 // |contents|, and continues a drag operation that began within the source
 // window's tab strip. |window_bounds| are the bounds of the source window in
 // screen coordinates, used to place the new window, and |tab_bounds| are the

@@ -7,10 +7,10 @@
 class TabStripModel;
 @class BrowserWindowController;
 
-// There is one Browser instance per percieved window.
-// A Browser instance has one TabStripModel.
+// There is one CTBrowser instance per percieved window.
+// A CTBrowser instance has one TabStripModel.
 
-@interface Browser : NSObject <TabStripModelDelegate> {
+@interface CTBrowser : NSObject <TabStripModelDelegate> {
   TabStripModel *tabStripModel_;
   BrowserWindowController *windowController_;
 }
@@ -25,11 +25,11 @@ class TabStripModel;
 @property(readonly, nonatomic) NSWindow* window;
 
 // Create a new browser with a window. (autoreleased)
-+(Browser*)browser;
-+(Browser*)browserWithWindowFrame:(const NSRect)frame;
++(CTBrowser*)browser;
++(CTBrowser*)browserWithWindowFrame:(const NSRect)frame;
 
 // Creates and opens a new window. (retained)
-+(Browser*)openEmptyWindow;
++(CTBrowser*)openEmptyWindow;
 
 // Creates a new window controller. The default implementation will create a
 // controller loaded with a nib called "BrowserWindow". If the nib can't be

@@ -955,7 +955,7 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
     }
 
     // Update the explicitly closed state. If the unload handlers cancel the
-    // close the state is reset in Browser. We don't update the explicitly
+    // close the state is reset in CTBrowser. We don't update the explicitly
     // closed state if already marked as explicitly closed as unload handlers
     // call back to this if the close is allowed.
     if (!detached_contents.closedByUserGesture) {

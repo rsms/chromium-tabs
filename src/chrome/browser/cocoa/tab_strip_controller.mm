@@ -6,7 +6,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "TabContents.h"
-#import "Browser.h"
+#import "CTBrowser.h"
 #import "util.h"
 #import "NSImage+ChromiumTabsAdditions.h"
 
@@ -293,7 +293,7 @@ private:
 
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
-           browser:(Browser*)browser {
+           browser:(CTBrowser*)browser {
   assert(view && switchView && browser);
   if ((self = [super init])) {
     tabStripView_.reset([view retain]);

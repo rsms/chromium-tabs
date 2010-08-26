@@ -31,7 +31,7 @@
 // Load the browser window nib and do initialization. Note that the nib also
 // sets this controller up as the window's delegate.
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
-                    browser:(Browser*)browser {
+                    browser:(CTBrowser*)browser {
   if (!(self = [super initWithWindowNibPath:windowNibPath owner:self]))
     return nil;
 
@@ -192,7 +192,7 @@
 
     // Deposit it into our model at the appropriate location (it already knows
     // where it should go from tracking the drag). Doing this sets the tab's
-    // delegate to be the Browser.
+    // delegate to be the CTBrowser.
     [tabStripController_ dropTabContents:contents
                                withFrame:destinationFrame
                              asPinnedTab:isPinned];
@@ -233,7 +233,7 @@
 
   // Set the window size. Need to do this before we detach the tab so it's
   // still in the window. We have to flip the coordinates as that's what
-  // is expected by the Browser code.
+  // is expected by the CTBrowser code.
   NSWindow* sourceWindow = [tabView window];
   NSRect windowRect = [sourceWindow frame];
   NSScreen* screen = [sourceWindow screen];
@@ -250,14 +250,14 @@
 
   // Detach it from the source window, which just updates the model without
   // deleting the tab contents. This needs to come before creating the new
-  // Browser because it clears the TabContents' delegate, which gets hooked
+  // CTBrowser because it clears the TabContents' delegate, which gets hooked
   // up during creation of the new window.
   tabStripModel->DetachTabContentsAt(index);
 
   // Create the new window with a single tab in its model, the one being
   // dragged.
   //DockInfo dockInfo;
-  Browser* newBrowser =
+  CTBrowser* newBrowser =
       [tabStripModel->delegate() createNewStripWithContents:contents
                                                windowBounds:windowRect
                                                    maximize:false];

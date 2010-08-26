@@ -17,7 +17,7 @@
 
 
 //namespace gfx { class Rect; }
-//class Browser;
+//class CTBrowser;
 //class DockInfo;
 //class GURL;
 //class NavigationController;
@@ -55,7 +55,7 @@ enum TabReplaceType {
 //  to the TabStripModel.
 //
 //  Two major implementers are the TabStrip, which uses notifications sent
-//  via this interface to update the presentation of the strip, and the Browser
+//  via this interface to update the presentation of the strip, and the CTBrowser
 //  object, which updates bookkeeping and shows/hides individual TabContentses.
 //
 //  Register your TabStripModelObserver with the TabStripModel using its
@@ -163,7 +163,7 @@ class TabStripModelObserver {
 //  TabContents, creating new TabStripModels for detached tabs, etc.
 //
 //  This interface is typically implemented by the controller that instantiates
-//  the TabStripModel (in our case the Browser object).
+//  the TabStripModel (in our case the CTBrowser object).
 //
 ///////////////////////////////////////////////////////////////////////////////
 /*class TabStripModelDelegate {
@@ -175,15 +175,15 @@ class TabStripModelObserver {
   // Asks for a new TabStripModel to be created and the given tab contents to
   // be added to it. Its size and position are reflected in |window_bounds|.
   // If |dock_info|'s type is other than NONE, the newly created window should
-  // be docked as identified by |dock_info|. Returns the Browser object
+  // be docked as identified by |dock_info|. Returns the CTBrowser object
   // representing the newly created window and tab strip. This does not
   // show the window, it's up to the caller to do so.
-  virtual Browser* CreateNewStripWithContents(TabContents* contents,
+  virtual CTBrowser* CreateNewStripWithContents(TabContents* contents,
                                               const NSRect window_bounds,
                                               const DockInfo& dock_info,
                                               bool maximize) = 0;
 
-  // Creates a new Browser object and window containing the specified
+  // Creates a new CTBrowser object and window containing the specified
   // |contents|, and continues a drag operation that began within the source
   // window's tab strip. |window_bounds| are the bounds of the source window in
   // screen coordinates, used to place the new window, and |tab_bounds| are the
@@ -274,9 +274,9 @@ class TabStripModelObserver {
 //
 // TabStripModel
 //
-//  A model & low level controller of a Browser Window tabstrip. Holds a vector
+//  A model & low level controller of a CTBrowser Window tabstrip. Holds a vector
 //  of TabContents, and provides an API for adding, removing and shuffling
-//  them, as well as a higher level API for doing specific Browser-related
+//  them, as well as a higher level API for doing specific CTBrowser-related
 //  tasks like adding new Tabs from just a URL, etc.
 //
 // Each tab may be any one of the following states:
@@ -305,14 +305,14 @@ class TabStripModelObserver {
 //   closed, then the tabstrip/browser are closed.
 //
 //  A TabStripModel has one delegate that it relies on to perform certain tasks
-//  like creating new TabStripModels (probably hosted in Browser windows) when
+//  like creating new TabStripModels (probably hosted in CTBrowser windows) when
 //  required. See TabStripDelegate above for more information.
 //
 //  A TabStripModel also has N observers (see TabStripModelObserver above),
 //  which can be registered via Add/RemoveObserver. An Observer is notified of
 //  tab creations, removals, moves, and other interesting events. The
 //  TabStrip implements this interface to know when to create new tabs in
-//  the View, and the Browser object likewise implements to be able to update
+//  the View, and the CTBrowser object likewise implements to be able to update
 //  its bookkeeping when such events happen.
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -544,7 +544,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   //int GetIndexOfLastTabContentsOpenedBy(const NavigationController* opener,
   //                                      int start_index) const;
 
-  // Called by the Browser when a navigation is about to occur in the specified
+  // Called by the CTBrowser when a navigation is about to occur in the specified
   // TabContents. Depending on the tab, and the transition type of the
   // navigation, the TabStripModel may adjust its selection and grouping
   // behavior.

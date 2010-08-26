@@ -11,7 +11,7 @@
   //commandDispatch
 
   // Create a browser and show the window
-  [Browser openEmptyWindow];
+  [CTBrowser openEmptyWindow];
 }
 
 - (void)commandDispatch:(id)sender {
@@ -19,7 +19,7 @@
   switch ([sender tag]) {
     // Window management commands
     case IDC_NEW_WINDOW:
-    case IDC_NEW_TAB:     [Browser openEmptyWindow]; break;
+    case IDC_NEW_TAB:     [CTBrowser openEmptyWindow]; break;
     case IDC_EXIT:       [NSApp terminate:self]; break;
   }
 }

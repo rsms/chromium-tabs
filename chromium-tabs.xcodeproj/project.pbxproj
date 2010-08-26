@@ -33,7 +33,7 @@
 		3A3ED9D61225E32A009E2908 /* tab_strip_model_observer_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DAE12233B3400D21E66 /* tab_strip_model_observer_bridge.mm */; };
 		3A3ED9D71225E32A009E2908 /* BrowserWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF96012235704008A3B8C /* BrowserWindowController.mm */; };
 		3A3ED9D81225E32A009E2908 /* fast_resize_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* fast_resize_view.mm */; };
-		3A3ED9D91225E32A009E2908 /* Browser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* Browser.mm */; };
+		3A3ED9D91225E32A009E2908 /* CTBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AA7188A122479CE005022BE /* CTBrowser.mm */; };
 		3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */; };
 		3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6841225CE7A009E2908 /* GTMNSColor+Luminance.m */; };
 		3A3ED9DD1225E32A009E2908 /* GTMWindowSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6861225CE7A009E2908 /* GTMWindowSheetController.m */; };
@@ -67,7 +67,7 @@
 		3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168D6122543A900757641 /* BrowserCommands.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAD31225FACA009E2908 /* Browser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* Browser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* CTBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD41225FACA009E2908 /* BrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF95F12235704008A3B8C /* BrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* TabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF41225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */; };
@@ -202,8 +202,8 @@
 		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3EDAF21225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+ChromiumTabsAdditions.h"; sourceTree = "<group>"; };
 		3A3EDAF31225FBFF009E2908 /* NSImage+ChromiumTabsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+ChromiumTabsAdditions.m"; sourceTree = "<group>"; };
-		3AA71889122479CE005022BE /* Browser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Browser.h; sourceTree = "<group>"; };
-		3AA7188A122479CE005022BE /* Browser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Browser.mm; sourceTree = "<group>"; };
+		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
+		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
 		3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowOpenDisposition.h; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* tab_strip_model.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_model.mm; sourceTree = "<group>"; };
 		3AEE19421222DC5B009DA438 /* tab_strip_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_strip_model.h; sourceTree = "<group>"; };
@@ -253,8 +253,8 @@
 				3A1CF94912235277008A3B8C /* TabStripModelDelegate.h */,
 				3AA71A2D12252ECF005022BE /* WindowOpenDisposition.h */,
 				3A1168D6122543A900757641 /* BrowserCommands.h */,
-				3AA71889122479CE005022BE /* Browser.h */,
-				3AA7188A122479CE005022BE /* Browser.mm */,
+				3AA71889122479CE005022BE /* CTBrowser.h */,
+				3AA7188A122479CE005022BE /* CTBrowser.mm */,
 				3A1CF95F12235704008A3B8C /* BrowserWindowController.h */,
 				3A1CF96012235704008A3B8C /* BrowserWindowController.mm */,
 				3AEE19521222DDEB009DA438 /* TabContents.h */,
@@ -504,7 +504,7 @@
 				3A3EDAD01225FACA009E2908 /* TabStripModelDelegate.h in Headers */,
 				3A3EDAD11225FACA009E2908 /* WindowOpenDisposition.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* BrowserCommands.h in Headers */,
-				3A3EDAD31225FACA009E2908 /* Browser.h in Headers */,
+				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* BrowserWindowController.h in Headers */,
 				3A3EDAD51225FACA009E2908 /* TabContents.h in Headers */,
 				3A3EDA9D1225EF84009E2908 /* util.h in Headers */,
@@ -630,7 +630,7 @@
 				3A3ED9D61225E32A009E2908 /* tab_strip_model_observer_bridge.mm in Sources */,
 				3A3ED9D71225E32A009E2908 /* BrowserWindowController.mm in Sources */,
 				3A3ED9D81225E32A009E2908 /* fast_resize_view.mm in Sources */,
-				3A3ED9D91225E32A009E2908 /* Browser.mm in Sources */,
+				3A3ED9D91225E32A009E2908 /* CTBrowser.mm in Sources */,
 				3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */,
 				3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */,
 				3A3ED9DD1225E32A009E2908 /* GTMWindowSheetController.m in Sources */,

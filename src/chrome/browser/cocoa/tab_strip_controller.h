@@ -21,7 +21,7 @@
 @class TabStripView;
 
 @class TabContents;
-@class Browser;
+@class CTBrowser;
 
 //class Browser;
 class ConstrainedWindowMac;
@@ -55,7 +55,7 @@ class TabStripModel;
   // Tracks the newTabButton_ for rollovers.
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
   scoped_ptr<TabStripModelObserverBridge> bridge_;
-  Browser *browser_;  // weak
+  CTBrowser *browser_;  // weak
   TabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
@@ -133,7 +133,7 @@ class TabStripModel;
 // you have retained them.
 - (id)initWithView:(TabStripView*)view
         switchView:(NSView*)switchView
-           browser:(Browser*)browser;
+           browser:(CTBrowser*)browser;
 
 // Return the view for the currently selected tab.
 - (NSView*)selectedTabView;

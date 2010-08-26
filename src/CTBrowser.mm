@@ -1,38 +1,38 @@
-#import "Browser.h"
+#import "CTBrowser.h"
 #import "chrome/browser/tabs/tab_strip_model.h"
 #import "chrome/browser/cocoa/tab_strip_controller.h"
 #import "chrome/common/page_transition_types.h"
 #import "BrowserWindowController.h"
 #import "util.h"
 
-@interface Browser (Private)
+@interface CTBrowser (Private)
 -(void)createWindowControllerInstance;
 @end
 
 
-@implementation Browser
+@implementation CTBrowser
 
 @synthesize windowController = windowController_;
 @synthesize tabStripModel = tabStripModel_;
 
 
-+(Browser*)browser {
-  Browser *browser = [[[[self class] alloc] init] autorelease];
++(CTBrowser*)browser {
+  CTBrowser *browser = [[[[self class] alloc] init] autorelease];
   [browser createWindowControllerInstance];
   // TODO: post notification? BrowserReady(self)
   return browser;
 }
 
 
-+(Browser*)browserWithWindowFrame:(const NSRect)frame {
-  Browser* browser = [self browser];
++(CTBrowser*)browserWithWindowFrame:(const NSRect)frame {
+  CTBrowser* browser = [self browser];
   [browser.window setFrame:frame display:NO];
   return browser;
 }
 
 
-+(Browser*)openEmptyWindow {
-  Browser *browser = [Browser browser];
++(CTBrowser*)openEmptyWindow {
+  CTBrowser *browser = [CTBrowser browser];
   // reference will live as long as the window lives (until closed)
   [browser addBlankTabInForeground:YES];
   [browser.windowController showWindow:self];
@@ -119,7 +119,7 @@
 #pragma mark Commands
 
 -(void)newWindow {
-  [Browser openEmptyWindow];
+  [CTBrowser openEmptyWindow];
 }
 
 -(void)closeWindow {
@@ -273,7 +273,7 @@
 #pragma mark TabStripModelDelegate protocol implementation
 
 
--(Browser*)createNewStripWithContents:(TabContents*)contents
+-(CTBrowser*)createNewStripWithContents:(TabContents*)contents
                          windowBounds:(const NSRect)windowBounds
                              maximize:(BOOL)maximize {
   //assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
@@ -283,7 +283,7 @@
   //  dock_info.AdjustOtherWindowBounds();
 
   // Create an empty new browser window the same size as the old one.
-  Browser* browser = [Browser browserWithWindowFrame:windowBounds];
+  CTBrowser* browser = [CTBrowser browserWithWindowFrame:windowBounds];
   browser.tabStripModel->AppendTabContents(contents, true);
   [browser loadingStateDidChange:contents];
   [browser.windowController showWindow:self];
@@ -302,7 +302,7 @@
   return browser;
 }
 
-// Creates a new Browser object and window containing the specified
+// Creates a new CTBrowser object and window containing the specified
 // |contents|, and continues a drag operation that began within the source
 // window's tab strip. |window_bounds| are the bounds of the source window in
 // screen coordinates, used to place the new window, and |tab_bounds| are the

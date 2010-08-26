@@ -1,5 +1,5 @@
 #import <Cocoa/Cocoa.h>
-#import "Browser.h"
+#import "CTBrowser.h"
 #import "TabStripModelDelegate.h"
 #import "chrome/browser/cocoa/tab_window_controller.h"
 
@@ -7,7 +7,7 @@
 class TabStripModelObserverBridge;
 
 @interface BrowserWindowController : TabWindowController {
-  Browser* browser_;
+  CTBrowser* browser_;
   TabStripController *tabStripController_;
   TabStripModelObserverBridge *tabStripObserver_;
  @private
@@ -15,10 +15,10 @@ class TabStripModelObserverBridge;
 }
 
 @property(readonly, nonatomic) TabStripController *tabStripController;
-@property(readonly, nonatomic) Browser *browser;
+@property(readonly, nonatomic) CTBrowser *browser;
 
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
-                    browser:(Browser*)browser;
+                    browser:(CTBrowser*)browser;
 
 // Make the (currently-selected) tab contents the first responder, if possible.
 - (void)focusTabContents;
