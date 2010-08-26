@@ -2,21 +2,18 @@ This license applies to all parts of Chromium Tabs that are not externally
 created by (origins from) a third party. The third party material used by
 Chromium Tabs are:
 
-  - Chromium, located under src/chrome and src/base which is copyrighted by 
-    Google, Inc. and has a BSD license.
+  - Chromium, located under src/chrome and src/base, copyright Google, Inc. BSD
+    license.
 
-  - dynamic_annotations, located under src/third_party/dynamic_annotations which 
-    is copyrighted by Google, Inc. and has a BSD license.
+  - Google Toolbox for Mac, located under src/third_party/gtm-subset, copyright
+    by Google, Inc. Apache 2.0 license.
 
-  - Google Toolbox for Mac, located under src/third_party/gtm-subset which is
-    copyrighted by Google, Inc. and has a Apache 2.0 license.
+  - MolokoCacao, located under src/third_party/molokocacao, copyright Sean 
+    Patrick O'Brien. BSD license.
 
-  - MolokoCacao, located under src/third_party/molokocacao which is copyrighted
-    by Sean Patrick O'Brien and has a BSD license.
-
-  - Cocoa extension code from Camino, located under src/third_party/mozilla
-    which is copyrighted by Netscape Communications Corporation & mozilla.org 
-    and has a MPL 1.1 license.
+  - Cocoa extension code from Camino, located under src/third_party/mozilla,
+    copyright Netscape Communications Corporation and mozilla.org. MPL 1.1
+    license.
 
 
 Chromium Tabs's license follows:
