@@ -18,7 +18,7 @@ static const int kMinWebHeight = 50;
 
 - (id)initWithContents:(CTTabContents*)contents {
   // subclasses might override this to load a different nib
-  return [self initWithNibName:@"CTTabContents"
+  return [self initWithNibName:@"TabContents"
                         bundle:[util bundleForResource:@"TabView" ofType:@"nib"]
                       contents:contents];
 }

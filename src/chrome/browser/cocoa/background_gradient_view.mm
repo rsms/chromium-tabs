@@ -5,7 +5,7 @@
 #import "background_gradient_view.h"
 //#import "chrome/browser/browser_theme_provider.h"
 //#import "themed_window.h"
-#import "third_party/gtm-subset/GTMNSColor+Luminance.h"
+#import "GTMNSColor+Luminance.h"
 
 #define kToolbarTopOffset 12
 #define kToolbarMaxHeight 100

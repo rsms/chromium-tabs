@@ -12,7 +12,7 @@
 #import "scoped_ptr.h"
 #import "tab_controller_target.h"
 #import "url_drop_target.h"
-#import "third_party/gtm-subset/GTMWindowSheetController.h"
+#import "GTMWindowSheetController.h"
 
 @class NewTabButton;
 @class TabContentsController;

@@ -13,19 +13,6 @@
 #import <limits>
 #import <string>
 
-//#import "app/l10n_util.h"
-//#import "app/resource_bundle.h"
-//#import "mac_util.h"
-//#import "nsimage_cache_mac.h"
-//#import "sys_string_conversions.h"
-//#import "chrome/app/chrome_dll_resource.h"
-//#import "chrome/browser/browser.h"
-//#import "chrome/browser/find_bar.h"
-//#import "chrome/browser/find_bar_controller.h"
-//#import "chrome/browser/metrics/user_metrics.h"
-//#import "chrome/browser/profile.h"
-//#import "browser_window_controller.h"
-//#import "constrained_window_mac.h"
 #import "new_tab_button.h"
 #import "tab_strip_view.h"
 #import "tab_contents_controller.h"
@@ -33,18 +20,8 @@
 #import "tab_strip_model_observer_bridge.h"
 #import "tab_view.h"
 #import "throbber_view.h"
-//#import "chrome/browser/debugger/devtools_window.h"
-//#import "chrome/browser/net/url_fixer_upper.h"
-//#import "chrome/browser/tab_contents/navigation_controller.h"
-//#import "chrome/browser/tab_contents/navigation_entry.h"
-//#import "chrome/browser/tab_contents/tab_contents.h"
-//#import "chrome/browser/tab_contents/tab_contents_view.h"
 #import "tab_strip_model.h"
-//#import "grit/app_resources.h"
-//#import "grit/generated_resources.h"
-//#import "grit/theme_resources.h"
-//#import "skia/ext/skia_utils_mac.h"
-#import "third_party/gtm-subset/GTMNSAnimation+Duration.h"
+#import "GTMNSAnimation+Duration.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 

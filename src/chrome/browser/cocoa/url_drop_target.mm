@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #import "url_drop_target.h"
-#import "third_party/mozilla/NSPasteboard+Utils.h"
+#import "NSPasteboard+Utils.h"
 
 @interface URLDropTargetHandler(Private)
 

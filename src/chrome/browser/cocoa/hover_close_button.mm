@@ -4,7 +4,7 @@
 
 #import "hover_close_button.h"
 #import "scoped_nsobject.h"
-#import "third_party/molokocacao/NSBezierPath+MCAdditions.h"
+#import "NSBezierPath+MCAdditions.h"
 
 namespace  {
 // Convenience function to return the middle point of the given |rect|.
