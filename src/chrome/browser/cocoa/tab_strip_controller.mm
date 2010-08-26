@@ -8,7 +8,7 @@
 #import "CTTabContents.h"
 #import "CTBrowser.h"
 #import "util.h"
-#import "NSImage+ChromiumTabsAdditions.h"
+#import "NSImage+CTAdditions.h"
 
 #import <limits>
 #import <string>
@@ -260,7 +260,7 @@ private:
 @synthesize indentForControls = indentForControls_;
 
 +(void)initialize {
-  #define PIMG(name) [[NSImage imageInAppOrFrameworkNamed:name] retain]
+  #define PIMG(name) [[NSImage imageInAppOrCTFrameworkNamed:name] retain]
   kNewTabHoverImage = PIMG(@"newtab_h.pdf");
   kNewTabImage = PIMG(@"newtab.pdf");
   kNewTabPressedImage = PIMG(@"newtab_p.pdf");
@@ -1162,11 +1162,11 @@ private:
     return;
 
   static NSImage* throbberWaitingImage =
-      [NSImage imageInAppOrFrameworkNamed:@"throbber_waiting"];
+      [NSImage imageInAppOrCTFrameworkNamed:@"throbber_waiting"];
   static NSImage* throbberLoadingImage =
-      [NSImage imageInAppOrFrameworkNamed:@"throbber"];
+      [NSImage imageInAppOrCTFrameworkNamed:@"throbber"];
   static NSImage* sadFaviconImage =
-      [NSImage imageInAppOrFrameworkNamed:@"sadfavicon"];
+      [NSImage imageInAppOrCTFrameworkNamed:@"sadfavicon"];
 
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];

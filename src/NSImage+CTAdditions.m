@@ -7,7 +7,7 @@
   return [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
 }
 
-+(NSImage*)imageInAppOrFrameworkNamed:(NSString *)name {
++(NSImage*)imageInAppOrCTFrameworkNamed:(NSString *)name {
   NSString *path = [kHostBundle pathForImageResource:name];
   if (!path)
     path = [kFrameworkBundle pathForImageResource:name];

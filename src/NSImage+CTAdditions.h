@@ -2,6 +2,6 @@
 
 @interface NSImage (CTAdditions)
 +(NSImage*)imageWithPath:(NSString *)path;
-+(NSImage*)imageInAppOrFrameworkNamed:(NSString*)name;
++(NSImage*)imageInAppOrCTFrameworkNamed:(NSString*)name;
 +(NSImage*)imageInFrameworkNamed:(NSString*)name;
 @end
