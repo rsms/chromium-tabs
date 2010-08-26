@@ -1639,8 +1639,7 @@ private:
 // (URLDropTargetController protocol)
 - (void)dropURLs:(NSArray*)urls inView:(NSView*)view at:(NSPoint)point {
   DCHECK_EQ(view, tabStripView_.get());
-  // TODO implement this, maybe...
-  NOTIMPLEMENTED();
+  NOTIMPLEMENTED(); // TODO
   /*if ([urls count] < 1) {
     NOTREACHED();
     return;
