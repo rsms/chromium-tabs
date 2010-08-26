@@ -79,7 +79,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3A3ED9821225E27E009E2908 /* ChromiumTabs */;
+			remoteGlobalIDString = 3A3ED9821225E27E009E2908;
 			remoteInfo = ChromiumTabs;
 		};
 /* End PBXContainerItemProxy section */
@@ -561,7 +561,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocoa-chromium-tabs" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "chromium-tabs" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* cocoa-chromium-tabs */;
@@ -893,7 +893,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocoa-chromium-tabs" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "chromium-tabs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
