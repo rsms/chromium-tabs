@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_TABS_TAB_STRIP_MODEL_ORDER_CONTROLLER_H_
 #pragma once
 
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 #import "CTPageTransition.h"
 
 @class CTTabContents;

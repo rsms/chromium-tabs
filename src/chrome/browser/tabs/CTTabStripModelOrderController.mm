@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "tab_strip_model_order_controller.h"
+#import "CTTabStripModelOrderController.h"
 #import "CTTabContents.h"
 
 ///////////////////////////////////////////////////////////////////////////////

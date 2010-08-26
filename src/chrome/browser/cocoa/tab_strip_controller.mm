@@ -16,11 +16,11 @@
 #import "new_tab_button.h"
 #import "tab_strip_view.h"
 #import "tab_contents_controller.h"
-#import "tab_controller.h"
+#import "CTTabController.h"
 #import "tab_strip_model_observer_bridge.h"
-#import "tab_view.h"
+#import "CTTabView.h"
 #import "throbber_view.h"
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 #import "GTMNSAnimation+Duration.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
@@ -1183,17 +1183,17 @@ private:
   bool newHasIcon = contents.hasIcon ||
       tabStripModel_->IsMiniTab(modelIndex);  // Always show icon if mini.
 
-  TabLoadingState oldState = [tabController loadingState];
-  TabLoadingState newState = kTabDone;
+  CTTabLoadingState oldState = [tabController loadingState];
+  CTTabLoadingState newState = CTTabLoadingStateDone;
   NSImage* throbberImage = nil;
   if (contents.isCrashed) {
-    newState = kTabCrashed;
+    newState = CTTabLoadingStateCrashed;
     newHasIcon = true;
   } else if (contents.isWaitingForResponse) {
-    newState = kTabWaiting;
+    newState = CTTabLoadingStateWaiting;
     throbberImage = throbberWaitingImage;
   } else if (contents.isLoading) {
-    newState = kTabLoading;
+    newState = CTTabLoadingStateLoading;
     throbberImage = throbberLoadingImage;
   }
 
@@ -1202,15 +1202,15 @@ private:
 
   // While loading, this function is called repeatedly with the same state.
   // To avoid expensive unnecessary view manipulation, only make changes when
-  // the state is actually changing.  When loading is complete (kTabDone),
-  // every call to this function is significant.
-  if (newState == kTabDone || oldState != newState ||
+  // the state is actually changing.  When loading is complete
+  // (CTTabLoadingStateDone), every call to this function is significant.
+  if (newState == CTTabLoadingStateDone || oldState != newState ||
       oldHasIcon != newHasIcon) {
     NSView* iconView = nil;
     if (newHasIcon) {
-      if (newState == kTabDone) {
+      if (newState == CTTabLoadingStateDone) {
         iconView = [self iconImageViewForContents:contents];
-      } else if (newState == kTabCrashed) {
+      } else if (newState == CTTabLoadingStateCrashed) {
         NSImage* oldImage = [[self iconImageViewForContents:contents] image];
         NSRect frame =
             NSMakeRect(0, 0, kIconWidthAndHeight, kIconWidthAndHeight);

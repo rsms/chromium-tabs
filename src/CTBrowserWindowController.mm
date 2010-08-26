@@ -1,10 +1,10 @@
 #import "CTBrowserWindowController.h"
 
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 
 #import "tab_strip_controller.h"
 #import "tab_strip_model_observer_bridge.h"
-#import "tab_view.h"
+#import "CTTabView.h"
 #import "tab_strip_view.h"
 #import "fast_resize_view.h"
 

@@ -6,8 +6,6 @@
 #define CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_
 #pragma once
 
-//#import "tab_strip_model.h"
-
 @class CTTabController;
 
 // A protocol to be implemented by a CTTabController's target.

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 
 @class CTTabContents;
 

@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "tab_view.h"
+#import "CTTabView.h"
 
 #import "scoped_cftyperef.h"
-#import "tab_controller.h"
+#import "CTTabController.h"
 #import "tab_window_controller.h"
 
 // ripped out from mac_util.mm:

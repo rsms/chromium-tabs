@@ -10,11 +10,11 @@
 #import "hover_close_button.h"
 
 // The loading/waiting state of the tab.
-enum TabLoadingState {
-  kTabDone,
-  kTabLoading,
-  kTabWaiting,
-  kTabCrashed,
+enum CTTabLoadingState {
+  CTTabLoadingStateDone,
+  CTTabLoadingStateLoading,
+  CTTabLoadingStateWaiting,
+  CTTabLoadingStateCrashed,
 };
 
 @class CTTabView;
@@ -45,7 +45,7 @@ enum TabLoadingState {
   BOOL pinned_;
   BOOL phantom_;
   BOOL selected_;
-  TabLoadingState loadingState_;
+  CTTabLoadingState loadingState_;
   CGFloat iconTitleXOffset_;  // between left edges of icon and title
   CGFloat titleCloseWidthOffset_;  // between right edges of icon and close btn.
   id<CTTabControllerTarget> target_;  // weak, where actions are sent
@@ -55,7 +55,7 @@ enum TabLoadingState {
   //scoped_nsobject<MenuController> contextMenuController_;
 }
 
-@property(assign, nonatomic) TabLoadingState loadingState;
+@property(assign, nonatomic) CTTabLoadingState loadingState;
 
 @property(assign, nonatomic) SEL action;
 @property(assign, nonatomic) BOOL app;

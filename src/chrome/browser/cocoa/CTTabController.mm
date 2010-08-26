@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "tab_controller.h"
-#import "tab_controller_target.h"
-#import "tab_view.h"
+#import "CTTabController.h"
+#import "CTTabControllerTarget.h"
+#import "CTTabView.h"
 #import "util.h"
 
 static NSString* const kBrowserThemeDidChangeNotification =

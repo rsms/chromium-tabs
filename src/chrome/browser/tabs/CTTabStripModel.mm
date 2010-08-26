@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 
 #import <algorithm>
 
@@ -18,7 +18,7 @@
 //#import "chrome/browser/profile.h"
 //#import "chrome/browser/renderer_host/render_process_host.h"
 //#import "chrome/browser/sessions/tab_restore_service.h"
-#import "tab_strip_model_order_controller.h"
+#import "CTTabStripModelOrderController.h"
 #import "CTPageTransition.h"
 //#import "chrome/browser/tab_contents/navigation_controller.h"
 //#import "chrome/browser/tab_contents/tab_contents.h"

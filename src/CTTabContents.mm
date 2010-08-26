@@ -1,5 +1,5 @@
 #import "CTTabContents.h"
-#import "tab_strip_model.h"
+#import "CTTabStripModel.h"
 
 @implementation CTTabContents
 

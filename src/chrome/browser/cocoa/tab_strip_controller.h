@@ -10,7 +10,7 @@
 
 #import "scoped_nsobject.h"
 #import "scoped_ptr.h"
-#import "tab_controller_target.h"
+#import "CTTabControllerTarget.h"
 #import "url_drop_target.h"
 #import "GTMWindowSheetController.h"
 
