@@ -35,7 +35,7 @@ enum AlertState {
 
 }  // namespace tabs
 
-@class CTTabController, TabWindowController;
+@class CTTabController, CTTabWindowController;
 
 // A view that handles the event tracking (clicking and dragging) for a tab
 // on the tab strip. Relies on an associated CTTabController to provide a
@@ -77,12 +77,12 @@ enum AlertState {
   NSPoint dragOrigin_;  // Origin point of the drag
   // TODO(alcor): these references may need to be strong to avoid crashes
   // due to JS closing windows
-  TabWindowController* sourceController_;  // weak. controller starting the drag
+  CTTabWindowController* sourceController_;  // weak. controller starting the drag
   NSWindow* sourceWindow_;  // weak. The window starting the drag
   NSRect sourceWindowFrame_;
   NSRect sourceTabFrame_;
 
-  TabWindowController* draggedController_;  // weak. Controller being dragged.
+  CTTabWindowController* draggedController_;  // weak. Controller being dragged.
   NSWindow* dragWindow_;  // weak. The window being dragged
   NSWindow* dragOverlay_;  // weak. The overlay being dragged
   // Cache workspace IDs per-drag because computing them on 10.5 with
@@ -92,7 +92,7 @@ enum AlertState {
   // TODO(davidben): When 10.5 becomes unsupported, remove this.
   std::map<CGWindowID, int> workspaceIDCache_;
 
-  TabWindowController* targetController_;  // weak. Controller being targeted
+  CTTabWindowController* targetController_;  // weak. Controller being targeted
   NSCellStateValue state_;
 }
 

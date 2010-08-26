@@ -11,7 +11,7 @@
 @class CTTabController;
 
 // A protocol to be implemented by a CTTabController's target.
-@protocol TabControllerTarget
+@protocol CTTabControllerTarget
 - (void)selectTab:(id)sender;
 - (void)closeTab:(id)sender;
 

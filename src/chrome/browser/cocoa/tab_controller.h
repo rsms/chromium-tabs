@@ -18,7 +18,7 @@ enum TabLoadingState {
 };
 
 @class CTTabView;
-@protocol TabControllerTarget;
+@protocol CTTabControllerTarget;
 
 // A class that manages a single tab in the tab strip. Set its target/action
 // to be sent a message when the tab is selected by the user clicking. Setting
@@ -48,7 +48,7 @@ enum TabLoadingState {
   TabLoadingState loadingState_;
   CGFloat iconTitleXOffset_;  // between left edges of icon and title
   CGFloat titleCloseWidthOffset_;  // between right edges of icon and close btn.
-  id<TabControllerTarget> target_;  // weak, where actions are sent
+  id<CTTabControllerTarget> target_;  // weak, where actions are sent
   SEL action_;  // selector sent when tab is selected by clicking
   //scoped_ptr<TabMenuModel> contextMenuModel_;
   //scoped_ptr<TabControllerInternal::MenuDelegate> contextMenuDelegate_;

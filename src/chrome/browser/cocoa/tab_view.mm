@@ -165,9 +165,9 @@ const CGFloat kRapidCloseDist = 2.5;
   if ([self isClosing])
     return NO;
   NSWindowController* controller = [sourceWindow_ windowController];
-  if ([controller isKindOfClass:[TabWindowController class]]) {
-    TabWindowController* realController =
-        static_cast<TabWindowController*>(controller);
+  if ([controller isKindOfClass:[CTTabWindowController class]]) {
+    CTTabWindowController* realController =
+        static_cast<CTTabWindowController*>(controller);
     return [realController isTabDraggable:self];
   }
   return YES;
@@ -176,7 +176,7 @@ const CGFloat kRapidCloseDist = 2.5;
 // Returns an array of controllers that could be a drop target, ordered front to
 // back. It has to be of the appropriate class, and visible (obviously). Note
 // that the window cannot be a target for itself.
-- (NSArray*)dropTargetsForController:(TabWindowController*)dragController {
+- (NSArray*)dropTargetsForController:(CTTabWindowController*)dragController {
   NSMutableArray* targets = [NSMutableArray array];
   NSWindow* dragWindow = [dragController window];
   for (NSWindow* window in [NSApp orderedWindows]) {
@@ -197,9 +197,9 @@ const CGFloat kRapidCloseDist = 2.5;
         continue;
     }
     NSWindowController* controller = [window windowController];
-    if ([controller isKindOfClass:[TabWindowController class]]) {
-      TabWindowController* realController =
-          static_cast<TabWindowController*>(controller);
+    if ([controller isKindOfClass:[CTTabWindowController class]]) {
+      CTTabWindowController* realController =
+          static_cast<CTTabWindowController*>(controller);
       if ([realController canReceiveFrom:dragController])
         [targets addObject:controller];
     }
@@ -411,8 +411,8 @@ const CGFloat kRapidCloseDist = 2.5;
   // target so that it pops into that window. We can't cache this because we
   // need the z-order to be correct.
   NSArray* targets = [self dropTargetsForController:draggedController_];
-  TabWindowController* newTarget = nil;
-  for (TabWindowController* target in targets) {
+  CTTabWindowController* newTarget = nil;
+  for (CTTabWindowController* target in targets) {
     NSRect windowFrame = [[target window] frame];
     if (NSPointInRect(thisPoint, windowFrame)) {
       [[target window] orderFront:self];
@@ -581,7 +581,7 @@ const CGFloat kRapidCloseDist = 2.5;
     if (tabWasDragged_) {
       // Move tab to new location.
       assert([sourceController_ numberOfTabs]);
-      TabWindowController* dropController = sourceController_;
+      CTTabWindowController* dropController = sourceController_;
       [dropController moveTabView:[dropController selectedTabView]
                    fromController:nil];
     }

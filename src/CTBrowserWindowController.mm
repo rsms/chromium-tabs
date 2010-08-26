@@ -126,10 +126,10 @@
 
 
 #pragma mark -
-#pragma mark TabWindowController implementation
+#pragma mark CTTabWindowController implementation
 
 // Accept tabs from a CTBrowserWindowController with the same Profile.
-- (BOOL)canReceiveFrom:(TabWindowController*)source {
+- (BOOL)canReceiveFrom:(CTTabWindowController*)source {
   if (![source isKindOfClass:[isa class]]) {
     return NO;
   }
@@ -151,7 +151,7 @@
 // complete. This also calls |-layoutTabs| internally so clients do not need to
 // call it again.
 - (void)moveTabView:(NSView*)view
-     fromController:(TabWindowController*)dragController {
+     fromController:(CTTabWindowController*)dragController {
   if (dragController) {
     // Moving between windows. Figure out the CTTabContents to drop into our tab
     // model from the source window's model.
@@ -220,7 +220,7 @@
 // Creates a new window by pulling the given tab out and placing it in
 // the new window. Returns the controller for the new window. The size of the
 // new window will be the same size as this window.
-- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
+- (CTTabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
   // Disable screen updates so that this appears as a single visual change.
   base::ScopedNSDisableScreenUpdates disabler;
 
@@ -270,7 +270,7 @@
   // Get the new controller by asking the new window for its delegate.
   CTBrowserWindowController* controller =
       reinterpret_cast<CTBrowserWindowController*>([newBrowser.window delegate]);
-  assert(controller && [controller isKindOfClass:[TabWindowController class]]);
+  assert(controller && [controller isKindOfClass:[CTTabWindowController class]]);
 
   // Force the added tab to the right size (remove stretching.)
   tabRect.size.height = [CTTabStripController defaultTabHeight];

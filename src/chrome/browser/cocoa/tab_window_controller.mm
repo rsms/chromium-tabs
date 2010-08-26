@@ -5,7 +5,7 @@
 #import "tab_window_controller.h"
 #import "tab_strip_view.h"
 
-@interface TabWindowController(PRIVATE)
+@interface CTTabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;
 @end
 
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation TabWindowController
+@implementation CTTabWindowController
 @synthesize tabContentArea = tabContentArea_;
 
 - (id)initWithWindow:(NSWindow*)window {
@@ -58,7 +58,7 @@
 }
 
 - (void)windowDidLoad {
-  //NSLog(@"TabWindowController windowDidLoad");
+  //NSLog(@"CTTabWindowController windowDidLoad");
   // Cache the difference in height between the window content area and the
   // tab content area.
   NSRect tabFrame = [tabContentArea_ frame];
@@ -204,14 +204,14 @@
   return overlayWindow_ == nil;
 }
 
-- (BOOL)canReceiveFrom:(TabWindowController*)source {
+- (BOOL)canReceiveFrom:(CTTabWindowController*)source {
   // subclass must implement
   NOTIMPLEMENTED();
   return NO;
 }
 
 - (void)moveTabView:(NSView*)view
-     fromController:(TabWindowController*)dragController {
+     fromController:(CTTabWindowController*)dragController {
   NOTIMPLEMENTED();
 }
 
@@ -225,7 +225,7 @@
   NOTIMPLEMENTED();
 }
 
-- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
+- (CTTabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
   // subclass must implement
   NOTIMPLEMENTED();
   return NULL;

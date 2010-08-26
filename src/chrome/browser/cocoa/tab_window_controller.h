@@ -8,7 +8,7 @@
 
 // A class acting as the Objective-C window controller for a window that has
 // tabs which can be dragged around. Tabs can be re-arranged within the same
-// window or dragged into other TabWindowController windows. This class doesn't
+// window or dragged into other CTTabWindowController windows. This class doesn't
 // know anything about the actual tab implementation or model, as that is fairly
 // application-specific. It only provides an API to be overridden by subclasses
 // to fill in the details.
@@ -35,7 +35,7 @@
 @class CTTabStripView;
 @class CTTabView;
 
-@interface TabWindowController : NSWindowController<NSWindowDelegate> {
+@interface CTTabWindowController : NSWindowController<NSWindowDelegate> {
  @private
   IBOutlet FastResizeView* tabContentArea_;
   // TODO(pinkerton): Figure out a better way to initialize one or the other
@@ -76,7 +76,7 @@
 // Creates a new window by pulling the given tab out and placing it in
 // the new window. Returns the controller for the new window. The size of the
 // new window will be the same size as this window.
-- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView;
+- (CTTabWindowController*)detachTabToNewWindow:(CTTabView*)tabView;
 
 // Make room in the tab strip for |tab| at the given x coordinate. Will hide the
 // new tab button while there's a placeholder. Subclasses need to call the
@@ -110,7 +110,7 @@
 
 // Called to check if the receiver can receive dragged tabs from
 // source.  Return YES if so.  The default implementation returns NO.
-- (BOOL)canReceiveFrom:(TabWindowController*)source;
+- (BOOL)canReceiveFrom:(CTTabWindowController*)source;
 
 // Move a given tab view to the location of the current placeholder. If there is
 // no placeholder, it will go at the end. |controller| is the window controller
@@ -120,7 +120,7 @@
 // the drag is now complete.  This also calls |-layoutTabs| internally so
 // clients do not need to call it again.
 - (void)moveTabView:(NSView*)view
-     fromController:(TabWindowController*)controller;
+     fromController:(CTTabWindowController*)controller;
 
 // Number of tabs in the tab strip. Useful, for example, to know if we're
 // dragging the only tab in the window. This includes pinned tabs (both live
@@ -158,7 +158,7 @@
 
 @end
 
-@interface TabWindowController(ProtectedMethods)
+@interface CTTabWindowController(ProtectedMethods)
 // Tells the tab strip to forget about this tab in preparation for it being
 // put into a different tab strip, such as during a drop on another window.
 - (void)detachTabView:(NSView*)view;

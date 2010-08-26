@@ -33,7 +33,7 @@ class CTTabStripModel;
 // For a full description of the design, see
 // http://www.chromium.org/developers/design-documents/tab-strip-mac
 @interface CTTabStripController :
-  NSObject<TabControllerTarget,
+  NSObject<CTTabControllerTarget,
            URLDropTargetController,
            GTMWindowSheetControllerDelegate> {
  @protected

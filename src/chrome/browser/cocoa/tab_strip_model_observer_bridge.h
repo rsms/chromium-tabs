@@ -11,7 +11,6 @@
 #import "tab_strip_model.h"
 
 @class CTTabContents;
-//class CTTabContents;
 
 // A C++ bridge class to handle receiving notifications from the C++ tab strip
 // model. When the caller allocates a bridge, it automatically registers for

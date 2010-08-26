@@ -6,7 +6,7 @@
 @class CTTabStripController;
 class CTTabStripModelObserverBridge;
 
-@interface CTBrowserWindowController : TabWindowController {
+@interface CTBrowserWindowController : CTTabWindowController {
   CTBrowser* browser_;
   CTTabStripController *tabStripController_;
   CTTabStripModelObserverBridge *tabStripObserver_;
