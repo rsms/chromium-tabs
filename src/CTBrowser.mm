@@ -162,6 +162,7 @@
   frame.origin.x  = frame.origin.y = 0.0;
   contents.view = [[NSTextView alloc] initWithFrame:frame];
   */
+  contents.view = [[NSTextView alloc] initWithFrame:NSZeroRect];
   return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
