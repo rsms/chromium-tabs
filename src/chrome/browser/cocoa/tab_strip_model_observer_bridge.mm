@@ -4,7 +4,7 @@
 
 #import "tab_strip_model_observer_bridge.h"
 
-TabStripModelObserverBridge::TabStripModelObserverBridge(CTTabStripModel* model,
+CTTabStripModelObserverBridge::CTTabStripModelObserverBridge(CTTabStripModel* model,
                                                          id controller)
     : controller_(controller), model_(model) {
   assert(model && controller);
@@ -13,12 +13,12 @@ TabStripModelObserverBridge::TabStripModelObserverBridge(CTTabStripModel* model,
   model_->AddObserver(this);
 }
 
-TabStripModelObserverBridge::~TabStripModelObserverBridge() {
+CTTabStripModelObserverBridge::~CTTabStripModelObserverBridge() {
   // Remove ourselves from receiving notifications.
   model_->RemoveObserver(this);
 }
 
-void TabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
                                                 int index,
                                                 bool foreground) {
   if ([controller_ respondsToSelector:
@@ -29,7 +29,7 @@ void TabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabClosingAt(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabClosingAt(CTTabContents* contents,
                                                int index) {
   if ([controller_ respondsToSelector:
           @selector(tabClosingWithContents:atIndex:)]) {
@@ -37,7 +37,7 @@ void TabStripModelObserverBridge::TabClosingAt(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabDetachedAt(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabDetachedAt(CTTabContents* contents,
                                                 int index) {
   if ([controller_ respondsToSelector:
           @selector(tabDetachedWithContents:atIndex:)]) {
@@ -45,7 +45,7 @@ void TabStripModelObserverBridge::TabDetachedAt(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
+void CTTabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
                                                 CTTabContents* new_contents,
                                                 int index,
                                                 bool user_gesture) {
@@ -59,7 +59,7 @@ void TabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
   }
 }
 
-void TabStripModelObserverBridge::TabMoved(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabMoved(CTTabContents* contents,
                                            int from_index,
                                            int to_index) {
   if ([controller_ respondsToSelector:
@@ -70,7 +70,7 @@ void TabStripModelObserverBridge::TabMoved(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
                                                int index,
                                                CTTabChangeType change_type) {
   if ([controller_ respondsToSelector:
@@ -81,13 +81,13 @@ void TabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabReplacedAt(CTTabContents* old_contents,
+void CTTabStripModelObserverBridge::TabReplacedAt(CTTabContents* old_contents,
                                                 CTTabContents* new_contents,
                                                 int index) {
   TabChangedAt(new_contents, index, ALL);
 }
 
-void TabStripModelObserverBridge::TabMiniStateChanged(CTTabContents* contents,
+void CTTabStripModelObserverBridge::TabMiniStateChanged(CTTabContents* contents,
                                                       int index) {
   if ([controller_ respondsToSelector:
           @selector(tabMiniStateChangedWithContents:atIndex:)]) {
@@ -95,7 +95,7 @@ void TabStripModelObserverBridge::TabMiniStateChanged(CTTabContents* contents,
   }
 }
 
-void TabStripModelObserverBridge::TabStripEmpty() {
+void CTTabStripModelObserverBridge::TabStripEmpty() {
   if ([controller_ respondsToSelector:@selector(tabStripEmpty)])
     [controller_ tabStripEmpty];
 }

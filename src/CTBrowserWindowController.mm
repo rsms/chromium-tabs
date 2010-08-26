@@ -43,7 +43,7 @@
 
   // Observe tabs
   tabStripObserver_ = 
-      new TabStripModelObserverBridge([browser_ tabStripModel], self);
+      new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
 
   // Note: the below statement including [self window] implicitly loads the
   // window and thus initializes IBOutlets, needed later. If [self window] is
@@ -60,7 +60,7 @@
 
   // Create a tab strip controller
   tabStripController_ =
-      [[TabStripController alloc] initWithView:self.tabStripView
+      [[CTTabStripController alloc] initWithView:self.tabStripView
                                     switchView:self.tabContentArea
                                        browser:browser_];
 
@@ -273,7 +273,7 @@
   assert(controller && [controller isKindOfClass:[TabWindowController class]]);
 
   // Force the added tab to the right size (remove stretching.)
-  tabRect.size.height = [TabStripController defaultTabHeight];
+  tabRect.size.height = [CTTabStripController defaultTabHeight];
 
   // And make sure we use the correct frame in the new view.
   [[controller tabStripController] setFrameOfSelectedTab:tabRect];
@@ -543,7 +543,7 @@
 
 
 #pragma mark -
-#pragma mark TabStripModelObserverBridge impl.
+#pragma mark CTTabStripModelObserverBridge impl.
 
 
 /*- (void)insertTabWithContents:(CTTabContents*)contents

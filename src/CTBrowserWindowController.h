@@ -3,18 +3,18 @@
 #import "CTTabStripModelDelegate.h"
 #import "tab_window_controller.h"
 
-@class TabStripController;
-class TabStripModelObserverBridge;
+@class CTTabStripController;
+class CTTabStripModelObserverBridge;
 
 @interface CTBrowserWindowController : TabWindowController {
   CTBrowser* browser_;
-  TabStripController *tabStripController_;
-  TabStripModelObserverBridge *tabStripObserver_;
+  CTTabStripController *tabStripController_;
+  CTTabStripModelObserverBridge *tabStripObserver_;
  @private
   BOOL initializing_; // true if the instance is initializing
 }
 
-@property(readonly, nonatomic) TabStripController *tabStripController;
+@property(readonly, nonatomic) CTTabStripController *tabStripController;
 @property(readonly, nonatomic) CTBrowser *browser;
 
 - (id)initWithWindowNibPath:(NSString *)windowNibPath

@@ -98,7 +98,7 @@ private:
 
 }  // namespace
 
-@interface TabStripController (Private)
+@interface CTTabStripController (Private)
 - (void)installTrackingArea;
 - (void)addSubviewToPermanentList:(NSView*)aView;
 - (void)regenerateSubviewList;
@@ -126,11 +126,11 @@ private:
 // falsely pick up clicks during rapid tab closure, so we have to account for
 // that.
 @interface TabStripControllerDragBlockingView : NSView {
-  TabStripController* controller_;  // weak; owns us
+  CTTabStripController* controller_;  // weak; owns us
 }
 
 - (id)initWithFrame:(NSRect)frameRect
-         controller:(TabStripController*)controller;
+         controller:(CTTabStripController*)controller;
 @end
 
 @implementation TabStripControllerDragBlockingView
@@ -138,7 +138,7 @@ private:
 - (void)drawRect:(NSRect)rect {}
 
 - (id)initWithFrame:(NSRect)frameRect
-         controller:(TabStripController*)controller {
+         controller:(CTTabStripController*)controller {
   if ((self = [super initWithFrame:frameRect]))
     controller_ = controller;
   return self;
@@ -175,13 +175,13 @@ private:
 // to prevent the use of dangling pointers.
 @interface TabCloseAnimationDelegate : NSObject {
  @private
-  TabStripController* strip_;  // weak; owns us indirectly
+  CTTabStripController* strip_;  // weak; owns us indirectly
   CTTabController* controller_;  // weak
 }
 
 // Will tell |strip| when the animation for |controller|'s view has completed.
 // These should not be nil, and will not be retained.
-- (id)initWithTabStrip:(TabStripController*)strip
+- (id)initWithTabStrip:(CTTabStripController*)strip
          tabController:(CTTabController*)controller;
 
 // Invalidates this object so that no further calls will be made to
@@ -196,7 +196,7 @@ private:
 
 @implementation TabCloseAnimationDelegate
 
-- (id)initWithTabStrip:(TabStripController*)strip
+- (id)initWithTabStrip:(CTTabStripController*)strip
          tabController:(CTTabController*)controller {
   if ((self == [super init])) {
     assert(strip && controller);
@@ -255,7 +255,7 @@ private:
 // or allow itself to be dragged. In addition, drags on the tab strip as a
 // whole are disabled while there are tabs closing.
 
-@implementation TabStripController
+@implementation CTTabStripController
 
 @synthesize indentForControls = indentForControls_;
 
@@ -277,7 +277,7 @@ private:
     switchView_ = switchView;
     browser_ = browser;
     tabStripModel_ = [browser_ tabStripModel];
-    bridge_.reset(new TabStripModelObserverBridge(tabStripModel_, self));
+    bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
     tabContentsArray_.reset([[NSMutableArray alloc] init]);
     tabArray_.reset([[NSMutableArray alloc] init]);
 
@@ -415,16 +415,16 @@ private:
   return 64.0;
 }
 
-// Finds the TabContentsController associated with the given index into the tab
+// Finds the CTTabContentsController associated with the given index into the tab
 // model and swaps out the sole child of the contentArea to display its
 // contents.
 - (void)swapInTabAtIndex:(NSInteger)modelIndex {
   assert(modelIndex >= 0 && modelIndex < tabStripModel_->count());
   NSInteger index = [self indexFromModelIndex:modelIndex];
-  TabContentsController* controller = [tabContentsArray_ objectAtIndex:index];
+  CTTabContentsController* controller = [tabContentsArray_ objectAtIndex:index];
 
   // Resize the new view to fit the window. Calling |view| may lazily
-  // instantiate the TabContentsController from the nib. Until we call
+  // instantiate the CTTabContentsController from the nib. Until we call
   // |-ensureContentsVisible|, the controller doesn't install the RWHVMac into
   // the view hierarchy. This is in order to avoid sending the renderer a
   // spurious default size loaded from the nib during the call to |-view|.
@@ -552,7 +552,7 @@ private:
 - (NSInteger)modelIndexForContentsView:(NSView*)view {
   NSInteger index = 0;
   NSInteger i = 0;
-  for (TabContentsController* current in tabContentsArray_.get()) {
+  for (CTTabContentsController* current in tabContentsArray_.get()) {
     // If the CTTabController corresponding to |current| is closing, skip it.
     CTTabController* controller = [tabArray_ objectAtIndex:i];
     if ([closingControllers_ containsObject:controller]) {
@@ -935,8 +935,8 @@ private:
 
   // Make a new tab. Load the contents of this tab from the nib and associate
   // the new controller with |contents| so it can be looked up later.
-  TabContentsController* contentsController =
-      [[[TabContentsController alloc] initWithContents:contents] autorelease];
+  CTTabContentsController* contentsController =
+      [[[CTTabContentsController alloc] initWithContents:contents] autorelease];
   [tabContentsArray_ insertObject:contentsController atIndex:index];
 
   // Make a new tab and add it to the strip. Keep track of its controller.
@@ -993,7 +993,7 @@ private:
     //browser_->GetIndexOfController(&(oldContents->controller()));
     if (oldModelIndex != -1) {  // When closing a tab, the old tab may be gone.
       NSInteger oldIndex = [self indexFromModelIndex:oldModelIndex];
-      TabContentsController* oldController =
+      CTTabContentsController* oldController =
           [tabContentsArray_ objectAtIndex:oldIndex];
       [oldController willBecomeUnselectedTab];
       //oldContents->view()->StoreFocus();
@@ -1014,7 +1014,7 @@ private:
 
   // Tell the new tab contents it is about to become the selected tab. Here it
   // can do things like make sure the toolbar is up to date.
-  TabContentsController* newController =
+  CTTabContentsController* newController =
       [tabContentsArray_ objectAtIndex:index];
   [newController willBecomeSelectedTab];
 
@@ -1256,7 +1256,7 @@ private:
 
   [self updateFavIconForContents:contents atIndex:modelIndex];
 
-  TabContentsController* updatedController =
+  CTTabContentsController* updatedController =
       [tabContentsArray_ objectAtIndex:index];
   [updatedController tabDidChange:contents];
 }
@@ -1271,7 +1271,7 @@ private:
   NSInteger from = [self indexFromModelIndex:modelFrom];
   NSInteger to = [self indexFromModelIndex:modelTo];
 
-  scoped_nsobject<TabContentsController> movedTabContentsController(
+  scoped_nsobject<CTTabContentsController> movedTabContentsController(
       [[tabContentsArray_ objectAtIndex:from] retain]);
   [tabContentsArray_ removeObjectAtIndex:from];
   [tabContentsArray_ insertObject:movedTabContentsController.get()
@@ -1723,7 +1723,7 @@ private:
   sheetController_.reset();
 }
 
-- (TabContentsController*)activeTabContentsController {
+- (CTTabContentsController*)activeTabContentsController {
   int modelIndex = tabStripModel_->selected_index();
   if (modelIndex < 0)
     return nil;
@@ -1753,10 +1753,10 @@ private:
 
   // View hierarchy of the contents view:
   // NSView  -- switchView, same for all tabs
-  // +-  NSView  -- TabContentsController's view
+  // +-  NSView  -- CTTabContentsController's view
   //     +- NSSplitView
   //        +- TabContentsViewCocoa
-  // We use the TabContentsController's view in |swapInTabAtIndex|, so we have
+  // We use the CTTabContentsController's view in |swapInTabAtIndex|, so we have
   // to pass it to the sheet controller here.
   NSView* tabContentsView =
       [[window->owner()->GetNativeView() superview] superview];
@@ -1806,7 +1806,7 @@ private:
   if (index < 0 || index >= (NSInteger)[tabContentsArray_ count])
     return;
 
-  TabContentsController* tabController =
+  CTTabContentsController* tabController =
       [tabContentsArray_ objectAtIndex:index];
   CTTabContents* devtoolsContents = contents ?
       DevToolsWindow::GetDevToolsContents(contents) : NULL;

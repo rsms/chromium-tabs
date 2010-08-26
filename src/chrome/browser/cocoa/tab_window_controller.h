@@ -16,7 +16,7 @@
 // This assumes that there will be a view in the nib, connected to
 // |tabContentArea_|, that indicates the content that it switched when switching
 // between tabs. It needs to be a regular NSView, not something like an NSBox
-// because the TabStripController makes certain assumptions about how it can
+// because the CTTabStripController makes certain assumptions about how it can
 // swap out subviews.
 //
 // The tab strip can exist in different orientations and window locations,

@@ -9,8 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @class CTTabContents;
-
-class TabContentsCommandObserver;
 class CTTabStripModel;
 
 // A class that controls the web contents of a tab. It manages displaying the
@@ -21,9 +19,8 @@ class CTTabStripModel;
 // to avoid multiple resize messages to the renderer. You must call
 // |-ensureContentsVisible| to display the render widget host view.
 
-@interface TabContentsController : NSViewController {
+@interface CTTabContentsController : NSViewController {
  @private
-  TabContentsCommandObserver* observer_;  // nil if |commands_| is nil
   CTTabContents* contents_;  // weak
 
   IBOutlet NSSplitView* contentsContainer_;

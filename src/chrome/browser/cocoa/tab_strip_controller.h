@@ -15,19 +15,15 @@
 #import "GTMWindowSheetController.h"
 
 @class NewTabButton;
-@class TabContentsController;
+@class CTTabContentsController;
 @class CTTabView;
 @class CTTabStripView;
 
 @class CTTabContents;
 @class CTBrowser;
 
-//class Browser;
-class ConstrainedWindowMac;
-class TabStripModelObserverBridge;
+class CTTabStripModelObserverBridge;
 class CTTabStripModel;
-//class TabContents;
-//class ToolbarModel;
 
 // A class that handles managing the tab strip in a browser window. It uses
 // a supporting C++ bridge object to register for notifications from the
@@ -36,7 +32,7 @@ class CTTabStripModel;
 //
 // For a full description of the design, see
 // http://www.chromium.org/developers/design-documents/tab-strip-mac
-@interface TabStripController :
+@interface CTTabStripController :
   NSObject<TabControllerTarget,
            URLDropTargetController,
            GTMWindowSheetControllerDelegate> {
@@ -53,7 +49,7 @@ class CTTabStripModel;
 
   // Tracks the newTabButton_ for rollovers.
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
-  scoped_ptr<TabStripModelObserverBridge> bridge_;
+  scoped_ptr<CTTabStripModelObserverBridge> bridge_;
   CTBrowser *browser_;  // weak
   CTTabStripModel* tabStripModel_;  // weak
 
@@ -218,8 +214,8 @@ class CTTabStripModel;
 // http://crbug.com/19093.
 - (void)destroySheetController;
 
-// Returns the currently active TabContentsController.
-- (TabContentsController*)activeTabContentsController;
+// Returns the currently active CTTabContentsController.
+- (CTTabContentsController*)activeTabContentsController;
 
   // See comments in browser_window_controller.h for documentation about these
   // functions.

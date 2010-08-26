@@ -14,7 +14,7 @@ static const int kDefaultContentsSplitOffset = 400;
 static const int kMinWebHeight = 50;
 
 
-@implementation TabContentsController
+@implementation CTTabContentsController
 
 - (id)initWithContents:(CTTabContents*)contents {
   // subclasses might override this to load a different nib
