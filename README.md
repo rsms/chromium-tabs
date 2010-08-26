@@ -18,11 +18,13 @@ The framework is distributed with an [`@rpath`](http://www.codeshorts.ca/2007/no
 Then you need to do at least two things:
 
 1. `#import <ChromiumTabs/ChromiumTabs.h>`
-2. `[Browser openEmptyWindow]` when your application has started (e.g. in the application delegates' `applicationDidFinishLaunching:`)
+2. `[CTBrowser openEmptyWindow]` when your application has started (e.g. in the application delegates' `applicationDidFinishLaunching:`)
 
 The example application (in `examples/simple-app/`) illustrates basic usage and likes to be inspected while you drink coffee. It looks like this:
 
 [<img src="http://farm5.static.flickr.com/4082/4927836567_7b9f577af4_o.png" alt="A slightly boring screenshot of the example application">](http://github.com/downloads/rsms/chromium-tabs/Chromium%20Tabs.app.zip)
+
+When building a "real" application you will need to sublcass at least the `CTBrowser` class which factorises tabs and their content. The example application do this at a very basic level (provides custom tab content).
 
 ## Download
 
@@ -30,9 +32,9 @@ Visit the [download section on GitHub](http://github.com/rsms/chromium-tabs/down
 
 ## Building
 
-1. Check out (or download) a version of the source code
+1. Check out (or download) the source code
 2. Open `chromium-tabs.xcodeproj` in [Xcode](http://developer.apple.com/tools/xcode/)
-3. Build the "ChromiumTabs" framework
+3. Choose your target and hit "Build"
 
 There is also an optional example application in the Xcode project. You build it by selecting the "Chromium Tabs" target.
 
