@@ -59,7 +59,6 @@
 		3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.mm */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
 		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
-		3A3EDA9D1225EF84009E2908 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDA9E1225EF84009E2908 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* util.m */; };
 		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
 		3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED97D1225E116009E2908 /* ChromiumTabs.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -68,9 +67,19 @@
 		3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AA71889122479CE005022BE /* CTBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF95F12235704008A3B8C /* CTBrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */; };
+		3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */; };
 		3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */; };
+		3A928BD91226F7FC00DA7E43 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19421222DC5B009DA438 /* CTTabStripModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDA1226F7FC00DA7E43 /* CTTabStripModelOrderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19441222DC5B009DA438 /* CTTabStripModelOrderController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A39270A1221C566006D8305 /* CTTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921F11221AF58006D8305 /* CTTabController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDD1226F81600DA7E43 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDE1226F81600DA7E43 /* CTTabContentsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236D9E1223375D00D21E66 /* CTTabContentsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BDF1226F81600DA7E43 /* CTTabStripView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286F8B1222CAA000F1BB78 /* CTTabStripView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FE21222D25400F1BB78 /* CTTabStripController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286F8D1222CAA000F1BB78 /* CTTabWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928BE21226F81600DA7E43 /* CTTabStripModelObserverBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236DAD12233B3400D21E66 /* CTTabStripModelObserverBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -500,13 +509,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
+				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
+				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
+				3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */,
+				3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */,
+				3A928BDD1226F81600DA7E43 /* CTTabControllerTarget.h in Headers */,
+				3A928BDE1226F81600DA7E43 /* CTTabContentsController.h in Headers */,
+				3A928BDF1226F81600DA7E43 /* CTTabStripView.h in Headers */,
+				3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */,
+				3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */,
+				3A928BE21226F81600DA7E43 /* CTTabStripModelObserverBridge.h in Headers */,
+				3A928BD91226F7FC00DA7E43 /* CTTabStripModel.h in Headers */,
+				3A928BDA1226F7FC00DA7E43 /* CTTabStripModelOrderController.h in Headers */,
+				3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */,
 				3A3EDAD01225FACA009E2908 /* CTTabStripModelDelegate.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* CTBrowserCommand.h in Headers */,
-				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
-				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
-				3A3EDA9D1225EF84009E2908 /* util.h in Headers */,
-				3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
