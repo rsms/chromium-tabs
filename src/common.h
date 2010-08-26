@@ -1,9 +1,6 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-// Adds defines about the platform we're currently building on
-#include "build_config.h"
-
 // Foundation is nice to have
 #ifdef __OBJC__
   #import <Foundation/Foundation.h>
