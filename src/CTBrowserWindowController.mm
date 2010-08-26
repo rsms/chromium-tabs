@@ -118,10 +118,10 @@
 
 
 -(IBAction)closeTab:(id)sender {
-  TabStripModel *tabStripModel = browser_.tabStripModel;
+  CTTabStripModel *tabStripModel = browser_.tabStripModel;
   //tabStripModel->CloseAllTabs();
   tabStripModel->CloseTabContentsAt(tabStripModel->selected_index(),
-                                    TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+                                    CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
 }
 
 
@@ -220,12 +220,12 @@
 // Creates a new window by pulling the given tab out and placing it in
 // the new window. Returns the controller for the new window. The size of the
 // new window will be the same size as this window.
-- (TabWindowController*)detachTabToNewWindow:(TabView*)tabView {
+- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
   // Disable screen updates so that this appears as a single visual change.
   base::ScopedNSDisableScreenUpdates disabler;
 
   // Keep a local ref to the tab strip model object
-  TabStripModel *tabStripModel = [browser_ tabStripModel];
+  CTTabStripModel *tabStripModel = [browser_ tabStripModel];
 
   // Fetch the tab contents for the tab being dragged.
   int index = [tabStripController_ modelIndexForTabView:tabView];
@@ -281,7 +281,7 @@
 }
 
 
-- (void)insertPlaceholderForTab:(TabView*)tab
+- (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                       yStretchiness:(CGFloat)yStretchiness {
   [super insertPlaceholderForTab:tab frame:frame yStretchiness:yStretchiness];

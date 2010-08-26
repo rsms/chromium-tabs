@@ -10,19 +10,19 @@ enum CTWindowOpenDisposition {
   CTWindowOpenDispositionNewBackgroundTab,
 };
 
-class TabStripModel;
+class CTTabStripModel;
 @class CTBrowserWindowController;
 
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
 @interface CTBrowser : NSObject <CTTabStripModelDelegate> {
-  TabStripModel *tabStripModel_;
+  CTTabStripModel *tabStripModel_;
   CTBrowserWindowController *windowController_;
 }
 
 // The tab strip model
-@property(readonly, nonatomic) TabStripModel* tabStripModel;
+@property(readonly, nonatomic) CTTabStripModel* tabStripModel;
 
 // The window controller
 @property(readonly, nonatomic) CTBrowserWindowController* windowController;

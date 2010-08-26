@@ -24,7 +24,7 @@
   [super dealloc];
 }
 
--(void)destroy:(TabStripModel*)sender {
+-(void)destroy:(CTTabStripModel*)sender {
   // TODO: notify "disconnected"
   sender->TabContentsWasDestroyed(self); // TODO: NSNotification
   [self release];
@@ -34,7 +34,7 @@
   return YES;
 }
 
--(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel {
+-(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
   // subclasses can implement this
   //NSLog(@"CTTabContents closingOfTabDidStart");
 }

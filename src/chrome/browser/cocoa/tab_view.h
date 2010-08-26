@@ -35,15 +35,15 @@ enum AlertState {
 
 }  // namespace tabs
 
-@class TabController, TabWindowController;
+@class CTTabController, TabWindowController;
 
 // A view that handles the event tracking (clicking and dragging) for a tab
-// on the tab strip. Relies on an associated TabController to provide a
+// on the tab strip. Relies on an associated CTTabController to provide a
 // target/action for selecting the tab.
 
-@interface TabView : BackgroundGradientView {
+@interface CTTabView : BackgroundGradientView {
  @private
-  IBOutlet TabController* tabController_;
+  IBOutlet CTTabController* tabController_;
   // TODO(rohitrao): Add this button to a CoreAnimation layer so we can fade it
   // in and out on mouseovers.
   IBOutlet HoverCloseButton* closeButton_;
@@ -119,13 +119,13 @@ enum AlertState {
 
 @end
 
-// The TabController |tabController_| is not the only owner of this view. If the
+// The CTTabController |tabController_| is not the only owner of this view. If the
 // controller is released before this view, then we could be hanging onto a
-// garbage pointer. To prevent this, the TabController uses this interface to
+// garbage pointer. To prevent this, the CTTabController uses this interface to
 // clear the |tabController_| pointer when it is dying.
-@interface TabView (TabControllerInterface)
-- (void)setController:(TabController*)controller;
-- (TabController*)controller;
+@interface CTTabView (TabControllerInterface)
+- (void)setController:(CTTabController*)controller;
+- (CTTabController*)controller;
 @end
 
 #endif  // CHROME_BROWSER_COCOA_TAB_VIEW_H_

@@ -16,7 +16,7 @@
 // A view class that handles rendering the tab strip and drops of URLS with
 // a positioning locator for drop feedback.
 
-@interface TabStripView : NSView<URLDropTarget> {
+@interface CTTabStripView : NSView<URLDropTarget> {
  @private
   NSTimeInterval lastMouseUp_;
 
@@ -40,7 +40,7 @@
 
 // Protected methods subclasses can override to alter behavior. Clients should
 // not call these directly.
-@interface TabStripView(Protected)
+@interface CTTabStripView(Protected)
 - (void)drawBottomBorder:(NSRect)bounds;
 - (BOOL)doubleClickMinimizesWindow;
 @end

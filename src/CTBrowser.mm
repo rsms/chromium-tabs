@@ -42,7 +42,7 @@
 
 -(id)init {
   if (!(self = [super init])) return nil;
-  tabStripModel_ = new TabStripModel(self);
+  tabStripModel_ = new CTTabStripModel(self);
   return self;
 }
 
@@ -131,13 +131,13 @@
                       atIndex:(int)index
                  inForeground:(BOOL)foreground {
   //tabStripModel_->AppendTabContents(contents, foreground);
-  int addTypes = foreground ? TabStripModel::ADD_SELECTED :
-                              TabStripModel::ADD_NONE;
+  int addTypes = foreground ? CTTabStripModel::ADD_SELECTED :
+                              CTTabStripModel::ADD_NONE;
   tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
                                  addTypes);
   // By default, content believes it is not hidden.  When adding contents
   // in the background, tell it that it's hidden.
-  if ((addTypes & TabStripModel::ADD_SELECTED) == 0) {
+  if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
     // TabStripModel::AddTabContents invokes HideContents if not foreground.
     [contents didBecomeHidden];
   }
@@ -170,8 +170,8 @@
   if ([self canCloseTab]) {
     tabStripModel_->CloseTabContentsAt(
         tabStripModel_->selected_index(),
-        TabStripModel::CLOSE_USER_GESTURE |
-        TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+        CTTabStripModel::CLOSE_USER_GESTURE |
+        CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
   }
 }
 

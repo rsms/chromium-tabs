@@ -12,21 +12,21 @@
 @class CTTabContents;
 
 ///////////////////////////////////////////////////////////////////////////////
-// TabStripModelOrderController
+// CTTabStripModelOrderController
 //
 //  An object that allows different types of ordering and reselection to be
 //  heuristics plugged into a TabStripModel.
 //
-class TabStripModelOrderController : public TabStripModelObserver {
+class CTTabStripModelOrderController : public CTTabStripModelObserver {
  public:
-  explicit TabStripModelOrderController(TabStripModel* tabstrip);
-  virtual ~TabStripModelOrderController();
+  explicit CTTabStripModelOrderController(CTTabStripModel* tabstrip);
+  virtual ~CTTabStripModelOrderController();
 
   // Sets the insertion policy. Default is INSERT_AFTER.
-  void set_insertion_policy(TabStripModel::InsertionPolicy policy) {
+  void set_insertion_policy(CTTabStripModel::InsertionPolicy policy) {
     insertion_policy_ = policy;
   }
-  TabStripModel::InsertionPolicy insertion_policy() const {
+  CTTabStripModel::InsertionPolicy insertion_policy() const {
     return insertion_policy_;
   }
 
@@ -58,11 +58,11 @@ class TabStripModelOrderController : public TabStripModelObserver {
   // away. This also skips any phantom tabs.
   int GetValidIndex(int index, int removing_index, bool is_remove) const;
 
-  TabStripModel* tab_strip_model_;
+  CTTabStripModel* tab_strip_model_;
 
-  TabStripModel::InsertionPolicy insertion_policy_;
+  CTTabStripModel::InsertionPolicy insertion_policy_;
 
-  DISALLOW_COPY_AND_ASSIGN(TabStripModelOrderController);
+  DISALLOW_COPY_AND_ASSIGN(CTTabStripModelOrderController);
 };
 
 #endif  // CHROME_BROWSER_TABS_TAB_STRIP_MODEL_ORDER_CONTROLLER_H_

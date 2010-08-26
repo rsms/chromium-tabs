@@ -23,11 +23,11 @@
 //class NavigationController;
 //class Profile;
 //class SiteInstance;
-class TabStripModelOrderController;
-class TabStripModel;
+class CTTabStripModelOrderController;
+class CTTabStripModel;
 
 // Enumeration of the possible values supplied to TabChangedAt.
-enum TabChangeType {
+enum CTTabChangeType {
   // Only the loading state changed.
   LOADING_ONLY,
 
@@ -39,7 +39,7 @@ enum TabChangeType {
 };
 
 // Enum used by ReplaceTabContentsAt.
-enum TabReplaceType {
+enum CTTabReplaceType {
   // The replace is the result of the tab being made phantom.
   REPLACE_MADE_PHANTOM,
 
@@ -62,7 +62,7 @@ enum TabReplaceType {
 //  Add/RemoveObserver methods.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class TabStripModelObserver {
+class CTTabStripModelObserver {
  public:
   // A new CTTabContents was inserted into the TabStripModel at the specified
   // index. |foreground| is whether or not it was opened in the foreground
@@ -105,7 +105,7 @@ class TabStripModelObserver {
   //
   // See TabChangeType for a description of |change_type|.
   virtual void TabChangedAt(CTTabContents* contents, int index,
-                            TabChangeType change_type);
+                            CTTabChangeType change_type);
 
   // The tab contents was replaced at the specified index. This is invoked when
   // a tab becomes phantom. See description of phantom tabs in class description
@@ -121,7 +121,7 @@ class TabStripModelObserver {
   virtual void TabReplacedAt(CTTabContents* old_contents,
                              CTTabContents* new_contents,
                              int index,
-                             TabReplaceType type);
+                             CTTabReplaceType type);
 
   // Invoked when the pinned state of a tab changes. This is not invoked if the
   // tab ends up moving as a result of the mini state changing.
@@ -151,7 +151,7 @@ class TabStripModelObserver {
   virtual void TabStripModelDeleted();
 
  protected:
-  virtual ~TabStripModelObserver() {}
+  virtual ~CTTabStripModelObserver() {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -316,7 +316,7 @@ class TabStripModelObserver {
 //  its bookkeeping when such events happen.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class TabStripModel /*: public NotificationObserver*/ {
+class CTTabStripModel /*: public NotificationObserver*/ {
  public:
   // Policy for how new tabs are inserted.
   enum InsertionPolicy {
@@ -373,15 +373,15 @@ class TabStripModel /*: public NotificationObserver*/ {
 
   // Construct a TabStripModel with a delegate to help it do certain things
   // (See CTTabStripModelDelegate documentation). |delegate| cannot be NULL.
-  TabStripModel(NSObject<CTTabStripModelDelegate>* delegate);
-  virtual ~TabStripModel();
+  CTTabStripModel(NSObject<CTTabStripModelDelegate>* delegate);
+  virtual ~CTTabStripModel();
 
   // Retrieves the CTTabStripModelDelegate associated with this TabStripModel.
   NSObject<CTTabStripModelDelegate>* delegate() const { return delegate_; }
 
   // Add and remove observers to changes within this TabStripModel.
-  void AddObserver(TabStripModelObserver* observer);
-  void RemoveObserver(TabStripModelObserver* observer);
+  void AddObserver(CTTabStripModelObserver* observer);
+  void RemoveObserver(CTTabStripModelObserver* observer);
 
   // Retrieve the number of CTTabContentses/emptiness of the TabStripModel.
   int count() const { return static_cast<int>(contents_data_.size()); }
@@ -405,7 +405,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   bool closing_all() const { return closing_all_; }
 
   // Access the order controller. Exposed only for unit tests.
-  TabStripModelOrderController* order_controller() const {
+  CTTabStripModelOrderController* order_controller() const {
     return order_controller_;
   }
 
@@ -415,7 +415,7 @@ class TabStripModel /*: public NotificationObserver*/ {
 
   // Returns true if |observer| is in the list of observers. This is intended
   // for debugging.
-  bool HasObserver(TabStripModelObserver* observer);
+  bool HasObserver(CTTabStripModelObserver* observer);
 
   // Basic API /////////////////////////////////////////////////////////////////
 
@@ -462,7 +462,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   // to the observer. This deletes the CTTabContents currently at |index|.
   void ReplaceTabContentsAt(int index,
                             CTTabContents* new_contents,
-                            TabReplaceType type);
+                            CTTabReplaceType type);
 
   // Detaches the CTTabContents at the specified index from this strip. The
   // CTTabContents is not destroyed, just removed from display. The caller is
@@ -504,7 +504,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   // changed in some way. See TabChangeType for details of |change_type|.
   void UpdateTabContentsStateAt(
       int index,
-      TabChangeType change_type);
+      CTTabChangeType change_type);
 
   // Make sure there is an auto-generated New Tab tab in the TabStripModel.
   // If |force_create| is true, the New Tab will be created even if the
@@ -554,7 +554,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   // relationships!) This is to reduce unpredictable tab switching behavior
   // in complex session states. The exact circumstances under which this method
   // is called are left up to the implementation of the selected
-  // TabStripModelOrderController.
+  // CTTabStripModelOrderController.
   void ForgetAllOpeners();
 
   // Forgets the group affiliation of the specified CTTabContents. This should be
@@ -686,7 +686,7 @@ class TabStripModel /*: public NotificationObserver*/ {
 
  private:
   // We cannot be constructed without a delegate.
-  TabStripModel();
+  CTTabStripModel();
 
   // Returns true if the specified CTTabContents is a New Tab at the end of the
   // TabStrip. We check for this because opener relationships are _not_
@@ -763,7 +763,7 @@ class TabStripModel /*: public NotificationObserver*/ {
   CTTabContents* ReplaceTabContentsAtImpl(
       int index,
       CTTabContents* new_contents,
-      TabReplaceType type);
+      CTTabReplaceType type);
 
   // Our delegate.
   NSObject<CTTabStripModelDelegate>* delegate_;
@@ -841,16 +841,16 @@ class TabStripModel /*: public NotificationObserver*/ {
 
   // An object that determines where new Tabs should be inserted and where
   // selection should move when a Tab is closed.
-  TabStripModelOrderController* order_controller_;
+  CTTabStripModelOrderController* order_controller_;
 
   // Our observers.
-  typedef ObserverList<TabStripModelObserver> TabStripModelObservers;
+  typedef ObserverList<CTTabStripModelObserver> TabStripModelObservers;
   TabStripModelObservers observers_;
 
   // A scoped container for notification registries.
   //NotificationRegistrar registrar_;
 
-  DISALLOW_COPY_AND_ASSIGN(TabStripModel);
+  DISALLOW_COPY_AND_ASSIGN(CTTabStripModel);
 };
 
 #endif  // CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H_

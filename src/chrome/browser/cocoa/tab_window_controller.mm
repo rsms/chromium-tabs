@@ -3,10 +3,7 @@
 // found in the LICENSE file.
 
 #import "tab_window_controller.h"
-
-//#import "logging.h"
 #import "tab_strip_view.h"
-#import "themed_window.h"
 
 @interface TabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;
@@ -17,15 +14,7 @@
 
 @implementation TabWindowOverlayWindow
 
-- (ThemedWindowStyle)themedWindowStyle {
-  if ([self parentWindow])
-    return [[[self parentWindow] windowController] themedWindowStyle];
-  return NO;
-}
-
 - (NSPoint)themePatternPhase {
-  //if ([self parentWindow])
-  //  return [[[self parentWindow] windowController] themePatternPhase];
   return NSZeroPoint;
 }
 
@@ -124,7 +113,7 @@
 
 // Return the appropriate tab strip based on whether or not side tabs are
 // enabled.
-- (TabStripView*)tabStripView {
+- (CTTabStripView*)tabStripView {
   if ([self useVerticalTabs])
     return sideTabStripView_;
   return topTabStripView_;
@@ -156,7 +145,7 @@
     [[overlayWindow_ contentView] addSubview:cachedContentView_];
   } else {
     [[self window] setContentView:cachedContentView_];
-    // The TabStripView always needs to be in front of the window's content
+    // The CTTabStripView always needs to be in front of the window's content
     // view and therefore it should always be added after the content view is
     // set.
     [[[[self window] contentView] superview] addSubview:[self tabStripView]];
@@ -236,13 +225,13 @@
   NOTIMPLEMENTED();
 }
 
-- (TabWindowController*)detachTabToNewWindow:(TabView*)tabView {
+- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView {
   // subclass must implement
   NOTIMPLEMENTED();
   return NULL;
 }
 
-- (void)insertPlaceholderForTab:(TabView*)tab
+- (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness {
   [self showNewTabButton:NO];
@@ -264,7 +253,7 @@
   return YES;
 }
 
-- (BOOL)isTabFullyVisible:(TabView*)tab {
+- (BOOL)isTabFullyVisible:(CTTabView*)tab {
   // Subclasses should implement this, but it's not necessary.
   return YES;
 }

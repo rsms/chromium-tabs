@@ -7,7 +7,6 @@
 #import "scoped_cftyperef.h"
 #import "tab_controller.h"
 #import "tab_window_controller.h"
-#import "themed_window.h"
 
 // ripped out from mac_util.mm:
 static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,
@@ -60,7 +59,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
 }  // namespace
 
-@interface TabView(Private)
+@interface CTTabView(Private)
 
 - (void)resetLastGlowUpdateTime;
 - (NSTimeInterval)timeElapsedSinceLastGlowUpdate;
@@ -69,9 +68,9 @@ const CGFloat kRapidCloseDist = 2.5;
 - (int)getWorkspaceID:(NSWindow*)window useCache:(BOOL)useCache;
 - (NSBezierPath*)bezierPathForRect:(NSRect)rect;
 
-@end  // TabView(Private)
+@end  // CTTabView(Private)
 
-@implementation TabView
+@implementation CTTabView
 
 @synthesize state = state_;
 @synthesize hoverAlpha = hoverAlpha_;
@@ -312,7 +311,7 @@ const CGFloat kRapidCloseDist = 2.5;
   // strip and then deallocated. This will also result in *us* being
   // deallocated. Both these are bad, so we prevent this by retaining the
   // controller.
-  scoped_nsobject<TabController> controller([tabController_ retain]);
+  scoped_nsobject<CTTabController> controller([tabController_ retain]);
 
   // Because we move views between windows, we need to handle the event loop
   // ourselves. Ideally we should use the standard event loop.
@@ -533,7 +532,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
     // Compute where placeholder should go and insert it into the
     // destination tab strip.
-    TabView* draggedTabView = (TabView*)[draggedController_ selectedTabView];
+    CTTabView* draggedTabView = (CTTabView*)[draggedController_ selectedTabView];
     NSRect tabFrame = [draggedTabView frame];
     tabFrame.origin = [dragWindow_ convertBaseToScreen:tabFrame.origin];
     tabFrame.origin = [[targetController_ window]
@@ -642,8 +641,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
   NSGraphicsContext* context = [NSGraphicsContext currentContext];
   [context saveGraphicsState];
-
-  [context setPatternPhase:[[self window] themePatternPhase]];
+  [context setPatternPhase:NSZeroPoint]; // TODO: really need to do this?
 
   NSRect rect = [self bounds];
   NSBezierPath* path = [self bezierPathForRect:rect];
@@ -846,18 +844,18 @@ const CGFloat kRapidCloseDist = 2.5;
   return [super accessibilityAttributeValue:attribute];
 }
 
-@end  // @implementation TabView
+@end  // @implementation CTTabView
 
-@implementation TabView (TabControllerInterface)
+@implementation CTTabView (TabControllerInterface)
 
-- (void)setController:(TabController*)controller {
+- (void)setController:(CTTabController*)controller {
   tabController_ = controller;
 }
-- (TabController*)controller { return tabController_; }
+- (CTTabController*)controller { return tabController_; }
 
-@end  // @implementation TabView (TabControllerInterface)
+@end  // @implementation CTTabView (TabControllerInterface)
 
-@implementation TabView(Private)
+@implementation CTTabView(Private)
 
 - (void)resetLastGlowUpdateTime {
   lastGlowUpdate_ = [NSDate timeIntervalSinceReferenceDate];
@@ -1036,4 +1034,4 @@ const CGFloat kRapidCloseDist = 2.5;
   return path;
 }
 
-@end  // @implementation TabView(Private)
+@end  // @implementation CTTabView(Private)

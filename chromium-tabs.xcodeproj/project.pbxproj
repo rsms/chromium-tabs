@@ -21,7 +21,6 @@
 		3A3ED9CA1225E32A009E2908 /* tab_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* tab_view.mm */; };
 		3A3ED9CB1225E32A009E2908 /* tab_window_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8E1222CAA000F1BB78 /* tab_window_controller.mm */; };
 		3A3ED9CC1225E32A009E2908 /* tab_strip_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8C1222CAA000F1BB78 /* tab_strip_view.mm */; };
-		3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F921222CADC00F1BB78 /* themed_window.mm */; };
 		3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.mm */; };
 		3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* throbber_view.mm */; };
 		3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* CTTabContents.mm */; };
@@ -123,8 +122,6 @@
 		3A286F8C1222CAA000F1BB78 /* tab_strip_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_strip_view.mm; sourceTree = "<group>"; };
 		3A286F8D1222CAA000F1BB78 /* tab_window_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tab_window_controller.h; sourceTree = "<group>"; };
 		3A286F8E1222CAA000F1BB78 /* tab_window_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tab_window_controller.mm; sourceTree = "<group>"; };
-		3A286F911222CADC00F1BB78 /* themed_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = themed_window.h; sourceTree = "<group>"; };
-		3A286F921222CADC00F1BB78 /* themed_window.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = themed_window.mm; sourceTree = "<group>"; };
 		3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowserWindow.xib; sourceTree = "<group>"; };
 		3A286F9F1222CDBE00F1BB78 /* TabContents.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabContents.xib; sourceTree = "<group>"; };
 		3A286FA01222CDBE00F1BB78 /* TabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabView.xib; sourceTree = "<group>"; };
@@ -365,8 +362,6 @@
 				3A3921F01221AF58006D8305 /* hover_close_button.mm */,
 				3A236DD71223414F00D21E66 /* new_tab_button.h */,
 				3A236DD81223414F00D21E66 /* new_tab_button.mm */,
-				3A286F911222CADC00F1BB78 /* themed_window.h */,
-				3A286F921222CADC00F1BB78 /* themed_window.mm */,
 				3A39270A1221C566006D8305 /* tab_view.h */,
 				3A39270B1221C566006D8305 /* tab_view.mm */,
 				3A3921F11221AF58006D8305 /* tab_controller.h */,
@@ -614,7 +609,6 @@
 				3A3ED9CA1225E32A009E2908 /* tab_view.mm in Sources */,
 				3A3ED9CB1225E32A009E2908 /* tab_window_controller.mm in Sources */,
 				3A3ED9CC1225E32A009E2908 /* tab_strip_view.mm in Sources */,
-				3A3ED9CD1225E32A009E2908 /* themed_window.mm in Sources */,
 				3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */,
 				3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */,
 				3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */,

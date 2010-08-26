@@ -1,7 +1,7 @@
 #pragma once
 #import <Cocoa/Cocoa.h>
 
-class TabStripModel; // Note: C++ class
+class CTTabStripModel; // Note: C++ class
 
 @interface CTTabContents : NSObject {
   BOOL isApp_;
@@ -36,10 +36,10 @@ class TabStripModel; // Note: C++ class
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
 // Invoked when the tab should be destroyed (involves some finalization).
--(void)destroy:(TabStripModel*)sender;
+-(void)destroy:(CTTabStripModel*)sender;
 
 // Invoked when this tab is closing
--(void)closingOfTabDidStart:(TabStripModel*)closeInitiatedByTabStripModel;
+-(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel;
 
 // Invoked when the tab contents becomes selected. If you override, be sure
 // and invoke super's implementation.

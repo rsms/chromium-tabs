@@ -19,7 +19,7 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
       [NSWindow performSelector:@selector(_shouldMiniaturizeOnDoubleClick)];
 }
 
-@implementation TabStripView
+@implementation CTTabStripView
 
 @synthesize newTabButton = newTabButton_;
 @synthesize dropArrowShown = dropArrowShown_;

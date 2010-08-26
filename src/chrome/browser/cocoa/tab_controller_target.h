@@ -8,20 +8,20 @@
 
 //#import "tab_strip_model.h"
 
-@class TabController;
+@class CTTabController;
 
-// A protocol to be implemented by a TabController's target.
+// A protocol to be implemented by a CTTabController's target.
 @protocol TabControllerTarget
 - (void)selectTab:(id)sender;
 - (void)closeTab:(id)sender;
 
 // Dispatch context menu commands for the given tab controller.
 //- (void)commandDispatch:(TabStripModel::ContextMenuCommand)command
-//          forController:(TabController*)controller;
+//          forController:(CTTabController*)controller;
 // Returns YES if the specificed command should be enabled for the given
 // controller.
 //- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
-//           forController:(TabController*)controller;
+//           forController:(CTTabController*)controller;
 @end
 
 #endif  // CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_

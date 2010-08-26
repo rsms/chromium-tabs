@@ -107,7 +107,7 @@ private:
                          atIndex:(NSInteger)modelIndex;
 - (void)layoutTabsWithAnimation:(BOOL)animate
              regenerateSubviews:(BOOL)doUpdate;
-- (void)animationDidStopForController:(TabController*)controller
+- (void)animationDidStopForController:(CTTabController*)controller
                              finished:(BOOL)finished;
 - (NSInteger)indexFromModelIndex:(NSInteger)index;
 - (NSInteger)numberOfOpenTabs;
@@ -176,13 +176,13 @@ private:
 @interface TabCloseAnimationDelegate : NSObject {
  @private
   TabStripController* strip_;  // weak; owns us indirectly
-  TabController* controller_;  // weak
+  CTTabController* controller_;  // weak
 }
 
 // Will tell |strip| when the animation for |controller|'s view has completed.
 // These should not be nil, and will not be retained.
 - (id)initWithTabStrip:(TabStripController*)strip
-         tabController:(TabController*)controller;
+         tabController:(CTTabController*)controller;
 
 // Invalidates this object so that no further calls will be made to
 // |strip_|.  This should be called when |strip_| is released, to
@@ -197,7 +197,7 @@ private:
 @implementation TabCloseAnimationDelegate
 
 - (id)initWithTabStrip:(TabStripController*)strip
-         tabController:(TabController*)controller {
+         tabController:(CTTabController*)controller {
   if ((self == [super init])) {
     assert(strip && controller);
     strip_ = strip;
@@ -225,16 +225,16 @@ private:
 // is directly mapped to the same index in the parallel arrays holding our
 // views and controllers. This is also true when new tabs are created (even
 // though there is a small period of animation) because the tab is present
-// in the model while the TabView is animating into place. As a result, nothing
+// in the model while the CTTabView is animating into place. As a result, nothing
 // special need be done to handle "new tab" animation.
 //
 // This all goes out the window with the "close tab" animation. The animation
 // kicks off in |-tabDetachedWithContents:atIndex:| with the notification that
 // the tab has been removed from the model. The simplest solution at this
 // point would be to remove the views and controllers as well, however once
-// the TabView is removed from the view list, the tab z-order code takes care of
+// the CTTabView is removed from the view list, the tab z-order code takes care of
 // removing it from the tab strip and we'll get no animation. That means if
-// there is to be any visible animation, the TabView needs to stay around until
+// there is to be any visible animation, the CTTabView needs to stay around until
 // its animation is complete. In order to maintain consistency among the
 // internal parallel arrays, this means all structures are kept around until
 // the animation completes. At this point, though, the model and our internal
@@ -268,7 +268,7 @@ private:
   #undef PIMG
 }
 
-- (id)initWithView:(TabStripView*)view
+- (id)initWithView:(CTTabStripView*)view
         switchView:(NSView*)switchView
            browser:(CTBrowser*)browser {
   assert(view && switchView && browser);
@@ -397,7 +397,7 @@ private:
   [newTabButton_ removeTrackingArea:newTabTrackingArea_.get()];
   // Invalidate all closing animations so they don't call back to us after
   // we're gone.
-  for (TabController* controller in closingControllers_.get()) {
+  for (CTTabController* controller in closingControllers_.get()) {
     NSView* view = [controller view];
     [[[view animationForKey:@"frameOrigin"] delegate] invalidate];
   }
@@ -473,8 +473,8 @@ private:
 // it to. It will be sized and positioned by |-layoutTabs| so there's no need to
 // set the frame here. This also creates the view as hidden, it will be
 // shown during layout.
-- (TabController*)newTab {
-  TabController* controller = [[[TabController alloc] init] autorelease];
+- (CTTabController*)newTab {
+  CTTabController* controller = [[[CTTabController alloc] init] autorelease];
   [controller setTarget:self];
   [controller setAction:@selector(selectTab:)];
   [[controller view] setHidden:YES];
@@ -515,9 +515,9 @@ private:
     return index;
 
   NSInteger i = 0;
-  for (TabController* controller in tabArray_.get()) {
+  for (CTTabController* controller in tabArray_.get()) {
     if ([closingControllers_ containsObject:controller]) {
-      assert([(TabView*)[controller view] isClosing]);
+      assert([(CTTabView*)[controller view] isClosing]);
       ++index;
     }
     if (i == index)  // No need to check anything after, it has no effect.
@@ -534,7 +534,7 @@ private:
 // are no longer in the model.
 - (NSInteger)modelIndexForTabView:(NSView*)view {
   NSInteger index = 0;
-  for (TabController* current in tabArray_.get()) {
+  for (CTTabController* current in tabArray_.get()) {
     // If |current| is closing, skip it.
     if ([closingControllers_ containsObject:current])
       continue;
@@ -553,8 +553,8 @@ private:
   NSInteger index = 0;
   NSInteger i = 0;
   for (TabContentsController* current in tabContentsArray_.get()) {
-    // If the TabController corresponding to |current| is closing, skip it.
-    TabController* controller = [tabArray_ objectAtIndex:i];
+    // If the CTTabController corresponding to |current| is closing, skip it.
+    CTTabController* controller = [tabArray_ objectAtIndex:i];
     if ([closingControllers_ containsObject:controller]) {
       ++i;
       continue;
@@ -590,9 +590,9 @@ private:
 }
 
 // Called when the user closes a tab. Asks the model to close the tab. |sender|
-// is the TabView that is potentially going away.
+// is the CTTabView that is potentially going away.
 - (void)closeTab:(id)sender {
-  assert([sender isKindOfClass:[TabView class]]);
+  assert([sender isKindOfClass:[CTTabView class]]);
   if ([hoveredTab_ isEqual:sender]) {
     hoveredTab_ = nil;
   }
@@ -621,8 +621,8 @@ private:
     }
     tabStripModel_->CloseTabContentsAt(
         index,
-        TabStripModel::CLOSE_USER_GESTURE |
-        TabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+        CTTabStripModel::CLOSE_USER_GESTURE |
+        CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
   } else {
     // Use the standard window close if this is the last tab
     // this prevents the tab from being removed from the model until after
@@ -632,8 +632,8 @@ private:
 }
 
 // Dispatch context menu commands for the given tab controller.
-- (void)commandDispatch:(TabStripModel::ContextMenuCommand)command
-          forController:(TabController*)controller {
+- (void)commandDispatch:(CTTabStripModel::ContextMenuCommand)command
+          forController:(CTTabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
   if (tabStripModel_->ContainsIndex(index))
     tabStripModel_->ExecuteContextMenuCommand(index, command);
@@ -641,15 +641,15 @@ private:
 
 // Returns YES if the specificed command should be enabled for the given
 // controller.
-- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
-           forController:(TabController*)controller {
+- (BOOL)isCommandEnabled:(CTTabStripModel::ContextMenuCommand)command
+           forController:(CTTabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
   if (!tabStripModel_->ContainsIndex(index))
     return NO;
   return tabStripModel_->IsContextMenuCommandEnabled(index, command) ? YES : NO;
 }
 
-- (void)insertPlaceholderForTab:(TabView*)tab
+- (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness {
   placeholderTab_ = tab;
@@ -658,7 +658,7 @@ private:
   [self layoutTabsWithAnimation:initialLayoutComplete_ regenerateSubviews:NO];
 }
 
-- (BOOL)isTabFullyVisible:(TabView*)tab {
+- (BOOL)isTabFullyVisible:(CTTabView*)tab {
   NSRect frame = [tab frame];
   return NSMinX(frame) >= [self indentForControls] &&
       NSMaxX(frame) <= NSMaxX([tabStripView_ frame]);
@@ -682,11 +682,11 @@ private:
   if (![tabArray_ count])
     return;
 
-  const CGFloat kMaxTabWidth = [TabController maxTabWidth];
-  const CGFloat kMinTabWidth = [TabController minTabWidth];
-  const CGFloat kMinSelectedTabWidth = [TabController minSelectedTabWidth];
-  const CGFloat kMiniTabWidth = [TabController miniTabWidth];
-  const CGFloat kAppTabWidth = [TabController appTabWidth];
+  const CGFloat kMaxTabWidth = [CTTabController maxTabWidth];
+  const CGFloat kMinTabWidth = [CTTabController minTabWidth];
+  const CGFloat kMinSelectedTabWidth = [CTTabController minSelectedTabWidth];
+  const CGFloat kMiniTabWidth = [CTTabController miniTabWidth];
+  const CGFloat kAppTabWidth = [CTTabController appTabWidth];
 
   NSRect enclosingRect = NSZeroRect;
   ScopedNSAnimationContextGroup mainAnimationGroup(animate);
@@ -746,7 +746,7 @@ private:
   CGFloat offset = [self indentForControls];
   NSUInteger i = 0;
   bool hasPlaceholderGap = false;
-  for (TabController* tab in tabArray_.get()) {
+  for (CTTabController* tab in tabArray_.get()) {
     // Ignore a tab that is going through a close animation.
     if ([closingControllers_ containsObject:tab])
       continue;
@@ -927,7 +927,7 @@ private:
                       atIndex:(NSInteger)modelIndex
                  inForeground:(bool)inForeground {
   assert(contents);
-  assert(modelIndex == TabStripModel::kNoTab ||
+  assert(modelIndex == CTTabStripModel::kNoTab ||
          tabStripModel_->ContainsIndex(modelIndex));
 
   // Take closing tabs into account.
@@ -940,7 +940,7 @@ private:
   [tabContentsArray_ insertObject:contentsController atIndex:index];
 
   // Make a new tab and add it to the strip. Keep track of its controller.
-  TabController* newController = [self newTab];
+  CTTabController* newController = [self newTab];
   [newController setMini:tabStripModel_->IsMiniTab(modelIndex)];
   [newController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
   [newController setApp:tabStripModel_->IsAppTab(modelIndex)];
@@ -1000,14 +1000,14 @@ private:
       [oldContents didBecomeHidden];
       // If the selection changed because the tab was made phantom, update the
       // Cocoa side of the state.
-      /*TabController* tabController = [tabArray_ objectAtIndex:oldIndex];
+      /*CTTabController* tabController = [tabArray_ objectAtIndex:oldIndex];
       [tabController setPhantom:tabStripModel_->IsPhantomTab(oldModelIndex)];*/
     }
   }
 
   // De-select all other tabs and select the new tab.
   int i = 0;
-  for (TabController* current in tabArray_.get()) {
+  for (CTTabController* current in tabArray_.get()) {
     [current setSelected:(i == index) ? YES : NO];
     ++i;
   }
@@ -1038,7 +1038,7 @@ private:
 
 // Remove all knowledge about this tab and its associated controller, and remove
 // the view from the strip.
-- (void)removeTab:(TabController*)controller {
+- (void)removeTab:(CTTabController*)controller {
   NSUInteger index = [tabArray_ indexOfObject:controller];
 
   // Release the tab contents controller so those views get destroyed. This
@@ -1074,16 +1074,16 @@ private:
 
 // Called by the CAAnimation delegate when the tab completes the closing
 // animation.
-- (void)animationDidStopForController:(TabController*)controller
+- (void)animationDidStopForController:(CTTabController*)controller
                              finished:(BOOL)finished {
   [closingControllers_ removeObject:controller];
   [self removeTab:controller];
 }
 
-// Save off which TabController is closing and tell its view's animator
+// Save off which CTTabController is closing and tell its view's animator
 // where to move the tab to. Registers a delegate to call back when the
 // animation is complete in order to remove the tab from the model.
-- (void)startClosingTabWithAnimation:(TabController*)closingTab {
+- (void)startClosingTabWithAnimation:(CTTabController*)closingTab {
   assert([NSThread isMainThread]);
   // Save off the controller into the set of animating tabs. This alerts
   // the layout method to not do anything with it and allows us to correctly
@@ -1092,7 +1092,7 @@ private:
 
   // Mark the tab as closing. This prevents it from generating any drags or
   // selections while it's animating closed.
-  [(TabView*)[closingTab view] setClosing:YES];
+  [(CTTabView*)[closingTab view] setClosing:YES];
 
   // Register delegate (owned by the animation system).
   NSView* tabView = [closingTab view];
@@ -1123,7 +1123,7 @@ private:
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
-  TabController* tab = [tabArray_ objectAtIndex:index];
+  CTTabController* tab = [tabArray_ objectAtIndex:index];
   if (tabStripModel_->count() > 0) {
     [self startClosingTabWithAnimation:tab];
     [self layoutTabs];
@@ -1171,7 +1171,7 @@ private:
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
-  TabController* tabController = [tabArray_ objectAtIndex:index];
+  CTTabController* tabController = [tabArray_ objectAtIndex:index];
 
   // Since the tab is loading, it cannot be phantom any more.
   if ([tabController phantom]) {
@@ -1234,7 +1234,7 @@ private:
 // throbber state, not anything else about the (partially) loading tab.
 - (void)tabChangedWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)modelIndex
-                    changeType:(TabChangeType)change {
+                    changeType:(CTTabChangeType)change {
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
@@ -1244,7 +1244,7 @@ private:
     return;
   }
 
-  TabController* tabController = [tabArray_ objectAtIndex:index];
+  CTTabController* tabController = [tabArray_ objectAtIndex:index];
 
   if (change != LOADING_ONLY)
     [self setTabTitle:tabController withContents:contents];
@@ -1276,9 +1276,9 @@ private:
   [tabContentsArray_ removeObjectAtIndex:from];
   [tabContentsArray_ insertObject:movedTabContentsController.get()
                           atIndex:to];
-  scoped_nsobject<TabController> movedTabController(
+  scoped_nsobject<CTTabController> movedTabController(
       [[tabArray_ objectAtIndex:from] retain]);
-  assert([movedTabController isKindOfClass:[TabController class]]);
+  assert([movedTabController isKindOfClass:[CTTabController class]]);
   [tabArray_ removeObjectAtIndex:from];
   [tabArray_ insertObject:movedTabController.get() atIndex:to];
 
@@ -1293,8 +1293,8 @@ private:
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
-  TabController* tabController = [tabArray_ objectAtIndex:index];
-  assert([tabController isKindOfClass:[TabController class]]);
+  CTTabController* tabController = [tabArray_ objectAtIndex:index];
+  assert([tabController isKindOfClass:[CTTabController class]]);
   [tabController setMini:tabStripModel_->IsMiniTab(modelIndex)];
   [tabController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
   [tabController setApp:tabStripModel_->IsAppTab(modelIndex)];
@@ -1333,7 +1333,7 @@ private:
   while (index < count) {
     // Ignore closing tabs for simplicity. The only drawback of this is that
     // if the placeholder is placed right before one or several contiguous
-    // currently closing tabs, the associated TabController will start at the
+    // currently closing tabs, the associated CTTabController will start at the
     // end of the closing tabs.
     if ([closingControllers_ containsObject:[tabArray_ objectAtIndex:index]]) {
       index++;
@@ -1385,7 +1385,7 @@ private:
   // inherit the current tab's group.
   tabStripModel_->InsertTabContentsAt(
       modelIndex, contents,
-      TabStripModel::ADD_SELECTED | (pinned ? TabStripModel::ADD_PINNED : 0));
+      CTTabStripModel::ADD_SELECTED | (pinned ? CTTabStripModel::ADD_PINNED : 0));
 }
 
 // Called when the tab strip view changes size. As we only registered for
@@ -1401,7 +1401,7 @@ private:
 // the individual tabs to update their hover states correctly.
 // Only generates the event if the cursor is in the tab strip.
 - (void)tabUpdateTracking:(NSNotification*)notification {
-  assert([[notification object] isKindOfClass:[TabView class]]);
+  assert([[notification object] isKindOfClass:[CTTabView class]]);
   assert(mouseInside_);
   NSWindow* window = [tabStripView_ window];
   NSPoint location = [window mouseLocationOutsideOfEventStream];
@@ -1436,10 +1436,10 @@ private:
   BOOL shouldShowHoverImage = [targetView isKindOfClass:[NewTabButton class]];
   [self setNewTabButtonHoverState:shouldShowHoverImage];
 
-  TabView* tabView = (TabView*)targetView;
-  if (![tabView isKindOfClass:[TabView class]]) {
-    if ([[tabView superview] isKindOfClass:[TabView class]]) {
-      tabView = (TabView*)[targetView superview];
+  CTTabView* tabView = (CTTabView*)targetView;
+  if (![tabView isKindOfClass:[CTTabView class]]) {
+    if ([[tabView superview] isKindOfClass:[CTTabView class]]) {
+      tabView = (CTTabView*)[targetView superview];
     } else {
       tabView = nil;
     }
@@ -1488,8 +1488,8 @@ private:
 // when the mouse is in the tabstrip.
 - (void)setTabTrackingAreasEnabled:(BOOL)enabled {
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-  for (TabController* controller in tabArray_.get()) {
-    TabView* tabView = [controller tabView];
+  for (CTTabController* controller in tabArray_.get()) {
+    CTTabView* tabView = [controller tabView];
     if (enabled) {
       // Set self up to observe tabs so hover states will be correct.
       [defaultCenter addObserver:self
@@ -1543,7 +1543,7 @@ private:
 
   NSView* selectedTabView = nil;
   // Go through tabs in reverse order, since |subviews| is bottom-to-top.
-  for (TabController* tab in [tabArray_ reverseObjectEnumerator]) {
+  for (CTTabController* tab in [tabArray_ reverseObjectEnumerator]) {
     NSView* tabView = [tab view];
     if ([tab selected]) {
       assert(!selectedTabView);
@@ -1560,7 +1560,7 @@ private:
 }
 
 // Get the index and disposition for a potential URL(s) drop given a point (in
-// the |TabStripView|'s coordinates). It considers only the x-coordinate of the
+// the |CTTabStripView|'s coordinates). It considers only the x-coordinate of the
 // given point. If it's in the "middle" of a tab, it drops on that tab. If it's
 // to the left, it inserts to the left, and similarly for the right.
 - (void)droppingURLsAt:(NSPoint)point
@@ -1573,12 +1573,12 @@ private:
 
   assert(index && disposition);
   NSInteger i = 0;
-  for (TabController* tab in tabArray_.get()) {
+  for (CTTabController* tab in tabArray_.get()) {
     NSView* view = [tab view];
-    assert([view isKindOfClass:[TabView class]]);
+    assert([view isKindOfClass:[CTTabView class]]);
 
     // Recall that |-[NSView frame]| is in its superview's coordinates, so a
-    // |TabView|'s frame is in the coordinates of the |TabStripView| (which
+    // |CTTabView|'s frame is in the coordinates of the |CTTabStripView| (which
     // matches the coordinate system of |point|).
     NSRect frame = [view frame];
 

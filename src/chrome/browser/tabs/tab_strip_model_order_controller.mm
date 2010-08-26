@@ -6,20 +6,20 @@
 #import "CTTabContents.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// TabStripModelOrderController, public:
+// CTTabStripModelOrderController, public:
 
-TabStripModelOrderController::TabStripModelOrderController(
-    TabStripModel* tab_strip_model)
+CTTabStripModelOrderController::CTTabStripModelOrderController(
+    CTTabStripModel* tab_strip_model)
     : tab_strip_model_(tab_strip_model),
-      insertion_policy_(TabStripModel::INSERT_AFTER) {
+      insertion_policy_(CTTabStripModel::INSERT_AFTER) {
   tab_strip_model_->AddObserver(this);
 }
 
-TabStripModelOrderController::~TabStripModelOrderController() {
+CTTabStripModelOrderController::~CTTabStripModelOrderController() {
   tab_strip_model_->RemoveObserver(this);
 }
 
-int TabStripModelOrderController::DetermineInsertionIndex(
+int CTTabStripModelOrderController::DetermineInsertionIndex(
     CTTabContents* new_contents,
     CTPageTransition transition,
     bool foreground) {
@@ -31,7 +31,7 @@ int TabStripModelOrderController::DetermineInsertionIndex(
   // so we don't have to check here too.
   if (transition == CTPageTransitionLink &&
       tab_strip_model_->selected_index() != -1) {
-    int delta = (insertion_policy_ == TabStripModel::INSERT_AFTER) ? 1 : 0;
+    int delta = (insertion_policy_ == CTTabStripModel::INSERT_AFTER) ? 1 : 0;
     if (foreground) {
       // If the page was opened in the foreground by a link click in another
       // tab, insert it adjacent to the tab that opened that link.
@@ -58,12 +58,12 @@ int TabStripModelOrderController::DetermineInsertionIndex(
   return DetermineInsertionIndexForAppending();
 }
 
-int TabStripModelOrderController::DetermineInsertionIndexForAppending() {
-  return (insertion_policy_ == TabStripModel::INSERT_AFTER) ?
+int CTTabStripModelOrderController::DetermineInsertionIndexForAppending() {
+  return (insertion_policy_ == CTTabStripModel::INSERT_AFTER) ?
       tab_strip_model_->count() : 0;
 }
 
-int TabStripModelOrderController::DetermineNewSelectedIndex(
+int CTTabStripModelOrderController::DetermineNewSelectedIndex(
     int removing_index,
     bool is_remove) const {
   int tab_count = tab_strip_model_->count();
@@ -102,7 +102,7 @@ int TabStripModelOrderController::DetermineNewSelectedIndex(
   return selected_index;
 }
 
-void TabStripModelOrderController::TabSelectedAt(CTTabContents* old_contents,
+void CTTabStripModelOrderController::TabSelectedAt(CTTabContents* old_contents,
                                                  CTTabContents* new_contents,
                                                  int index,
                                                  bool user_gesture) {
@@ -129,9 +129,9 @@ void TabStripModelOrderController::TabSelectedAt(CTTabContents* old_contents,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// TabStripModelOrderController, private:
+// CTTabStripModelOrderController, private:
 
-int TabStripModelOrderController::GetValidIndex(int index,
+int CTTabStripModelOrderController::GetValidIndex(int index,
                                                 int removing_index,
                                                 bool is_remove) const {
   if (is_remove && removing_index < index)

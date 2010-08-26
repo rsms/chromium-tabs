@@ -4,7 +4,7 @@
 
 #import "tab_strip_model_observer_bridge.h"
 
-TabStripModelObserverBridge::TabStripModelObserverBridge(TabStripModel* model,
+TabStripModelObserverBridge::TabStripModelObserverBridge(CTTabStripModel* model,
                                                          id controller)
     : controller_(controller), model_(model) {
   assert(model && controller);
@@ -72,7 +72,7 @@ void TabStripModelObserverBridge::TabMoved(CTTabContents* contents,
 
 void TabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
                                                int index,
-                                               TabChangeType change_type) {
+                                               CTTabChangeType change_type) {
   if ([controller_ respondsToSelector:
           @selector(tabChangedWithContents:atIndex:changeType:)]) {
     [controller_ tabChangedWithContents:contents

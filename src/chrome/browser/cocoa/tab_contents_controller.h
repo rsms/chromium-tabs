@@ -11,7 +11,7 @@
 @class CTTabContents;
 
 class TabContentsCommandObserver;
-class TabStripModel;
+class CTTabStripModel;
 
 // A class that controls the web contents of a tab. It manages displaying the
 // native view for a given CTTabContents and optionally its docked devtools in

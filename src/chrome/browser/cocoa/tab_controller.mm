@@ -10,7 +10,7 @@
 static NSString* const kBrowserThemeDidChangeNotification =
   @"BrowserThemeDidChangeNotification";
 
-@implementation TabController
+@implementation CTTabController
 
 @synthesize action = action_;
 @synthesize app = app_;
@@ -29,8 +29,8 @@ static NSString* const kBrowserThemeDidChangeNotification =
 + (CGFloat)miniTabWidth { return 53; }
 + (CGFloat)appTabWidth { return 66; }
 
-- (TabView*)tabView {
-  return static_cast<TabView*>([self view]);
+- (CTTabView*)tabView {
+  return static_cast<CTTabView*>([self view]);
 }
 
 - (id)init {
@@ -65,8 +65,8 @@ static NSString* const kBrowserThemeDidChangeNotification =
 // mark ourselves as needing a redraw.
 - (void)internalSetSelected:(BOOL)selected {
   selected_ = selected;
-  TabView* tabView = static_cast<TabView*>([self view]);
-  assert([tabView isKindOfClass:[TabView class]]);
+  CTTabView* tabView = static_cast<CTTabView*>([self view]);
+  assert([tabView isKindOfClass:[CTTabView class]]);
   [tabView setState:selected];
   [tabView cancelAlert];
   [self updateVisibility];
@@ -115,8 +115,8 @@ static NSString* const kBrowserThemeDidChangeNotification =
 - (void)setTitle:(NSString*)title {
   [[self view] setToolTip:title];
   if ([self mini] && ![self selected]) {
-    TabView* tabView = static_cast<TabView*>([self view]);
-    assert([tabView isKindOfClass:[TabView class]]);
+    CTTabView* tabView = static_cast<CTTabView*>([self view]);
+    assert([tabView isKindOfClass:[CTTabView class]]);
     [tabView startAlert];
   }
   [super setTitle:title];
@@ -138,7 +138,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
     NSRect appIconFrame = [iconView frame];
     appIconFrame.origin = originalIconFrame_.origin;
     // Center the icon.
-    appIconFrame.origin.x = ([TabController appTabWidth] -
+    appIconFrame.origin.x = ([CTTabController appTabWidth] -
         NSWidth(appIconFrame)) / 2.0;
     [iconView setFrame:appIconFrame];
   } else {

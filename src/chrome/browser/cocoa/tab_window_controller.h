@@ -32,16 +32,16 @@
 #import "scoped_nsobject.h"
 
 @class FastResizeView;
-@class TabStripView;
-@class TabView;
+@class CTTabStripView;
+@class CTTabView;
 
 @interface TabWindowController : NSWindowController<NSWindowDelegate> {
  @private
   IBOutlet FastResizeView* tabContentArea_;
   // TODO(pinkerton): Figure out a better way to initialize one or the other
   // w/out needing both to be in the nib.
-  IBOutlet TabStripView* topTabStripView_;
-  IBOutlet TabStripView* sideTabStripView_;
+  IBOutlet CTTabStripView* topTabStripView_;
+  IBOutlet CTTabStripView* sideTabStripView_;
   NSWindow* overlayWindow_;  // Used during dragging for window opacity tricks
   NSView* cachedContentView_;  // Used during dragging for identifying which
                                // view is the proper content area in the overlay
@@ -53,7 +53,7 @@
   // cached in order to restore the delta when switching tab modes.
   CGFloat contentAreaHeightDelta_;
 }
-@property(readonly, nonatomic) TabStripView* tabStripView;
+@property(readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;
 
 // Used during tab dragging to turn on/off the overlay window when a tab
@@ -76,12 +76,12 @@
 // Creates a new window by pulling the given tab out and placing it in
 // the new window. Returns the controller for the new window. The size of the
 // new window will be the same size as this window.
-- (TabWindowController*)detachTabToNewWindow:(TabView*)tabView;
+- (TabWindowController*)detachTabToNewWindow:(CTTabView*)tabView;
 
 // Make room in the tab strip for |tab| at the given x coordinate. Will hide the
 // new tab button while there's a placeholder. Subclasses need to call the
 // superclass implementation.
-- (void)insertPlaceholderForTab:(TabView*)tab
+- (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness;
 
@@ -106,7 +106,7 @@
 // its current position would cause it be obscured by things such as the edge
 // of the window or the window decorations. Returns YES only if the entire tab
 // is visible. The default implementation always returns YES.
-- (BOOL)isTabFullyVisible:(TabView*)tab;
+- (BOOL)isTabFullyVisible:(CTTabView*)tab;
 
 // Called to check if the receiver can receive dragged tabs from
 // source.  Return YES if so.  The default implementation returns NO.

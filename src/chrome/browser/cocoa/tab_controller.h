@@ -17,7 +17,7 @@ enum TabLoadingState {
   kTabCrashed,
 };
 
-@class TabView;
+@class CTTabView;
 @protocol TabControllerTarget;
 
 // A class that manages a single tab in the tab strip. Set its target/action
@@ -31,7 +31,7 @@ enum TabLoadingState {
 // progress. The default in the nib is an image view so nothing special is
 // required if that's all you need.
 
-@interface TabController : NSViewController {
+@interface CTTabController : NSViewController {
  @private
   IBOutlet NSView* iconView_;
   IBOutlet NSTextField* titleView_;
@@ -74,10 +74,10 @@ enum TabLoadingState {
 + (CGFloat)miniTabWidth;
 + (CGFloat)appTabWidth;
 
-// The view associated with this controller, pre-casted as a TabView
-- (TabView*)tabView;
+// The view associated with this controller, pre-casted as a CTTabView
+- (CTTabView*)tabView;
 
-// Closes the associated TabView by relaying the message to |target_| to
+// Closes the associated CTTabView by relaying the message to |target_| to
 // perform the close.
 - (IBAction)closeTab:(id)sender;
 
@@ -100,11 +100,11 @@ enum TabLoadingState {
 - (void)updateTitleColor;
 @end
 
-@interface TabController(TestingAPI)
+@interface CTTabController(TestingAPI)
 - (NSString*)toolTip;
 - (CGFloat)iconCapacity;
 - (BOOL)shouldShowIcon;
 - (BOOL)shouldShowCloseButton;
-@end  // TabController(TestingAPI)
+@end  // CTTabController(TestingAPI)
 
 #endif  // CHROME_BROWSER_COCOA_TAB_CONTROLLER_H_

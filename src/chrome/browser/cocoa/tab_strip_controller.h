@@ -16,8 +16,8 @@
 
 @class NewTabButton;
 @class TabContentsController;
-@class TabView;
-@class TabStripView;
+@class CTTabView;
+@class CTTabStripView;
 
 @class CTTabContents;
 @class CTBrowser;
@@ -25,7 +25,7 @@
 //class Browser;
 class ConstrainedWindowMac;
 class TabStripModelObserverBridge;
-class TabStripModel;
+class CTTabStripModel;
 //class TabContents;
 //class ToolbarModel;
 
@@ -46,7 +46,7 @@ class TabStripModel;
 
  @private
   CTTabContents* currentTab_;   // weak, tab for which we're showing state
-  scoped_nsobject<TabStripView> tabStripView_;
+  scoped_nsobject<CTTabStripView> tabStripView_;
   NSView* switchView_;  // weak
   scoped_nsobject<NSView> dragBlockingView_;  // avoid bad window server drags
   NewTabButton* newTabButton_;  // weak, obtained from the nib.
@@ -55,7 +55,7 @@ class TabStripModel;
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
   scoped_ptr<TabStripModelObserverBridge> bridge_;
   CTBrowser *browser_;  // weak
-  TabStripModel* tabStripModel_;  // weak
+  CTTabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
   // mouse is currently over the button).
@@ -79,7 +79,7 @@ class TabStripModel;
   scoped_nsobject<NSMutableSet> closingControllers_;
 
   // These values are only used during a drag, and override tab positioning.
-  TabView* placeholderTab_;  // weak. Tab being dragged
+  CTTabView* placeholderTab_;  // weak. Tab being dragged
   NSRect placeholderFrame_;  // Frame to use
   CGFloat placeholderStretchiness_; // Vertical force shown by streching tab.
   NSRect droppedTabFrame_;  // Initial frame of a dropped tab, for animation.
@@ -103,7 +103,7 @@ class TabStripModel;
   // A tracking area that's the size of the tab strip used to be notified
   // when the mouse moves in the tab strip
   scoped_nsobject<NSTrackingArea> trackingArea_;
-  TabView* hoveredTab_;  // weak. Tab that the mouse is hovering over
+  CTTabView* hoveredTab_;  // weak. Tab that the mouse is hovering over
 
   // Array of subviews which are permanent (and which should never be removed),
   // such as the new-tab button, but *not* the tabs themselves.
@@ -130,7 +130,7 @@ class TabStripModel;
 // "switched" every time the user switches tabs. The children of this view
 // will be released, so if you want them to stay around, make sure
 // you have retained them.
-- (id)initWithView:(TabStripView*)view
+- (id)initWithView:(CTTabStripView*)view
         switchView:(NSView*)switchView
            browser:(CTBrowser*)browser;
 
@@ -173,7 +173,7 @@ class TabStripModel;
 
 // Set the placeholder for a dragged tab, allowing the |frame| and |strechiness|
 // to be specified. This causes this tab to be rendered in an arbitrary position
-- (void)insertPlaceholderForTab:(TabView*)tab
+- (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness;
 
@@ -181,7 +181,7 @@ class TabStripModel;
 // its current position would cause it be obscured by things such as the edge
 // of the window or the window decorations. Returns YES only if the entire tab
 // is visible.
-- (BOOL)isTabFullyVisible:(TabView*)tab;
+- (BOOL)isTabFullyVisible:(CTTabView*)tab;
 
 // Show or hide the new tab button. The button is hidden immediately, but
 // waits until the next call to |-layoutTabs| to show it again.

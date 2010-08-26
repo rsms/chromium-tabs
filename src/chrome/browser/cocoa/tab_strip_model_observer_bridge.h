@@ -18,9 +18,9 @@
 // notifications from |model| and passes messages to |controller| via the
 // informal protocol below. The owner of this object is responsible for deleting
 // it (and thus unhooking notifications) before |controller| is destroyed.
-class TabStripModelObserverBridge : public TabStripModelObserver {
+class TabStripModelObserverBridge : public CTTabStripModelObserver {
  public:
-  TabStripModelObserverBridge(TabStripModel* model, id controller);
+  TabStripModelObserverBridge(CTTabStripModel* model, id controller);
   virtual ~TabStripModelObserverBridge();
 
   // Overridden from TabStripModelObserver
@@ -37,7 +37,7 @@ class TabStripModelObserverBridge : public TabStripModelObserver {
                         int from_index,
                         int to_index);
   virtual void TabChangedAt(CTTabContents* contents, int index,
-                            TabChangeType change_type);
+                            CTTabChangeType change_type);
   virtual void TabReplacedAt(CTTabContents* old_contents,
                              CTTabContents* new_contents,
                              int index);
@@ -46,7 +46,7 @@ class TabStripModelObserverBridge : public TabStripModelObserver {
 
  private:
   id controller_;  // weak, owns me
-  TabStripModel* model_;  // weak, owned by CTBrowser
+  CTTabStripModel* model_;  // weak, owned by CTBrowser
 };
 
 // A collection of methods which can be selectively implemented by any
@@ -69,7 +69,7 @@ class TabStripModelObserverBridge : public TabStripModelObserver {
                       toIndex:(NSInteger)to;
 - (void)tabChangedWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index
-                    changeType:(TabChangeType)change;
+                    changeType:(CTTabChangeType)change;
 - (void)tabMiniStateChangedWithContents:(CTTabContents*)contents
                                 atIndex:(NSInteger)index;
 - (void)tabStripEmpty;
