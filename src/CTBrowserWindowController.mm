@@ -1,4 +1,4 @@
-#import "BrowserWindowController.h"
+#import "CTBrowserWindowController.h"
 
 #import "chrome/browser/tabs/tab_strip_model.h"
 
@@ -16,13 +16,13 @@
 -(void)setBottomCornerRounded:(BOOL)y;
 @end
 
-@interface BrowserWindowController (Private)
+@interface CTBrowserWindowController (Private)
 - (CGFloat)layoutTabStripAtMaxY:(CGFloat)maxY
                           width:(CGFloat)width
                      fullscreen:(BOOL)fullscreen;
 @end
 
-@implementation BrowserWindowController
+@implementation CTBrowserWindowController
 
 @synthesize tabStripController = tabStripController_;
 @synthesize browser = browser_;
@@ -109,10 +109,10 @@
   // senders don't have this problem (for example, menus only operate on the
   // foreground window), so this is only an issue for senders that are part of
   // windows.
-  BrowserWindowController* targetController = self;
+  CTBrowserWindowController* targetController = self;
   if ([sender respondsToSelector:@selector(window)])
     targetController = [[sender window] windowController];
-  assert([targetController isKindOfClass:[BrowserWindowController class]]);
+  assert([targetController isKindOfClass:[CTBrowserWindowController class]]);
   [targetController.browser executeCommand:[sender tag]];
 }
 
@@ -128,7 +128,7 @@
 #pragma mark -
 #pragma mark TabWindowController implementation
 
-// Accept tabs from a BrowserWindowController with the same Profile.
+// Accept tabs from a CTBrowserWindowController with the same Profile.
 - (BOOL)canReceiveFrom:(TabWindowController*)source {
   if (![source isKindOfClass:[isa class]]) {
     return NO;
@@ -156,10 +156,10 @@
     // Moving between windows. Figure out the TabContents to drop into our tab
     // model from the source window's model.
     BOOL isBrowser =
-        [dragController isKindOfClass:[BrowserWindowController class]];
+        [dragController isKindOfClass:[CTBrowserWindowController class]];
     assert(isBrowser);
     if (!isBrowser) return;
-    BrowserWindowController* dragBWC = (BrowserWindowController*)dragController;
+    CTBrowserWindowController* dragBWC = (CTBrowserWindowController*)dragController;
     int index = [dragBWC->tabStripController_ modelIndexForTabView:view];
     TabContents* contents =
         [dragBWC->browser_ tabStripModel]->GetTabContentsAt(index);
@@ -268,8 +268,8 @@
   [newBrowser tabStripModel]->SetTabPinned(0, isPinned);
 
   // Get the new controller by asking the new window for its delegate.
-  BrowserWindowController* controller =
-      reinterpret_cast<BrowserWindowController*>([newBrowser.window delegate]);
+  CTBrowserWindowController* controller =
+      reinterpret_cast<CTBrowserWindowController*>([newBrowser.window delegate]);
   assert(controller && [controller isKindOfClass:[TabWindowController class]]);
 
   // Force the added tab to the right size (remove stretching.)

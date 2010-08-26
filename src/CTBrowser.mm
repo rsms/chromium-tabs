@@ -2,7 +2,7 @@
 #import "chrome/browser/tabs/tab_strip_model.h"
 #import "chrome/browser/cocoa/tab_strip_controller.h"
 #import "chrome/common/page_transition_types.h"
-#import "BrowserWindowController.h"
+#import "CTBrowserWindowController.h"
 #import "util.h"
 
 @interface CTBrowser (Private)
@@ -63,10 +63,10 @@
 }
 
 
--(BrowserWindowController *)createWindowController {
+-(CTBrowserWindowController *)createWindowController {
   NSString *windowNibPath = [util pathForResource:@"BrowserWindow"
                                            ofType:@"nib"];
-  return [[BrowserWindowController alloc] initWithWindowNibPath:windowNibPath 
+  return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath 
                                                         browser:self];
 }
 
@@ -317,26 +317,26 @@
 
 // Returns whether some contents can be duplicated.
 -(BOOL)canDuplicateContentsAt:(int)index {
-  DLOG("BrowserWindowController canDuplicateContentsAt %d", index);
+  DLOG("CTBrowserWindowController canDuplicateContentsAt %d", index);
   return false;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
 -(void)duplicateContentsAt:(int)index {
-  DLOG("BrowserWindowController duplicateContentsAt %d", index);
+  DLOG("CTBrowserWindowController duplicateContentsAt %d", index);
 }
 
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
 -(void)closeFrameAfterDragSession {
-  DLOG("BrowserWindowController closeFrameAfterDragSession");
+  DLOG("CTBrowserWindowController closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // TabContents.
 -(void)createHistoricalTab:(TabContents*)contents {
-  DLOG("BrowserWindowController createHistoricalTab %@", contents);
+  DLOG("CTBrowserWindowController createHistoricalTab %@", contents);
 }
 
 // Runs any unload listeners associated with the specified TabContents before
@@ -345,30 +345,30 @@
 // TabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the TabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(TabContents*)contents {
-  //DLOG("BrowserWindowController runUnloadListenerBeforeClosing %@" contents);
+  //DLOG("CTBrowserWindowController runUnloadListenerBeforeClosing %@" contents);
   return false;
 }
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab {
-  DLOG("BrowserWindowController canRestoreTab");
+  DLOG("CTBrowserWindowController canRestoreTab");
   return false;
 }
 
 // Restores the last closed tab if CanRestoreTab would return true.
 -(void)restoreTab {
-  DLOG("BrowserWindowController restoreTab");
+  DLOG("CTBrowserWindowController restoreTab");
 }
 
 // Returns whether some contents can be closed.
 -(BOOL)canCloseContentsAt:(int)index {
-  DLOG("BrowserWindowController canCloseContentsAt %d", index);
+  DLOG("CTBrowserWindowController canCloseContentsAt %d", index);
   return true;
 }
 
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
-  DLOG("BrowserWindowController canCloseTab");
+  DLOG("CTBrowserWindowController canCloseTab");
   return true;
 }
 

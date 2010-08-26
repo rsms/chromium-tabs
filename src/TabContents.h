@@ -1,3 +1,4 @@
+#pragma once
 #import <Cocoa/Cocoa.h>
 
 class TabStripModel; // Note: C++ class

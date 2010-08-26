@@ -5,21 +5,21 @@
 #import "BrowserCommands.h"
 
 class TabStripModel;
-@class BrowserWindowController;
+@class CTBrowserWindowController;
 
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
 @interface CTBrowser : NSObject <TabStripModelDelegate> {
   TabStripModel *tabStripModel_;
-  BrowserWindowController *windowController_;
+  CTBrowserWindowController *windowController_;
 }
 
 // The tab strip model
 @property(readonly, nonatomic) TabStripModel* tabStripModel;
 
 // The window controller
-@property(readonly, nonatomic) BrowserWindowController* windowController;
+@property(readonly, nonatomic) CTBrowserWindowController* windowController;
 
 // The window. Convenience for [windowController window]
 @property(readonly, nonatomic) NSWindow* window;
@@ -36,7 +36,7 @@ class TabStripModel;
 // found in the main bundle, a fallback nib will be loaded from the framework.
 // This is usually enough since all UI which normally is customized is comprised
 // within each tab (TabContents view).
--(BrowserWindowController *)createWindowController;
+-(CTBrowserWindowController *)createWindowController;
 
 // Commands
 -(void)newWindow;

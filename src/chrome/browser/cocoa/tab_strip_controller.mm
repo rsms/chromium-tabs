@@ -477,12 +477,12 @@ private:
     TabContents::ConstrainedWindowList::iterator it, end;
     end = newTab->constrained_window_end();
     NSWindowController* controller = [[newView window] windowController];
-    assert([controller isKindOfClass:[BrowserWindowController class]]);
+    assert([controller isKindOfClass:[CTBrowserWindowController class]]);
 
     for (it = newTab->constrained_window_begin(); it != end; ++it) {
       ConstrainedWindow* constrainedWindow = *it;
       static_cast<ConstrainedWindowMac*>(constrainedWindow)->Realize(
-          static_cast<BrowserWindowController*>(controller));
+          static_cast<CTBrowserWindowController*>(controller));
     }
   }*/
 
@@ -1791,8 +1791,8 @@ private:
   // between windows, e.g. no tearing off of tabs.
   NSInteger modelIndex = [self modelIndexForContentsView:tabContentsView];
   NSInteger index = [self indexFromModelIndex:modelIndex];
-  BrowserWindowController* controller =
-      (BrowserWindowController*)[[switchView_ window] windowController];
+  CTBrowserWindowController* controller =
+      (CTBrowserWindowController*)[[switchView_ window] windowController];
   assert(controller != nil);
   assert(index >= 0);
   if (index >= 0) {
@@ -1809,8 +1809,8 @@ private:
   // between windows, e.g. no tearing off of tabs.
   NSInteger modelIndex = [self modelIndexForContentsView:tabContentsView];
   NSInteger index = [self indexFromModelIndex:modelIndex];
-  BrowserWindowController* controller =
-      (BrowserWindowController*)[[switchView_ window] windowController];
+  CTBrowserWindowController* controller =
+      (CTBrowserWindowController*)[[switchView_ window] windowController];
   assert(index >= 0);
   if (index >= 0) {
     [controller setTab:[self viewAtIndex:index] isDraggable:YES];

@@ -170,8 +170,8 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
 
 // (URLDropTarget protocol)
 - (id<URLDropTargetController>)urlDropController {
-  //BrowserWindowController* windowController = [[self window] windowController];
-  //assert([windowController isKindOfClass:[BrowserWindowController class]]);
+  //CTBrowserWindowController* windowController = [[self window] windowController];
+  //assert([windowController isKindOfClass:[CTBrowserWindowController class]]);
   //return [windowController tabStripController];
   return nil;
 }
