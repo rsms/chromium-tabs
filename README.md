@@ -1,6 +1,6 @@
 # Chromium Tabs
 
-Chromium Tabs is a [Cocoa](http://developer.apple.com/cocoa/) framework for building applications that works like [Chromium](http://www.google.com/chrome)s window system.
+Chromium Tabs is a [Cocoa](http://developer.apple.com/cocoa/) framework for building applications that works like [Chromium](http://www.chromium.org/)'s window system.
 
 - An *application* has multiple *windows*
 - Each *window* represents a unit of *tabs*
