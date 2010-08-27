@@ -297,7 +297,7 @@
 +(void)executeCommand:(int)cmd {
   switch (cmd) {
     case CTBrowserCommandNewWindow:
-    case CTBrowserCommandNewTab:    [isa openEmptyWindow];  break;
+    case CTBrowserCommandNewTab:    [self openEmptyWindow];  break;
     case CTBrowserCommandExit:      [NSApp terminate:self]; break;
   }
 }
