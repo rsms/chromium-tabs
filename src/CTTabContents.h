@@ -1,13 +1,43 @@
 #pragma once
 #import <Cocoa/Cocoa.h>
 
-class CTTabStripModel; // Note: C++ class
+class CTTabStripModel;
+
+//
+// Visibility states:
+//
+// - isVisible:  if the tab is visible (on screen). You may implement the
+//               callbacks in order to enable/disable "background" tasks like
+//               animations.
+//               Callbacks:
+//               - tabDidBecomeVisible
+//               - tabDidResignVisible
+//
+// - isSelected: if the tab is the selected tab in its window. Note that a tab
+//               can be selected withouth being visible (i.e. the window is
+//               minimized or the app is hidden). If your tabs contain
+//               user-interactive components, you should save and restore focus
+//               by sublcassing the callbacks.
+//               Callbacks:
+//               - tabDidBecomeSelected
+//               - tabDidResignSelected
+//
+// - isKey:      if the tab has the users focus. Only one tab in the application
+//               can be key at a given time. (Note that the OS will automatically
+//               restore any focus to user-interactive components.)
+//               Callbacks:
+//               - tabDidBecomeKey
+//               - tabDidResignKey
+//
 
 @interface CTTabContents : NSObject {
   BOOL isApp_;
   BOOL isLoading_;
   BOOL isWaitingForResponse_;
   BOOL isCrashed_;
+  BOOL isVisible_;
+  BOOL isSelected_;
+  BOOL isTeared_; // true while being "teared" (dragged between windows)
   id delegate_;
   unsigned int closedByUserGesture_; // TabStripModel::CloseTypes
   NSView *view_; // the actual content
@@ -19,6 +49,9 @@ class CTTabStripModel; // Note: C++ class
 @property(assign, nonatomic) BOOL isLoading;
 @property(assign, nonatomic) BOOL isCrashed;
 @property(assign, nonatomic) BOOL isWaitingForResponse;
+@property(assign, nonatomic) BOOL isVisible;
+@property(assign, nonatomic) BOOL isSelected;
+@property(assign, nonatomic) BOOL isTeared;
 @property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
 @property(retain, nonatomic) NSView *view;
@@ -35,21 +68,52 @@ class CTTabStripModel; // Note: C++ class
 // customized initialization.
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
-// Invoked when the tab should be destroyed (involves some finalization).
+// Called when the tab should be destroyed (involves some finalization).
 -(void)destroy:(CTTabStripModel*)sender;
 
-// Invoked when this tab is closing.
+#pragma mark -
+#pragma mark Callbacks
+
+// Called when this tab is closing.
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel;
 
-// Invoked when the tab contents becomes selected. If you override, be sure
-// and invoke super's implementation.
--(void)didBecomeSelected;
+// The followinf callbacks called when the tab's visible state changes. If you
+// override, be sure and invoke super's implementation. See "Visibility states"
+// in the header of this file for details.
 
-// Invoked when the tab contents becomes hidden.
-// NOTE: If you override this, call the superclass version too!
--(void)didBecomeHidden;
+// Called when this tab become visible on screen. This is a good place to resume
+// animations.
+-(void)tabDidBecomeVisible;
 
-// Invoked when the frame has changed, normally due to the window being resized.
+// Called when this tab is no longer visible on screen. This is a good place to
+// pause animations.
+-(void)tabDidResignVisible;
+
+// Called when this tab became the selected tab in its window. This does
+// neccessarily not mean it's visible (app might be hidden or window might be
+// minimized). The default implementation makes our view the first responder, if
+// visible.
+-(void)tabDidBecomeSelected;
+
+// Called when another tab in our window "stole" the selection.
+-(void)tabDidResignSelected;
+
+// Called when this tab is about to being "teared" (when dragging a tab from one
+// window to another).
+-(void)tabWillBecomeTeared;
+
+// Called when this tab is teared and is about to "land" into a window.
+-(void)tabWillResignTeared;
+
+// Called when this tab was teared and just landed in a window. The default
+// implementation makes our view the first responder, restoring focus.
+-(void)tabDidResignTeared;
+
+// Called when the frame has changed, which isn't too often.
+// There are at least two cases when it's called:
+// - When the tab's view is first inserted into the view hiearchy
+// - When a torn off tab is moves into a window with other dimensions than the
+//   initial window.
 -(void)viewFrameDidChange:(NSRect)newFrame;
 
 @end

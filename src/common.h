@@ -40,11 +40,7 @@
   // shorthand to include and evaluate <x> only for debug builds
   #define IFDEBUG(x) do{ x }while(0)
   #define DLOG(...) _LOG('D', __VA_ARGS__)
-  #ifdef __OBJC__
-    #define MARKLOG _LOG('M', @"%s", __PRETTY_FUNCTION__)
-  #else
-    #define MARKLOG _LOG('M', "%s", __PRETTY_FUNCTION__)
-  #endif
+  #define DLOG_TRACE() _LOG('D', "%s", __PRETTY_FUNCTION__)
   // log an expression
   #ifdef __OBJC__
     NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);
@@ -65,10 +61,10 @@
     // TODO eval expression ---------------^
   #endif // __OBJC__
 #else // !defined(NDEBUG)
-  #define IFDEBUG(x)    do{}while(0)
-  #define DLOG(...)     do{}while(0)
-  #define MARKLOG       do{}while(0)
-  #define DLOG_EXPR(...)  do{}while(0)
+  #define IFDEBUG(x)     do{}while(0)
+  #define DLOG(...)      do{}while(0)
+  #define DLOG_TRACE()    do{}while(0)
+  #define DLOG_EXPR(...) do{}while(0)
 #endif // !defined(NDEBUG)
 
 // libbase compatible assertion macros

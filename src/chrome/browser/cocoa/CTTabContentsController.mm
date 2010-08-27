@@ -33,11 +33,17 @@
 // should be put into the view hierarchy.
 - (void)ensureContentsVisible {
   NSArray* subviews = [contentsContainer_ subviews];
-  if ([subviews count] == 0)
+  if ([subviews count] == 0) {
+    DLOG_TRACE();
     [contentsContainer_ addSubview:contents_.view];
-  else if ([subviews objectAtIndex:0] != contents_.view)
-    [contentsContainer_ replaceSubview:[subviews objectAtIndex:0]
+    [contents_ viewFrameDidChange:[contentsContainer_ bounds]];
+  } else if ([subviews objectAtIndex:0] != contents_.view) {
+    DLOG_TRACE();
+    NSView *subview = [subviews objectAtIndex:0];
+    [contentsContainer_ replaceSubview:subview
                                   with:contents_.view];
+    [contents_ viewFrameDidChange:[subview bounds]];
+  }
 }
 
 // Returns YES if the tab represented by this controller is the front-most.
@@ -47,24 +53,20 @@
   return [[self view] superview] ? YES : NO;
 }
 
-- (void)willBecomeUnselectedTab {
-  /*RenderViewHost* rvh = contents_->render_view_host();
-  if (rvh)
-    rvh->Blur();*/
+- (void)willBecomeSelectedTab {
 }
 
-- (void)willBecomeSelectedTab {
-  /*RenderViewHost* rvh = contents_->render_view_host();
-  if (rvh)
-    rvh->Focus();*/
+- (void)willResignSelectedTab {
 }
 
 - (void)tabDidChange:(CTTabContents*)updatedContents {
   // Calling setContentView: here removes any first responder status
   // the view may have, so avoid changing the view hierarchy unless
   // the view is different.
-  NSLog(@"tabDidChange");
   if (contents_ != updatedContents) {
+    updatedContents.isSelected = contents_.isSelected;
+    updatedContents.isVisible = contents_.isVisible;
+    //updatedContents.isKey = contents_.isKey;
     contents_ = updatedContents;
     [self ensureContentsVisible];
   }

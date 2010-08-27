@@ -3,6 +3,7 @@
 #import "CTTabStripController.h"
 #import "CTPageTransition.h"
 #import "CTBrowserWindowController.h"
+#import "CTTabContentsController.h"
 #import "util.h"
 
 @interface CTBrowser (Private)
@@ -72,6 +73,13 @@
 }
 
 
+-(CTTabContentsController*)createTabContentsControllerWithContents:
+    (CTTabContents*)contents {
+  // subclasses could override this
+  return [[[CTTabContentsController alloc] initWithContents:contents] autorelease];
+}
+
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -117,6 +125,19 @@
 
 
 #pragma mark -
+#pragma mark UI state
+
+
+/*-(NSRect)savedWindowBounds {
+  gfx::Rect restored_bounds = override_bounds_;
+  bool maximized;
+  WindowSizer::GetBrowserWindowBounds(app_name_, restored_bounds, NULL,
+                                      &restored_bounds, &maximized);
+  return restored_bounds;
+}*/
+
+
+#pragma mark -
 #pragma mark Commands
 
 -(void)newWindow {
@@ -136,11 +157,9 @@
                               CTTabStripModel::ADD_NONE;
   tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
                                  addTypes);
-  // By default, content believes it is not hidden.  When adding contents
-  // in the background, tell it that it's hidden.
   if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
     // TabStripModel::AddTabContents invokes HideContents if not foreground.
-    [contents didBecomeHidden];
+    contents.isVisible = NO;
   }
   return contents;
 }
@@ -155,6 +174,10 @@
 
 // implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
+  // Retrieve the window frame which we pass on to 
+  //NSRect frame = [self.windowController.window frame];
+  //frame.origin.x  = frame.origin.y = 0.0;
+  
   CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
   CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
   return [self addTabContents:contents atIndex:index inForeground:foreground];
@@ -212,7 +235,7 @@
 
 -(void)executeCommand:(int)cmd
       withDisposition:(CTWindowOpenDisposition)disposition {
-  DLOG_EXPR(cmd);
+  DLOG_EXPR(/* execute command */ cmd);
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -269,6 +292,14 @@
 
 -(void)executeCommand:(int)cmd {
   [self executeCommand:cmd withDisposition:CTWindowOpenDispositionCurrentTab];
+}
+
++(void)executeCommand:(int)cmd {
+  switch (cmd) {
+    case CTBrowserCommandNewWindow:
+    case CTBrowserCommandNewTab:    [isa openEmptyWindow];  break;
+    case CTBrowserCommandExit:      [NSApp terminate:self]; break;
+  }
 }
 
 

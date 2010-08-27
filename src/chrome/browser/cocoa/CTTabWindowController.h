@@ -98,6 +98,11 @@
 - (BOOL)tabTearingAllowed;
 - (BOOL)windowMovementAllowed;
 
+// Called when dragging of teared tab in an overlay window occurs
+-(void)willStartTearingTab;
+-(void)willEndTearingTab;
+-(void)didEndTearingTab;
+
 // Show or hide the new tab button. The button is hidden immediately, but
 // waits until the next call to |-layoutTabs| to show it again.
 - (void)showNewTabButton:(BOOL)show;

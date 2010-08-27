@@ -22,10 +22,10 @@ void CTTabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
                                                 int index,
                                                 bool foreground) {
   if ([controller_ respondsToSelector:
-          @selector(insertTabWithContents:atIndex:inForeground:)]) {
-    [controller_ insertTabWithContents:contents
-                               atIndex:index
-                          inForeground:foreground];
+          @selector(tabInsertedWithContents:atIndex:inForeground:)]) {
+    [controller_ tabInsertedWithContents:contents
+                                 atIndex:index
+                            inForeground:foreground];
   }
 }
 
@@ -50,12 +50,12 @@ void CTTabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
                                                 int index,
                                                 bool user_gesture) {
   if ([controller_ respondsToSelector:
-          @selector(selectTabWithContents:previousContents:atIndex:
+          @selector(tabSelectedWithContents:previousContents:atIndex:
                     userGesture:)]) {
-    [controller_ selectTabWithContents:new_contents
-                      previousContents:old_contents
-                               atIndex:index
-                           userGesture:user_gesture];
+    [controller_ tabSelectedWithContents:new_contents
+                        previousContents:old_contents
+                                 atIndex:index
+                             userGesture:user_gesture];
   }
 }
 

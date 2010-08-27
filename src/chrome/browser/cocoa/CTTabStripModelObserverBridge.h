@@ -52,14 +52,14 @@ class CTTabStripModelObserverBridge : public CTTabStripModelObserver {
 // Cocoa object to receive updates about changes to a tab strip model. It is
 // ok to not implement them, the calling code checks before calling.
 @interface NSObject(TabStripModelBridge)
-- (void)insertTabWithContents:(CTTabContents*)contents
+- (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)inForeground;
 - (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index;
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index;
-- (void)selectTabWithContents:(CTTabContents*)newContents
+- (void)tabSelectedWithContents:(CTTabContents*)newContents
              previousContents:(CTTabContents*)oldContents
                       atIndex:(NSInteger)index
                   userGesture:(bool)wasUserGesture;

@@ -43,9 +43,12 @@ class CTTabStripModel;
 // initWithNibName:bundle:contents
 - (id)initWithContents:(CTTabContents*)contents;
 
+// Returns YES if the tab represented by this controller is the front-most.
+- (BOOL)isCurrentTab;
+
 // Called when the tab contents is the currently selected tab and is about to be
 // removed from the view hierarchy.
-- (void)willBecomeUnselectedTab;
+- (void)willResignSelectedTab;
 
 // Called when the tab contents is about to be put into the view hierarchy as
 // the selected tab. Handles things such as ensuring the toolbar is correctly

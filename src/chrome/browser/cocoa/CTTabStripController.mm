@@ -365,16 +365,16 @@ private:
     const CTTabContents* selection = tabStripModel_->GetSelectedTabContents();
     for (int i = 0; i < existingTabCount; ++i) {
       CTTabContents* currentContents = tabStripModel_->GetTabContentsAt(i);
-      [self insertTabWithContents:currentContents
-                          atIndex:i
-                     inForeground:NO];
+      [self tabInsertedWithContents:currentContents
+                            atIndex:i
+                       inForeground:NO];
       if (selection == currentContents) {
         // Must manually force a selection since the model won't send
         // selection messages in this scenario.
-        [self selectTabWithContents:currentContents
-                   previousContents:NULL
-                            atIndex:i
-                        userGesture:NO];
+        [self tabSelectedWithContents:currentContents
+                     previousContents:NULL
+                              atIndex:i
+                          userGesture:NO];
       }
     }
     // Don't lay out the tabs until after the controller has been fully
@@ -923,9 +923,9 @@ private:
 
 // Called when a notification is received from the model to insert a new tab
 // at |modelIndex|.
-- (void)insertTabWithContents:(CTTabContents*)contents
-                      atIndex:(NSInteger)modelIndex
-                 inForeground:(bool)inForeground {
+- (void)tabInsertedWithContents:(CTTabContents*)contents
+                        atIndex:(NSInteger)modelIndex
+                   inForeground:(bool)inForeground {
   assert(contents);
   assert(modelIndex == CTTabStripModel::kNoTab ||
          tabStripModel_->ContainsIndex(modelIndex));
@@ -936,7 +936,7 @@ private:
   // Make a new tab. Load the contents of this tab from the nib and associate
   // the new controller with |contents| so it can be looked up later.
   CTTabContentsController* contentsController =
-      [[[CTTabContentsController alloc] initWithContents:contents] autorelease];
+      [browser_ createTabContentsControllerWithContents:contents];
   [tabContentsArray_ insertObject:contentsController atIndex:index];
 
   // Make a new tab and add it to the strip. Keep track of its controller.
@@ -981,10 +981,10 @@ private:
 
 // Called when a notification is received from the model to select a particular
 // tab. Swaps in the toolbar and content area associated with |newContents|.
-- (void)selectTabWithContents:(CTTabContents*)newContents
-             previousContents:(CTTabContents*)oldContents
-                      atIndex:(NSInteger)modelIndex
-                  userGesture:(bool)wasUserGesture {
+- (void)tabSelectedWithContents:(CTTabContents*)newContents
+               previousContents:(CTTabContents*)oldContents
+                        atIndex:(NSInteger)modelIndex
+                    userGesture:(bool)wasUserGesture {
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
@@ -995,9 +995,8 @@ private:
       NSInteger oldIndex = [self indexFromModelIndex:oldModelIndex];
       CTTabContentsController* oldController =
           [tabContentsArray_ objectAtIndex:oldIndex];
-      [oldController willBecomeUnselectedTab];
+      [oldController willResignSelectedTab];
       //oldContents->view()->StoreFocus();
-      [oldContents didBecomeHidden];
       // If the selection changed because the tab was made phantom, update the
       // Cocoa side of the state.
       /*CTTabController* tabController = [tabArray_ objectAtIndex:oldIndex];
@@ -1014,7 +1013,7 @@ private:
 
   // Tell the new tab contents it is about to become the selected tab. Here it
   // can do things like make sure the toolbar is up to date.
-  CTTabContentsController* newController =
+  CTTabContentsController *newController =
       [tabContentsArray_ objectAtIndex:index];
   [newController willBecomeSelectedTab];
 
@@ -1025,14 +1024,16 @@ private:
 
   // Swap in the contents for the new tab.
   [self swapInTabAtIndex:modelIndex];
-  //[self updateDevToolsForContents:newContents];
 
   if (newContents) {
-    [newContents didBecomeSelected];
-    //newContents->view()->RestoreFocus(); // TODO
-
-    /*if (newContents->find_ui_active())
-      browser_->GetFindBarController()->find_bar()->SetFocusAndSelection();*/
+    // TODO: if [<parent window> isMiniaturized] or if app is hidden the tab is
+    // not visible
+    newContents.isVisible = oldContents.isVisible;
+    newContents.isSelected = YES;
+  }
+  if (oldContents) {
+    oldContents.isVisible = NO;
+    oldContents.isSelected = NO;
   }
 }
 
@@ -1385,7 +1386,8 @@ private:
   // inherit the current tab's group.
   tabStripModel_->InsertTabContentsAt(
       modelIndex, contents,
-      CTTabStripModel::ADD_SELECTED | (pinned ? CTTabStripModel::ADD_PINNED : 0));
+      CTTabStripModel::ADD_SELECTED |
+      (pinned ? CTTabStripModel::ADD_PINNED : 0));
 }
 
 // Called when the tab strip view changes size. As we only registered for

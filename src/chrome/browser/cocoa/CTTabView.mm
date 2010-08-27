@@ -305,6 +305,10 @@ const CGFloat kRapidCloseDist = 2.5;
   if (!moveWindowOnDrag_)
     draggingWithinTabStrip_ = [sourceController_ numberOfTabs] > 1;
 
+  if (!draggingWithinTabStrip_) {
+    [sourceController_ willStartTearingTab];
+  }
+
   dragOrigin_ = [NSEvent mouseLocation];
 
   // If the tab gets torn off, the tab controller will be removed from the tab
@@ -391,6 +395,7 @@ const CGFloat kRapidCloseDist = 2.5;
     if ([sourceController_ tabTearingAllowed] &&
         (tearForce > kTearDistance || !stillVisible)) {
       draggingWithinTabStrip_ = NO;
+      [sourceController_ willStartTearingTab];
       // When you finally leave the strip, we treat that as the origin.
       dragOrigin_.x = thisPoint.x;
     } else {
@@ -581,34 +586,42 @@ const CGFloat kRapidCloseDist = 2.5;
     if (tabWasDragged_) {
       // Move tab to new location.
       assert([sourceController_ numberOfTabs]);
-      CTTabWindowController* dropController = sourceController_;
-      [dropController moveTabView:[dropController selectedTabView]
-                   fromController:nil];
+      [sourceController_ moveTabView:[sourceController_ selectedTabView]
+                      fromController:nil];
     }
-  } else if (targetController_) {
-    // Move between windows. If |targetController_| is nil, we're not dropping
-    // into any existing window.
-    NSView* draggedTabView = [draggedController_ selectedTabView];
-    [targetController_ moveTabView:draggedTabView
-                    fromController:draggedController_];
-    // Force redraw to avoid flashes of old content before returning to event
-    // loop.
-    [[targetController_ window] display];
-    [targetController_ showWindow:nil];
-    [draggedController_ removeOverlay];
   } else {
-    // Only move the window around on screen. Make sure it's set back to
-    // normal state (fully opaque, has shadow, has key, etc).
-    [draggedController_ removeOverlay];
-    // Don't want to re-show the window if it was closed during the drag.
-    if ([dragWindow_ isVisible]) {
-      [dragWindow_ setAlphaValue:1.0];
-      [dragOverlay_ setHasShadow:NO];
-      [dragWindow_ setHasShadow:YES];
-      [dragWindow_ makeKeyAndOrderFront:nil];
+    // call willEndTearingTab before potentially moving the tab so the same
+    // controller which got willStartTearingTab can reference the tab.
+    [draggedController_ willEndTearingTab];
+    if (targetController_) {
+      // Move between windows. If |targetController_| is nil, we're not dropping
+      // into any existing window.
+      NSView* draggedTabView = [draggedController_ selectedTabView];
+      [targetController_ moveTabView:draggedTabView
+                      fromController:draggedController_];
+      // Force redraw to avoid flashes of old content before returning to event
+      // loop.
+      [[targetController_ window] display];
+      [targetController_ showWindow:nil];
+      //[draggedController_ removeOverlay]; // <- causes an exception
+      DLOG_EXPR(targetController_);
+      [targetController_ didEndTearingTab];
+    } else {
+      // Only move the window around on screen. Make sure it's set back to
+      // normal state (fully opaque, has shadow, has key, etc).
+      [draggedController_ removeOverlay];
+      // Don't want to re-show the window if it was closed during the drag.
+      if ([dragWindow_ isVisible]) {
+        [dragWindow_ setAlphaValue:1.0];
+        [dragOverlay_ setHasShadow:NO];
+        [dragWindow_ setHasShadow:YES];
+        [dragWindow_ makeKeyAndOrderFront:nil];
+      }
+      [[draggedController_ window] setLevel:NSNormalWindowLevel];
+      [draggedController_ removePlaceholder];
+      DLOG_EXPR(draggedController_);
+      [draggedController_ didEndTearingTab];
     }
-    [[draggedController_ window] setLevel:NSNormalWindowLevel];
-    [draggedController_ removePlaceholder];
   }
   [sourceController_ removePlaceholder];
   chromeIsVisible_ = YES;

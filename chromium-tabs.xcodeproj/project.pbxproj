@@ -80,6 +80,10 @@
 		3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FE21222D25400F1BB78 /* CTTabStripController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286F8D1222CAA000F1BB78 /* CTTabWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BE21226F81600DA7E43 /* CTTabStripModelObserverBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236DAD12233B3400D21E66 /* CTTabStripModelObserverBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A928C6C1228131400DA7E43 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A928C6A1228131400DA7E43 /* CTToolbarView.h */; };
+		3A928C6D1228131400DA7E43 /* CTToolbarView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928C6B1228131400DA7E43 /* CTToolbarView.mm */; };
+		3A928D0C12282DE500DA7E43 /* MyTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928D0B12282DE500DA7E43 /* MyTabContents.mm */; };
+		3A928F991228648F00DA7E43 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168C31225404F00757641 /* common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +215,10 @@
 		3A928A771226E01900DA7E43 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBrowser.h; sourceTree = "<group>"; };
 		3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyBrowser.mm; sourceTree = "<group>"; };
+		3A928C6A1228131400DA7E43 /* CTToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarView.h; sourceTree = "<group>"; };
+		3A928C6B1228131400DA7E43 /* CTToolbarView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTToolbarView.mm; sourceTree = "<group>"; };
+		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
+		3A928D0B12282DE500DA7E43 /* MyTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyTabContents.mm; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
@@ -375,6 +383,8 @@
 				3A3921F01221AF58006D8305 /* hover_close_button.mm */,
 				3A236DD71223414F00D21E66 /* new_tab_button.h */,
 				3A236DD81223414F00D21E66 /* new_tab_button.mm */,
+				3A928C6A1228131400DA7E43 /* CTToolbarView.h */,
+				3A928C6B1228131400DA7E43 /* CTToolbarView.mm */,
 				3A39270A1221C566006D8305 /* CTTabView.h */,
 				3A39270B1221C566006D8305 /* CTTabView.mm */,
 				3A3921F11221AF58006D8305 /* CTTabController.h */,
@@ -486,6 +496,8 @@
 				3A3EDA711225EBBB009E2908 /* AppDelegate.mm */,
 				3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */,
 				3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */,
+				3A928D0A12282DE500DA7E43 /* MyTabContents.h */,
+				3A928D0B12282DE500DA7E43 /* MyTabContents.mm */,
 			);
 			path = "simple-app";
 			sourceTree = "<group>";
@@ -509,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
+				3A928F991228648F00DA7E43 /* common.h in Headers */,
 				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
 				3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */,
@@ -525,6 +538,7 @@
 				3A3EDAD01225FACA009E2908 /* CTTabStripModelDelegate.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* CTBrowserCommand.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
+				3A928C6C1228131400DA7E43 /* CTToolbarView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,8 +598,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* Chromium Tabs */,
 				3A3ED9821225E27E009E2908 /* ChromiumTabs */,
+				8D1107260486CEB800E47090 /* Chromium Tabs */,
 			);
 		};
 /* End PBXProject section */
@@ -659,6 +673,7 @@
 				3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
 				3A3EDA9E1225EF84009E2908 /* util.m in Sources */,
 				3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */,
+				3A928C6D1228131400DA7E43 /* CTToolbarView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +684,7 @@
 				3A3EDA7C1225EBFF009E2908 /* main.m in Sources */,
 				3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */,
 				3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */,
+				3A928D0C12282DE500DA7E43 /* MyTabContents.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

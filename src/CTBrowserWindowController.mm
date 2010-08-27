@@ -1,7 +1,6 @@
 #import "CTBrowserWindowController.h"
-
 #import "CTTabStripModel.h"
-
+#import "CTTabContents.h"
 #import "CTTabStripController.h"
 #import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
@@ -53,10 +52,13 @@
   // Sets the window to not have rounded corners, which prevents the resize
   // control from being inset slightly and looking ugly.
   NSWindow *window = [self window];
-  if ([window respondsToSelector:@selector(setBottomCornerRounded:)]) {
+  if ([window respondsToSelector:@selector(setBottomCornerRounded:)])
     [window setBottomCornerRounded:NO];
-  }
   [[window contentView] setAutoresizesSubviews:YES];
+
+  // Restore saved window size
+  NSSize minSize = [[self window] minSize];
+  //gfx::Rect windowRect = browser_->GetSavedWindowBounds();
 
   // Create a tab strip controller
   tabStripController_ =
@@ -90,6 +92,30 @@
 
 - (BOOL)isFullscreen {
   return NO; // TODO fullscreen capabilities
+}
+
+- (BOOL)hasToolbar {
+  // subclasses can override this
+  return YES;
+}
+
+
+- (void)saveWindowPositionIfNeeded {
+  /*if (browser_ != BrowserList::GetLastActive())
+    return;
+  if (!g_browser_process || !g_browser_process->local_state() ||
+      !browser_->ShouldSaveWindowPlacement())
+    return;
+  [self saveWindowPositionToPrefs:g_browser_process->local_state()];*/
+}
+
+
+// Updates the toolbar with the states of the specified |contents|.
+// If |shouldRestore| is true, we're switching (back?) to this tab and should
+// restore any previous state (such as user editing a text field) as well.
+- (void)updateToolbarWithContents:(CTTabContents*)contents
+               shouldRestoreState:(BOOL)shouldRestore {
+  // TODO
 }
 
 
@@ -452,6 +478,7 @@
 }
 
 
+
 #pragma mark -
 #pragma mark Layout
 
@@ -520,6 +547,10 @@
   // Disable updates while closing all tabs to avoid flickering.
   base::ScopedNSDisableScreenUpdates disabler;
 
+  // NOTE: orderOut: ends up activating another window, so we have to save the
+  // window position before we call orderOut:
+  [self saveWindowPositionIfNeeded];
+
   if (browser_.tabStripModel->HasNonPhantomTabs()) {
     // Tab strip isn't empty.  Hide the frame (so it appears to have closed
     // immediately) and close all the tabs, allowing them to shut down. When the
@@ -534,29 +565,222 @@
 }
 
 
+// Called right after our window became the main window.
+- (void)windowDidBecomeMain:(NSNotification*)notification {
+  [self saveWindowPositionIfNeeded];
+
+  // TODO(dmaclach): Instead of redrawing the whole window, views that care
+  // about the active window state should be registering for notifications.
+  [[self window] setViewsNeedDisplay:YES];
+
+  // TODO(viettrungluu): For some reason, the above doesn't suffice.
+  //if ([self isFullscreen])
+  //  [floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
+}
+
+- (void)windowDidResignMain:(NSNotification*)notification {
+  // TODO(dmaclach): Instead of redrawing the whole window, views that care
+  // about the active window state should be registering for notifications.
+  [[self window] setViewsNeedDisplay:YES];
+
+  // TODO(viettrungluu): For some reason, the above doesn't suffice.
+  //if ([self isFullscreen])
+  //  [floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
+}
+
+// Called when we are activated (when we gain focus).
+- (void)windowDidBecomeKey:(NSNotification*)notification {
+  if (![[self window] isMiniaturized]) {
+    if (CTTabContents* contents = [browser_ selectedTabContents]) {
+      contents.isVisible = YES;
+    }
+  }
+}
+
+// Called when we are deactivated (when we lose focus).
+- (void)windowDidResignKey:(NSNotification*)notification {
+  // If our app is still active and we're still the key window, ignore this
+  // message, since it just means that a menu extra (on the "system status bar")
+  // was activated; we'll get another |-windowDidResignKey| if we ever really
+  // lose key window status.
+  if ([NSApp isActive] && ([NSApp keyWindow] == [self window]))
+    return;
+
+  // We need to deactivate the controls (in the "WebView"). To do this, get the
+  // selected TabContents's RenderWidgetHostView and tell it to deactivate.
+  /*if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isKey = NO;
+  }*/
+}
+
+// Called when we have been minimized.
+- (void)windowDidMiniaturize:(NSNotification *)notification {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isVisible = NO;
+  }
+}
+
+// Called when we have been unminimized.
+- (void)windowDidDeminiaturize:(NSNotification *)notification {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isVisible = YES;
+  }
+}
+
+// Called when the application has been hidden.
+- (void)applicationDidHide:(NSNotification *)notification {
+  // Let the selected tab know (unless we are minimized, in which case nothing
+  // has really changed).
+  if (![[self window] isMiniaturized]) {
+    if (CTTabContents* contents = [browser_ selectedTabContents]) {
+      contents.isVisible = NO;
+    }
+  }
+}
+
+// Called when the application has been unhidden.
+- (void)applicationDidUnhide:(NSNotification *)notification {
+  // Let the selected tab know
+  // (unless we are minimized, in which case nothing has really changed).
+  if (![[self window] isMiniaturized]) {
+    if (CTTabContents* contents = [browser_ selectedTabContents]) {
+      contents.isVisible = YES;
+    }
+  }
+}
+
+// Called when the user clicks the zoom button (or selects it from the Window
+// menu) to determine the "standard size" of the window, based on the content
+// and other factors. If the current size/location differs nontrivally from the
+// standard size, Cocoa resizes the window to the standard size, and saves the
+// current size as the "user size". If the current size/location is the same (up
+// to a fudge factor) as the standard size, Cocoa resizes the window to the
+// saved user size. (It is possible for the two to coincide.) In this way, the
+// zoom button acts as a toggle. We determine the standard size based on the
+// content, but enforce a minimum width (calculated using the dimensions of the
+// screen) to ensure websites with small intrinsic width (such as google.com)
+// don't end up with a wee window. Moreover, we always declare the standard
+// width to be at least as big as the current width, i.e., we never want zooming
+// to the standard width to shrink the window. This is consistent with other
+// browsers' behaviour, and is desirable in multi-tab situations. Note, however,
+// that the "toggle" behaviour means that the window can still be "unzoomed" to
+// the user size.
+/*- (NSRect)windowWillUseStandardFrame:(NSWindow*)window
+                        defaultFrame:(NSRect)frame {
+  // Forget that we grew the window up (if we in fact did).
+  [self resetWindowGrowthState];
+
+  // |frame| already fills the current screen. Never touch y and height since we
+  // always want to fill vertically.
+
+  // If the shift key is down, maximize. Hopefully this should make the
+  // "switchers" happy.
+  if ([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) {
+    return frame;
+  }
+
+  // To prevent strange results on portrait displays, the basic minimum zoomed
+  // width is the larger of: 60% of available width, 60% of available height
+  // (bounded by available width).
+  const CGFloat kProportion = 0.6;
+  CGFloat zoomedWidth =
+      std::max(kProportion * frame.size.width,
+               std::min(kProportion * frame.size.height, frame.size.width));
+
+  TabContents* contents = browser_.tabStripModel->GetSelectedTabContents();
+  if (contents) {
+    // If the intrinsic width is bigger, then make it the zoomed width.
+    const int kScrollbarWidth = 16;  // TODO(viettrungluu): ugh.
+    TabContentsViewMac* tab_contents_view =
+        static_cast<TabContentsViewMac*>(contents->view());
+    CGFloat intrinsicWidth = static_cast<CGFloat>(
+        tab_contents_view->preferred_width() + kScrollbarWidth);
+    zoomedWidth = std::max(zoomedWidth,
+                           std::min(intrinsicWidth, frame.size.width));
+  }
+
+  // Never shrink from the current size on zoom (see above).
+  NSRect currentFrame = [[self window] frame];
+  zoomedWidth = std::max(zoomedWidth, currentFrame.size.width);
+
+  // |frame| determines our maximum extents. We need to set the origin of the
+  // frame -- and only move it left if necessary.
+  if (currentFrame.origin.x + zoomedWidth > frame.origin.x + frame.size.width)
+    frame.origin.x = frame.origin.x + frame.size.width - zoomedWidth;
+  else
+    frame.origin.x = currentFrame.origin.x;
+
+  // Set the width. Don't touch y or height.
+  frame.size.width = zoomedWidth;
+
+  return frame;
+}*/
+
+
+-(void)willStartTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isTeared = YES;
+  }
+}
+
+-(void)willEndTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isTeared = NO;
+  }
+}
+
+-(void)didEndTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    [contents tabDidResignTeared];
+  }
+}
+
 #pragma mark -
 #pragma mark Etc (need sorting out)
 
+- (void)activate {
+  [[self window] makeKeyAndOrderFront:self];
+}
+
 - (void)focusTabContents {
-  [[self window] makeFirstResponder:[tabStripController_ selectedTabView]];
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    [[self window] makeFirstResponder:contents.view];
+  }
 }
 
 
 #pragma mark -
 #pragma mark CTTabStripModelObserverBridge impl.
 
+// Note: the following are called by the CTTabStripModel and thus indicate
+// the model's state rather than the UI state. This means that when for instance
+// tabSelectedWithContents:... is called, the view is not yet on screen, so
+// doing things like restoring focus is not possible.
 
-/*- (void)insertTabWithContents:(CTTabContents*)contents
+/*- (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
-                 inForeground:(bool)inForeground;
+                 inForeground:(bool)inForeground {
+  DLOG_TRACE();
+}
+
 - (void)tabClosingWithContents:(CTTabContents*)contents
-                       atIndex:(NSInteger)index;
+                       atIndex:(NSInteger)index {
+  DLOG_TRACE();
+}
 - (void)tabDetachedWithContents:(CTTabContents*)contents
-                        atIndex:(NSInteger)index;
-- (void)selectTabWithContents:(CTTabContents*)newContents
+                        atIndex:(NSInteger)index {
+  DLOG_TRACE();
+}
+
+// Note: this is called _before_ the view is on screen
+- (void)tabSelectedWithContents:(CTTabContents*)newContents
              previousContents:(CTTabContents*)oldContents
                       atIndex:(NSInteger)index
-                  userGesture:(bool)wasUserGesture;
+                  userGesture:(bool)wasUserGesture {
+  DLOG_TRACE();
+}*/
+
+/*
 - (void)tabMovedWithContents:(CTTabContents*)contents
                     fromIndex:(NSInteger)from
                       toIndex:(NSInteger)to;

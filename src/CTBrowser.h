@@ -12,6 +12,7 @@ enum CTWindowOpenDisposition {
 
 class CTTabStripModel;
 @class CTBrowserWindowController;
+@class CTTabContentsController;
 
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
@@ -44,6 +45,11 @@ class CTTabStripModel;
 // within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
 
+// Create a new tab contents controller. Override this to provide a custom
+// CTTabContentsController subclass.
+-(CTTabContentsController*)createTabContentsControllerWithContents:
+    (CTTabContents*)contents;
+
 // Create a new default/blank CTTabContents.
 // |baseContents| represents the CTTabContents which is currently in the
 // foreground. It might be nil.
@@ -70,7 +76,17 @@ class CTTabStripModel;
 
 -(void)executeCommand:(int)cmd
       withDisposition:(CTWindowOpenDisposition)disposition;
--(void)executeCommand:(int)cmd; // withDisposition:CURRENT_TAB
+-(void)executeCommand:(int)cmd;
+
+// Execute a command which does not need to have a valid browser. This can be
+// used in application delegates or other non-chromium-tabs windows which are
+// first responders. Like this:
+//
+// - (void)commandDispatch:(id)sender {
+//   [MyBrowser executeCommand:[sender tag]];
+// }
+//
++(void)executeCommand:(int)cmd;
 
 // callbacks
 -(void)loadingStateDidChange:(CTTabContents*)contents;

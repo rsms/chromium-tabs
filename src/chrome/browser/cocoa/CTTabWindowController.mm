@@ -153,6 +153,15 @@
   }
 }
 
+-(void)willStartTearingTab {
+}
+
+-(void)willEndTearingTab {
+}
+
+-(void)didEndTearingTab {
+}
+
 // If |useOverlay| is YES, creates a new overlay window and puts the tab strip
 // and the content area inside of it. This allows it to have a different opacity
 // from the title bar. If NO, returns everything to the previous state and
