@@ -11,9 +11,8 @@
 @class CTTabContents;
 class CTTabStripModel;
 
-// A class that controls the web contents of a tab. It manages displaying the
-// native view for a given CTTabContents and optionally its docked devtools in
-// |contentsContainer_|.
+// A class that controls the contents of a tab. It manages displaying the native
+// view for a given CTTabContents in |contentsContainer_|.
 // Note that just creating the class does not display the view in
 // |contentsContainer_|. We defer inserting it until the box is the correct size
 // to avoid multiple resize messages to the renderer. You must call

@@ -17,9 +17,9 @@
 
 
 +(CTBrowser*)browser {
-  CTBrowser *browser = [[[[self class] alloc] init] autorelease];
+  CTBrowser *browser = [[[self alloc] init] autorelease];
   [browser createWindowControllerInstance];
-  // TODO: post notification? BrowserReady(self)
+  // TODO: post notification browserReady:self ?
   return browser;
 }
 

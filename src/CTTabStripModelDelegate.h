@@ -3,11 +3,16 @@
 @class CTBrowser;
 #import "CTTabContents.h"
 
-enum {
-  TAB_MOVE_ACTION = 1,
-  TAB_TEAROFF_ACTION = 2
-};
-
+//
+// CTTabStripModelDelegate
+//
+// A delegate interface that the CTTabStripModel uses to perform work that it
+// can't do itself, such as obtain a container for creating new CTTabContents,
+// creating new TabStripModels for detached tabs, etc.
+//
+// This interface is typically implemented by the controller that instantiates
+// the CTTabStripModel (the CTBrowser object).
+//
 @protocol CTTabStripModelDelegate
 // Adds what the delegate considers to be a blank tab to the model.
 -(CTTabContents*)addBlankTabInForeground:(BOOL)foreground;
