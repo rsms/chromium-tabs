@@ -13,6 +13,7 @@ enum CTWindowOpenDisposition {
 class CTTabStripModel;
 @class CTBrowserWindowController;
 @class CTTabContentsController;
+@class CTToolbarController;
 
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
@@ -44,6 +45,12 @@ class CTTabStripModel;
 // This is usually enough since all UI which normally is customized is comprised
 // within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
+
+// Create a new toolbar controller. The default implementation will create a
+// controller loaded with a nib called "Toolbar". If the nib can't be found in
+// the main bundle, a fallback nib will be loaded from the framework.
+// Returning nil means there is no toolbar.
+-(CTToolbarController *)createToolbarController;
 
 // Create a new tab contents controller. Override this to provide a custom
 // CTTabContentsController subclass.

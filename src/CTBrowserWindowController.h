@@ -4,19 +4,20 @@
 #import "CTTabWindowController.h"
 
 @class CTTabStripController;
+@class CTToolbarController;
 class CTTabStripModelObserverBridge;
 
 @interface CTBrowserWindowController : CTTabWindowController {
   CTBrowser* browser_;
   CTTabStripController *tabStripController_;
   CTTabStripModelObserverBridge *tabStripObserver_;
-  //CTToolbarController *toolbarController_;
+  CTToolbarController *toolbarController_;
  @private
   BOOL initializing_; // true if the instance is initializing
 }
 
 @property(readonly, nonatomic) CTTabStripController *tabStripController;
-//@property(readonly, nonatomic) CTTabStripController *toolbarController;
+@property(readonly, nonatomic) CTToolbarController *toolbarController;
 @property(readonly, nonatomic) CTBrowser *browser;
 
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
@@ -28,7 +29,8 @@ class CTTabStripModelObserverBridge;
 // Returns fullscreen state.
 - (BOOL)isFullscreen;
 
-// Called to check whether or not this window has a toolbar.
+// Called to check whether or not this window has a toolbar. By default returns
+// true if toolbarController_ is not nil.
 - (BOOL)hasToolbar;
 
 // Updates the toolbar with the states of the specified |contents|.

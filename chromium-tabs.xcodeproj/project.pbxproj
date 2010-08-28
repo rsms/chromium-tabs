@@ -86,6 +86,9 @@
 		3A929009122947A800DA7E43 /* CTToolbarView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A929007122947A800DA7E43 /* CTToolbarView.mm */; };
 		3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */; };
 		3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.mm */; };
+		3A92904612294F1900DA7E43 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92904412294F1900DA7E43 /* CTToolbarController.h */; };
+		3A92904712294F1900DA7E43 /* CTToolbarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A92904512294F1900DA7E43 /* CTToolbarController.mm */; };
+		3A92907612295BC400DA7E43 /* Toolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92907512295BC400DA7E43 /* Toolbar.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +226,9 @@
 		3A929007122947A800DA7E43 /* CTToolbarView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTToolbarView.mm; sourceTree = "<group>"; };
 		3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+CTThemed.h"; sourceTree = "<group>"; };
 		3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSWindow+CTThemed.mm"; sourceTree = "<group>"; };
+		3A92904412294F1900DA7E43 /* CTToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarController.h; sourceTree = "<group>"; };
+		3A92904512294F1900DA7E43 /* CTToolbarController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTToolbarController.mm; sourceTree = "<group>"; };
+		3A92907512295BC400DA7E43 /* Toolbar.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; path = Toolbar.xib; sourceTree = "<group>"; };
 		3AA71889122479CE005022BE /* CTBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBrowser.h; sourceTree = "<group>"; };
 		3AA7188A122479CE005022BE /* CTBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTBrowser.mm; sourceTree = "<group>"; };
 		3AEE19411222DC5B009DA438 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
@@ -280,6 +286,8 @@
 				3AEE19531222DDEB009DA438 /* CTTabContents.mm */,
 				3A929006122947A800DA7E43 /* CTToolbarView.h */,
 				3A929007122947A800DA7E43 /* CTToolbarView.mm */,
+				3A92904412294F1900DA7E43 /* CTToolbarController.h */,
+				3A92904512294F1900DA7E43 /* CTToolbarController.mm */,
 				3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */,
 				3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.mm */,
 				3A3EDA321225E911009E2908 /* base */,
@@ -318,6 +326,7 @@
 				3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */,
 				3A286F9F1222CDBE00F1BB78 /* TabContents.xib */,
 				3A286FA01222CDBE00F1BB78 /* TabView.xib */,
+				3A92907512295BC400DA7E43 /* Toolbar.xib */,
 				3A3EDAA71225F192009E2908 /* Localizable.strings */,
 			);
 			path = resources;
@@ -546,6 +555,7 @@
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
 				3A929008122947A800DA7E43 /* CTToolbarView.h in Headers */,
 				3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */,
+				3A92904612294F1900DA7E43 /* CTToolbarController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +637,7 @@
 				3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */,
 				3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */,
 				3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */,
+				3A92907612295BC400DA7E43 /* Toolbar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,6 +693,7 @@
 				3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */,
 				3A929009122947A800DA7E43 /* CTToolbarView.mm in Sources */,
 				3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.mm in Sources */,
+				3A92904712294F1900DA7E43 /* CTToolbarController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

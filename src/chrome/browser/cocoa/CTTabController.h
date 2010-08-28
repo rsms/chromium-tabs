@@ -74,6 +74,16 @@ enum CTTabLoadingState {
 + (CGFloat)miniTabWidth;
 + (CGFloat)appTabWidth;
 
+// Initialize a new controller. The default implementation will locate a nib
+// called "TabView" in the app bundle and if not found there, will use the
+// default nib from the framework bundle. If you need to rename the nib or load
+// if from somepleace else, you should override this method and then call
+// initWithNibName:bundle:.
+- (id)init;
+
+// Does the actual initialization work
+- (id)initWithNibName:(NSString*)nibName bundle:(NSBundle*)bundle;
+
 // The view associated with this controller, pre-casted as a CTTabView
 - (CTTabView*)tabView;
 

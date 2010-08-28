@@ -5,6 +5,7 @@
 #import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "CTTabStripView.h"
+#import "CTToolbarController.h"
 #import "fast_resize_view.h"
 
 #import "scoped_nsdisable_screen_updates.h"
@@ -19,11 +20,15 @@
 - (CGFloat)layoutTabStripAtMaxY:(CGFloat)maxY
                           width:(CGFloat)width
                      fullscreen:(BOOL)fullscreen;
+- (CGFloat)layoutToolbarAtMinX:(CGFloat)minX
+                          maxY:(CGFloat)maxY
+                         width:(CGFloat)width;
 @end
 
 @implementation CTBrowserWindowController
 
 @synthesize tabStripController = tabStripController_;
+@synthesize toolbarController = toolbarController_;
 @synthesize browser = browser_;
 
 
@@ -65,6 +70,15 @@
                                     switchView:self.tabContentArea
                                        browser:browser_];
 
+  // Create a toolbar controller. The browser object might return nil, in which
+  // means we do not have a toolbar.
+  toolbarController_ = [[browser_ createToolbarController] retain];
+  if (toolbarController_) {
+    [[[self window] contentView] addSubview:[toolbarController_ view]];
+  }
+  
+  [self layoutSubviews];
+
   initializing_ = NO;
   return self;
 }
@@ -90,12 +104,11 @@
 
 
 - (BOOL)isFullscreen {
-  return NO; // TODO fullscreen capabilities
+  return NO; // TODO
 }
 
 - (BOOL)hasToolbar {
-  // subclasses can override this
-  return YES;
+  return !!toolbarController_;
 }
 
 
@@ -104,7 +117,9 @@
 // restore any previous state (such as user editing a text field) as well.
 - (void)updateToolbarWithContents:(CTTabContents*)contents
                shouldRestoreState:(BOOL)shouldRestore {
-  // TODO
+  // safe even if toolbarController_ is nil
+  [toolbarController_ updateToolbarWithContents:contents
+                             shouldRestoreState:shouldRestore];
 }
 
 #pragma mark -
@@ -444,7 +459,8 @@
   //}
 
   // Place the toolbar at the top of the reserved area.
-  //maxY = [self layoutToolbarAtMinX:minX maxY:maxY width:width];
+  if ([self hasToolbar])
+    maxY = [self layoutToolbarAtMinX:minX maxY:maxY width:width];
 
   // If we're not displaying the bookmark bar below the infobar, then it goes
   // immediately below the toolbar.
@@ -488,10 +504,26 @@
 
   // Normally, we don't need to tell the toolbar whether or not to show the
   // divider, but things break down during animation.
-  //[toolbarController_
-  //    setDividerOpacity:[bookmarkBarController_ toolbarDividerOpacity]];
+  if (toolbarController_) {
+    [toolbarController_ setDividerOpacity:0.4];
+  }
 }
 
+
+- (CGFloat)layoutToolbarAtMinX:(CGFloat)minX
+                          maxY:(CGFloat)maxY
+                         width:(CGFloat)width {
+  assert([self hasToolbar]);
+  NSView* toolbarView = [toolbarController_ view];
+  NSRect toolbarFrame = [toolbarView frame];
+  assert(![toolbarView isHidden]);
+  toolbarFrame.origin.x = minX;
+  toolbarFrame.origin.y = maxY - NSHeight(toolbarFrame);
+  toolbarFrame.size.width = width;
+  maxY -= NSHeight(toolbarFrame);
+  [toolbarView setFrame:toolbarFrame];
+  return maxY;
+}
 
 
 #pragma mark -
@@ -776,6 +808,14 @@
 // tabSelectedWithContents:... is called, the view is not yet on screen, so
 // doing things like restoring focus is not possible.
 
+// Note: this is called _before_ the view is on screen
+- (void)tabSelectedWithContents:(CTTabContents*)newContents
+             previousContents:(CTTabContents*)oldContents
+                      atIndex:(NSInteger)index
+                  userGesture:(bool)wasUserGesture {
+  [self updateToolbarWithContents:newContents shouldRestoreState:!!oldContents];
+}
+
 /*- (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)inForeground {
@@ -787,13 +827,6 @@
 }
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index {
-  DLOG_TRACE();
-}
-// Note: this is called _before_ the view is on screen
-- (void)tabSelectedWithContents:(CTTabContents*)newContents
-             previousContents:(CTTabContents*)oldContents
-                      atIndex:(NSInteger)index
-                  userGesture:(bool)wasUserGesture {
   DLOG_TRACE();
 }
 - (void)tabMovedWithContents:(CTTabContents*)contents

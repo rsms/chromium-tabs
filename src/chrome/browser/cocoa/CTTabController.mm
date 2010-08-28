@@ -34,10 +34,12 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 - (id)init {
-  // TODO: make it possible to load a custom nib (i.e. by providing a factory
-  // method which can be overridden)
   NSBundle *bundle = [util bundleForResource:@"TabView" ofType:@"nib"];
-  self = [super initWithNibName:@"TabView" bundle:bundle];
+  return [self initWithNibName:@"TabView" bundle:bundle];
+}
+
+- (id)initWithNibName:(NSString*)nibName bundle:(NSBundle*)bundle {
+  self = [super initWithNibName:nibName bundle:bundle];
   assert(self);
   if (self != nil) {
     isIconShowing_ = YES;

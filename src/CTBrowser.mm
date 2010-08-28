@@ -4,6 +4,7 @@
 #import "CTPageTransition.h"
 #import "CTBrowserWindowController.h"
 #import "CTTabContentsController.h"
+#import "CTToolbarController.h"
 #import "util.h"
 
 @interface CTBrowser (Private)
@@ -68,10 +69,17 @@
   // subclasses could override this
   NSString *windowNibPath = [util pathForResource:@"BrowserWindow"
                                            ofType:@"nib"];
-  return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath 
+  return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath
                                                         browser:self];
 }
 
+-(CTToolbarController *)createToolbarController {
+  // subclasses could override this -- returning nil means no toolbar
+  NSBundle *bundle = [util bundleForResource:@"Toolbar" ofType:@"nib"];
+  return [[CTToolbarController alloc] initWithNibName:@"Toolbar"
+                                                   bundle:bundle
+                                                  browser:self];
+}
 
 -(CTTabContentsController*)createTabContentsControllerWithContents:
     (CTTabContents*)contents {
