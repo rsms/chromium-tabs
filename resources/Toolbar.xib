@@ -43,23 +43,23 @@
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSTextField" id="748483555">
+					<object class="NSTextField" id="1059683952">
 						<reference key="NSNextResponder" ref="928520650"/>
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{17, 7}, {574, 17}}</string>
 						<reference key="NSSuperview" ref="928520650"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="503904737">
+						<object class="NSTextFieldCell" key="NSCell" id="1046442189">
 							<int key="NSCellFlags">67239488</int>
-							<int key="NSCellFlags2">138549824</int>
+							<int key="NSCellFlags2">138549760</int>
 							<string key="NSContents">Placeholder toolbar — provide a Toolbar.xib or disable it. See CTToolbarController.h for details.</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3100</int>
 							</object>
-							<reference key="NSControlView" ref="748483555"/>
+							<reference key="NSControlView" ref="1059683952"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -128,7 +128,7 @@
 						<reference key="object" ref="928520650"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="748483555"/>
+							<reference ref="1059683952"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -139,17 +139,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">225</int>
-						<reference key="object" ref="748483555"/>
+						<reference key="object" ref="1059683952"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="503904737"/>
+							<reference ref="1046442189"/>
 						</object>
 						<reference key="parent" ref="928520650"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">226</int>
-						<reference key="object" ref="503904737"/>
-						<reference key="parent" ref="748483555"/>
+						<reference key="object" ref="1046442189"/>
+						<reference key="parent" ref="1059683952"/>
 					</object>
 				</object>
 			</object>
