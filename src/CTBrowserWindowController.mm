@@ -56,9 +56,8 @@
     [window setBottomCornerRounded:NO];
   [[window contentView] setAutoresizesSubviews:YES];
 
-  // Restore saved window size
-  NSSize minSize = [[self window] minSize];
-  //gfx::Rect windowRect = browser_->GetSavedWindowBounds();
+  // Note: when using the default BrowserWindow.xib, window bounds are saved and
+  // restored by Cocoa using NSUserDefaults key "browserWindow".
 
   // Create a tab strip controller
   tabStripController_ =
@@ -97,16 +96,6 @@
 - (BOOL)hasToolbar {
   // subclasses can override this
   return YES;
-}
-
-
-- (void)saveWindowPositionIfNeeded {
-  /*if (browser_ != BrowserList::GetLastActive())
-    return;
-  if (!g_browser_process || !g_browser_process->local_state() ||
-      !browser_->ShouldSaveWindowPlacement())
-    return;
-  [self saveWindowPositionToPrefs:g_browser_process->local_state()];*/
 }
 
 
@@ -547,9 +536,12 @@
   // Disable updates while closing all tabs to avoid flickering.
   base::ScopedNSDisableScreenUpdates disabler;
 
-  // NOTE: orderOut: ends up activating another window, so we have to save the
-  // window position before we call orderOut:
-  [self saveWindowPositionIfNeeded];
+  // NOTE: when using the default BrowserWindow.xib, window bounds are saved and
+  //       restored by Cocoa using NSUserDefaults key "browserWindow".
+
+  // NOTE: orderOut: ends up activating another window, so if we save window
+  //       bounds in a custom manner we have to do it here, before we call
+  //       orderOut:
 
   if (browser_.tabStripModel->HasNonPhantomTabs()) {
     // Tab strip isn't empty.  Hide the frame (so it appears to have closed
@@ -567,7 +559,8 @@
 
 // Called right after our window became the main window.
 - (void)windowDidBecomeMain:(NSNotification*)notification {
-  [self saveWindowPositionIfNeeded];
+  // NOTE: if you use custom window bounds saving/restoring, you should probably
+  //       save the window bounds here.
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.

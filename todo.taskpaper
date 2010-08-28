@@ -1,0 +1,6 @@
+Features:
+	- Save and restore window bounds @done using NS autosave for BrowserWindow.xib with key "browserWindow"
+	- Toolbar support (optional, controlled by CTBrowserWindowController)
+Bugs:
+	- The top of the window gets darker when "enough" tabs are in it. Why?
+	
