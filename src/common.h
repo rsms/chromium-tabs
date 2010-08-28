@@ -63,7 +63,7 @@
 #else // !defined(NDEBUG)
   #define IFDEBUG(x)     do{}while(0)
   #define DLOG(...)      do{}while(0)
-  #define DLOG_TRACE()    do{}while(0)
+  #define DLOG_TRACE()   do{}while(0)
   #define DLOG_EXPR(...) do{}while(0)
 #endif // !defined(NDEBUG)
 
