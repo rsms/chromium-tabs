@@ -10,3 +10,7 @@
 // Describes the |CTTabContents| class which represents the contents of a tab,
 // including icon, title and state (loading, crashed, etc).
 #import <ChromiumTabs/CTTabContents.h>
+
+// Toolbar view and view controller
+#import <ChromiumTabs/CTToolbarView.h>
+#import <ChromiumTabs/CTToolbarController.h>

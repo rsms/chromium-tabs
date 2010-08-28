@@ -82,13 +82,42 @@
 		3A928BE21226F81600DA7E43 /* CTTabStripModelObserverBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236DAD12233B3400D21E66 /* CTTabStripModelObserverBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928D0C12282DE500DA7E43 /* MyTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928D0B12282DE500DA7E43 /* MyTabContents.mm */; };
 		3A928F991228648F00DA7E43 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168C31225404F00757641 /* common.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A929008122947A800DA7E43 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A929006122947A800DA7E43 /* CTToolbarView.h */; };
+		3A929008122947A800DA7E43 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A929006122947A800DA7E43 /* CTToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A929009122947A800DA7E43 /* CTToolbarView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A929007122947A800DA7E43 /* CTToolbarView.mm */; };
-		3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */; };
+		3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.mm */; };
-		3A92904612294F1900DA7E43 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92904412294F1900DA7E43 /* CTToolbarController.h */; };
+		3A92904612294F1900DA7E43 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92904412294F1900DA7E43 /* CTToolbarController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A92904712294F1900DA7E43 /* CTToolbarController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A92904512294F1900DA7E43 /* CTToolbarController.mm */; };
 		3A92907612295BC400DA7E43 /* Toolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92907512295BC400DA7E43 /* Toolbar.xib */; };
+		3A9291981229BEB600DA7E43 /* CTPageTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921DB1221AA4B006D8305 /* CTPageTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A92919B1229BEE900DA7E43 /* basictypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA331225E911009E2908 /* basictypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A92919C1229BEE900DA7E43 /* cocoa_protocols_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA341225E911009E2908 /* cocoa_protocols_mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A92919D1229BEE900DA7E43 /* observer_list.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA351225E911009E2908 /* observer_list.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A92919E1229BEE900DA7E43 /* scoped_cftyperef.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA361225E911009E2908 /* scoped_cftyperef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A92919F1229BEE900DA7E43 /* scoped_nsdisable_screen_updates.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA371225E911009E2908 /* scoped_nsdisable_screen_updates.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A01229BEE900DA7E43 /* scoped_nsobject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA381225E911009E2908 /* scoped_nsobject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A11229BEE900DA7E43 /* scoped_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA391225E911009E2908 /* scoped_ptr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A21229BEE900DA7E43 /* stl_util-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA3A1225E911009E2908 /* stl_util-inl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A31229BEE900DA7E43 /* throbber_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FE71222D53500F1BB78 /* throbber_view.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A41229BEE900DA7E43 /* url_drop_target.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FC01222D10700F1BB78 /* url_drop_target.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A51229BEE900DA7E43 /* background_gradient_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3927111221C596006D8305 /* background_gradient_view.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A61229BEE900DA7E43 /* hover_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921ED1221AF58006D8305 /* hover_button.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A71229BEE900DA7E43 /* hover_close_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921EF1221AF58006D8305 /* hover_close_button.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A81229BEE900DA7E43 /* new_tab_button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236DD71223414F00D21E66 /* new_tab_button.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291A91229BEE900DA7E43 /* fast_resize_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF98712235CEE008A3B8C /* fast_resize_view.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AA1229BF0100DA7E43 /* NSPasteboard+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A11225CEB1009E2908 /* NSPasteboard+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AB1229BF0100DA7E43 /* NSScreen+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A31225CEB1009E2908 /* NSScreen+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AC1229BF0100DA7E43 /* NSString+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A51225CEB1009E2908 /* NSString+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AD1229BF0100DA7E43 /* NSURL+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A71225CEB1009E2908 /* NSURL+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AE1229BF0100DA7E43 /* NSWorkspace+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A91225CEB1009E2908 /* NSWorkspace+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291AF1229BF0100DA7E43 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74F1225DDF2009E2908 /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B01229BF0100DA7E43 /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74B1225DDBE009E2908 /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B11229BF0100DA7E43 /* GTMNSBezierPath+CGPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74C1225DDBE009E2908 /* GTMNSBezierPath+CGPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B21229BF0100DA7E43 /* GTMNSAnimation+Duration.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B41229BF0100DA7E43 /* GTMWindowSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6851225CE7A009E2908 /* GTMWindowSheetController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -538,6 +567,7 @@
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
 				3A928F991228648F00DA7E43 /* common.h in Headers */,
 				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
+				3A9291981229BEB600DA7E43 /* CTPageTransition.h in Headers */,
 				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
 				3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */,
 				3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */,
@@ -547,8 +577,6 @@
 				3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */,
 				3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */,
 				3A928BE21226F81600DA7E43 /* CTTabStripModelObserverBridge.h in Headers */,
-				3A928BD91226F7FC00DA7E43 /* CTTabStripModel.h in Headers */,
-				3A928BDA1226F7FC00DA7E43 /* CTTabStripModelOrderController.h in Headers */,
 				3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */,
 				3A3EDAD01225FACA009E2908 /* CTTabStripModelDelegate.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* CTBrowserCommand.h in Headers */,
@@ -556,6 +584,36 @@
 				3A929008122947A800DA7E43 /* CTToolbarView.h in Headers */,
 				3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */,
 				3A92904612294F1900DA7E43 /* CTToolbarController.h in Headers */,
+				3A92919B1229BEE900DA7E43 /* basictypes.h in Headers */,
+				3A92919C1229BEE900DA7E43 /* cocoa_protocols_mac.h in Headers */,
+				3A92919D1229BEE900DA7E43 /* observer_list.h in Headers */,
+				3A92919E1229BEE900DA7E43 /* scoped_cftyperef.h in Headers */,
+				3A92919F1229BEE900DA7E43 /* scoped_nsdisable_screen_updates.h in Headers */,
+				3A9291A01229BEE900DA7E43 /* scoped_nsobject.h in Headers */,
+				3A9291A11229BEE900DA7E43 /* scoped_ptr.h in Headers */,
+				3A9291A21229BEE900DA7E43 /* stl_util-inl.h in Headers */,
+				3A928BD91226F7FC00DA7E43 /* CTTabStripModel.h in Headers */,
+				3A928BDA1226F7FC00DA7E43 /* CTTabStripModelOrderController.h in Headers */,
+				3A9291A31229BEE900DA7E43 /* throbber_view.h in Headers */,
+				3A9291A41229BEE900DA7E43 /* url_drop_target.h in Headers */,
+				3A9291A51229BEE900DA7E43 /* background_gradient_view.h in Headers */,
+				3A9291A61229BEE900DA7E43 /* hover_button.h in Headers */,
+				3A9291A71229BEE900DA7E43 /* hover_close_button.h in Headers */,
+				3A9291A81229BEE900DA7E43 /* new_tab_button.h in Headers */,
+				3A9291A91229BEE900DA7E43 /* fast_resize_view.h in Headers */,
+				3A9291AA1229BF0100DA7E43 /* NSPasteboard+Utils.h in Headers */,
+				3A9291AB1229BF0100DA7E43 /* NSScreen+Utils.h in Headers */,
+				3A9291AC1229BF0100DA7E43 /* NSString+Utils.h in Headers */,
+				3A9291AD1229BF0100DA7E43 /* NSURL+Utils.h in Headers */,
+				3A9291AE1229BF0100DA7E43 /* NSWorkspace+Utils.h in Headers */,
+				3A9291AF1229BF0100DA7E43 /* GTMDefines.h in Headers */,
+				3A9291B01229BF0100DA7E43 /* GTMGarbageCollection.h in Headers */,
+				3A9291B11229BF0100DA7E43 /* GTMNSBezierPath+CGPath.h in Headers */,
+				3A9291B21229BF0100DA7E43 /* GTMNSAnimation+Duration.h in Headers */,
+				3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */,
+				3A9291B41229BF0100DA7E43 /* GTMWindowSheetController.h in Headers */,
+				3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */,
+				3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
