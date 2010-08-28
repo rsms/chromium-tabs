@@ -107,6 +107,32 @@
   // TODO
 }
 
+#pragma mark -
+#pragma mark NSWindow (CTThemed) implementation
+
+- (NSPoint)themePatternPhase {
+  // Our patterns want to be drawn from the upper left hand corner of the view.
+  // Cocoa wants to do it from the lower left of the window.
+  //
+  // Rephase our pattern to fit this view. Some other views (Tabs, Toolbar etc.)
+  // will phase their patterns relative to this so all the views look right.
+  //
+  // To line up the background pattern with the pattern in the browser window
+  // the background pattern for the tabs needs to be moved left by 5 pixels.
+  const CGFloat kPatternHorizontalOffset = -5;
+  NSView* tabStripView = [self tabStripView];
+  NSRect tabStripViewWindowBounds = [tabStripView bounds];
+  NSView* windowChromeView = [[[self window] contentView] superview];
+  tabStripViewWindowBounds =
+      [tabStripView convertRect:tabStripViewWindowBounds
+                         toView:windowChromeView];
+  NSPoint phase = NSMakePoint(NSMinX(tabStripViewWindowBounds)
+                                  + kPatternHorizontalOffset,
+                              NSMinY(tabStripViewWindowBounds)
+                                  + [CTTabStripController defaultTabHeight]);
+  return phase;
+}
+
 
 #pragma mark -
 #pragma mark Actions

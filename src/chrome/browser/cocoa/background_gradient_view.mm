@@ -10,8 +10,43 @@
 #define kToolbarTopOffset 12
 #define kToolbarMaxHeight 100
 
+static NSGradient *_mkGradient(BOOL faded) {
+  NSColor* base_color = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
+  NSColor* start_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightHighlight
+                                 faded:faded];
+  NSColor* mid_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightMidtone
+                                 faded:faded];
+  NSColor* end_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightShadow
+                                 faded:faded];
+  NSColor* glow_color =
+      [base_color gtm_colorAdjustedFor:GTMColorationLightPenumbra
+                                 faded:faded];
+  return [[NSGradient alloc] initWithColorsAndLocations:start_color, 0.0,
+                                                        mid_color, 0.25,
+                                                        end_color, 0.5,
+                                                        glow_color, 0.75,
+                                                        nil];
+}
+
 @implementation BackgroundGradientView
 @synthesize showsDivider = showsDivider_;
+
+static NSGradient *_gradientFaded = nil;
+static NSGradient *_gradientNotFaded = nil;
+static NSColor* kDefaultColorToolbarStroke = nil;
+static NSColor* kDefaultColorToolbarStrokeInactive = nil;
+
++ (void)initialize {
+  _gradientFaded = _mkGradient(true);
+  _gradientNotFaded = _mkGradient(false);
+  kDefaultColorToolbarStroke =
+    [[NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0] retain];
+  kDefaultColorToolbarStrokeInactive =
+    [[NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0] retain];
+}
 
 - (id)initWithFrame:(NSRect)frameRect {
   self = [super initWithFrame:frameRect];
@@ -31,32 +66,8 @@
 }
 
 - (void)drawBackground {
-  BOOL isKey = [[self window] isKeyWindow];
-  
-  // TODO: cache the resulting NSGradient
-  NSColor* base_color = [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-  BOOL faded = !isKey;
-  NSColor* start_color =
-      [base_color gtm_colorAdjustedFor:GTMColorationLightHighlight
-                                 faded:faded];
-  NSColor* mid_color =
-      [base_color gtm_colorAdjustedFor:GTMColorationLightMidtone
-                                 faded:faded];
-  NSColor* end_color =
-      [base_color gtm_colorAdjustedFor:GTMColorationLightShadow
-                                 faded:faded];
-  NSColor* glow_color =
-      [base_color gtm_colorAdjustedFor:GTMColorationLightPenumbra
-                                 faded:faded];
-
-  NSGradient *gradient =
-      [[NSGradient alloc] initWithColorsAndLocations:start_color, 0.0,
-                                                     mid_color, 0.25,
-                                                     end_color, 0.5,
-                                                     glow_color, 0.75,
-                                                     nil];
-
-
+  NSGradient *gradient = [[self window] isKeyWindow] ? _gradientNotFaded :
+                                                       _gradientFaded;
   CGFloat winHeight = NSHeight([[self window] frame]);
   NSPoint startPoint =
       [self convertPoint:NSMakePoint(0, winHeight - kToolbarTopOffset)
@@ -80,13 +91,8 @@
 }
 
 - (NSColor*)strokeColor {
-  static NSColor* kDefaultColorToolbarStroke =
-    [NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0];
-  static NSColor* kDefaultColorToolbarStrokeInactive =
-    [NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0];
-  BOOL isKey = [[self window] isKeyWindow];
-  return isKey ? kDefaultColorToolbarStroke :
-                 kDefaultColorToolbarStrokeInactive;
+  return [[self window] isKeyWindow] ? kDefaultColorToolbarStroke :
+                                       kDefaultColorToolbarStrokeInactive;
 }
 
 @end

@@ -22,15 +22,14 @@ class CTTabStripModelObserverBridge;
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
                     browser:(CTBrowser*)browser;
 
-// Make the (currently-selected) tab contents the first responder, if possible.
-- (void)focusTabContents;
+// Gets the pattern phase for the window.
+- (NSPoint)themePatternPhase;
 
 // Returns fullscreen state.
 - (BOOL)isFullscreen;
 
-// Lays out the tab content area in the given frame. If the height changes,
-// sends a message to the renderer to resize.
-- (void)layoutTabContentArea:(NSRect)frame;
+// Called to check whether or not this window has a toolbar.
+- (BOOL)hasToolbar;
 
 // Updates the toolbar with the states of the specified |contents|.
 // If |shouldRestore| is true, we're switching (back?) to this tab and should
@@ -38,10 +37,14 @@ class CTTabStripModelObserverBridge;
 - (void)updateToolbarWithContents:(CTTabContents*)tab
                shouldRestoreState:(BOOL)shouldRestore;
 
-// Called to check whether or not this window has a toolbar.
-- (BOOL)hasToolbar;
-
 // Brings this controller's window to the front.
 - (void)activate;
+
+// Make the (currently-selected) tab contents the first responder, if possible.
+- (void)focusTabContents;
+
+// Lays out the tab content area in the given frame. If the height changes,
+// sends a message to the renderer to resize.
+- (void)layoutTabContentArea:(NSRect)frame;
 
 @end

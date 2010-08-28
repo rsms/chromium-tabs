@@ -7,8 +7,9 @@
 #import "scoped_cftyperef.h"
 #import "CTTabController.h"
 #import "CTTabWindowController.h"
+#import "NSWindow+CTThemed.h"
 
-// ripped out from mac_util.mm:
+// ported from mac_util.mm:
 static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,
                                         CFStringRef key,
                                         CFTypeID expected_type) {
@@ -654,7 +655,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
   NSGraphicsContext* context = [NSGraphicsContext currentContext];
   [context saveGraphicsState];
-  [context setPatternPhase:NSZeroPoint]; // TODO: really need to do this?
+  [context setPatternPhase:[[self window] themePatternPhase]];
 
   NSRect rect = [self bounds];
   NSBezierPath* path = [self bezierPathForRect:rect];
