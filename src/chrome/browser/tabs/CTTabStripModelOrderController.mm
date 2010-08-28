@@ -106,7 +106,6 @@ void CTTabStripModelOrderController::TabSelectedAt(CTTabContents* old_contents,
                                                  CTTabContents* new_contents,
                                                  int index,
                                                  bool user_gesture) {
-  DLOG("TabSelectedAt %d", index);
   /*NavigationController* old_opener = NULL;
   if (old_contents) {
     int index = tab_strip_model_->GetIndexOfTabContents(old_contents);

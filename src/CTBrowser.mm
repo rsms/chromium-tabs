@@ -112,15 +112,11 @@
 #pragma mark Callbacks
 
 -(void)loadingStateDidChange:(CTTabContents*)contents {
-  DLOG("TODO %s", __func__);
-  DLOG_EXPR(contents);
+  // TODO: Make sure the loading state is updated correctly
 }
 
 -(void)windowDidBeginToClose {
   tabStripModel_->CloseAllTabs();
-  // NOTE: in the future the following call could be deferred (i.e. after all
-  // tabs have finalized). But for now we'll just call it again.
-  //[self closeWindow];
 }
 
 
@@ -235,7 +231,7 @@
 
 -(void)executeCommand:(int)cmd
       withDisposition:(CTWindowOpenDisposition)disposition {
-  DLOG_EXPR(/* execute command */ cmd);
+  //DLOG_EXPR(cmd); //< useful to debug incoming |cmd| values
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -351,26 +347,24 @@
 
 // Returns whether some contents can be duplicated.
 -(BOOL)canDuplicateContentsAt:(int)index {
-  DLOG("CTBrowserWindowController canDuplicateContentsAt %d", index);
   return false;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
 -(void)duplicateContentsAt:(int)index {
-  DLOG("CTBrowserWindowController duplicateContentsAt %d", index);
 }
 
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
 -(void)closeFrameAfterDragSession {
-  DLOG("CTBrowserWindowController closeFrameAfterDragSession");
+  DLOG("closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // CTTabContents.
 -(void)createHistoricalTab:(CTTabContents*)contents {
-  DLOG("CTBrowserWindowController createHistoricalTab %@", contents);
+  DLOG("TODO createHistoricalTab %@", contents);
 }
 
 // Runs any unload listeners associated with the specified CTTabContents before
@@ -379,30 +373,25 @@
 // CTTabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the CTTabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
-  //DLOG("CTBrowserWindowController runUnloadListenerBeforeClosing %@" contents);
   return false;
 }
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab {
-  DLOG("CTBrowserWindowController canRestoreTab");
   return false;
 }
 
 // Restores the last closed tab if CanRestoreTab would return true.
 -(void)restoreTab {
-  DLOG("CTBrowserWindowController restoreTab");
 }
 
 // Returns whether some contents can be closed.
 -(BOOL)canCloseContentsAt:(int)index {
-  DLOG("CTBrowserWindowController canCloseContentsAt %d", index);
   return true;
 }
 
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
-  DLOG("CTBrowserWindowController canCloseTab");
   return true;
 }
 

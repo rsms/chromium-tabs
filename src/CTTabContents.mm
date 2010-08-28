@@ -79,7 +79,6 @@
 
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
   // subclasses can implement this
-  //NSLog(@"CTTabContents closingOfTabDidStart");
 }
 
 -(void)tabDidBecomeSelected {
@@ -110,7 +109,6 @@
 }
 
 -(void)viewFrameDidChange:(NSRect)newFrame {
-  DLOG("viewFrameDidChange viewFrameDidChange viewFrameDidChange");
   [view_ setFrame:newFrame];
 }
 

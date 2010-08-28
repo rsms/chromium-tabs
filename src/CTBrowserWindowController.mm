@@ -755,7 +755,6 @@
                  inForeground:(bool)inForeground {
   DLOG_TRACE();
 }
-
 - (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index {
   DLOG_TRACE();
@@ -764,24 +763,27 @@
                         atIndex:(NSInteger)index {
   DLOG_TRACE();
 }
-
 // Note: this is called _before_ the view is on screen
 - (void)tabSelectedWithContents:(CTTabContents*)newContents
              previousContents:(CTTabContents*)oldContents
                       atIndex:(NSInteger)index
                   userGesture:(bool)wasUserGesture {
   DLOG_TRACE();
-}*/
-
-/*
+}
 - (void)tabMovedWithContents:(CTTabContents*)contents
                     fromIndex:(NSInteger)from
-                      toIndex:(NSInteger)to;
+                      toIndex:(NSInteger)to {
+  DLOG_TRACE();
+}
 - (void)tabChangedWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index
-                    changeType:(TabChangeType)change;
+                    changeType:(TabChangeType)change {
+  DLOG_TRACE();
+}
 - (void)tabMiniStateChangedWithContents:(CTTabContents*)contents
-                                atIndex:(NSInteger)index;*/
+                                atIndex:(NSInteger)index {
+  DLOG_TRACE();
+}*/
 
 - (void)tabStripEmpty {
   [browser_ closeWindow];

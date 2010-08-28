@@ -34,11 +34,9 @@
 - (void)ensureContentsVisible {
   NSArray* subviews = [contentsContainer_ subviews];
   if ([subviews count] == 0) {
-    DLOG_TRACE();
     [contentsContainer_ addSubview:contents_.view];
     [contents_ viewFrameDidChange:[contentsContainer_ bounds]];
   } else if ([subviews objectAtIndex:0] != contents_.view) {
-    DLOG_TRACE();
     NSView *subview = [subviews objectAtIndex:0];
     [contentsContainer_ replaceSubview:subview
                                   with:contents_.view];
