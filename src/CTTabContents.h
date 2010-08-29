@@ -2,6 +2,7 @@
 #import <Cocoa/Cocoa.h>
 
 class CTTabStripModel;
+@class CTBrowser;
 
 //
 // Visibility states:
@@ -78,10 +79,17 @@ class CTTabStripModel;
 // canCloseTab).
 -(void)closingOfTabDidStart:(CTTabStripModel*)model;
 
-// Called when this tab is closing.
--(void)tabWillClose;
+// The following three callbacks are meant to be implemented by subclasses:
+// Called when this tab was inserted into a browser
+- (void)tabWasInsertedIntoBrowser:(CTBrowser*)browser
+                          atIndex:(NSInteger)index
+                     inForeground:(bool)foreground;
+// Called when this tab is about to close
+- (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
+// Called when this tab was removed from a browser
+- (void)tabWasDetachedFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
 
-// The followinf callbacks called when the tab's visible state changes. If you
+// The following callbacks called when the tab's visible state changes. If you
 // override, be sure and invoke super's implementation. See "Visibility states"
 // in the header of this file for details.
 

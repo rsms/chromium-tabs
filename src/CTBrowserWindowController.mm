@@ -822,20 +822,28 @@
   [self updateToolbarWithContents:newContents shouldRestoreState:!!oldContents];
 }
 
+
 - (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index {
-  [contents tabWillClose];
+  [contents tabWillCloseInBrowser:browser_ atIndex:index];
 }
 
-/*- (void)tabInsertedWithContents:(CTTabContents*)contents
+
+- (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
-                 inForeground:(bool)inForeground {
-  DLOG_TRACE();
+                 inForeground:(bool)foreground {
+  [contents tabWasInsertedIntoBrowser:browser_
+                              atIndex:index
+                         inForeground:foreground];
 }
+
+
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index {
-  DLOG_TRACE();
+  [contents tabWasDetachedFromBrowser:browser_ atIndex:index];
 }
+
+/*
 - (void)tabMovedWithContents:(CTTabContents*)contents
                     fromIndex:(NSInteger)from
                       toIndex:(NSInteger)to {

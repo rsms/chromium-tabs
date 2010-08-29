@@ -1,5 +1,6 @@
 #import "CTTabContents.h"
 #import "CTTabStripModel.h"
+#import "CTBrowser.h"
 
 @implementation CTTabContents
 
@@ -81,8 +82,18 @@
   // subclasses can implement this
 }
 
-// Called when this tab is closing.
--(void)tabWillClose {
+// Called when this tab was inserted into a browser
+- (void)tabWasInsertedIntoBrowser:(CTBrowser*)browser
+                          atIndex:(NSInteger)index
+                     inForeground:(bool)foreground {
+}
+
+// Called when this tab is about to close
+- (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
+}
+
+// Called when this tab was removed from a browser
+- (void)tabWasDetachedFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
 }
 
 -(void)tabDidBecomeSelected {
