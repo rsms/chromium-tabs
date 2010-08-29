@@ -93,4 +93,15 @@ const char *common_strrstr(const char *string, const char *find);
 }
 #endif
 
+// utils
+#ifdef __OBJC__
+  // exchange dst with src, retaining src and safely releasing old object.
+  inline id objc_exch(id *dst, id src) {
+    id old = *dst;
+    *dst = [src retain];
+    if (old) [old release];
+    return old;
+  }
+#endif // __OBJC__
+
 #endif // COMMON_H_

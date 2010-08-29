@@ -4,16 +4,38 @@
 
 @implementation CTTabContents
 
+// Custom @synthesize which invokes [browser_ updateTabStateForContent:self]
+// when setting values.
+#define _synthRetain(T, setname, getname) \
+- (T)getname { return getname##_; } \
+- (void)set##setname :(T)v { \
+  objc_exch(&(getname##_), v); \
+  if (browser_) [browser_ updateTabStateForContent:self]; \
+}
+#define _synthAssign(T, setname, getname) \
+- (T)getname { return getname##_; } \
+- (void)set##setname :(T)v { \
+  getname##_ = v; \
+  if (browser_) [browser_ updateTabStateForContent:self]; \
+}
+
 @synthesize isApp = isApp_;
-@synthesize isLoading = isLoading_;
-@synthesize isWaitingForResponse = isWaitingForResponse_;
-@synthesize isCrashed = isCrashed_;
+
+_synthAssign(BOOL, IsLoading, isLoading);
+_synthAssign(BOOL, IsWaitingForResponse, isWaitingForResponse);
+_synthAssign(BOOL, IsCrashed, isCrashed);
+
 @synthesize delegate = delegate_;
 @synthesize closedByUserGesture = closedByUserGesture_;
 @synthesize view = view_;
-@synthesize title = title_;
-@synthesize icon = icon_;
+
+_synthRetain(NSString*, Title, title);
+_synthRetain(NSImage*, Icon, icon);
+
 @synthesize browser = browser_;
+
+#undef _synth
+
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
   // subclasses should probably override this
