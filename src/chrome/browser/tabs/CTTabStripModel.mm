@@ -246,10 +246,9 @@ void CTTabStripModel::InsertTabContentsAt(int index,
     ChangeSelectedContentsFrom(selected_contents, index, false);
 }
 
-void CTTabStripModel::ReplaceTabContentsAt(
-    int index,
-    CTTabContents* new_contents,
-    CTTabReplaceType type) {
+void CTTabStripModel::ReplaceTabContentsAt(int index,
+                                           CTTabContents* new_contents,
+                                           CTTabReplaceType type) {
   CTTabContents* old_contents =
       ReplaceTabContentsAtImpl(index, new_contents, type);
   [old_contents destroy:this];
@@ -1129,14 +1128,9 @@ CTTabContents* CTTabStripModel::ReplaceTabContentsAtImpl(
     int index,
     CTTabContents* new_contents,
     CTTabReplaceType type) {
-  // TODO: this should reset group/opener of any tabs that point at
-  // old_contents.
   assert(ContainsIndex(index));
-
   CTTabContents* old_contents = GetContentsAt(index);
-
   contents_data_[index]->contents = new_contents;
-
   FOR_EACH_OBSERVER(CTTabStripModelObserver, observers_,
                     TabReplacedAt(old_contents, new_contents, index, type));
   return old_contents;

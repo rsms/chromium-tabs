@@ -1239,7 +1239,7 @@ private:
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
-  if (change == TITLE_NOT_LOADING) {
+  if (change == CTTabChangeTypeTitleNotLoading) {
     // TODO(sky): make this work.
     // We'll receive another notification of the change asynchronously.
     return;
@@ -1247,7 +1247,7 @@ private:
 
   CTTabController* tabController = [tabArray_ objectAtIndex:index];
 
-  if (change != LOADING_ONLY)
+  if (change != CTTabChangeTypeLoadingOnly)
     [self setTabTitle:tabController withContents:contents];
 
   // See if the change was to/from phantom.

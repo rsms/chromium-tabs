@@ -29,13 +29,13 @@ class CTTabStripModel;
 // Enumeration of the possible values supplied to TabChangedAt.
 enum CTTabChangeType {
   // Only the loading state changed.
-  LOADING_ONLY,
+  CTTabChangeTypeLoadingOnly,
 
   // Only the title changed and page isn't loading.
-  TITLE_NOT_LOADING,
+  CTTabChangeTypeTitleNotLoading,
 
-  // Change not characterized by LOADING_ONLY or TITLE_NOT_LOADING.
-  ALL
+  // Change not characterized by CTTabChangeTypeLoadingOnly or CTTabChangeTypeTitleNotLoading.
+  CTTabChangeTypeAll
 };
 
 // Enum used by ReplaceTabContentsAt.

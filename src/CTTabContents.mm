@@ -13,6 +13,7 @@
 @synthesize view = view_;
 @synthesize title = title_;
 @synthesize icon = icon_;
+@synthesize browser = browser_;
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
   // subclasses should probably override this
@@ -86,14 +87,17 @@
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
                    inForeground:(bool)foreground {
+  self.browser = browser;
 }
 
 // Called when this tab is about to close
 - (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
+  self.browser = nil;
 }
 
 // Called when this tab was removed from a browser
 - (void)tabDidDetachFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
+  self.browser = nil;
 }
 
 -(void)tabDidBecomeSelected {

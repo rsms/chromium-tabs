@@ -44,6 +44,7 @@ class CTTabStripModel;
   NSView *view_; // the actual content
   NSString *title_; // title of this tab
   NSImage *icon_; // tab icon (nil means no or default icon)
+  CTBrowser *browser_;
 }
 
 @property(assign, nonatomic) BOOL isApp;
@@ -58,6 +59,7 @@ class CTTabStripModel;
 @property(retain, nonatomic) NSView *view;
 @property(retain, nonatomic) NSString *title;
 @property(retain, nonatomic) NSImage *icon;
+@property(retain, nonatomic) CTBrowser *browser;
 
 // If this returns true, special icons like throbbers and "crashed" is
 // displayed, even if |icon| is nil. By default this returns true.

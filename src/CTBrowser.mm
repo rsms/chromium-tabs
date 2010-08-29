@@ -132,18 +132,37 @@ static CTBrowser* _currentMain = nil; // weak
 -(int)tabCount {
   return tabStripModel_->count();
 }
+
 -(int)selectedTabIndex {
   return tabStripModel_->selected_index();
 }
+
 -(CTTabContents*)selectedTabContents {
   return tabStripModel_->GetSelectedTabContents();
 }
+
 -(CTTabContents*)tabContentsAtIndex:(int)index {
   return tabStripModel_->GetTabContentsAt(index);
 }
+
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
   tabStripModel_->SelectTabContentsAt(index, userGesture);
 }
+
+-(void)updateTabStateAtIndex:(int)index {
+  tabStripModel_->UpdateTabContentsStateAt(index, CTTabChangeTypeAll);
+}
+
+-(void)replaceTabContentsAtIndex:(int)index
+                 withTabContents:(CTTabContents*)contents {
+  tabStripModel_->ReplaceTabContentsAt(index, contents, (CTTabReplaceType)0);
+}
+
+-(void)closeTabAtIndex:(int)index makeHistory:(BOOL)makeHistory {
+  tabStripModel_->CloseTabContentsAt(index,
+      makeHistory ? CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB : 0);
+}
+
 -(void)closeAllTabs {
   tabStripModel_->CloseAllTabs();
 }
