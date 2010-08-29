@@ -83,9 +83,9 @@
 }
 
 // Called when this tab was inserted into a browser
-- (void)tabWasInsertedIntoBrowser:(CTBrowser*)browser
-                          atIndex:(NSInteger)index
-                     inForeground:(bool)foreground {
+- (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
+                        atIndex:(NSInteger)index
+                   inForeground:(bool)foreground {
 }
 
 // Called when this tab is about to close
@@ -93,7 +93,7 @@
 }
 
 // Called when this tab was removed from a browser
-- (void)tabWasDetachedFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
+- (void)tabDidDetachFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
 }
 
 -(void)tabDidBecomeSelected {

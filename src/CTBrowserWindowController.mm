@@ -832,15 +832,15 @@
 - (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)foreground {
-  [contents tabWasInsertedIntoBrowser:browser_
-                              atIndex:index
-                         inForeground:foreground];
+  [contents tabDidInsertIntoBrowser:browser_
+                            atIndex:index
+                       inForeground:foreground];
 }
 
 
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index {
-  [contents tabWasDetachedFromBrowser:browser_ atIndex:index];
+  [contents tabDidDetachFromBrowser:browser_ atIndex:index];
 }
 
 /*

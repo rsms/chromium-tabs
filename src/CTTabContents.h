@@ -81,13 +81,13 @@ class CTTabStripModel;
 
 // The following three callbacks are meant to be implemented by subclasses:
 // Called when this tab was inserted into a browser
-- (void)tabWasInsertedIntoBrowser:(CTBrowser*)browser
-                          atIndex:(NSInteger)index
-                     inForeground:(bool)foreground;
+- (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
+                        atIndex:(NSInteger)index
+                   inForeground:(bool)foreground;
 // Called when this tab is about to close
 - (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
 // Called when this tab was removed from a browser
-- (void)tabWasDetachedFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
+- (void)tabDidDetachFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
 
 // The following callbacks called when the tab's visible state changes. If you
 // override, be sure and invoke super's implementation. See "Visibility states"
