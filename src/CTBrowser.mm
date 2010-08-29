@@ -145,12 +145,23 @@ static CTBrowser* _currentMain = nil; // weak
   return tabStripModel_->GetTabContentsAt(index);
 }
 
+-(int)indexOfTabContents:(CTTabContents*)contents {
+  return tabStripModel_->GetIndexOfTabContents(contents);
+}
+
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
   tabStripModel_->SelectTabContentsAt(index, userGesture);
 }
 
 -(void)updateTabStateAtIndex:(int)index {
   tabStripModel_->UpdateTabContentsStateAt(index, CTTabChangeTypeAll);
+}
+
+-(void)updateTabStateForContent:(CTTabContents*)contents {
+  int index = tabStripModel_->GetIndexOfTabContents(contents);
+  if (index != -1) {
+    tabStripModel_->UpdateTabContentsStateAt(index, CTTabChangeTypeAll);
+  }
 }
 
 -(void)replaceTabContentsAtIndex:(int)index

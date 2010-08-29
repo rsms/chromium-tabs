@@ -119,8 +119,10 @@ class CTTabStripModel;
 -(int)selectedTabIndex;
 -(CTTabContents*)selectedTabContents;
 -(CTTabContents*)tabContentsAtIndex:(int)index;
+-(int)indexOfTabContents:(CTTabContents*)contents; // -1 if not found
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture;
 -(void)updateTabStateAtIndex:(int)index;
+-(void)updateTabStateForContent:(CTTabContents*)contents;
 -(void)replaceTabContentsAtIndex:(int)index
                  withTabContents:(CTTabContents*)contents;
 -(void)closeTabAtIndex:(int)index makeHistory:(BOOL)makeHistory;
