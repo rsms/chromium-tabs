@@ -36,6 +36,11 @@ class CTTabStripModel;
 +(CTBrowser*)browser;
 +(CTBrowser*)browserWithWindowFrame:(const NSRect)frame;
 
+// Returns the current "main" browser instance, or nil if none. "main" means the
+// browser's window(Controller) is the main window. Useful when there's a need
+// to e.g. add contents to the "best browser from the users perspective".
++ (CTBrowser*)mainBrowser;
+
 // Creates and opens a new window. (retained)
 +(CTBrowser*)openEmptyWindow;
 
@@ -45,6 +50,9 @@ class CTTabStripModel;
 // This is usually enough since all UI which normally is customized is comprised
 // within each tab (CTTabContents view).
 -(CTBrowserWindowController *)createWindowController;
+
+// This should normally _not_ be overridden
+-(void)createWindowControllerInstance;
 
 // Create a new toolbar controller. The default implementation will create a
 // controller loaded with a nib called "Toolbar". If the nib can't be found in
@@ -63,15 +71,20 @@ class CTTabStripModel;
 // Subclasses could override this to provide a custom CTTabContents type.
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents;
 
-// Commands
--(void)newWindow;
--(void)closeWindow;
+// Add blank tab
+-(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTabInForeground:(BOOL)foreground;
+-(CTTabContents*)addBlankTab; // inForeground:YES
+
+// Add tab with contents
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
                       atIndex:(int)index
                  inForeground:(BOOL)foreground;
--(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground;
--(CTTabContents*)addBlankTabInForeground:(BOOL)foreground;
--(CTTabContents*)addBlankTab; // InForeground:YES
+-(CTTabContents*)addTabContents:(CTTabContents*)contents; // inForeground:YES
+
+// Commands
+-(void)newWindow;
+-(void)closeWindow;
 -(void)closeTab;
 -(void)selectNextTab;
 -(void)selectPreviousTab;
@@ -98,6 +111,8 @@ class CTTabStripModel;
 // callbacks
 -(void)loadingStateDidChange:(CTTabContents*)contents;
 -(void)windowDidBeginToClose;
+-(void)windowDidBecomeMain:(NSNotification*)notification;
+-(void)windowDidResignMain:(NSNotification*)notification;
 
 // Convenience helpers (proxy for TabStripModel)
 -(int)tabCount;

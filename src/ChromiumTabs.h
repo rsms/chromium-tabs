@@ -14,3 +14,6 @@
 // Toolbar view and view controller
 #import <ChromiumTabs/CTToolbarView.h>
 #import <ChromiumTabs/CTToolbarController.h>
+
+// Utilities
+#import <ChromiumTabs/CTUtil.h>

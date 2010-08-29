@@ -4,13 +4,13 @@
 
 #import "CTTabContentsController.h"
 #import "CTTabContents.h"
-#import "util.h"
+#import "CTUtil.h"
 
 @implementation CTTabContentsController
 
 - (id)initWithContents:(CTTabContents*)contents {
   // subclasses might override this to load a different nib
-  NSBundle *bundle = [util bundleForResource:@"TabContents" ofType:@"nib"];
+  NSBundle *bundle = [CTUtil bundleForResource:@"TabContents" ofType:@"nib"];
   return [self initWithNibName:@"TabContents" bundle:bundle contents:contents];
 }
 

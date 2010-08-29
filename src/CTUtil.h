@@ -2,15 +2,15 @@
 
 // Framework-local utilities
 
-extern NSBundle *kFrameworkBundle;
-extern NSBundle *kHostBundle; // main bundle -- the hosts' bundle
+extern NSBundle *CTFrameworkBundle;
+extern NSBundle *CTHostBundle; // main bundle -- the hosts' bundle
 
 inline NSString *L10n(NSString *key) {
-  assert(kFrameworkBundle);
-  return [kFrameworkBundle localizedStringForKey:key value:nil table:nil];
+  assert(CTFrameworkBundle);
+  return [CTFrameworkBundle localizedStringForKey:key value:nil table:nil];
 }
 
-@interface util : NSObject {
+@interface CTUtil : NSObject {
 }
 
 +(NSBundle *)bundleForResource:(NSString *)name ofType:(NSString *)ext;

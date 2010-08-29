@@ -40,7 +40,7 @@
   // shorthand to include and evaluate <x> only for debug builds
   #define IFDEBUG(x) do{ x }while(0)
   #define DLOG(...) _LOG('D', __VA_ARGS__)
-  #define DLOG_TRACE() _LOG('D', "%s", __PRETTY_FUNCTION__)
+  #define DLOG_TRACE() _LOG('D', "%s", __func__)
   // log an expression
   #ifdef __OBJC__
     NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);

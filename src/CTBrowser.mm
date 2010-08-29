@@ -5,14 +5,11 @@
 #import "CTBrowserWindowController.h"
 #import "CTTabContentsController.h"
 #import "CTToolbarController.h"
-#import "util.h"
-
-@interface CTBrowser (Private)
--(void)createWindowControllerInstance;
-@end
-
+#import "CTUtil.h"
 
 @implementation CTBrowser
+
+static CTBrowser* _currentMain = nil; // weak
 
 @synthesize windowController = windowController_;
 @synthesize tabStripModel = tabStripModel_;
@@ -42,18 +39,53 @@
 }
 
 
++ (CTBrowser*)mainBrowser {
+  // TODO: synchronization
+  return _currentMain;
+}
+
+
 -(id)init {
   if (!(self = [super init])) return nil;
   tabStripModel_ = new CTTabStripModel(self);
+  if (!_currentMain) {
+    // TODO: synchronization
+    _currentMain = self;
+  }
   return self;
 }
 
 
 -(void)dealloc {
   DLOG("deallocing browser %@", self);
+  if (_currentMain == self)
+    _currentMain = nil;
   delete tabStripModel_;
   [windowController_ release];
   [super dealloc];
+}
+
+
+-(void)finalize {
+  if (_currentMain == self) {
+    // TODO: synchronization
+    _currentMain = nil;
+  }
+  delete tabStripModel_;
+  [super finalize];
+}
+
+
+- (void)windowDidBecomeMain:(NSNotification*)notification {
+  assert([NSThread isMainThread]); // since we don't lock
+  _currentMain = self;
+}
+
+- (void)windowDidResignMain:(NSNotification*)notification {
+  if (_currentMain == self) {
+    assert([NSThread isMainThread]); // since we don't lock
+    _currentMain = nil;
+  }
 }
 
 
@@ -67,15 +99,15 @@
 
 -(CTBrowserWindowController *)createWindowController {
   // subclasses could override this
-  NSString *windowNibPath = [util pathForResource:@"BrowserWindow"
-                                           ofType:@"nib"];
+  NSString *windowNibPath = [CTUtil pathForResource:@"BrowserWindow"
+                                             ofType:@"nib"];
   return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath
                                                         browser:self];
 }
 
 -(CTToolbarController *)createToolbarController {
   // subclasses could override this -- returning nil means no toolbar
-  NSBundle *bundle = [util bundleForResource:@"Toolbar" ofType:@"nib"];
+  NSBundle *bundle = [CTUtil bundleForResource:@"Toolbar" ofType:@"nib"];
   return [[CTToolbarController alloc] initWithNibName:@"Toolbar"
                                                    bundle:bundle
                                                   browser:self];
@@ -124,6 +156,8 @@
 }
 
 -(void)windowDidBeginToClose {
+  if (_currentMain == self)
+    _currentMain = nil;
   tabStripModel_->CloseAllTabs();
 }
 
@@ -168,6 +202,10 @@
   return contents;
 }
 
+-(CTTabContents*)addTabContents:(CTTabContents*)contents {
+  return [self addTabContents:contents atIndex:-1 inForeground:YES];
+}
+
 
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
   // subclasses should override this to provide a custom CTTabContents type
@@ -175,13 +213,8 @@
   return [[CTTabContents alloc] initWithBaseTabContents:baseContents];
 }
 
-
 // implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
-  // Retrieve the window frame which we pass on to 
-  //NSRect frame = [self.windowController.window frame];
-  //frame.origin.x  = frame.origin.y = 0.0;
-  
   CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
   CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
   return [self addTabContents:contents atIndex:index inForeground:foreground];

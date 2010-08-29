@@ -7,7 +7,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CTTabContents.h"
 #import "CTBrowser.h"
-#import "util.h"
+#import "CTUtil.h"
 #import "NSImage+CTAdditions.h"
 
 #import <limits>

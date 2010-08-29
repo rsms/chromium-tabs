@@ -59,7 +59,7 @@
 		3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.mm */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
 		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
-		3A3EDA9E1225EF84009E2908 /* util.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* util.m */; };
+		3A3EDA9E1225EF84009E2908 /* CTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* CTUtil.m */; };
 		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
 		3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED97D1225E116009E2908 /* ChromiumTabs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAD01225FACA009E2908 /* CTTabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF94912235277008A3B8C /* CTTabStripModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -118,6 +118,7 @@
 		3A9291B41229BF0100DA7E43 /* GTMWindowSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6851225CE7A009E2908 /* GTMWindowSheetController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3A9292A21229D43300DA7E43 /* CTUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* CTUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,8 +242,8 @@
 		3A3EDA751225EBBB009E2908 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3A3EDA761225EBBB009E2908 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A3EDA771225EBBB009E2908 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3A3EDA9B1225EF84009E2908 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
-		3A3EDA9C1225EF84009E2908 /* util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = util.m; sourceTree = "<group>"; };
+		3A3EDA9B1225EF84009E2908 /* CTUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTUtil.h; sourceTree = "<group>"; };
+		3A3EDA9C1225EF84009E2908 /* CTUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTUtil.m; sourceTree = "<group>"; };
 		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CTAdditions.h"; sourceTree = "<group>"; };
 		3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
@@ -301,8 +302,8 @@
 				3A1168C31225404F00757641 /* common.h */,
 				3A1168C21225404F00757641 /* common.c */,
 				3A1168C41225404F00757641 /* common.mm */,
-				3A3EDA9B1225EF84009E2908 /* util.h */,
-				3A3EDA9C1225EF84009E2908 /* util.m */,
+				3A3EDA9B1225EF84009E2908 /* CTUtil.h */,
+				3A3EDA9C1225EF84009E2908 /* CTUtil.m */,
 				3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */,
 				3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */,
 				3A1CF94912235277008A3B8C /* CTTabStripModelDelegate.h */,
@@ -566,6 +567,7 @@
 			files = (
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
 				3A928F991228648F00DA7E43 /* common.h in Headers */,
+				3A9292A21229D43300DA7E43 /* CTUtil.h in Headers */,
 				3A3EDAD31225FACA009E2908 /* CTBrowser.h in Headers */,
 				3A9291981229BEB600DA7E43 /* CTPageTransition.h in Headers */,
 				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
@@ -747,7 +749,7 @@
 				3A3ED9E31225E32A009E2908 /* NSWorkspace+Utils.m in Sources */,
 				3A3ED9E41225E32A009E2908 /* GTMNSBezierPath+CGPath.m in Sources */,
 				3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
-				3A3EDA9E1225EF84009E2908 /* util.m in Sources */,
+				3A3EDA9E1225EF84009E2908 /* CTUtil.m in Sources */,
 				3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */,
 				3A929009122947A800DA7E43 /* CTToolbarView.mm in Sources */,
 				3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.mm in Sources */,

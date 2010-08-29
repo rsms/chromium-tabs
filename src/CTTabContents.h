@@ -30,7 +30,7 @@ class CTTabStripModel;
 //               - tabDidResignKey
 //
 
-@interface CTTabContents : NSObject {
+@interface CTTabContents : NSDocument {
   BOOL isApp_;
   BOOL isLoading_;
   BOOL isWaitingForResponse_;
@@ -74,8 +74,12 @@ class CTTabStripModel;
 #pragma mark -
 #pragma mark Callbacks
 
+// Called when this tab may be closing (unless CTBrowser respond no to
+// canCloseTab).
+-(void)closingOfTabDidStart:(CTTabStripModel*)model;
+
 // Called when this tab is closing.
--(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel;
+-(void)tabWillClose;
 
 // The followinf callbacks called when the tab's visible state changes. If you
 // override, be sure and invoke super's implementation. See "Visibility states"

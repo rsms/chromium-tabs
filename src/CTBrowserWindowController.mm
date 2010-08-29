@@ -526,6 +526,25 @@
 }
 
 
+-(void)willStartTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isTeared = YES;
+  }
+}
+
+-(void)willEndTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    contents.isTeared = NO;
+  }
+}
+
+-(void)didEndTearingTab {
+  if (CTTabContents* contents = [browser_ selectedTabContents]) {
+    [contents tabDidResignTeared];
+  }
+}
+
+
 #pragma mark -
 #pragma mark Layout
 
@@ -620,6 +639,10 @@
   // NOTE: if you use custom window bounds saving/restoring, you should probably
   //       save the window bounds here.
 
+  // We forward windowDid{Become,Resign}Main to our browser instance so it can
+  // help the KBrowser class to keep track of the current "main" browser.
+  [browser_ windowDidBecomeMain:notification];
+
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
   [[self window] setViewsNeedDisplay:YES];
@@ -630,6 +653,8 @@
 }
 
 - (void)windowDidResignMain:(NSNotification*)notification {
+  [browser_ windowDidResignMain:notification];
+  
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
   [[self window] setViewsNeedDisplay:YES];
@@ -767,25 +792,6 @@
   return frame;
 }*/
 
-
--(void)willStartTearingTab {
-  if (CTTabContents* contents = [browser_ selectedTabContents]) {
-    contents.isTeared = YES;
-  }
-}
-
--(void)willEndTearingTab {
-  if (CTTabContents* contents = [browser_ selectedTabContents]) {
-    contents.isTeared = NO;
-  }
-}
-
--(void)didEndTearingTab {
-  if (CTTabContents* contents = [browser_ selectedTabContents]) {
-    [contents tabDidResignTeared];
-  }
-}
-
 #pragma mark -
 #pragma mark Etc (need sorting out)
 
@@ -816,13 +822,14 @@
   [self updateToolbarWithContents:newContents shouldRestoreState:!!oldContents];
 }
 
+- (void)tabClosingWithContents:(CTTabContents*)contents
+                       atIndex:(NSInteger)index {
+  [contents tabWillClose];
+}
+
 /*- (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)inForeground {
-  DLOG_TRACE();
-}
-- (void)tabClosingWithContents:(CTTabContents*)contents
-                       atIndex:(NSInteger)index {
   DLOG_TRACE();
 }
 - (void)tabDetachedWithContents:(CTTabContents*)contents

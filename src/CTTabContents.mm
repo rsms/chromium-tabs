@@ -81,6 +81,10 @@
   // subclasses can implement this
 }
 
+// Called when this tab is closing.
+-(void)tabWillClose {
+}
+
 -(void)tabDidBecomeSelected {
   if (isVisible_)
     [[view_ window] makeFirstResponder:view_];

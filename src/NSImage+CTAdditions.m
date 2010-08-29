@@ -1,5 +1,5 @@
 #import "NSImage+CTAdditions.h"
-#import "util.h"
+#import "CTUtil.h"
 
 @implementation NSImage (CTAdditions)
 
@@ -8,14 +8,14 @@
 }
 
 +(NSImage*)imageInAppOrCTFrameworkNamed:(NSString *)name {
-  NSString *path = [kHostBundle pathForImageResource:name];
+  NSString *path = [CTHostBundle pathForImageResource:name];
   if (!path)
-    path = [kFrameworkBundle pathForImageResource:name];
+    path = [CTFrameworkBundle pathForImageResource:name];
   return [self imageWithPath:path];
 }
 
 +(NSImage*)imageInFrameworkNamed:(NSString *)name {
-  return [self imageWithPath:[kFrameworkBundle pathForImageResource:name]];
+  return [self imageWithPath:[CTFrameworkBundle pathForImageResource:name]];
 }
 
 @end
