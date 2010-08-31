@@ -444,12 +444,12 @@ static CTBrowser* _currentMain = nil; // weak
 // CTTabContents. If it returns false, there are no unload listeners and the
 // TabStripModel can close the CTTabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
-  return false;
+  return NO;
 }
 
 // Returns true if a tab can be restored.
 -(BOOL)canRestoreTab {
-  return false;
+  return NO;
 }
 
 // Restores the last closed tab if CanRestoreTab would return true.
@@ -458,12 +458,12 @@ static CTBrowser* _currentMain = nil; // weak
 
 // Returns whether some contents can be closed.
 -(BOOL)canCloseContentsAt:(int)index {
-  return true;
+  return YES;
 }
 
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
-  return true;
+  return YES;
 }
 
 

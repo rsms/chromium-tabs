@@ -122,8 +122,13 @@
                              shouldRestoreState:shouldRestore];
 }
 
+- (void)synchronizeWindowTitleWithDocumentName {
+  // overriding this to not do anything have the effect of not adding a title to
+  // our window (the title is in the tab, remember?)
+}
+
 #pragma mark -
-#pragma mark NSWindow (CTThemed) implementation
+#pragma mark NSWindow (CTThemed)
 
 - (NSPoint)themePatternPhase {
   // Our patterns want to be drawn from the upper left hand corner of the view.
