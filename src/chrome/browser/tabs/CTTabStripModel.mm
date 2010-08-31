@@ -908,7 +908,7 @@ bool CTTabStripModel::IsNewTabAtEndOfTabStrip(CTTabContents* contents) const {
 }
 
 bool CTTabStripModel::InternalCloseTabs(const std::vector<int>& indices,
-                                      uint32 close_types) {
+                                        uint32 close_types) {
   bool retval = true;
 
   // We only try the fast shutdown path if the whole browser process is *not*
