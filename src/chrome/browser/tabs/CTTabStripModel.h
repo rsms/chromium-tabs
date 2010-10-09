@@ -651,7 +651,7 @@ class CTTabStripModel /*: public NotificationObserver*/ {
       CTTabReplaceType type);
 
   // Our delegate.
-  NSObject<CTTabStripModelDelegate>* delegate_;
+  __weak NSObject<CTTabStripModelDelegate>* delegate_;
 
   // A hunk of data representing a CTTabContents and (optionally) the
   // NavigationController that spawned it. This memory only sticks around while

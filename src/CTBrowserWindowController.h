@@ -7,8 +7,14 @@
 @class CTToolbarController;
 class CTTabStripModelObserverBridge;
 
+@interface NSDocumentController (CTBrowserWindowControllerAdditions)
+- (id)openUntitledDocumentWithWindowController:(NSWindowController*)windowController
+                                       display:(BOOL)display
+                                         error:(NSError **)outError;
+@end
+
 @interface CTBrowserWindowController : CTTabWindowController {
-  CTBrowser* browser_;
+  CTBrowser* browser_; // we own the browser
   CTTabStripController *tabStripController_;
   CTTabStripModelObserverBridge *tabStripObserver_;
   CTToolbarController *toolbarController_;
@@ -20,11 +26,25 @@ class CTTabStripModelObserverBridge;
 @property(readonly, nonatomic) CTToolbarController *toolbarController;
 @property(readonly, nonatomic) CTBrowser *browser;
 
+// Returns the current "main" CTBrowserWindowController, or nil if none. "main"
+// means the window controller's window is the main window. Useful when there's
+// a need to e.g. add contents to the "best window from the users perspective".
++ (CTBrowserWindowController*)mainBrowserWindowController;
+
+// alias for [[[isa alloc] init] autorelease]
++ (CTBrowserWindowController*)browserWindowController;
+
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
                     browser:(CTBrowser*)browser;
+- (id)initWithBrowser:(CTBrowser *)browser;
+- (id)init;
 
 // Gets the pattern phase for the window.
 - (NSPoint)themePatternPhase;
+
+- (IBAction)saveAllDocuments:(id)sender;
+- (IBAction)openDocument:(id)sender;
+- (IBAction)newDocument:(id)sender;
 
 // Returns fullscreen state.
 - (BOOL)isFullscreen;

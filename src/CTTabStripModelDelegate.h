@@ -24,9 +24,7 @@
 // be docked as identified by |dock_info|. Returns the CTBrowser object
 // representing the newly created window and tab strip. This does not
 // show the window, it's up to the caller to do so.
--(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents
-                         windowBounds:(const NSRect)windowBounds
-                             maximize:(BOOL)maximize;
+-(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents;
 
 // Creates a new CTBrowser object and window containing the specified
 // |contents|, and continues a drag operation that began within the source

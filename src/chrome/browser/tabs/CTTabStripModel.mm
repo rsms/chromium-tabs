@@ -121,8 +121,7 @@ CTTabStripModel::CTTabStripModel(NSObject<CTTabStripModelDelegate>* delegate)
     : selected_index_(kNoTab),
       closing_all_(false),
       order_controller_(NULL) {
-  delegate_ = [delegate retain];
-  assert(delegate_);
+  delegate_ = delegate; // weak
   // TODO replace with nsnotificationcenter?
   /*registrar_.Add(this,
                  NotificationType::TAB_CONTENTS_DESTROYED,
@@ -136,8 +135,7 @@ CTTabStripModel::~CTTabStripModel() {
   FOR_EACH_OBSERVER(CTTabStripModelObserver, observers_,
                     TabStripModelDeleted());
 
-  [delegate_ release];
-  delegate_ = NULL;
+  delegate_ = NULL; // weak
 
   // Before deleting any phantom tabs remove our notification observers so that
   // we don't attempt to notify our delegate or do any processing.
@@ -195,8 +193,8 @@ void CTTabStripModel::AppendTabContents(CTTabContents* contents, bool foreground
 }
 
 void CTTabStripModel::InsertTabContentsAt(int index,
-                                        CTTabContents* contents,
-                                        int add_types) {
+                                          CTTabContents* contents,
+                                          int add_types) {
   bool foreground = add_types & ADD_SELECTED;
   // Force app tabs to be pinned.
   bool pin = contents.isApp || add_types & ADD_PINNED;

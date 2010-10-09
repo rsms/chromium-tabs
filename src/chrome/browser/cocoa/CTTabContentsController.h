@@ -20,7 +20,7 @@ class CTTabStripModel;
 
 @interface CTTabContentsController : NSViewController {
  @private
-  CTTabContents* contents_;  // weak
+  __weak CTTabContents* contents_;  // weak
 
   IBOutlet NSSplitView* contentsContainer_;
 }

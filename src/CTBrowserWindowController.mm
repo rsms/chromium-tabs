@@ -6,10 +6,10 @@
 #import "CTTabView.h"
 #import "CTTabStripView.h"
 #import "CTToolbarController.h"
+#import "CTUtil.h"
 #import "fast_resize_view.h"
 
 #import "scoped_nsdisable_screen_updates.h"
-
 
 @interface NSWindow (ThingsThatMightBeImplemented)
 -(void)setShouldHideTitle:(BOOL)y;
@@ -25,12 +25,44 @@
                          width:(CGFloat)width;
 @end
 
+@implementation NSDocumentController (CTBrowserWindowControllerAdditions)
+- (id)openUntitledDocumentWithWindowController:(NSWindowController*)windowController
+                                       display:(BOOL)display
+                                         error:(NSError **)outError {
+  // default implementation
+  return [self openUntitledDocumentAndDisplay:display error:outError];
+}
+@end
+
+static CTBrowserWindowController* _currentMain = nil; // weak
+
 @implementation CTBrowserWindowController
 
 @synthesize tabStripController = tabStripController_;
 @synthesize toolbarController = toolbarController_;
 @synthesize browser = browser_;
 
+
+/*- (id)retain {
+  self = [super retain];
+  NSLog(@"%@  did retain  (retainCount: %u)", self, [self retainCount]);
+  NSLog(@"%@", [NSThread callStackSymbols]);
+  return self;
+}
+
+- (void)release {
+  NSLog(@"%@ will release (retainCount: %u)", self, [self retainCount]);
+  NSLog(@"%@", [NSThread callStackSymbols]);
+  [super release];
+}*/
+
++ (CTBrowserWindowController*)browserWindowController {
+  return [[[self alloc] init] autorelease];
+}
+
++ (CTBrowserWindowController*)mainBrowserWindowController {
+  return _currentMain;
+}
 
 // Load the browser window nib and do initialization. Note that the nib also
 // sets this controller up as the window's delegate.
@@ -42,7 +74,7 @@
   // Set initialization boolean state so subroutines can act accordingly
   initializing_ = YES;
 
-  // Keep a reference to the browser
+  // Our browser
   browser_ = [browser retain];
 
   // Observe tabs
@@ -76,16 +108,44 @@
   if (toolbarController_) {
     [[[self window] contentView] addSubview:[toolbarController_ view]];
   }
-  
+
+  // When using NSDocuments
+  [self setShouldCloseDocument:YES];
+
   [self layoutSubviews];
 
   initializing_ = NO;
+  if (!_currentMain) {
+    // TODO: synchronization
+    _currentMain = self;
+  }
   return self;
+}
+
+
+- (id)initWithBrowser:(CTBrowser *)browser {
+  // subclasses could override this to provie a custom nib
+  NSString *windowNibPath = [CTUtil pathForResource:@"BrowserWindow"
+                                             ofType:@"nib"];
+  return [self initWithWindowNibPath:windowNibPath browser:browser];
+}
+
+
+- (id)init {
+  // subclasses could override this to provide a custom |CTBrowser|
+  return [self initWithBrowser:[CTBrowser browser]];
 }
 
 
 -(void)dealloc {
   DLOG("dealloc window controller");
+  //[self finalize];
+  if (_currentMain == self) {
+    // TODO: synchronization
+    _currentMain = nil;
+  }
+  delete tabStripObserver_;
+  
   // Close all tabs
   //[browser_ closeAllTabs]; // TODO
 
@@ -98,8 +158,21 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
   [browser_ release];
-  delete tabStripObserver_;
+  [tabStripController_ release];
+  [toolbarController_ release];
   [super dealloc];
+}
+
+
+-(void)finalize {
+  if (_currentMain == self) {
+    // TODO: synchronization
+    _currentMain = nil;
+  }
+  NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
+  //NSLog(@"%@", [NSThread callStackSymbols]);
+  delete tabStripObserver_;
+  [super finalize];
 }
 
 
@@ -156,6 +229,30 @@
 
 #pragma mark -
 #pragma mark Actions
+
+
+- (IBAction)saveAllDocuments:(id)sender {
+  [[NSDocumentController sharedDocumentController] saveAllDocuments:sender];
+}
+- (IBAction)openDocument:(id)sender {
+  [[NSDocumentController sharedDocumentController] openDocument:sender];
+}
+
+- (IBAction)newDocument:(id)sender {
+  NSDocumentController* docController =
+      [NSDocumentController sharedDocumentController];
+  NSError *error;
+  if (![docController openUntitledDocumentWithWindowController:self display:YES error:&error]) {
+    [NSApp presentError:error];
+  }
+}
+
+- (IBAction)newWindow:(id)sender {
+  CTBrowserWindowController* windowController =
+      [[isa browserWindowController] retain];
+  [windowController newDocument:sender];
+  [windowController showWindow:self];
+}
 
 
 // Called when the user picks a menu or toolbar item when this window is key.
@@ -315,23 +412,22 @@
   // up during creation of the new window.
   tabStripModel->DetachTabContentsAt(index);
 
-  // Create the new window with a single tab in its model, the one being
-  // dragged.
-  //DockInfo dockInfo;
+  // Create the new browser with a single tab in its model, the one being
+  // dragged. Note that we do not retain the (autoreleased) reference since the
+  // new browser will be owned by a window controller (created later)
   CTBrowser* newBrowser =
-      [tabStripModel->delegate() createNewStripWithContents:contents
-                                               windowBounds:windowRect
-                                                   maximize:false];
-  //CreateNewStripWithContents(contents, windowRect, dockInfo, false);
+      [tabStripModel->delegate() createNewStripWithContents:contents];
+
+  // Create a new window controller with the browser.
+  CTBrowserWindowController* controller =
+      [[CTBrowserWindowController alloc] initWithBrowser:newBrowser];
+
+  // Set window frame
+  [controller.window setFrame:windowRect display:NO];
 
   // Propagate the tab pinned state of the new tab (which is the only tab in
   // this new window).
   [newBrowser tabStripModel]->SetTabPinned(0, isPinned);
-
-  // Get the new controller by asking the new window for its delegate.
-  CTBrowserWindowController* controller =
-      reinterpret_cast<CTBrowserWindowController*>([newBrowser.window delegate]);
-  assert(controller && [controller isKindOfClass:[CTTabWindowController class]]);
 
   // Force the added tab to the right size (remove stretching.)
   tabRect.size.height = [CTTabStripController defaultTabHeight];
@@ -631,6 +727,8 @@
     // tab strip is empty we'll be called back again.
     [[self window] orderOut:self];
     [browser_ windowDidBeginToClose];
+    if (_currentMain == self)
+      _currentMain = nil;
     return NO;
   }
 
@@ -639,14 +737,18 @@
 }
 
 
+- (void)windowWillClose:(NSNotification *)notification {
+  [self autorelease];
+}
+
+
 // Called right after our window became the main window.
 - (void)windowDidBecomeMain:(NSNotification*)notification {
   // NOTE: if you use custom window bounds saving/restoring, you should probably
   //       save the window bounds here.
 
-  // We forward windowDid{Become,Resign}Main to our browser instance so it can
-  // help the KBrowser class to keep track of the current "main" browser.
-  [browser_ windowDidBecomeMain:notification];
+  assert([NSThread isMainThread]); // since we don't lock
+  _currentMain = self;
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
@@ -658,8 +760,11 @@
 }
 
 - (void)windowDidResignMain:(NSNotification*)notification {
-  [browser_ windowDidResignMain:notification];
-  
+  if (_currentMain == self) {
+    assert([NSThread isMainThread]); // since we don't lock
+    _currentMain = nil;
+  }
+
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
   [[self window] setViewsNeedDisplay:YES];
@@ -865,7 +970,7 @@
 }*/
 
 - (void)tabStripEmpty {
-  [browser_ closeWindow];
+  [self close];
 }
 
 

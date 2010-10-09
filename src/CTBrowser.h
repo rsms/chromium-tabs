@@ -20,7 +20,7 @@ class CTTabStripModel;
 
 @interface CTBrowser : NSObject <CTTabStripModelDelegate> {
   CTTabStripModel *tabStripModel_;
-  CTBrowserWindowController *windowController_;
+  __weak CTBrowserWindowController *windowController_;
 }
 
 // The tab strip model
@@ -32,36 +32,26 @@ class CTTabStripModel;
 // The window. Convenience for [windowController window]
 @property(readonly, nonatomic) NSWindow* window;
 
-// Create a new browser with a window. (autoreleased)
+// Create a new browser with a window.
+// @autoreleased
 +(CTBrowser*)browser;
-+(CTBrowser*)browserWithWindowFrame:(const NSRect)frame;
 
-// Returns the current "main" browser instance, or nil if none. "main" means the
-// browser's window(Controller) is the main window. Useful when there's a need
-// to e.g. add contents to the "best browser from the users perspective".
-+ (CTBrowser*)mainBrowser;
+// Initialize a new browser as the child of windowController
+-(id)initWithWindowController:(CTBrowserWindowController*)windowController;
 
-// Creates and opens a new window. (retained)
-+(CTBrowser*)openEmptyWindow;
-
-// Create a new window controller. The default implementation will create a
-// controller loaded with a nib called "BrowserWindow". If the nib can't be
-// found in the main bundle, a fallback nib will be loaded from the framework.
-// This is usually enough since all UI which normally is customized is comprised
-// within each tab (CTTabContents view).
--(CTBrowserWindowController *)createWindowController;
-
-// This should normally _not_ be overridden
--(void)createWindowControllerInstance;
+// alias for [initWithWindowController:[self createWindowController]]
+-(id)init;
 
 // Create a new toolbar controller. The default implementation will create a
 // controller loaded with a nib called "Toolbar". If the nib can't be found in
 // the main bundle, a fallback nib will be loaded from the framework.
 // Returning nil means there is no toolbar.
+// @autoreleased
 -(CTToolbarController *)createToolbarController;
 
 // Create a new tab contents controller. Override this to provide a custom
 // CTTabContentsController subclass.
+// @autoreleased
 -(CTTabContentsController*)createTabContentsControllerWithContents:
     (CTTabContents*)contents;
 
@@ -69,6 +59,7 @@ class CTTabStripModel;
 // |baseContents| represents the CTTabContents which is currently in the
 // foreground. It might be nil.
 // Subclasses could override this to provide a custom CTTabContents type.
+// @autoreleased
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents;
 
 // Add blank tab
@@ -82,7 +73,7 @@ class CTTabStripModel;
                  inForeground:(BOOL)foreground;
 -(CTTabContents*)addTabContents:(CTTabContents*)contents; // inForeground:YES
 
-// Commands
+// Commands -- TODO: move to CTBrowserWindowController
 -(void)newWindow;
 -(void)closeWindow;
 -(void)closeTab;
@@ -111,8 +102,6 @@ class CTTabStripModel;
 // callbacks
 -(void)loadingStateDidChange:(CTTabContents*)contents;
 -(void)windowDidBeginToClose;
--(void)windowDidBecomeMain:(NSNotification*)notification;
--(void)windowDidResignMain:(NSNotification*)notification;
 
 // Convenience helpers (proxy for TabStripModel)
 -(int)tabCount;

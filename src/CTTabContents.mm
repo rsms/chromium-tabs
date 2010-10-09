@@ -2,6 +2,9 @@
 #import "CTTabStripModel.h"
 #import "CTBrowser.h"
 
+const NSString* CTTabContentsDidCloseNotification =
+    @"CTTabContentsDidCloseNotification";
+
 @implementation CTTabContents
 
 // Custom @synthesize which invokes [browser_ updateTabStateForContent:self]
@@ -39,6 +42,7 @@ _synthRetain(NSImage*, Icon, icon);
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
   // subclasses should probably override this
+  self.parentOpener = baseContents;
   return [super init];
 }
 
@@ -55,6 +59,36 @@ _synthRetain(NSImage*, Icon, icon);
 -(BOOL)hasIcon {
   return YES;
 }
+
+
+- (CTTabContents*)parentOpener {
+  return parentOpener_;
+}
+
+- (void)setParentOpener:(CTTabContents*)parentOpener {
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  if (parentOpener_) {
+    [nc removeObserver:self
+                  name:CTTabContentsDidCloseNotification
+                object:parentOpener_];
+  }
+  parentOpener_ = parentOpener; // weak
+  if (parentOpener_) {
+    [nc addObserver:self
+           selector:@selector(tabContentsDidClose:)
+               name:CTTabContentsDidCloseNotification
+             object:parentOpener_];
+  }
+}
+
+- (void)tabContentsDidClose:(NSNotification*)notification {
+  // detach (NULLify) our parentOpener_ when it closes
+  CTTabContents* tabContents = [notification object];
+  if (tabContents == parentOpener_) {
+    parentOpener_ = nil;
+  }
+}
+
 
 -(void)setIsVisible:(BOOL)visible {
   if (isVisible_ != visible && !isTeared_) {
@@ -102,24 +136,25 @@ _synthRetain(NSImage*, Icon, icon);
 }
 
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
-  // subclasses can implement this
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  [nc postNotificationName:CTTabContentsDidCloseNotification object:self];
 }
 
 // Called when this tab was inserted into a browser
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
                    inForeground:(bool)foreground {
-  self.browser = browser;
+  browser_ = browser;
 }
 
 // Called when this tab is about to close
 - (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
-  self.browser = nil;
+  browser_ = nil;
 }
 
 // Called when this tab was removed from a browser
 - (void)tabDidDetachFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
-  self.browser = nil;
+  browser_ = nil;
 }
 
 -(void)tabDidBecomeSelected {

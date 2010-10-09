@@ -15,7 +15,8 @@ CTTabStripModelObserverBridge::CTTabStripModelObserverBridge(CTTabStripModel* mo
 
 CTTabStripModelObserverBridge::~CTTabStripModelObserverBridge() {
   // Remove ourselves from receiving notifications.
-  model_->RemoveObserver(this);
+  if (model_)
+    model_->RemoveObserver(this);
 }
 
 void CTTabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,

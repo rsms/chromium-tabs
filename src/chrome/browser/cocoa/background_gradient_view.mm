@@ -39,13 +39,15 @@ static NSGradient *_gradientNotFaded = nil;
 static NSColor* kDefaultColorToolbarStroke = nil;
 static NSColor* kDefaultColorToolbarStrokeInactive = nil;
 
-+ (void)initialize {
++ (void)load {
+  NSAutoreleasePool* pool = [NSAutoreleasePool new];
   _gradientFaded = _mkGradient(true);
   _gradientNotFaded = _mkGradient(false);
   kDefaultColorToolbarStroke =
-    [[NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0] retain];
+    [NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0];
   kDefaultColorToolbarStrokeInactive =
-    [[NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0] retain];
+    [NSColor colorWithCalibratedWhite: 0x7b / 0xff alpha:1.0];
+  [pool drain];
 }
 
 - (id)initWithFrame:(NSRect)frameRect {

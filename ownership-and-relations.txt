@@ -1,0 +1,30 @@
+
+CTBrowserWindowController
+  CTTabStripController
+    CTTabStripView
+    TabContentsController[] # NSViewController for the contents of a tab
+      weak:CTTabContents contents_
+    TabController[] # NSViewController for a tab in the tab strip
+      weak:id<CTTabControllerTarget> target_
+    GTMWindowSheetController sheetController_
+    weak:CTTabContents currentTab_
+    weak:CTBrowser browser_
+    weak:CTTabStripModel tabStripModel_
+  CTTabStripModelObserverBridge
+    weak:id controller_ # owns this
+    weak:CTTabStripModel model_
+  CTToolbarController
+    weak:CTBrowser browser_
+  CTBrowser browser_
+    CTTabStripModel
+      TabContentsData[]
+        CTTabContents
+          NSView view_
+          weak: CTBrowser browser_
+          weak: CTTabContents parentOpener_
+      CTTabStripModelOrderController
+        weak:CTTabStripModel tabStripModel_
+      CTTabStripModelObserver[]
+      weak:NSObject<CTTabStripModelDelegate> delegate_
+    weak:CTBrowserWindowController *windowController_
+    

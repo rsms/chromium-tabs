@@ -259,13 +259,15 @@ private:
 
 @synthesize indentForControls = indentForControls_;
 
-+(void)initialize {
++ (void)load {
+  NSAutoreleasePool* pool = [NSAutoreleasePool new];
   #define PIMG(name) [[NSImage imageInAppOrCTFrameworkNamed:name] retain]
   kNewTabHoverImage = PIMG(@"newtab_h.pdf");
   kNewTabImage = PIMG(@"newtab.pdf");
   kNewTabPressedImage = PIMG(@"newtab_p.pdf");
   kDefaultIconImage = PIMG(@"default-icon");
   #undef PIMG
+  [pool drain];
 }
 
 - (id)initWithView:(CTTabStripView*)view
@@ -1151,6 +1153,7 @@ private:
     image = defaultFavIcon_.get();
   NSRect frame = NSMakeRect(0, 0, kIconWidthAndHeight, kIconWidthAndHeight);
   NSImageView* view = [[[NSImageView alloc] initWithFrame:frame] autorelease];
+  //DLOG_EXPR(image);
   [view setImage:image];
   return view;
 }

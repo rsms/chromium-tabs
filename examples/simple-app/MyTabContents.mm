@@ -4,7 +4,7 @@
 @implementation MyTabContents
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
-  if (!(self = [super init])) return nil;
+  if (!(self = [super initWithBaseTabContents:baseContents])) return nil;
 
   // Setup our contents -- a scrolling text view
 

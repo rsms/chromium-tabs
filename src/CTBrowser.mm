@@ -9,48 +9,39 @@
 
 @implementation CTBrowser
 
-static CTBrowser* _currentMain = nil; // weak
-
 @synthesize windowController = windowController_;
 @synthesize tabStripModel = tabStripModel_;
 
 
-+(CTBrowser*)browser {
-  CTBrowser *browser = [[[self alloc] init] autorelease];
-  [browser createWindowControllerInstance];
-  // TODO: post notification browserReady:self ?
-  return browser;
+/*- (id)retain {
+  self = [super retain];
+  NSLog(@"%@  did retain  (retainCount: %u)", self, [self retainCount]);
+  NSLog(@"%@", [NSThread callStackSymbols]);
+  return self;
+}
+
+- (void)release {
+  NSLog(@"%@ will release (retainCount: %u)", self, [self retainCount]);
+  NSLog(@"%@", [NSThread callStackSymbols]);
+  [super release];
+}*/
+
+
++ (CTBrowser*)browser {
+  return [[[self alloc] init] autorelease];
 }
 
 
-+(CTBrowser*)browserWithWindowFrame:(const NSRect)frame {
-  CTBrowser* browser = [self browser];
-  [browser.window setFrame:frame display:NO];
-  return browser;
-}
-
-
-+(CTBrowser*)openEmptyWindow {
-  CTBrowser *browser = [self browser];
-  // reference will live as long as the window lives (until closed)
-  [browser addBlankTabInForeground:YES];
-  [browser.windowController showWindow:self];
-  return browser;
-}
-
-
-+ (CTBrowser*)mainBrowser {
-  // TODO: synchronization
-  return _currentMain;
-}
-
-
--(id)init {
+- (id)init {
   if (!(self = [super init])) return nil;
   tabStripModel_ = new CTTabStripModel(self);
-  if (!_currentMain) {
-    // TODO: synchronization
-    _currentMain = self;
+  return self;
+}
+
+
+- (id)initWithWindowController:(CTBrowserWindowController*)windowController {
+  if ((self = [self init])) {
+    windowController_ = windowController; // weak since it own us
   }
   return self;
 }
@@ -58,8 +49,7 @@ static CTBrowser* _currentMain = nil; // weak
 
 -(void)dealloc {
   DLOG("deallocing browser %@", self);
-  if (_currentMain == self)
-    _currentMain = nil;
+  //[self finalize];
   delete tabStripModel_;
   [windowController_ release];
   [super dealloc];
@@ -67,56 +57,24 @@ static CTBrowser* _currentMain = nil; // weak
 
 
 -(void)finalize {
-  if (_currentMain == self) {
-    // TODO: synchronization
-    _currentMain = nil;
-  }
   delete tabStripModel_;
   [super finalize];
 }
 
 
-- (void)windowDidBecomeMain:(NSNotification*)notification {
-  assert([NSThread isMainThread]); // since we don't lock
-  _currentMain = self;
-}
-
-- (void)windowDidResignMain:(NSNotification*)notification {
-  if (_currentMain == self) {
-    assert([NSThread isMainThread]); // since we don't lock
-    _currentMain = nil;
-  }
-}
-
-
-// private
--(void)createWindowControllerInstance {
-  assert(!windowController_);
-  windowController_ = [self createWindowController];
-  assert(windowController_);
-}
-
-
--(CTBrowserWindowController *)createWindowController {
-  // subclasses could override this
-  NSString *windowNibPath = [CTUtil pathForResource:@"BrowserWindow"
-                                             ofType:@"nib"];
-  return [[CTBrowserWindowController alloc] initWithWindowNibPath:windowNibPath
-                                                        browser:self];
-}
-
 -(CTToolbarController *)createToolbarController {
   // subclasses could override this -- returning nil means no toolbar
   NSBundle *bundle = [CTUtil bundleForResource:@"Toolbar" ofType:@"nib"];
-  return [[CTToolbarController alloc] initWithNibName:@"Toolbar"
+  return [[[CTToolbarController alloc] initWithNibName:@"Toolbar"
                                                    bundle:bundle
-                                                  browser:self];
+                                                  browser:self] autorelease];
 }
 
 -(CTTabContentsController*)createTabContentsControllerWithContents:
     (CTTabContents*)contents {
   // subclasses could override this
-  return [[[CTTabContentsController alloc] initWithContents:contents] autorelease];
+  return [[[CTTabContentsController alloc]
+      initWithContents:contents] autorelease];
 }
 
 
@@ -186,8 +144,6 @@ static CTBrowser* _currentMain = nil; // weak
 }
 
 -(void)windowDidBeginToClose {
-  if (_currentMain == self)
-    _currentMain = nil;
   tabStripModel_->CloseAllTabs();
 }
 
@@ -209,12 +165,19 @@ static CTBrowser* _currentMain = nil; // weak
 #pragma mark Commands
 
 -(void)newWindow {
-  [isa openEmptyWindow];
+  // Create a new browser & window when we start
+  Class cls = self.windowController ? [self.windowController class] :
+                                      [CTBrowserWindowController class];
+  CTBrowser *browser = [isa browser];
+  CTBrowserWindowController* windowController =
+      [[cls alloc] initWithBrowser:browser];
+  [browser addBlankTabInForeground:YES];
+  [windowController showWindow:self];
+  [windowController autorelease];
 }
 
 -(void)closeWindow {
-  [self.window orderOut:self];
-  [self.window performClose:self];  // Autoreleases the controller.
+  [self.windowController close];
 }
 
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
@@ -240,7 +203,8 @@ static CTBrowser* _currentMain = nil; // weak
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
   // subclasses should override this to provide a custom CTTabContents type
   // and/or initialization
-  return [[CTTabContents alloc] initWithBaseTabContents:baseContents];
+  return [[[CTTabContents alloc]
+      initWithBaseTabContents:baseContents] autorelease];
 }
 
 // implementation conforms to CTTabStripModelDelegate
@@ -363,8 +327,6 @@ static CTBrowser* _currentMain = nil; // weak
 
 +(void)executeCommand:(int)cmd {
   switch (cmd) {
-    case CTBrowserCommandNewWindow:
-    case CTBrowserCommandNewTab:    [self openEmptyWindow];  break;
     case CTBrowserCommandExit:      [NSApp terminate:self]; break;
   }
 }
@@ -374,9 +336,7 @@ static CTBrowser* _currentMain = nil; // weak
 #pragma mark CTTabStripModelDelegate protocol implementation
 
 
--(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents
-                         windowBounds:(const NSRect)windowBounds
-                             maximize:(BOOL)maximize {
+-(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents {
   //assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
 
   //gfx::Rect new_window_bounds = window_bounds;
@@ -384,10 +344,9 @@ static CTBrowser* _currentMain = nil; // weak
   //  dock_info.AdjustOtherWindowBounds();
 
   // Create an empty new browser window the same size as the old one.
-  CTBrowser* browser = [isa browserWithWindowFrame:windowBounds];
+  CTBrowser* browser = [isa browser];
   browser.tabStripModel->AppendTabContents(contents, true);
   [browser loadingStateDidChange:contents];
-  [browser.windowController showWindow:self];
 
   // Orig impl:
   //browser->set_override_bounds(new_window_bounds);
@@ -418,12 +377,13 @@ static CTBrowser* _currentMain = nil; // weak
 
 // Returns whether some contents can be duplicated.
 -(BOOL)canDuplicateContentsAt:(int)index {
-  return false;
+  return NO;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
 -(void)duplicateContentsAt:(int)index {
+  NOTIMPLEMENTED();
 }
 
 // Called when a drag session has completed and the frame that initiated the
