@@ -96,10 +96,12 @@ const char *common_strrstr(const char *string, const char *find);
 // utils
 #ifdef __OBJC__
   // exchange dst with src, retaining src and safely releasing old object.
+  //   id old = objc_exch(&foo_, [NSColor redColor]);
   inline id objc_exch(id *dst, id src) {
     id old = *dst;
-    *dst = [src retain];
+    *dst = src;
     if (old) [old release];
+    if (src) [src retain];
     return old;
   }
 #endif // __OBJC__
