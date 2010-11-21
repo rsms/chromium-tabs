@@ -24,6 +24,8 @@ const NSString* CTTabContentsDidCloseNotification =
 
 @synthesize isApp = isApp_;
 
+// setting any of these implies [browser_ updateTabStateForContent:self]
+
 _synthAssign(BOOL, IsLoading, isLoading);
 _synthAssign(BOOL, IsWaitingForResponse, isWaitingForResponse);
 _synthAssign(BOOL, IsCrashed, isCrashed);
