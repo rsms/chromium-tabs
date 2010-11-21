@@ -298,8 +298,11 @@ CTTabContents* CTTabStripModel::DetachTabContentsAt(int index) {
 }
 
 void CTTabStripModel::SelectTabContentsAt(int index, bool user_gesture) {
-  assert(ContainsIndex(index));
-  ChangeSelectedContentsFrom(GetSelectedTabContents(), index, user_gesture);
+  if (ContainsIndex(index)) {
+    ChangeSelectedContentsFrom(GetSelectedTabContents(), index, user_gesture);
+  } else {
+    DLOG("inconsistency: !ContainsIndex(index) in %s", __PRETTY_FUNCTION__);
+  }
 }
 
 void CTTabStripModel::MoveTabContentsAt(int index, int to_position,

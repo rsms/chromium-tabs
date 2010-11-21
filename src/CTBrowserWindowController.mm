@@ -241,7 +241,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (IBAction)newDocument:(id)sender {
   NSDocumentController* docController =
       [NSDocumentController sharedDocumentController];
-  NSError *error;
+  NSError *error = nil;
   if (![docController openUntitledDocumentWithWindowController:self display:YES error:&error]) {
     [NSApp presentError:error];
   }
@@ -651,16 +651,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 - (void)layoutTabContentArea:(NSRect)newFrame {
-  NSView* tabContentView = [self tabContentArea];
-  NSRect tabContentFrame = [tabContentView frame];
-
-  bool contentShifted =
+  FastResizeView* tabContentView = self.tabContentArea;
+  NSRect tabContentFrame = tabContentView.frame;
+  BOOL contentShifted =
       NSMaxY(tabContentFrame) != NSMaxY(newFrame) ||
       NSMinX(tabContentFrame) != NSMinX(newFrame);
-
-  tabContentFrame = newFrame;
+  tabContentFrame.size.height = newFrame.size.height;
   [tabContentView setFrame:tabContentFrame];
-
   // If the relayout shifts the content area up or down, let the renderer know.
   if (contentShifted) {
     if (CTTabContents* contents = [browser_ selectedTabContents]) {

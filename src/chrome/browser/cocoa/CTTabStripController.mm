@@ -1165,12 +1165,20 @@ private:
   if (!contents)
     return;
 
-  static NSImage* throbberWaitingImage =
-      [NSImage imageInAppOrCTFrameworkNamed:@"throbber_waiting"];
-  static NSImage* throbberLoadingImage =
-      [NSImage imageInAppOrCTFrameworkNamed:@"throbber"];
-  static NSImage* sadFaviconImage =
-      [NSImage imageInAppOrCTFrameworkNamed:@"sadfavicon"];
+  static NSImage* throbberWaitingImage = nil;
+  static NSImage* throbberLoadingImage = nil;
+  static NSImage* sadFaviconImage = nil;
+  if (throbberWaitingImage == nil) {
+    throbberWaitingImage =
+        [[NSImage imageInAppOrCTFrameworkNamed:@"throbber_waiting"] retain];
+    assert(throbberWaitingImage);
+    throbberLoadingImage =
+        [[NSImage imageInAppOrCTFrameworkNamed:@"throbber"] retain];
+    assert(throbberLoadingImage);
+    sadFaviconImage =
+        [[NSImage imageInAppOrCTFrameworkNamed:@"sadfavicon"] retain];
+    assert(sadFaviconImage);
+  }
 
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
