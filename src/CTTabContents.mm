@@ -58,6 +58,8 @@ _synthRetain(NSImage*, Icon, icon);
   [self release];
 }
 
+#pragma mark Properties impl.
+
 -(BOOL)hasIcon {
   return YES;
 }
@@ -136,6 +138,22 @@ _synthRetain(NSImage*, Icon, icon);
 -(BOOL)isTeared {
   return isTeared_;
 }
+
+
+#pragma mark Actions
+
+- (void)makeKeyAndOrderFront:(id)sender {
+  if (browser_) {
+    NSWindow *window = browser_.window;
+    if (window)
+      [window makeKeyAndOrderFront:sender];
+    int index = [browser_ indexOfTabContents:self];
+    assert(index > -1); // we should exist in browser
+    [browser_ selectTabAtIndex:index];
+  }
+}
+
+#pragma mark Callbacks
 
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];

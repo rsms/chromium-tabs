@@ -23,24 +23,33 @@ class CTTabStripModelObserverBridge : public CTTabStripModelObserver {
   virtual ~CTTabStripModelObserverBridge();
 
   // Overridden from TabStripModelObserver
+  bool TabInsertedAtOK_;
   virtual void TabInsertedAt(CTTabContents* contents,
                              int index,
                              bool foreground);
+  bool TabClosingAtOK_;
   virtual void TabClosingAt(CTTabContents* contents, int index);
+  bool TabDetachedAtOK_;
   virtual void TabDetachedAt(CTTabContents* contents, int index);
+  bool TabSelectedAtOK_;
   virtual void TabSelectedAt(CTTabContents* old_contents,
                              CTTabContents* new_contents,
                              int index,
                              bool user_gesture);
+  bool TabMovedOK_;
   virtual void TabMoved(CTTabContents* contents,
                         int from_index,
                         int to_index);
+  bool TabChangedAtOK_;
   virtual void TabChangedAt(CTTabContents* contents, int index,
                             CTTabChangeType change_type);
+  bool TabReplacedAtOK_;
   virtual void TabReplacedAt(CTTabContents* old_contents,
                              CTTabContents* new_contents,
                              int index);
+  bool TabMiniStateChangedOK_;
   virtual void TabMiniStateChanged(CTTabContents* contents, int index);
+  bool TabStripEmptyOK_;
   virtual void TabStripEmpty();
 
  private:

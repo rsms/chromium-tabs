@@ -78,6 +78,12 @@ extern const NSString* CTTabContentsDidCloseNotification;
 // Called when the tab should be destroyed (involves some finalization).
 -(void)destroy:(CTTabStripModel*)sender;
 
+#pragma mark Action
+
+// Selects the tab in it's window and brings the window to front
+- (void)makeKeyAndOrderFront:(id)sender;
+
+
 #pragma mark -
 #pragma mark Callbacks
 

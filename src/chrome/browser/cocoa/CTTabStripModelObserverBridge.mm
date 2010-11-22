@@ -11,6 +11,19 @@ CTTabStripModelObserverBridge::CTTabStripModelObserverBridge(CTTabStripModel* mo
   // Register to be a listener on the model so we can get updates and tell
   // |controller_| about them in the future.
   model_->AddObserver(this);
+  
+  // test which messages |controller| accepts
+  #define TEST(sele) [controller_ respondsToSelector:@selector(sele)]
+  TabInsertedAtOK_ = TEST(tabInsertedWithContents:atIndex:inForeground:);
+  TabClosingAtOK_ = TEST(tabClosingWithContents:atIndex:);
+  TabDetachedAtOK_ = TEST(tabDetachedWithContents:atIndex:);
+  TabSelectedAtOK_ = TEST(tabSelectedWithContents:previousContents:atIndex:userGesture:);
+  TabMovedOK_ = TEST(tabMovedWithContents:fromIndex:toIndex:);
+  TabChangedAtOK_ = TEST(tabChangedWithContents:atIndex:changeType:);
+  TabReplacedAtOK_ = TEST(tabReplacedWithContents:oldContents:atIndex:);
+  TabMiniStateChangedOK_ = TEST(tabMiniStateChangedWithContents:atIndex:);
+  TabStripEmptyOK_ = TEST(tabStripEmpty);
+  #undef TEST
 }
 
 CTTabStripModelObserverBridge::~CTTabStripModelObserverBridge() {
@@ -19,11 +32,11 @@ CTTabStripModelObserverBridge::~CTTabStripModelObserverBridge() {
     model_->RemoveObserver(this);
 }
 
+
 void CTTabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
                                                 int index,
                                                 bool foreground) {
-  if ([controller_ respondsToSelector:
-          @selector(tabInsertedWithContents:atIndex:inForeground:)]) {
+  if (TabInsertedAtOK_) {
     [controller_ tabInsertedWithContents:contents
                                  atIndex:index
                             inForeground:foreground];
@@ -32,16 +45,14 @@ void CTTabStripModelObserverBridge::TabInsertedAt(CTTabContents* contents,
 
 void CTTabStripModelObserverBridge::TabClosingAt(CTTabContents* contents,
                                                int index) {
-  if ([controller_ respondsToSelector:
-          @selector(tabClosingWithContents:atIndex:)]) {
+  if (TabClosingAtOK_) {
     [controller_ tabClosingWithContents:contents atIndex:index];
   }
 }
 
 void CTTabStripModelObserverBridge::TabDetachedAt(CTTabContents* contents,
                                                 int index) {
-  if ([controller_ respondsToSelector:
-          @selector(tabDetachedWithContents:atIndex:)]) {
+  if (TabDetachedAtOK_) {
     [controller_ tabDetachedWithContents:contents atIndex:index];
   }
 }
@@ -50,9 +61,7 @@ void CTTabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
                                                 CTTabContents* new_contents,
                                                 int index,
                                                 bool user_gesture) {
-  if ([controller_ respondsToSelector:
-          @selector(tabSelectedWithContents:previousContents:atIndex:
-                    userGesture:)]) {
+  if (TabSelectedAtOK_) {
     [controller_ tabSelectedWithContents:new_contents
                         previousContents:old_contents
                                  atIndex:index
@@ -63,8 +72,7 @@ void CTTabStripModelObserverBridge::TabSelectedAt(CTTabContents* old_contents,
 void CTTabStripModelObserverBridge::TabMoved(CTTabContents* contents,
                                            int from_index,
                                            int to_index) {
-  if ([controller_ respondsToSelector:
-       @selector(tabMovedWithContents:fromIndex:toIndex:)]) {
+  if (TabMovedOK_) {
     [controller_ tabMovedWithContents:contents
                             fromIndex:from_index
                               toIndex:to_index];
@@ -74,8 +82,7 @@ void CTTabStripModelObserverBridge::TabMoved(CTTabContents* contents,
 void CTTabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
                                                int index,
                                                CTTabChangeType change_type) {
-  if ([controller_ respondsToSelector:
-          @selector(tabChangedWithContents:atIndex:changeType:)]) {
+  if (TabChangedAtOK_) {
     [controller_ tabChangedWithContents:contents
                                 atIndex:index
                              changeType:change_type];
@@ -85,23 +92,22 @@ void CTTabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
 void CTTabStripModelObserverBridge::TabReplacedAt(CTTabContents* old_contents,
                                                 CTTabContents* new_contents,
                                                 int index) {
-  if ([controller_ respondsToSelector:
-          @selector(tabReplacedWithContents:oldContents:atIndex:)]) {
+  if (TabReplacedAtOK_) {
     [controller_ tabReplacedWithContents:new_contents
                              oldContents:old_contents
                                  atIndex:index];
   }
+  TabChangedAt(new_contents, index, CTTabChangeTypeAll);
 }
 
 void CTTabStripModelObserverBridge::TabMiniStateChanged(CTTabContents* contents,
                                                       int index) {
-  if ([controller_ respondsToSelector:
-          @selector(tabMiniStateChangedWithContents:atIndex:)]) {
+  if (TabMiniStateChangedOK_) {
     [controller_ tabMiniStateChangedWithContents:contents atIndex:index];
   }
 }
 
 void CTTabStripModelObserverBridge::TabStripEmpty() {
-  if ([controller_ respondsToSelector:@selector(tabStripEmpty)])
+  if (TabStripEmptyOK_)
     [controller_ tabStripEmpty];
 }

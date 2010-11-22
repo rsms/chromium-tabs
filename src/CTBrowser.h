@@ -20,6 +20,9 @@ class CTTabStripModel;
 
 @interface CTBrowser : NSObject <CTTabStripModelDelegate> {
   CTTabStripModel *tabStripModel_;
+@public
+  // Important: Don't ever change this value from user code. It's public just
+  // so that the internal machinery can set it at the appropriate time.
   __weak CTBrowserWindowController *windowController_;
 }
 
@@ -39,7 +42,7 @@ class CTTabStripModel;
 // Initialize a new browser as the child of windowController
 -(id)initWithWindowController:(CTBrowserWindowController*)windowController;
 
-// alias for [initWithWindowController:[self createWindowController]]
+// init
 -(id)init;
 
 // Create a new toolbar controller. The default implementation will create a

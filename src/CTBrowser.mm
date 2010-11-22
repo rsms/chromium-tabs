@@ -33,8 +33,9 @@
 
 
 - (id)init {
-  if (!(self = [super init])) return nil;
-  tabStripModel_ = new CTTabStripModel(self);
+  if ((self = [super init])) {
+    tabStripModel_ = new CTTabStripModel(self);
+  }
   return self;
 }
 

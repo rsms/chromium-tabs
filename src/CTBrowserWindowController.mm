@@ -76,6 +76,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Our browser
   browser_ = [browser retain];
+  browser_->windowController_ = self;
 
   // Observe tabs
   tabStripObserver_ = 
