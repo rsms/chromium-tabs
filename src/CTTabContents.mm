@@ -24,7 +24,7 @@ const NSString* CTTabContentsDidCloseNotification =
 
 @synthesize isApp = isApp_;
 
-// setting any of these implies [browser_ updateTabStateForContent:self]
+// changing any of these implies [browser_ updateTabStateForContent:self]
 
 _synthAssign(BOOL, IsLoading, isLoading);
 _synthAssign(BOOL, IsWaitingForResponse, isWaitingForResponse);
@@ -146,6 +146,13 @@ _synthRetain(NSImage*, Icon, icon);
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
                    inForeground:(bool)foreground {
+  browser_ = browser;
+}
+
+// Called when this tab replaced another tab
+- (void)tabReplaced:(CTTabContents*)oldContents
+          inBrowser:(CTBrowser*)browser
+            atIndex:(NSInteger)index {
   browser_ = browser;
 }
 

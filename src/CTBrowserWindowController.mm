@@ -945,6 +945,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
+- (void)tabReplacedWithContents:(CTTabContents*)contents
+                    oldContents:(CTTabContents*)oldContents
+                        atIndex:(NSInteger)index {
+  [contents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
+}
+
+
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index {
   [contents tabDidDetachFromBrowser:browser_ atIndex:index];
@@ -958,7 +965,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 - (void)tabChangedWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index
-                    changeType:(TabChangeType)change {
+                    changeType:(CTTabChangeType)change {
   DLOG_TRACE();
 }
 - (void)tabMiniStateChangedWithContents:(CTTabContents*)contents

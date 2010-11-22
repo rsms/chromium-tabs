@@ -594,10 +594,10 @@ int CTTabStripModel::GetNonPhantomTabCount() const {
   return count();
 }
 
-void CTTabStripModel::AddTabContents(CTTabContents* contents,
-                                   int index,
-                                   CTPageTransition transition,
-                                   int add_types) {
+int CTTabStripModel::AddTabContents(CTTabContents* contents,
+                                    int index,
+                                    CTPageTransition transition,
+                                    int add_types) {
   // If the newly-opened tab is part of the same task as the parent tab, we want
   // to inherit the parent's "group" attribute, so that if this tab is then
   // closed we'll jump back to the parent tab.
@@ -657,6 +657,8 @@ void CTTabStripModel::AddTabContents(CTTabContents* contents,
       contents->HideContents();
     }
   }*/
+  
+  return index;
 }
 
 void CTTabStripModel::CloseSelectedTab() {

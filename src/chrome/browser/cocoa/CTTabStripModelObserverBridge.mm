@@ -85,7 +85,12 @@ void CTTabStripModelObserverBridge::TabChangedAt(CTTabContents* contents,
 void CTTabStripModelObserverBridge::TabReplacedAt(CTTabContents* old_contents,
                                                 CTTabContents* new_contents,
                                                 int index) {
-  TabChangedAt(new_contents, index, CTTabChangeTypeAll);
+  if ([controller_ respondsToSelector:
+          @selector(tabReplacedWithContents:oldContents:atIndex:)]) {
+    [controller_ tabReplacedWithContents:new_contents
+                             oldContents:old_contents
+                                 atIndex:index];
+  }
 }
 
 void CTTabStripModelObserverBridge::TabMiniStateChanged(CTTabContents* contents,

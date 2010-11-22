@@ -186,8 +186,8 @@
   //tabStripModel_->AppendTabContents(contents, foreground);
   int addTypes = foreground ? CTTabStripModel::ADD_SELECTED :
                               CTTabStripModel::ADD_NONE;
-  tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
-                                 addTypes);
+  index = tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
+                                         addTypes);
   if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
     // TabStripModel::AddTabContents invokes HideContents if not foreground.
     contents.isVisible = NO;

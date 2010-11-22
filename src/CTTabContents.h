@@ -90,6 +90,10 @@ extern const NSString* CTTabContentsDidCloseNotification;
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
                    inForeground:(bool)foreground;
+// Called when this tab replaced another tab
+- (void)tabReplaced:(CTTabContents*)oldContents
+          inBrowser:(CTBrowser*)browser
+            atIndex:(NSInteger)index;
 // Called when this tab is about to close
 - (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index;
 // Called when this tab was removed from a browser

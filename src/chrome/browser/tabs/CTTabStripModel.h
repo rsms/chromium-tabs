@@ -506,10 +506,10 @@ class CTTabStripModel /*: public NotificationObserver*/ {
   // specified insertion index, transition, etc. |add_types| is a bitmask of
   // AddTypes; see it for details. This method ends up calling into
   // InsertTabContentsAt to do the actual inertion.
-  void AddTabContents(CTTabContents* contents,
-                      int index,
-                      CTPageTransition transition,
-                      int add_types);
+  int AddTabContents(CTTabContents* contents,
+                     int index,
+                     CTPageTransition transition,
+                     int add_types);
 
   // Closes the selected CTTabContents.
   void CloseSelectedTab();

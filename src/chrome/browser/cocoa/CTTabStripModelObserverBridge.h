@@ -55,6 +55,9 @@ class CTTabStripModelObserverBridge : public CTTabStripModelObserver {
 - (void)tabInsertedWithContents:(CTTabContents*)contents
                       atIndex:(NSInteger)index
                  inForeground:(bool)inForeground;
+- (void)tabReplacedWithContents:(CTTabContents*)contents
+                    oldContents:(CTTabContents*)oldContents
+                        atIndex:(NSInteger)index;
 - (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index;
 - (void)tabDetachedWithContents:(CTTabContents*)contents
