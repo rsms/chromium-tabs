@@ -52,7 +52,6 @@
   DLOG("deallocing browser %@", self);
   //[self finalize];
   delete tabStripModel_;
-  [windowController_ release];
   [super dealloc];
 }
 

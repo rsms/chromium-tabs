@@ -79,7 +79,7 @@
 
 // log an error and exit when reaching unimplemented parts
 #import <err.h>
-#define NOTIMPLEMENTED() errx(4, "Not implemented reached in %s (%s:%d)", \
+#define NOTIMPLEMENTED() errx(4, "[not implemented] %s (%s:%d)", \
                               __PRETTY_FUNCTION__, __SRC_FILENAME__, __LINE__)
 
 #define NOTREACHED() assert(false && "Should not have been reached")

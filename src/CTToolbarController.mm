@@ -41,6 +41,29 @@
 - (void)awakeFromNib {
 }
 
+#pragma mark -
+#pragma mark URLDropTargetController protocol impl
+
+- (void)dropURLs:(NSArray*)urls inView:(NSView*)view at:(NSPoint)point {
+  // subclasses should implement this
+  NOTIMPLEMENTED();
+}
+
+
+- (void)indicateDropURLsInView:(NSView*)view at:(NSPoint)point {
+  // Do nothing.
+}
+
+
+- (void)hideDropURLsIndicatorInView:(NSView*)view {
+  // Do nothing.
+}
+
+
+- (id)customFieldEditorForObject:(id)obj {
+  return nil;
+}
+
 
 #pragma mark -
 #pragma mark Private

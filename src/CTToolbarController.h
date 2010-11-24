@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
-#include "scoped_ptr.h"
-#include "scoped_nsobject.h"
+#import "scoped_ptr.h"
+#import "scoped_nsobject.h"
+#import "url_drop_target.h"
 
 @class CTBrowser;
 @class CTTabContents;
@@ -19,7 +20,7 @@
 // 3. Implement createToolbarController in your CTBrowser subclass to initialize
 //    and return a CTToolbarController based on your nib.
 //
-@interface CTToolbarController : NSViewController {
+@interface CTToolbarController : NSViewController<URLDropTargetController> {
   __weak CTBrowser* browser_;  // weak, one per window
  @private
   // Tracking area for mouse enter/exit/moved in the toolbar.
@@ -38,5 +39,12 @@
 // update the toolbar's state.
 - (void)updateToolbarWithContents:(CTTabContents*)contents
                shouldRestoreState:(BOOL)shouldRestore;
+
+// Called by the Window delegate so we can provide a custom field editor if
+// needed.
+// Note that this may be called for objects unrelated to the toolbar.
+// returns nil if we don't want to override the custom field editor for |obj|.
+// The default implementation returns nil
+- (id)customFieldEditorForObject:(id)obj;
 
 @end
