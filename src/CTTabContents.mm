@@ -1,6 +1,7 @@
 #import "CTTabContents.h"
 #import "CTTabStripModel.h"
 #import "CTBrowser.h"
+#import "KVOChangeScope.hh"
 
 const NSString* CTTabContentsDidCloseNotification =
     @"CTTabContentsDidCloseNotification";
@@ -22,24 +23,39 @@ const NSString* CTTabContentsDidCloseNotification =
   if (browser_) [browser_ updateTabStateForContent:self]; \
 }
 
-@synthesize isApp = isApp_;
-
 // changing any of these implies [browser_ updateTabStateForContent:self]
 
 _synthAssign(BOOL, IsLoading, isLoading);
 _synthAssign(BOOL, IsWaitingForResponse, isWaitingForResponse);
 _synthAssign(BOOL, IsCrashed, isCrashed);
 
-@synthesize delegate = delegate_;
-@synthesize closedByUserGesture = closedByUserGesture_;
-@synthesize view = view_;
-
 _synthRetain(NSString*, Title, title);
 _synthRetain(NSImage*, Icon, icon);
 
+@synthesize delegate = delegate_;
+@synthesize closedByUserGesture = closedByUserGesture_;
+@synthesize view = view_;
+@synthesize isApp = isApp_;
 @synthesize browser = browser_;
 
 #undef _synth
+
+
+// KVO support
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString*)key {
+  if ([key isEqualToString:@"isLoading"] ||
+      [key isEqualToString:@"isWaitingForResponse"] ||
+      [key isEqualToString:@"isCrashed"] ||
+      [key isEqualToString:@"isVisible"] ||
+      [key isEqualToString:@"title"] ||
+      [key isEqualToString:@"icon"] ||
+      [key isEqualToString:@"parentOpener"] ||
+      [key isEqualToString:@"isSelected"] ||
+      [key isEqualToString:@"isTeared"]) {
+    return YES;
+  }
+  return [super automaticallyNotifiesObserversForKey:key];
+}
 
 
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents {
@@ -76,7 +92,8 @@ _synthRetain(NSImage*, Icon, icon);
                   name:CTTabContentsDidCloseNotification
                 object:parentOpener_];
   }
-  parentOpener_ = parentOpener; // weak
+  kvo_change(parentOpener)
+    parentOpener_ = parentOpener; // weak
   if (parentOpener_) {
     [nc addObserver:self
            selector:@selector(tabContentsDidClose:)

@@ -493,9 +493,19 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
+- (int)selectedTabIndex {
+  return [browser_ tabStripModel]->selected_index();
+}
+
+
+- (CTTabContents*)selectedTabContents {
+  return [browser_ tabStripModel]->GetSelectedTabContents();
+}
+
+
 - (NSString*)selectedTabTitle {
-  CTTabContents* contents = [browser_ tabStripModel]->GetSelectedTabContents();
-  return contents.title;
+  CTTabContents* contents = [self selectedTabContents];
+  return contents ? contents.title : nil;
 }
 
 
@@ -924,10 +934,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Note: this is called _before_ the view is on screen
 - (void)tabSelectedWithContents:(CTTabContents*)newContents
-             previousContents:(CTTabContents*)oldContents
-                      atIndex:(NSInteger)index
-                  userGesture:(bool)wasUserGesture {
-  [self updateToolbarWithContents:newContents shouldRestoreState:!!oldContents];
+               previousContents:(CTTabContents*)oldContents
+                        atIndex:(NSInteger)index
+                    userGesture:(bool)wasUserGesture {
+  assert(newContents != oldContents);
+  [self updateToolbarWithContents:newContents
+               shouldRestoreState:!!oldContents];
 }
 
 
@@ -950,6 +962,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
                     oldContents:(CTTabContents*)oldContents
                         atIndex:(NSInteger)index {
   [contents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
+  if ([self selectedTabIndex] == index) {
+    [self updateToolbarWithContents:contents
+                 shouldRestoreState:!!oldContents];
+  }
 }
 
 

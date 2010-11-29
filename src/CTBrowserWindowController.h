@@ -54,6 +54,12 @@
 // true if toolbarController_ is not nil.
 - (BOOL)hasToolbar;
 
+// Returns the selected (active) tab, or nil if there are no tabs.
+- (CTTabContents*)selectedTabContents;
+
+// Returns the index of the selected (active) tab, or -1 if there are no tabs.
+- (int)selectedTabIndex;
+
 // Updates the toolbar with the states of the specified |contents|.
 // If |shouldRestore| is true, we're switching (back?) to this tab and should
 // restore any previous state (such as user editing a text field) as well.
