@@ -117,6 +117,14 @@ extern const NSString* CTTabContentsDidCloseNotification;
 // pause animations.
 -(void)tabDidResignVisible;
 
+// Called when this tab is about to become the selected tab. Followed by a call
+// to |tabDidBecomeSelected|
+-(void)tabWillBecomeSelected;
+
+// Called when this tab is about to resign as the selected tab. Followed by a
+// call to |tabDidResignSelected|
+-(void)tabWillResignSelected;
+
 // Called when this tab became the selected tab in its window. This does
 // neccessarily not mean it's visible (app might be hidden or window might be
 // minimized). The default implementation makes our view the first responder, if

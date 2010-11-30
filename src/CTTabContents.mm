@@ -148,6 +148,7 @@ _synthRetain(NSImage*, Icon, icon);
       [self tabWillBecomeTeared];
     } else {
       [self tabWillResignTeared];
+      [self tabDidBecomeSelected];
     }
   }
 }
@@ -181,25 +182,29 @@ _synthRetain(NSImage*, Icon, icon);
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
                    inForeground:(bool)foreground {
-  browser_ = browser;
+  self.browser = browser;
 }
 
 // Called when this tab replaced another tab
 - (void)tabReplaced:(CTTabContents*)oldContents
           inBrowser:(CTBrowser*)browser
             atIndex:(NSInteger)index {
-  browser_ = browser;
+  self.browser = browser;
 }
 
 // Called when this tab is about to close
 - (void)tabWillCloseInBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
-  browser_ = nil;
+  self.browser = nil;
 }
 
-// Called when this tab was removed from a browser
+// Called when this tab was removed from a browser. Will be followed by a
+// |tabDidInsertIntoBrowser:atIndex:inForeground:|.
 - (void)tabDidDetachFromBrowser:(CTBrowser*)browser atIndex:(NSInteger)index {
-  browser_ = nil;
+  self.browser = nil;
 }
+
+-(void)tabWillBecomeSelected {}
+-(void)tabWillResignSelected {}
 
 -(void)tabDidBecomeSelected {
   if (isVisible_)

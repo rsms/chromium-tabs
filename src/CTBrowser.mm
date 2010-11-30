@@ -389,13 +389,13 @@
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
 -(void)closeFrameAfterDragSession {
-  DLOG("closeFrameAfterDragSession");
+  DLOG("[ChromiumTabs] closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // CTTabContents.
 -(void)createHistoricalTab:(CTTabContents*)contents {
-  DLOG("TODO createHistoricalTab %@", contents);
+  DLOG("[ChromiumTabs] TODO createHistoricalTab %@", contents);
 }
 
 // Runs any unload listeners associated with the specified CTTabContents before

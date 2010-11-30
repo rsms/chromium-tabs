@@ -605,7 +605,7 @@ const CGFloat kRapidCloseDist = 2.5;
       [[targetController_ window] display];
       [targetController_ showWindow:nil];
       //[draggedController_ removeOverlay]; // <- causes an exception
-      DLOG_EXPR(targetController_);
+      //DLOG_EXPR(targetController_);
       [targetController_ didEndTearingTab];
     } else {
       // Only move the window around on screen. Make sure it's set back to
@@ -620,7 +620,7 @@ const CGFloat kRapidCloseDist = 2.5;
       }
       [[draggedController_ window] setLevel:NSNormalWindowLevel];
       [draggedController_ removePlaceholder];
-      DLOG_EXPR(draggedController_);
+      //DLOG_EXPR(draggedController_);
       [draggedController_ didEndTearingTab];
     }
   }

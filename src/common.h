@@ -40,9 +40,13 @@
   // shorthand to include and evaluate <x> only for debug builds
   #define IFDEBUG(x) do{ x }while(0)
   #define DLOG(...) _LOG('D', __VA_ARGS__)
-  #define DLOG_TRACE() _LOG('D', "%s", __func__)
+  #define DLOG_TRACE() _LOG('T', "%s", __func__)
   // log an expression
   #ifdef __OBJC__
+    // trace "<ObjCClass: 0xAddress> selector"
+    #define DLOG_TRACE_M() \
+      _LOG('T', "%@ %@", self, NSStringFromSelector(_cmd));
+    
     NSString *VTPG_DDToStringFromTypeAndValue(const char *tc, void *v);
     #define DLOG_EXPR(_X_) do{\
       __typeof__(_X_) _Y_ = (_X_);\

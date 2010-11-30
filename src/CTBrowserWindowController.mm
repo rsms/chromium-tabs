@@ -170,7 +170,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     // TODO: synchronization
     _currentMain = nil;
   }
-  NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
+  //NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
   //NSLog(@"%@", [NSThread callStackSymbols]);
   delete tabStripObserver_;
   [super finalize];
@@ -416,12 +416,21 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   // Create the new browser with a single tab in its model, the one being
   // dragged. Note that we do not retain the (autoreleased) reference since the
   // new browser will be owned by a window controller (created later)
-  CTBrowser* newBrowser =
-      [tabStripModel->delegate() createNewStripWithContents:contents];
+  //--oldimpl--
+  //CTBrowser* newBrowser =
+  //    [tabStripModel->delegate() createNewStripWithContents:contents];
+
+  // New browser
+  CTBrowser* newBrowser = [[browser_ class] browser];
 
   // Create a new window controller with the browser.
   CTBrowserWindowController* controller =
       [[CTBrowserWindowController alloc] initWithBrowser:newBrowser];
+  
+  // Add the tab to the browser (we do it here after creating the window
+  // controller so that notifications are properly delegated)
+  newBrowser.tabStripModel->AppendTabContents(contents, true);
+  [newBrowser loadingStateDidChange:contents];
 
   // Set window frame
   [controller.window setFrame:windowRect display:NO];
@@ -988,7 +997,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)tabMiniStateChangedWithContents:(CTTabContents*)contents
                                 atIndex:(NSInteger)index {
   DLOG_TRACE();
-}*/
+}
+//*/
 
 - (void)tabStripEmpty {
   [self close];

@@ -319,7 +319,6 @@ namespace {
 }
 
 - (BOOL)mouseInGroup:(NSButton*)widget {
-  NSLog(@"mouseInGroup -> %d", entered_);
   return entered_;
 }
 

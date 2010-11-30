@@ -52,9 +52,11 @@
 }
 
 - (void)willBecomeSelectedTab {
+  [contents_ tabWillBecomeSelected];
 }
 
 - (void)willResignSelectedTab {
+  [contents_ tabWillResignSelected];
 }
 
 - (void)tabDidChange:(CTTabContents*)updatedContents {
