@@ -83,6 +83,9 @@ extern const NSString* CTTabContentsDidCloseNotification;
 // Selects the tab in it's window and brings the window to front
 - (void)makeKeyAndOrderFront:(id)sender;
 
+// Give first-responder status to view_ if isVisible
+- (void)becomeFirstResponder;
+
 
 #pragma mark -
 #pragma mark Callbacks
