@@ -8,9 +8,14 @@
 }
 
 +(NSImage*)imageInAppOrCTFrameworkNamed:(NSString *)name {
-  NSString *path = [CTHostBundle pathForImageResource:name];
-  if (!path)
-    path = [CTFrameworkBundle pathForImageResource:name];
+  NSBundle *bundle = CTHostBundle;
+  if (bundle == nil) bundle = [NSBundle mainBundle];
+  NSString *path = [bundle pathForImageResource:name];
+  if (!path) {
+    NSBundle *bundle = CTFrameworkBundle;
+    if (bundle == nil) bundle = [NSBundle bundleForClass:self];
+    path = [bundle pathForImageResource:name];
+  }
   return [self imageWithPath:path];
 }
 
