@@ -26,11 +26,22 @@
 @property(readonly, nonatomic) CTTabStripController *tabStripController;
 @property(readonly, nonatomic) CTToolbarController *toolbarController;
 @property(readonly, nonatomic) CTBrowser *browser;
+@property(readonly, nonatomic) BOOL isFullscreen; // fullscreen or not
+
+// Called to check whether or not this window has a toolbar. By default returns
+// true if toolbarController_ is not nil.
+@property(readonly, nonatomic) BOOL hasToolbar;
 
 // Returns the current "main" CTBrowserWindowController, or nil if none. "main"
 // means the window controller's window is the main window. Useful when there's
 // a need to e.g. add contents to the "best window from the users perspective".
 + (CTBrowserWindowController*)mainBrowserWindowController;
+
+// Returns the window controller for |window| or nil if none found
++ (CTBrowserWindowController*)browserWindowControllerForWindow:(NSWindow*)window;
+
+// Returns the window controller for |view| or nil if none found
++ (CTBrowserWindowController*)browserWindowControllerForView:(NSView*)view;
 
 // alias for [[[isa alloc] init] autorelease]
 + (CTBrowserWindowController*)browserWindowController;
@@ -46,13 +57,6 @@
 - (IBAction)saveAllDocuments:(id)sender;
 - (IBAction)openDocument:(id)sender;
 - (IBAction)newDocument:(id)sender;
-
-// Returns fullscreen state.
-- (BOOL)isFullscreen;
-
-// Called to check whether or not this window has a toolbar. By default returns
-// true if toolbarController_ is not nil.
-- (BOOL)hasToolbar;
 
 // Returns the selected (active) tab, or nil if there are no tabs.
 - (CTTabContents*)selectedTabContents;

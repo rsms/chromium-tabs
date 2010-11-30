@@ -64,6 +64,22 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   return _currentMain;
 }
 
++ (CTBrowserWindowController*)browserWindowControllerForWindow:(NSWindow*)window {
+  while (window) {
+    id controller = [window windowController];
+    if ([controller isKindOfClass:[CTBrowserWindowController class]])
+      return (CTBrowserWindowController*)controller;
+    window = [window parentWindow];
+  }
+  return nil;
+}
+
++ (CTBrowserWindowController*)browserWindowControllerForView:(NSView*)view {
+  NSWindow* window = [view window];
+  return [CTBrowserWindowController browserWindowControllerForWindow:window];
+}
+
+
 // Load the browser window nib and do initialization. Note that the nib also
 // sets this controller up as the window's delegate.
 - (id)initWithWindowNibPath:(NSString *)windowNibPath
