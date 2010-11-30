@@ -259,12 +259,12 @@ private:
 
 @synthesize indentForControls = indentForControls_;
 
-+ (void)load {
++ (void)initialize {
   NSAutoreleasePool* pool = [NSAutoreleasePool new];
   #define PIMG(name) [[NSImage imageInAppOrCTFrameworkNamed:name] retain]
-  kNewTabHoverImage = PIMG(@"newtab_h.pdf");
-  kNewTabImage = PIMG(@"newtab.pdf");
-  kNewTabPressedImage = PIMG(@"newtab_p.pdf");
+  kNewTabHoverImage = PIMG(@"newtab_h");
+  kNewTabImage = PIMG(@"newtab");
+  kNewTabPressedImage = PIMG(@"newtab_p");
   kDefaultIconImage = PIMG(@"default-icon");
   #undef PIMG
   [pool drain];
@@ -711,7 +711,11 @@ private:
     } else {
       availableSpace = NSWidth([tabStripView_ frame]);
       // Account for the new tab button and the incognito badge.
-      availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
+      if (forceNewTabButtonHidden_) {
+        availableSpace -= 5.0; // margin
+      } else {
+        availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
+      }
       /*if (browser_->profile()->IsOffTheRecord())
         availableSpace -= kIncognitoBadgeTabStripShrink;*/
     }
