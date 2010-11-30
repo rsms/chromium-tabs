@@ -172,9 +172,11 @@ _synthRetain(NSImage*, Icon, icon);
 }
 
 
-- (void)becomeFirstResponder {
-  if (isVisible_)
-    [[view_ window] makeFirstResponder:view_];
+- (BOOL)becomeFirstResponder {
+  if (isVisible_) {
+    return [[view_ window] makeFirstResponder:view_];
+  }
+  return NO;
 }
 
 

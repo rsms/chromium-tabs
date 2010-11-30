@@ -84,7 +84,7 @@ extern const NSString* CTTabContentsDidCloseNotification;
 - (void)makeKeyAndOrderFront:(id)sender;
 
 // Give first-responder status to view_ if isVisible
-- (void)becomeFirstResponder;
+- (BOOL)becomeFirstResponder;
 
 
 #pragma mark -
