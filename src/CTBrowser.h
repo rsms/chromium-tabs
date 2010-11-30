@@ -72,8 +72,10 @@ class CTTabStripModel;
 
 // Add tab with contents
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
-                      atIndex:(int)index
-                 inForeground:(BOOL)foreground;
+                        atIndex:(int)index
+                   inForeground:(BOOL)foreground;
+-(CTTabContents*)addTabContents:(CTTabContents*)contents
+                   inForeground:(BOOL)foreground;
 -(CTTabContents*)addTabContents:(CTTabContents*)contents; // inForeground:YES
 
 // Commands -- TODO: move to CTBrowserWindowController

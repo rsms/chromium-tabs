@@ -181,8 +181,8 @@
 }
 
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
-                      atIndex:(int)index
-                 inForeground:(BOOL)foreground {
+                        atIndex:(int)index
+                   inForeground:(BOOL)foreground {
   //tabStripModel_->AppendTabContents(contents, foreground);
   int addTypes = foreground ? CTTabStripModel::ADD_SELECTED :
                               CTTabStripModel::ADD_NONE;
@@ -194,6 +194,13 @@
   }
   return contents;
 }
+
+
+-(CTTabContents*)addTabContents:(CTTabContents*)contents
+                   inForeground:(BOOL)foreground {
+  return [self addTabContents:contents atIndex:-1 inForeground:foreground];
+}
+
 
 -(CTTabContents*)addTabContents:(CTTabContents*)contents {
   return [self addTabContents:contents atIndex:-1 inForeground:YES];
