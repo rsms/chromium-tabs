@@ -18,7 +18,7 @@ class CTTabStripModel;
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
-@interface CTBrowser : NSObject <CTTabStripModelDelegate> {
+@interface CTBrowser : NSObject <CTTabStripModelDelegate, NSFastEnumeration> {
   CTTabStripModel *tabStripModel_;
 @public
   // Important: Don't ever change this value from user code. It's public just
@@ -113,6 +113,7 @@ class CTTabStripModel;
 -(int)selectedTabIndex;
 -(CTTabContents*)selectedTabContents;
 -(CTTabContents*)tabContentsAtIndex:(int)index;
+-(NSArray*)allTabContents;
 -(int)indexOfTabContents:(CTTabContents*)contents; // -1 if not found
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture;
 -(void)updateTabStateAtIndex:(int)index;

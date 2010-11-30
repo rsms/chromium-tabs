@@ -103,6 +103,15 @@
   return tabStripModel_->GetTabContentsAt(index);
 }
 
+- (NSArray*)allTabContents {
+  NSUInteger i = 0, count = tabStripModel_->count();
+  NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
+  for (; i<count; ++i) {
+    [array insertObject:tabStripModel_->GetTabContentsAt(i) atIndex:i];
+  }
+  return array;
+}
+
 -(int)indexOfTabContents:(CTTabContents*)contents {
   return tabStripModel_->GetIndexOfTabContents(contents);
 }
@@ -431,6 +440,29 @@
 // Returns true if any of the tabs can be closed.
 -(BOOL)canCloseTab {
   return YES;
+}
+
+
+#pragma mark -
+#pragma mark NSFastEnumeration
+
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(id *)stackbuf
+                                    count:(NSUInteger)fetchCount {
+  NSUInteger totalCount = tabStripModel_->count();
+  NSUInteger fetchIndex = 0;
+
+  while (state->state+fetchIndex < totalCount && fetchIndex < fetchCount) {
+    stackbuf[fetchIndex++] =
+        tabStripModel_->GetTabContentsAt(state->state + fetchIndex);
+  }
+
+  state->state += fetchIndex;
+  state->itemsPtr = stackbuf;
+  state->mutationsPtr = (unsigned long *)self;  // TODO
+
+  return fetchIndex;
 }
 
 
