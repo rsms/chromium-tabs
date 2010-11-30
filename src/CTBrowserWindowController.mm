@@ -243,8 +243,16 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   NSDocumentController* docController =
       [NSDocumentController sharedDocumentController];
   NSError *error = nil;
-  if (![docController openUntitledDocumentWithWindowController:self display:YES error:&error]) {
+  DCHECK(browser_);
+  CTTabContents *baseTabContents = browser_.selectedTabContents;
+  CTTabContents *tabContents =
+      [docController openUntitledDocumentWithWindowController:self
+                                                      display:YES
+                                                        error:&error];
+  if (!tabContents) {
     [NSApp presentError:error];
+  } else if (baseTabContents) {
+    tabContents.parentOpener = baseTabContents;
   }
 }
 

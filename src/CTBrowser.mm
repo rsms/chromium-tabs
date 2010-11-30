@@ -183,9 +183,9 @@
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
                         atIndex:(int)index
                    inForeground:(BOOL)foreground {
-  //tabStripModel_->AppendTabContents(contents, foreground);
-  int addTypes = foreground ? CTTabStripModel::ADD_SELECTED :
-                              CTTabStripModel::ADD_NONE;
+  int addTypes = foreground ? (CTTabStripModel::ADD_SELECTED |
+                               CTTabStripModel::ADD_INHERIT_GROUP)
+                            : CTTabStripModel::ADD_NONE;
   index = tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
                                          addTypes);
   if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
