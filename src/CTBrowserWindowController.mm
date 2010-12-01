@@ -448,7 +448,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Create a new window controller with the browser.
   CTBrowserWindowController* controller =
-      [[CTBrowserWindowController alloc] initWithBrowser:newBrowser];
+      [[[self class] alloc] initWithBrowser:newBrowser];
   
   // Add the tab to the browser (we do it here after creating the window
   // controller so that notifications are properly delegated)
