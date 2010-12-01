@@ -301,7 +301,8 @@ void CTTabStripModel::SelectTabContentsAt(int index, bool user_gesture) {
   if (ContainsIndex(index)) {
     ChangeSelectedContentsFrom(GetSelectedTabContents(), index, user_gesture);
   } else {
-    DLOG("inconsistency: !ContainsIndex(index) in %s", __PRETTY_FUNCTION__);
+    DLOG("[ChromiumTabs] internal inconsistency: !ContainsIndex(index) in %s",
+         __PRETTY_FUNCTION__);
   }
 }
 
