@@ -49,8 +49,7 @@
 
 
 -(void)dealloc {
-  DLOG("deallocing browser %@", self);
-  //[self finalize];
+  DLOG("[ChromiumTabs] deallocing browser %@", self);
   delete tabStripModel_;
   [super dealloc];
 }
