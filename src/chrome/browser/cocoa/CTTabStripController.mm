@@ -666,10 +666,17 @@ private:
       NSMaxX(frame) <= NSMaxX([tabStripView_ frame]);
 }
 
-- (void)showNewTabButton:(BOOL)show {
-  forceNewTabButtonHidden_ = show ? NO : YES;
-  if (forceNewTabButtonHidden_)
-    [newTabButton_ setHidden:YES];
+
+- (void)setShowsNewTabButton:(BOOL)show {
+  if (!!forceNewTabButtonHidden_ == !!show) {
+    forceNewTabButtonHidden_ = !show;
+    [newTabButton_ setHidden:forceNewTabButtonHidden_];
+  }
+}
+
+
+- (BOOL)showsNewTabButton {
+  return !forceNewTabButtonHidden_ && newTabButton_;
 }
 
 // Lay out all tabs in the order of their TabContentsControllers, which matches

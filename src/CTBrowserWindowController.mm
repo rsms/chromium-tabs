@@ -502,8 +502,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }*/
 
 
-- (void)showNewTabButton:(BOOL)show {
-  [tabStripController_ showNewTabButton:show];
+// impl. CTTabWindowController requirements
+- (void)setShowsNewTabButton:(BOOL)show {
+  tabStripController_.showsNewTabButton = show;
+}
+
+- (BOOL)showsNewTabButton {
+  return tabStripController_.showsNewTabButton;
 }
 
 

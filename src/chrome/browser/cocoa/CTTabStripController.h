@@ -121,6 +121,10 @@ class CTTabStripModel;
 
 @property(nonatomic) CGFloat indentForControls;
 
+// Show or hide the new tab button. The button is hidden immediately, but
+// waits until the next call to |-layoutTabs| to show it again.
+@property(nonatomic, assign) BOOL showsNewTabButton;
+
 // Initialize the controller with a view and browser that contains
 // everything else we'll need. |switchView| is the view whose contents get
 // "switched" every time the user switches tabs. The children of this view
@@ -178,10 +182,6 @@ class CTTabStripModel;
 // of the window or the window decorations. Returns YES only if the entire tab
 // is visible.
 - (BOOL)isTabFullyVisible:(CTTabView*)tab;
-
-// Show or hide the new tab button. The button is hidden immediately, but
-// waits until the next call to |-layoutTabs| to show it again.
-- (void)showNewTabButton:(BOOL)show;
 
 // Force the tabs to rearrange themselves to reflect the current model.
 - (void)layoutTabs;

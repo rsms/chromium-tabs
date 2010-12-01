@@ -472,7 +472,9 @@ const CGFloat kRapidCloseDist = 2.5;
     [draggedController_ showOverlay];
     dragOverlay_ = [draggedController_ overlayWindow];
     // Force the new tab button to be hidden. We'll reset it on mouse up.
-    [draggedController_ showNewTabButton:NO];
+    draggedController_.didShowNewTabButtonBeforeTemporalAction =
+        draggedController_.showsNewTabButton;
+    draggedController_.showsNewTabButton = NO;
     tearTime_ = [NSDate timeIntervalSinceReferenceDate];
     tearOrigin_ = sourceWindowFrame_.origin;
   }
@@ -581,7 +583,8 @@ const CGFloat kRapidCloseDist = 2.5;
   // We are now free to re-display the new tab button in the window we're
   // dragging. It will show when the next call to -layoutTabs (which happens
   // indrectly by several of the calls below, such as removing the placeholder).
-  [draggedController_ showNewTabButton:YES];
+  draggedController_.showsNewTabButton =
+      draggedController_.didShowNewTabButtonBeforeTemporalAction;
 
   if (draggingWithinTabStrip_) {
     if (tabWasDragged_) {

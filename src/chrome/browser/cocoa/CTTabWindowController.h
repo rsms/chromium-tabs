@@ -52,9 +52,12 @@
   // |tabContentArea_|. Calculated when the window is loaded from the nib and
   // cached in order to restore the delta when switching tab modes.
   CGFloat contentAreaHeightDelta_;
+  
+  BOOL didShowNewTabButtonBeforeTemporalAction_;
 }
 @property(readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;
+@property(assign, nonatomic) BOOL didShowNewTabButtonBeforeTemporalAction;
 
 // Used during tab dragging to turn on/off the overlay window when a tab
 // is torn off. If -deferPerformClose (below) is used, -removeOverlay will
@@ -105,7 +108,7 @@
 
 // Show or hide the new tab button. The button is hidden immediately, but
 // waits until the next call to |-layoutTabs| to show it again.
-- (void)showNewTabButton:(BOOL)show;
+@property(nonatomic, assign) BOOL showsNewTabButton;
 
 // Returns whether or not |tab| can still be fully seen in the tab strip or if
 // its current position would cause it be obscured by things such as the edge

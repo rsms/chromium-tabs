@@ -21,7 +21,9 @@
 @end
 
 @implementation CTTabWindowController
-@synthesize tabContentArea = tabContentArea_;
+@synthesize tabContentArea = tabContentArea_,
+            didShowNewTabButtonBeforeTemporalAction = 
+                didShowNewTabButtonBeforeTemporalAction_;
 
 - (id)initWithWindow:(NSWindow*)window {
   if ((self = [super initWithWindow:window]) != nil) {
@@ -242,11 +244,13 @@
 - (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness {
-  [self showNewTabButton:NO];
+  didShowNewTabButtonBeforeTemporalAction_ = self.showsNewTabButton;
+  self.showsNewTabButton = NO;
 }
 
 - (void)removePlaceholder {
-  [self showNewTabButton:YES];
+  if (didShowNewTabButtonBeforeTemporalAction_)
+    self.showsNewTabButton = YES;
 }
 
 - (BOOL)tabDraggingAllowed {
@@ -266,10 +270,16 @@
   return YES;
 }
 
-- (void)showNewTabButton:(BOOL)show {
+- (void)setShowsNewTabButton:(BOOL)show {
   // subclass must implement
   NOTIMPLEMENTED();
 }
+
+- (BOOL)showsNewTabButton {
+  // subclass must implement
+  NOTIMPLEMENTED();
+}
+
 
 - (void)detachTabView:(NSView*)view {
   // subclass must implement
