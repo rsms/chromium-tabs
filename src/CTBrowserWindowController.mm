@@ -155,8 +155,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 -(void)dealloc {
-  DLOG("dealloc window controller");
-  //[self finalize];
+  DLOG("[ChromiumTabs] dealloc window controller");
   if (_currentMain == self) {
     // TODO: synchronization
     _currentMain = nil;
