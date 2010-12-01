@@ -288,7 +288,7 @@ private:
     permanentSubviews_.reset([[NSMutableArray alloc] init]);
 
     //ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-    defaultFavIcon_.reset(kDefaultIconImage);
+    defaultFavIcon_.reset([kDefaultIconImage retain]);
 
     [self setIndentForControls:[[self class] defaultIndentForControls]];
 
