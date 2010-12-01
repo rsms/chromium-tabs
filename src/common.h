@@ -100,8 +100,8 @@ const char *common_strrstr(const char *string, const char *find);
 // utils
 #ifdef __OBJC__
   // exchange dst with src, retaining src and safely releasing old object.
-  //   id old = objc_exch(&foo_, [NSColor redColor]);
-  inline id objc_exch(id *dst, id src) {
+  //   id old = ct_objc_xch(&foo_, [NSColor redColor]);
+  static inline id ct_objc_xch(id *dst, id src) {
     id old = *dst;
     *dst = src;
     if (old) [old release];

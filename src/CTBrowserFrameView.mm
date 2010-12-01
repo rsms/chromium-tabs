@@ -144,6 +144,16 @@ static BOOL gCanGetCornerRadius = NO;
                                    yRadius:cornerRadius] addClip];
   [[NSBezierPath bezierPathWithRect:rect] addClip];
 
+  // Draw a fancy gradient at the top of the window, like "Incognito mode"
+  /*
+  NSGradient* gradient = [[NSGradient alloc] initWithStartingColor:[NSColor yellowColor]
+                                                       endingColor:[NSColor redColor]];
+  NSPoint startPoint = NSMakePoint(NSMinX(windowRect), NSMaxY(windowRect));
+  NSPoint endPoint = startPoint;
+  endPoint.y -= kBrowserFrameViewPaintHeight;
+  [gradient drawFromPoint:startPoint toPoint:endPoint options:0];
+  */
+  
   // -- removed: themed window drawing routines --
 }
 

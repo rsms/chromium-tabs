@@ -12,8 +12,8 @@
 #import "scoped_nsdisable_screen_updates.h"
 
 @interface NSWindow (ThingsThatMightBeImplemented)
--(void)setShouldHideTitle:(BOOL)y;
--(void)setBottomCornerRounded:(BOOL)y;
+- (void)setShouldHideTitle:(BOOL)y;
+- (void)setBottomCornerRounded:(BOOL)y;
 @end
 
 @interface CTBrowserWindowController (Private)
