@@ -210,11 +210,12 @@ const CGFloat kRapidCloseDist = 2.5;
 
 // Call to clear out transient weak references we hold during drags.
 - (void)resetDragControllers {
-  draggedController_ = nil;
+  ct_objc_xch(&draggedController_, nil);
   dragWindow_ = nil;
   dragOverlay_ = nil;
-  sourceController_ = nil;
+  ct_objc_xch(&sourceController_, nil);
   sourceWindow_ = nil;
+  //ct_objc_xch(&targetController_, nil);
   targetController_ = nil;
   workspaceIDCache_.clear();
 }
@@ -285,7 +286,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
   sourceWindowFrame_ = [sourceWindow_ frame];
   sourceTabFrame_ = [self frame];
-  sourceController_ = [sourceWindow_ windowController];
+  ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
   tabWasDragged_ = NO;
   tearTime_ = 0.0;
   draggingWithinTabStrip_ = YES;
@@ -437,7 +438,7 @@ const CGFloat kRapidCloseDist = 2.5;
   if (targetController_ != newTarget) {
     targetDwellDate = [NSDate date];
     [targetController_ removePlaceholder];
-    targetController_ = newTarget;
+    ct_objc_xch(&targetController_, newTarget);
     if (!newTarget) {
       tearTime_ = [NSDate timeIntervalSinceReferenceDate];
       tearOrigin_ = [dragWindow_ frame].origin;
@@ -454,11 +455,12 @@ const CGFloat kRapidCloseDist = 2.5;
     // go away (it's been autoreleased) so we need to ensure we don't reference
     // it any more. In that case the new controller becomes our source
     // controller.
-    draggedController_ = [sourceController_ detachTabToNewWindow:self];
+    ct_objc_xch(&draggedController_,
+                [sourceController_ detachTabToNewWindow:self]);
     dragWindow_ = [draggedController_ window];
     [dragWindow_ setAlphaValue:0.0];
     if (![sourceController_ hasLiveTabs]) {
-      sourceController_ = draggedController_;
+      ct_objc_xch(&sourceController_, draggedController_);
       sourceWindow_ = dragWindow_;
     }
 

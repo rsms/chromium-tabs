@@ -40,14 +40,6 @@
 }
 
 
-- (id)initWithWindowController:(CTBrowserWindowController*)windowController {
-  if ((self = [self init])) {
-    windowController_ = windowController; // weak since it own us
-  }
-  return self;
-}
-
-
 -(void)dealloc {
   DLOG("[ChromiumTabs] deallocing browser %@", self);
   delete tabStripModel_;

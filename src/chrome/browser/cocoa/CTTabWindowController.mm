@@ -32,6 +32,13 @@
   return self;
 }
 
+- (void)dealloc {
+  if (overlayWindow_)
+    [self setUseOverlay:NO];
+  [super dealloc];
+}
+
+
 // Add the side tab strip to the left side of the window's content area,
 // making it fill the full height of the content area.
 - (void)addSideTabStripToWindow {
@@ -196,6 +203,7 @@
     [window display];
     [window removeChildWindow:overlayWindow_];
     [overlayWindow_ orderOut:nil];
+    [overlayWindow_ setDelegate:nil];
     [overlayWindow_ release];
     overlayWindow_ = nil;
     cachedContentView_ = nil;

@@ -39,9 +39,6 @@ class CTTabStripModel;
 // @autoreleased
 +(CTBrowser*)browser;
 
-// Initialize a new browser as the child of windowController
--(id)initWithWindowController:(CTBrowserWindowController*)windowController;
-
 // init
 -(id)init;
 
