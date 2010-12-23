@@ -48,7 +48,7 @@ enum CTTabLoadingState {
   CTTabLoadingState loadingState_;
   CGFloat iconTitleXOffset_;  // between left edges of icon and title
   CGFloat titleCloseWidthOffset_;  // between right edges of icon and close btn.
-  __weak id<CTTabControllerTarget> target_;  // weak, where actions are sent
+  id<CTTabControllerTarget> target_;  // weak, where actions are sent
   SEL action_;  // selector sent when tab is selected by clicking
   //scoped_ptr<TabMenuModel> contextMenuModel_;
   //scoped_ptr<TabControllerInternal::MenuDelegate> contextMenuDelegate_;

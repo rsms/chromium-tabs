@@ -23,7 +23,7 @@ class CTTabStripModel;
 @public
   // Important: Don't ever change this value from user code. It's public just
   // so that the internal machinery can set it at the appropriate time.
-  __weak CTBrowserWindowController *windowController_;
+  CTBrowserWindowController *windowController_;
 }
 
 // The tab strip model

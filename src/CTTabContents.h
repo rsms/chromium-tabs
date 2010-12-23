@@ -46,7 +46,7 @@ extern const NSString* CTTabContentsDidCloseNotification;
   NSView *view_; // the actual content
   NSString *title_; // title of this tab
   NSImage *icon_; // tab icon (nil means no or default icon)
-  __weak CTBrowser *browser_;
+  CTBrowser *browser_;
   __weak CTTabContents* parentOpener_; // the tab which opened this tab (unless nil)
 }
 

@@ -133,8 +133,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   initializing_ = NO;
   if (!_currentMain) {
-    // TODO: synchronization
-    _currentMain = self;
+    ct_casid(&_currentMain, self);
   }
   return self;
 }
@@ -157,8 +156,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 -(void)dealloc {
   DLOG("[ChromiumTabs] dealloc window controller");
   if (_currentMain == self) {
-    // TODO: synchronization
-    _currentMain = nil;
+    ct_casid(&_currentMain, nil);
   }
   delete tabStripObserver_;
   
@@ -182,8 +180,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 -(void)finalize {
   if (_currentMain == self) {
-    // TODO: synchronization
-    _currentMain = nil;
+    ct_casid(&_currentMain, nil);
   }
   //NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
   //NSLog(@"%@", [NSThread callStackSymbols]);
@@ -772,8 +769,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     // tab strip is empty we'll be called back again.
     [[self window] orderOut:self];
     [browser_ windowDidBeginToClose];
-    if (_currentMain == self)
-      _currentMain = nil;
+    if (_currentMain == self) {
+      ct_casid(&_currentMain, nil);
+    }
     return NO;
   }
 
@@ -792,8 +790,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   // NOTE: if you use custom window bounds saving/restoring, you should probably
   //       save the window bounds here.
 
-  assert([NSThread isMainThread]); // since we don't lock
-  _currentMain = self;
+  ct_casid(&_currentMain, self);
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
@@ -806,8 +803,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (void)windowDidResignMain:(NSNotification*)notification {
   if (_currentMain == self) {
-    assert([NSThread isMainThread]); // since we don't lock
-    _currentMain = nil;
+    ct_casid(&_currentMain, nil);
   }
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
