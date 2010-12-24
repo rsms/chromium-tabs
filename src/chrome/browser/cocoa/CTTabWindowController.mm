@@ -33,8 +33,9 @@
 }
 
 - (void)dealloc {
-  if (overlayWindow_)
+  if (overlayWindow_) {
     [self setUseOverlay:NO];
+  }
   [super dealloc];
 }
 
@@ -197,13 +198,14 @@
     [overlayWindow_ orderFront:nil];
   } else if (!useOverlay && overlayWindow_) {
     assert(cachedContentView_);
+    [overlayWindow_ setDelegate:nil];
+    [window setDelegate:nil];
     [window setContentView:cachedContentView_];
     [self moveViewsBetweenWindowAndOverlay:useOverlay];
     [window makeFirstResponder:cachedContentView_];
     [window display];
     [window removeChildWindow:overlayWindow_];
     [overlayWindow_ orderOut:nil];
-    [overlayWindow_ setDelegate:nil];
     [overlayWindow_ release];
     overlayWindow_ = nil;
     cachedContentView_ = nil;
