@@ -29,6 +29,10 @@ namespace {
 - (NSView*)frameView;
 @end
 
+@interface NSButton (_NSThemeCloseWidget)
+- (void)setDocumentEdited:(BOOL)arg1;
+@end
+
 @implementation CTBrowserWindow
 
 - (id)initWithContentRect:(NSRect)contentRect
@@ -348,6 +352,11 @@ namespace {
   if (![delegate respondsToSelector:@selector(themePatternPhase)])
     return NSMakePoint(0, 0);
   return [delegate themePatternPhase];
+}
+
+- (void)setDocumentEdited:(BOOL)documentEdited {
+  [super setDocumentEdited:documentEdited];
+  [closeButton_ setDocumentEdited:documentEdited];
 }
 
 @end
