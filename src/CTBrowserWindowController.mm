@@ -979,6 +979,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)tabClosingWithContents:(CTTabContents*)contents
                        atIndex:(NSInteger)index {
   [contents tabWillCloseInBrowser:browser_ atIndex:index];
+  if (contents.isSelected)
+    [self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
 
@@ -1005,6 +1007,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)tabDetachedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)index {
   [contents tabDidDetachFromBrowser:browser_ atIndex:index];
+  if (contents.isSelected)
+    [self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
 /*
