@@ -95,7 +95,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   browser_->windowController_ = self;
 
   // Observe tabs
-  tabStripObserver_ = 
+  tabStripObserver_ =
       new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
 
   // Note: the below statement including [self window] implicitly loads the
@@ -159,7 +159,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     ct_casid(&_currentMain, nil);
   }
   delete tabStripObserver_;
-  
+
   // Close all tabs
   //[browser_ closeAllTabs]; // TODO
 
@@ -173,7 +173,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   [browser_ release];
   [tabStripController_ release];
-  [toolbarController_ release];
+  ct_casid(&toolbarController_, nil);
   [super dealloc];
 }
 
@@ -418,7 +418,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   NSScreen* screen = [sourceWindow screen];
   windowRect.origin.y =
       [screen frame].size.height - windowRect.size.height - windowRect.origin.y;
-  
+
   //gfx::Rect browserRect(windowRect.origin.x, windowRect.origin.y,
   //                      windowRect.size.width, windowRect.size.height);
 
@@ -446,7 +446,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   // Create a new window controller with the browser.
   CTBrowserWindowController* controller =
       [[[self class] alloc] initWithBrowser:newBrowser];
-  
+
   // Add the tab to the browser (we do it here after creating the window
   // controller so that notifications are properly delegated)
   newBrowser.tabStripModel->AppendTabContents(contents, true);
