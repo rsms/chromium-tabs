@@ -17,7 +17,7 @@
 // When there are no windows in our application, this class (AppDelegate) will
 // become the first responder. We forward the command to the browser class.
 - (void)commandDispatch:(id)sender {
-  NSLog(@"commandDispatch %d", [sender tag]);
+  NSLog(@"commandDispatch %d", (int)[sender tag]);
   [MyBrowser executeCommand:[sender tag]];
 }
 
