@@ -89,7 +89,7 @@ _synthRetain(NSImage*, Icon, icon);
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
   if (parentOpener_) {
     [nc removeObserver:self
-                  name:CTTabContentsDidCloseNotification
+                  name:(NSString*)CTTabContentsDidCloseNotification
                 object:parentOpener_];
   }
   kvo_change(parentOpener)
@@ -97,7 +97,7 @@ _synthRetain(NSImage*, Icon, icon);
   if (parentOpener_) {
     [nc addObserver:self
            selector:@selector(tabContentsDidClose:)
-               name:CTTabContentsDidCloseNotification
+               name:(NSString*)CTTabContentsDidCloseNotification
              object:parentOpener_];
   }
 }
@@ -184,7 +184,7 @@ _synthRetain(NSImage*, Icon, icon);
 
 -(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-  [nc postNotificationName:CTTabContentsDidCloseNotification object:self];
+  [nc postNotificationName:(NSString*)CTTabContentsDidCloseNotification object:self];
 }
 
 // Called when this tab was inserted into a browser
