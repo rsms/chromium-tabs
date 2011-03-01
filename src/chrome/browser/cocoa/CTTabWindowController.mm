@@ -254,7 +254,6 @@
 - (void)insertPlaceholderForTab:(CTTabView*)tab
                           frame:(NSRect)frame
                   yStretchiness:(CGFloat)yStretchiness {
-  didShowNewTabButtonBeforeTemporalAction_ = self.showsNewTabButton;
   self.showsNewTabButton = NO;
 }
 
