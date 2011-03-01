@@ -287,6 +287,7 @@ const CGFloat kRapidCloseDist = 2.5;
   sourceWindowFrame_ = [sourceWindow_ frame];
   sourceTabFrame_ = [self frame];
   ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
+  sourceController_.didShowNewTabButtonBeforeTemporalAction = sourceController_.showsNewTabButton;
   tabWasDragged_ = NO;
   tearTime_ = 0.0;
   draggingWithinTabStrip_ = YES;
