@@ -59,7 +59,7 @@ extern const NSString* CTTabContentsDidCloseNotification;
 @property(assign, nonatomic) BOOL isTeared;
 @property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
-@property(retain, nonatomic) NSView *view;
+@property(retain, nonatomic) IBOutlet NSView *view;
 @property(retain, nonatomic) NSString *title;
 @property(retain, nonatomic) NSImage *icon;
 @property(assign, nonatomic) CTBrowser *browser;

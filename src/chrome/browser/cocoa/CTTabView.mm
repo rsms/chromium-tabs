@@ -287,6 +287,7 @@ const CGFloat kRapidCloseDist = 2.5;
   sourceWindowFrame_ = [sourceWindow_ frame];
   sourceTabFrame_ = [self frame];
   ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
+  sourceController_.didShowNewTabButtonBeforeTemporalAction = sourceController_.showsNewTabButton;
   tabWasDragged_ = NO;
   tearTime_ = 0.0;
   draggingWithinTabStrip_ = YES;
@@ -356,7 +357,7 @@ const CGFloat kRapidCloseDist = 2.5;
       // (and maybe even others?) for reasons I don't understand. So we
       // explicitly check for both events we're expecting, and log others. We
       // should figure out what's going on.
-      WLOG("Spurious event received of type %@", type);
+      WLOG("Spurious event received of type %d", type);
     }
   }
 }

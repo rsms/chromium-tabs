@@ -497,6 +497,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   return ![self isFullscreen];
 }*/
 
+- (BOOL)isTabFullyVisible:(CTTabView*)tab {
+	return [tabStripController_ isTabFullyVisible:tab];
+}
 
 // impl. CTTabWindowController requirements
 - (void)setShowsNewTabButton:(BOOL)show {
