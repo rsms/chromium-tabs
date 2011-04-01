@@ -1,6 +1,4 @@
 #import <Cocoa/Cocoa.h>
-#import "scoped_ptr.h"
-#import "scoped_nsobject.h"
 #import "URLDropTarget.h"
 
 @class CTBrowser;
@@ -22,9 +20,9 @@
 //
 @interface CTToolbarController : NSViewController<URLDropTargetController> {
   __weak CTBrowser* browser_;  // weak, one per window
- @private
-  // Tracking area for mouse enter/exit/moved in the toolbar.
-  scoped_nsobject<NSTrackingArea> trackingArea_;
+// @private
+//  // Tracking area for mouse enter/exit/moved in the toolbar.
+//  scoped_nsobject<NSTrackingArea> trackingArea_;
 }
 
 - (id)initWithNibName:(NSString*)nibName
