@@ -1,7 +1,7 @@
 #pragma once
 
 @class CTBrowser;
-#import "CTTabContents.h"
+@class CTTabContents;
 
 //
 // CTTabStripModelDelegate

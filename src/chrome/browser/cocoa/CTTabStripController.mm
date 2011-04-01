@@ -22,6 +22,7 @@
 #import "throbber_view.h"
 #import "CTTabStripModel.h"
 #import "GTMNSAnimation+Duration.h"
+#import "CTBrowserCommand.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 

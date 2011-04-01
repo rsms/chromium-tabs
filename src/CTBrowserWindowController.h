@@ -1,12 +1,11 @@
 #import <Cocoa/Cocoa.h>
-#import "CTBrowser.h"
-#import "CTTabStripModelDelegate.h"
 #import "CTTabWindowController.h"
-#import "CTTabStripModelObserverBridge.h"
 
+@class CTBrowser;
 @class CTTabStripController;
 @class CTToolbarController;
-//class CTTabStripModelObserverBridge;
+@class CTTabContents;
+class CTTabStripModelObserverBridge;
 
 @interface NSDocumentController (CTBrowserWindowControllerAdditions)
 - (id)openUntitledDocumentWithWindowController:(NSWindowController*)windowController

@@ -1,3 +1,4 @@
+#import "CTBrowser.h"
 #import "CTBrowserWindowController.h"
 #import "CTTabStripModel.h"
 #import "CTTabContents.h"

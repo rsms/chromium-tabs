@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_COCOA_BACKGROUND_GRADIENT_VIEW_H_
 #pragma once
 
-#import "basictypes.h"
 #import <Cocoa/Cocoa.h>
 
 // A custom view that draws a 'standard' background gradient.

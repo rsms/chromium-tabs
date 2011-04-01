@@ -1,8 +1,6 @@
 #pragma once
 #import <Cocoa/Cocoa.h>
-#import "CTTabStripModel.h"
 #import "CTTabStripModelDelegate.h"
-#import "CTBrowserCommand.h"
 
 enum CTWindowOpenDisposition {
   CTWindowOpenDispositionCurrentTab,
