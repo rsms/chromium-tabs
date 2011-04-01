@@ -5,3 +5,5 @@
 /chromium/src/
 *xcodeproj/project.xcworkspace
 *xcodeproj/xcuserdata
+/examples/simple-app/test.*
+*CTTab*Object.*
