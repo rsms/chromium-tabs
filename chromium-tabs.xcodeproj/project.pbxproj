@@ -126,6 +126,7 @@
 		3ABF4A8B12A461630020233C /* scoped_nsautorelease_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ABF4A8912A461630020233C /* scoped_nsautorelease_pool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3ABF4A8C12A461630020233C /* scoped_nsautorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF4A8A12A461630020233C /* scoped_nsautorelease_pool.mm */; };
 		3ABF4AAC12A465100020233C /* KVOChangeScope.hh in Headers */ = {isa = PBXBuildFile; fileRef = 3ABF4AAB12A464F50020233C /* KVOChangeScope.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC861346399A00325928 /* URLDropTarget.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -281,6 +282,7 @@
 		3AEE19441222DC5B009DA438 /* CTTabStripModelOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelOrderController.h; sourceTree = "<group>"; };
 		3AEE19521222DDEB009DA438 /* CTTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContents.h; sourceTree = "<group>"; };
 		3AEE19531222DDEB009DA438 /* CTTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabContents.mm; sourceTree = "<group>"; };
+		5AE6BC861346399A00325928 /* URLDropTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDropTarget.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -439,6 +441,7 @@
 			children = (
 				3A286FE71222D53500F1BB78 /* throbber_view.h */,
 				3A286FE81222D53500F1BB78 /* throbber_view.mm */,
+				5AE6BC861346399A00325928 /* URLDropTarget.h */,
 				3A286FC01222D10700F1BB78 /* url_drop_target.h */,
 				3A286FC11222D10700F1BB78 /* url_drop_target.mm */,
 				3A3927111221C596006D8305 /* background_gradient_view.h */,
@@ -641,6 +644,7 @@
 				3ABF4A1912A4592A0020233C /* CTBrowserWindow.h in Headers */,
 				3ABF4A8712A460DA0020233C /* CTBrowserFrameView.h in Headers */,
 				3ABF4A8B12A461630020233C /* scoped_nsautorelease_pool.h in Headers */,
+				5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

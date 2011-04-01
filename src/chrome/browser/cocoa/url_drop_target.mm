@@ -3,6 +3,7 @@
 // found in the LICENSE-chromium file.
 
 #import "url_drop_target.h"
+#import "URLDropTarget.h"
 #import "NSPasteboard+Utils.h"
 
 @interface URLDropTargetHandler(Private)

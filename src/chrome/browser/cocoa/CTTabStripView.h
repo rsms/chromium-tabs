@@ -9,9 +9,10 @@
 #import <Cocoa/Cocoa.h>
 
 #import "scoped_nsobject.h"
-#import "url_drop_target.h"
+#import "URLDropTarget.h"
 
 @class NewTabButton;
+@class URLDropTargetHandler;
 
 // A view class that handles rendering the tab strip and drops of URLS with
 // a positioning locator for drop feedback.

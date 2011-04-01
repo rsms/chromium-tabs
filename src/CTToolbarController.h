@@ -1,7 +1,7 @@
 #import <Cocoa/Cocoa.h>
 #import "scoped_ptr.h"
 #import "scoped_nsobject.h"
-#import "url_drop_target.h"
+#import "URLDropTarget.h"
 
 @class CTBrowser;
 @class CTTabContents;

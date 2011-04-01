@@ -4,6 +4,7 @@
 
 #import "CTTabStripView.h"
 #import "CTTabStripController.h"
+#import "url_drop_target.h"
 
 // ripped out from libbase mac_util.mm:
 static bool ShouldWindowsMiniaturizeOnDoubleClick() {

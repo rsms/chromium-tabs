@@ -11,7 +11,7 @@
 #import "scoped_nsobject.h"
 #import "scoped_ptr.h"
 #import "CTTabControllerTarget.h"
-#import "url_drop_target.h"
+#import "URLDropTarget.h"
 #import "GTMWindowSheetController.h"
 
 @class NewTabButton;
