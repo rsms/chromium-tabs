@@ -4,7 +4,7 @@
 
 #pragma once
 #import <Cocoa/Cocoa.h>
-#import "scoped_nsobject.h"
+//#import "scoped_nsobject.h"
 
 // Offset from the top of the window frame to the top of the window controls
 // (zoom, close, miniaturize) for a window with a tabstrip.
@@ -32,7 +32,8 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
   NSButton* miniaturizeButton_;
   NSButton* zoomButton_;
   BOOL entered_;
-  scoped_nsobject<NSTrackingArea> widgetTrackingArea_;
+  //scoped_nsobject<NSTrackingArea> widgetTrackingArea_;
+  NSTrackingArea *widgetTrackingArea_;
 }
 
 // Tells the window to suppress title drawing.

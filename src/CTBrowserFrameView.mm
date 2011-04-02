@@ -5,7 +5,6 @@
 #import "CTBrowserFrameView.h"
 
 #import <objc/runtime.h>
-#import <Carbon/Carbon.h>
 
 #import "scoped_nsautorelease_pool.h"
 #import "CTBrowserWindow.h"
