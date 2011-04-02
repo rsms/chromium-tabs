@@ -21,7 +21,7 @@
 		3A3ED9CA1225E32A009E2908 /* CTTabView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* CTTabView.mm */; };
 		3A3ED9CB1225E32A009E2908 /* CTTabWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8E1222CAA000F1BB78 /* CTTabWindowController.m */; };
 		3A3ED9CC1225E32A009E2908 /* CTTabStripView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286F8C1222CAA000F1BB78 /* CTTabStripView.mm */; };
-		3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.mm */; };
+		3A3ED9CE1225E32A009E2908 /* url_drop_target.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* url_drop_target.m */; };
 		3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* throbber_view.mm */; };
 		3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* CTTabContents.mm */; };
 		3A3ED9D11225E32A009E2908 /* CTTabStripModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19411222DC5B009DA438 /* CTTabStripModel.mm */; };
@@ -186,7 +186,7 @@
 		3A286F9F1222CDBE00F1BB78 /* TabContents.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabContents.xib; sourceTree = "<group>"; };
 		3A286FA01222CDBE00F1BB78 /* TabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabView.xib; sourceTree = "<group>"; };
 		3A286FC01222D10700F1BB78 /* url_drop_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = url_drop_target.h; sourceTree = "<group>"; };
-		3A286FC11222D10700F1BB78 /* url_drop_target.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = url_drop_target.mm; sourceTree = "<group>"; };
+		3A286FC11222D10700F1BB78 /* url_drop_target.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = url_drop_target.m; sourceTree = "<group>"; };
 		3A286FE21222D25400F1BB78 /* CTTabStripController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripController.h; sourceTree = "<group>"; };
 		3A286FE31222D25400F1BB78 /* CTTabStripController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripController.mm; sourceTree = "<group>"; };
 		3A286FE71222D53500F1BB78 /* throbber_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = throbber_view.h; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 				3A286FE81222D53500F1BB78 /* throbber_view.mm */,
 				5AE6BC861346399A00325928 /* URLDropTarget.h */,
 				3A286FC01222D10700F1BB78 /* url_drop_target.h */,
-				3A286FC11222D10700F1BB78 /* url_drop_target.mm */,
+				3A286FC11222D10700F1BB78 /* url_drop_target.m */,
 				3A3927111221C596006D8305 /* background_gradient_view.h */,
 				3A3927121221C596006D8305 /* background_gradient_view.m */,
 				3A3921ED1221AF58006D8305 /* hover_button.h */,
@@ -774,7 +774,7 @@
 				3A3ED9CA1225E32A009E2908 /* CTTabView.mm in Sources */,
 				3A3ED9CB1225E32A009E2908 /* CTTabWindowController.m in Sources */,
 				3A3ED9CC1225E32A009E2908 /* CTTabStripView.mm in Sources */,
-				3A3ED9CE1225E32A009E2908 /* url_drop_target.mm in Sources */,
+				3A3ED9CE1225E32A009E2908 /* url_drop_target.m in Sources */,
 				3A3ED9CF1225E32A009E2908 /* throbber_view.mm in Sources */,
 				3A3ED9D01225E32A009E2908 /* CTTabContents.mm in Sources */,
 				3A3ED9D11225E32A009E2908 /* CTTabStripModel.mm in Sources */,
