@@ -249,7 +249,7 @@ void CTTabStripModel::ReplaceTabContentsAt(int index,
                                            CTTabReplaceType type) {
   CTTabContents* old_contents =
       ReplaceTabContentsAtImpl(index, new_contents, type);
-  [old_contents destroy:this];
+//  [old_contents destroy:this];
 }
 
 /*void TabStripModel::ReplaceNavigationControllerAt(
@@ -950,7 +950,7 @@ bool CTTabStripModel::InternalCloseTabs(const std::vector<int>& indices,
   // We now return to our regularly scheduled shutdown procedure.
   for (size_t i = 0; i < indices.size(); ++i) {
     CTTabContents* detached_contents = GetContentsAt(indices[i]);
-    [detached_contents closingOfTabDidStart:this]; // TODO notification
+    //[detached_contents closingOfTabDidStart:this]; // TODO notification
 
     if (![delegate_ canCloseContentsAt:indices[i]]) {
       retval = false;
@@ -993,7 +993,7 @@ void CTTabStripModel::InternalCloseTab(CTTabContents* contents,
 
   // Deleting the CTTabContents will call back to us via NotificationObserver
   // and detach it.
-  [contents destroy:this];
+//  [contents destroy:this];
 }
 
 CTTabContents* CTTabStripModel::GetContentsAt(int index) const {

@@ -638,7 +638,7 @@ class CTTabStripModel /*: public NotificationObserver*/ {
   // Returns true if the tab represented by the specified data has an opener
   // that matches the specified one. If |use_group| is true, then this will
   // fall back to check the group relationship as well.
-  struct TabContentsData;
+  //struct TabContentsData;
   //static bool OpenerMatches(const TabContentsData* data,
   //                          const NavigationController* opener,
   //                          bool use_group);

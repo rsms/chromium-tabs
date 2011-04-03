@@ -1,7 +1,7 @@
 #pragma once
 #import <Cocoa/Cocoa.h>
 
-class CTTabStripModel;
+@class CTTabStripModelObject;
 @class CTBrowser;
 
 extern NSString *const CTTabContentsDidCloseNotification;
@@ -76,7 +76,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
 // Called when the tab should be destroyed (involves some finalization).
--(void)destroy:(CTTabStripModel*)sender;
+-(void)destroy:(CTTabStripModelObject *)sender;
 
 #pragma mark Action
 
@@ -92,7 +92,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 
 // Called when this tab may be closing (unless CTBrowser respond no to
 // canCloseTab).
--(void)closingOfTabDidStart:(CTTabStripModel*)model;
+-(void)closingOfTabDidStart:(CTTabStripModelObject *)model;
 
 // The following three callbacks are meant to be implemented by subclasses:
 // Called when this tab was inserted into a browser

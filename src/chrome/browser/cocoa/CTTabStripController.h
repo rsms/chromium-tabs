@@ -13,6 +13,7 @@
 #import "CTTabControllerTarget.h"
 #import "URLDropTarget.h"
 #import "GTMWindowSheetController.h"
+#import "CTTabStripModelObject.h"
 
 @class NewTabButton;
 @class CTTabContentsController;
@@ -24,6 +25,7 @@
 
 class CTTabStripModelObserverBridge;
 class CTTabStripModel;
+//@class CTTabStripModelObject;
 
 // A class that handles managing the tab strip in a browser window. It uses
 // a supporting C++ bridge object to register for notifications from the
@@ -35,7 +37,8 @@ class CTTabStripModel;
 @interface CTTabStripController :
   NSObject<CTTabControllerTarget,
            URLDropTargetController,
-           GTMWindowSheetControllerDelegate> {
+           GTMWindowSheetControllerDelegate,
+		   CTTabStripModelObserver> {
  @protected
   // YES if tabs are to be laid out vertically instead of horizontally.
   BOOL verticalLayout_;

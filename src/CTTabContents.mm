@@ -1,5 +1,5 @@
 #import "CTTabContents.h"
-#import "CTTabStripModel.h"
+#import "CTTabStripModelObject.h"
 #import "CTBrowser.h"
 #import "KVOChangeScope.hh"
 
@@ -68,9 +68,9 @@ _synthRetain(NSImage*, Icon, icon);
   [super dealloc];
 }
 
--(void)destroy:(CTTabStripModel*)sender {
+-(void)destroy:(CTTabStripModelObject *)sender {
   // TODO: notify "disconnected"?
-  sender->TabContentsWasDestroyed(self); // TODO: NSNotification
+  [sender TabContentsWasDestroyed:self]; // TODO: NSNotification
   [self release];
 }
 
@@ -182,7 +182,7 @@ _synthRetain(NSImage*, Icon, icon);
 
 #pragma mark Callbacks
 
--(void)closingOfTabDidStart:(CTTabStripModel*)closeInitiatedByTabStripModel {
+-(void)closingOfTabDidStart:(CTTabStripModelObject *)closeInitiatedByTabStripModel {
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
   [nc postNotificationName:CTTabContentsDidCloseNotification object:self];
 }
