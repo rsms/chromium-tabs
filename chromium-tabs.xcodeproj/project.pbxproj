@@ -53,7 +53,7 @@
 		3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
 		3A3EDA501225EAE7009E2908 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
 		3A3EDA521225EAEA009E2908 /* ChromiumTabs.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
-		3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.mm */; };
+		3A3EDA7B1225EBFF009E2908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.m */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
 		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
 		3A3EDA9E1225EF84009E2908 /* CTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* CTUtil.m */; };
@@ -66,7 +66,7 @@
 		3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */; };
-		3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */; };
+		3A928BBC1226F0AA00DA7E43 /* MyBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */; };
 		3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A39270A1221C566006D8305 /* CTTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921F11221AF58006D8305 /* CTTabController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BDD1226F81600DA7E43 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -74,7 +74,7 @@
 		3A928BDF1226F81600DA7E43 /* CTTabStripView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286F8B1222CAA000F1BB78 /* CTTabStripView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FE21222D25400F1BB78 /* CTTabStripController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286F8D1222CAA000F1BB78 /* CTTabWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A928D0C12282DE500DA7E43 /* MyTabContents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3A928D0B12282DE500DA7E43 /* MyTabContents.mm */; };
+		3A928D0C12282DE500DA7E43 /* MyTabContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A928D0B12282DE500DA7E43 /* MyTabContents.m */; };
 		3A928F991228648F00DA7E43 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168C31225404F00757641 /* common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A929008122947A800DA7E43 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A929006122947A800DA7E43 /* CTToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A929009122947A800DA7E43 /* CTToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A929007122947A800DA7E43 /* CTToolbarView.m */; };
@@ -243,7 +243,7 @@
 		3A3EDA391225E911009E2908 /* scoped_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_ptr.h; sourceTree = "<group>"; };
 		3A3EDA3A1225E911009E2908 /* stl_util-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "stl_util-inl.h"; sourceTree = "<group>"; };
 		3A3EDA701225EBBB009E2908 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3A3EDA711225EBBB009E2908 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		3A3EDA711225EBBB009E2908 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3A3EDA731225EBBB009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A3EDA751225EBBB009E2908 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3A3EDA761225EBBB009E2908 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -255,9 +255,9 @@
 		3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
 		3A928A771226E01900DA7E43 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBrowser.h; sourceTree = "<group>"; };
-		3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyBrowser.mm; sourceTree = "<group>"; };
+		3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBrowser.m; sourceTree = "<group>"; };
 		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
-		3A928D0B12282DE500DA7E43 /* MyTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyTabContents.mm; sourceTree = "<group>"; };
+		3A928D0B12282DE500DA7E43 /* MyTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabContents.m; sourceTree = "<group>"; };
 		3A929006122947A800DA7E43 /* CTToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarView.h; sourceTree = "<group>"; };
 		3A929007122947A800DA7E43 /* CTToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTToolbarView.m; sourceTree = "<group>"; };
 		3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+CTThemed.h"; sourceTree = "<group>"; };
@@ -561,11 +561,11 @@
 				3A3EDA761225EBBB009E2908 /* Info.plist */,
 				3A3EDA771225EBBB009E2908 /* main.m */,
 				3A3EDA701225EBBB009E2908 /* AppDelegate.h */,
-				3A3EDA711225EBBB009E2908 /* AppDelegate.mm */,
+				3A3EDA711225EBBB009E2908 /* AppDelegate.m */,
 				3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */,
-				3A928BBB1226F0AA00DA7E43 /* MyBrowser.mm */,
+				3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */,
 				3A928D0A12282DE500DA7E43 /* MyTabContents.h */,
-				3A928D0B12282DE500DA7E43 /* MyTabContents.mm */,
+				3A928D0B12282DE500DA7E43 /* MyTabContents.m */,
 				5AE6BC8C134644CA00325928 /* test.h */,
 				5AE6BC8D134644CB00325928 /* test.m */,
 			);
@@ -802,9 +802,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3EDA7C1225EBFF009E2908 /* main.m in Sources */,
-				3A3EDA7B1225EBFF009E2908 /* AppDelegate.mm in Sources */,
-				3A928BBC1226F0AA00DA7E43 /* MyBrowser.mm in Sources */,
-				3A928D0C12282DE500DA7E43 /* MyTabContents.mm in Sources */,
+				3A3EDA7B1225EBFF009E2908 /* AppDelegate.m in Sources */,
+				3A928BBC1226F0AA00DA7E43 /* MyBrowser.m in Sources */,
+				3A928D0C12282DE500DA7E43 /* MyTabContents.m in Sources */,
 				5AE6BC8E134644CC00325928 /* test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

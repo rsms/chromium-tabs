@@ -23,8 +23,6 @@
 @class CTTabContents;
 @class CTBrowser;
 
-//class CTTabStripModelObserverBridge;
-//class CTTabStripModel;
 @class CTTabStripModel;
 
 // A class that handles managing the tab strip in a browser window. It uses
