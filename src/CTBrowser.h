@@ -8,7 +8,7 @@ enum CTWindowOpenDisposition {
   CTWindowOpenDispositionNewBackgroundTab,
 };
 
-class CTTabStripModel;
+@class CTTabStripModelObject;
 @class CTBrowserWindowController;
 @class CTTabContentsController;
 @class CTToolbarController;
@@ -17,7 +17,7 @@ class CTTabStripModel;
 // A CTBrowser instance has one TabStripModel.
 
 @interface CTBrowser : NSObject <CTTabStripModelDelegate, NSFastEnumeration> {
-  CTTabStripModel *tabStripModel_;
+  CTTabStripModelObject *tabStripModel_;
 @public
   // Important: Don't ever change this value from user code. It's public just
   // so that the internal machinery can set it at the appropriate time.
@@ -25,7 +25,7 @@ class CTTabStripModel;
 }
 
 // The tab strip model
-@property(readonly, nonatomic) CTTabStripModel* tabStripModel;
+@property(readonly, nonatomic) CTTabStripModelObject* tabStripModel;
 
 // The window controller
 @property(readonly, nonatomic) CTBrowserWindowController* windowController;

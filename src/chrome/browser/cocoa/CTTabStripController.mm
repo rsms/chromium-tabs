@@ -280,7 +280,8 @@ private:
     switchView_ = switchView;
     browser_ = browser;
     tabStripModel_ = [browser_ tabStripModel];
-    bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
+//    bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
+	[tabStripModel_ AddObserver:self];
     tabContentsArray_.reset([[NSMutableArray alloc] init]);
     tabArray_.reset([[NSMutableArray alloc] init]);
 
@@ -364,10 +365,10 @@ private:
     // Controller may have been (re-)created by switching layout modes, which
     // means the tab model is already fully formed with tabs. Need to walk the
     // list and create the UI for each.
-    const int existingTabCount = tabStripModel_->count();
-    const CTTabContents* selection = tabStripModel_->GetSelectedTabContents();
+    const int existingTabCount = [tabStripModel_ count];
+    const CTTabContents* selection = [tabStripModel_ selectedTabContents];
     for (int i = 0; i < existingTabCount; ++i) {
-      CTTabContents* currentContents = tabStripModel_->GetTabContentsAt(i);
+		CTTabContents* currentContents = [tabStripModel_ tabContentsAtIndex:i];
       [self tabInsertedWithContents:currentContents
                             atIndex:i
                        inForeground:NO];
@@ -405,6 +406,7 @@ private:
     [[[view animationForKey:@"frameOrigin"] delegate] invalidate];
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [tabStripModel_ RemoveObserver:self];
   [super dealloc];
 }
 
@@ -422,7 +424,7 @@ private:
 // model and swaps out the sole child of the contentArea to display its
 // contents.
 - (void)swapInTabAtIndex:(NSInteger)modelIndex {
-  assert(modelIndex >= 0 && modelIndex < tabStripModel_->count());
+  assert(modelIndex >= 0 && modelIndex < [tabStripModel_ count]);
   NSInteger index = [self indexFromModelIndex:modelIndex];
   CTTabContentsController* controller = [tabContentsArray_ objectAtIndex:index];
 
@@ -450,7 +452,7 @@ private:
 
   // Make sure the new tabs's sheets are visible (necessary when a background
   // tab opened a sheet while it was in the background and now becomes active).
-  CTTabContents* newTab = tabStripModel_->GetTabContentsAt(modelIndex);
+  CTTabContents* newTab = [tabStripModel_ tabContentsAtIndex:modelIndex];
   assert(newTab);
   // TODO: Possibly need to implement this for sheets to function properly
   /*if (newTab) {
@@ -489,7 +491,7 @@ private:
 // number of TabControllers we know about (as there's a 1-to-1 mapping from
 // these controllers to a tab) less the number of closing tabs.
 - (NSInteger)numberOfOpenTabs {
-  return static_cast<NSInteger>(tabStripModel_->count());
+  return static_cast<NSInteger>([tabStripModel_ count]);
 }
 
 // (Private) Returns the number of open, mini-tabs.
@@ -497,7 +499,7 @@ private:
   // Ask the model for the number of mini tabs. Note that tabs which are in
   // the process of closing (i.e., whose controllers are in
   // |closingControllers_|) have already been removed from the model.
-  return tabStripModel_->IndexOfFirstNonMiniTab();
+  return [tabStripModel_ IndexOfFirstNonMiniTab];
 }
 
 // (Private) Returns the number of open, non-mini tabs.
@@ -588,8 +590,9 @@ private:
 - (void)selectTab:(id)sender {
   assert([sender isKindOfClass:[NSView class]]);
   int index = [self modelIndexForTabView:sender];
-  if (tabStripModel_->ContainsIndex(index))
-    tabStripModel_->SelectTabContentsAt(index, true);
+  if ([tabStripModel_ ContainsIndex:index])
+    [tabStripModel_ selectTabContentsAtIndex:index
+								 userGesture:true];
 }
 
 // Called when the user closes a tab. Asks the model to close the tab. |sender|
@@ -601,7 +604,7 @@ private:
   }
 
   NSInteger index = [self modelIndexForTabView:sender];
-  if (!tabStripModel_->ContainsIndex(index))
+	if (![tabStripModel_ ContainsIndex:index])
     return;
 
   //CTTabContents* contents = tabStripModel_->GetTabContentsAt(index);
@@ -622,10 +625,9 @@ private:
       NSView* lastTab = [self viewAtIndex:numberOfOpenTabs - 1];
       availableResizeWidth_ = NSMaxX([lastTab frame]);
     }
-    tabStripModel_->CloseTabContentsAt(
-        index,
-        CTTabStripModel::CLOSE_USER_GESTURE |
-        CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+    [tabStripModel_ closeTabContentsAtIndex:index 
+								 closeTypes:CLOSE_USER_GESTURE |
+											CLOSE_CREATE_HISTORICAL_TAB];
   } else {
     // Use the standard window close if this is the last tab
     // this prevents the tab from being removed from the model until after
@@ -635,21 +637,23 @@ private:
 }
 
 // Dispatch context menu commands for the given tab controller.
-- (void)commandDispatch:(CTTabStripModel::ContextMenuCommand)command
+- (void)commandDispatch:(ContextMenuCommand)command
           forController:(CTTabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
-  if (tabStripModel_->ContainsIndex(index))
-    tabStripModel_->ExecuteContextMenuCommand(index, command);
+  if ([tabStripModel_ ContainsIndex:index])
+    [tabStripModel_ executeContextMenuCommand:index 
+									commandID:command];
 }
 
 // Returns YES if the specificed command should be enabled for the given
 // controller.
-- (BOOL)isCommandEnabled:(CTTabStripModel::ContextMenuCommand)command
+- (BOOL)isCommandEnabled:(ContextMenuCommand)command
            forController:(CTTabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
-  if (!tabStripModel_->ContainsIndex(index))
+  if (![tabStripModel_ ContainsIndex:index])
     return NO;
-  return tabStripModel_->IsContextMenuCommandEnabled(index, command) ? YES : NO;
+  return [tabStripModel_ isContextMenuCommandEnabled:index
+										   commandID:command] ? YES : NO;
 }
 
 - (void)insertPlaceholderForTab:(CTTabView*)tab
@@ -941,8 +945,8 @@ private:
                         atIndex:(NSInteger)modelIndex
                    inForeground:(bool)inForeground {
   assert(contents);
-  assert(modelIndex == CTTabStripModel::kNoTab ||
-         tabStripModel_->ContainsIndex(modelIndex));
+  assert(modelIndex == kNoTab ||
+         [tabStripModel_ ContainsIndex:modelIndex]);
 
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
@@ -955,9 +959,9 @@ private:
 
   // Make a new tab and add it to the strip. Keep track of its controller.
   CTTabController* newController = [self newTab];
-  [newController setMini:tabStripModel_->IsMiniTab(modelIndex)];
-  [newController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
-  [newController setApp:tabStripModel_->IsAppTab(modelIndex)];
+	[newController setMini:[tabStripModel_ IsMiniTab:modelIndex]];
+	[newController setPinned:[tabStripModel_ IsTabPinned:modelIndex]];
+	[newController setApp:[tabStripModel_ IsAppTab:modelIndex]];
   [tabArray_ insertObject:newController atIndex:index];
   NSView* newView = [newController view];
 
@@ -1003,7 +1007,7 @@ private:
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
   if (oldContents) {
-    int oldModelIndex = tabStripModel_->GetIndexOfTabContents(oldContents);
+	  int oldModelIndex = [tabStripModel_ indexOfTabContents:oldContents];
     //browser_->GetIndexOfController(&(oldContents->controller()));
     if (oldModelIndex != -1) {  // When closing a tab, the old tab may be gone.
       NSInteger oldIndex = [self indexFromModelIndex:oldModelIndex];
@@ -1139,7 +1143,7 @@ private:
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
   CTTabController* tab = [tabArray_ objectAtIndex:index];
-  if (tabStripModel_->count() > 0) {
+  if ([tabStripModel_ count] > 0) {
     [self startClosingTabWithAnimation:tab];
     [self layoutTabs];
   } else {
@@ -1205,7 +1209,7 @@ private:
 
   bool oldHasIcon = [tabController iconView] != nil;
   bool newHasIcon = contents.hasIcon ||
-      tabStripModel_->IsMiniTab(modelIndex);  // Always show icon if mini.
+	[tabStripModel_ IsMiniTab:modelIndex];  // Always show icon if mini.
 
   CTTabLoadingState oldState = [tabController loadingState];
   CTTabLoadingState newState = CTTabLoadingStateDone;
@@ -1274,7 +1278,7 @@ private:
     [self setTabTitle:tabController withContents:contents];
 
   // See if the change was to/from phantom.
-  bool isPhantom = tabStripModel_->IsPhantomTab(modelIndex);
+	bool isPhantom = [tabStripModel_ IsPhantomTab:modelIndex];
   if (isPhantom != [tabController phantom])
     [tabController setPhantom:isPhantom];
 
@@ -1307,7 +1311,7 @@ private:
   [tabArray_ insertObject:movedTabController.get() atIndex:to];
 
   // The tab moved, which means that the mini-tab state may have changed.
-  if (tabStripModel_->IsMiniTab(modelTo) != [movedTabController mini])
+  if ([tabStripModel_ IsMiniTab:modelTo] != [movedTabController mini])
     [self tabMiniStateChangedWithContents:contents atIndex:modelTo];
 }
 
@@ -1319,9 +1323,9 @@ private:
 
   CTTabController* tabController = [tabArray_ objectAtIndex:index];
   assert([tabController isKindOfClass:[CTTabController class]]);
-  [tabController setMini:tabStripModel_->IsMiniTab(modelIndex)];
-  [tabController setPinned:tabStripModel_->IsTabPinned(modelIndex)];
-  [tabController setApp:tabStripModel_->IsAppTab(modelIndex)];
+	[tabController setMini:[tabStripModel_ IsMiniTab:modelIndex]];
+	[tabController setPinned:[tabStripModel_ IsTabPinned:modelIndex]];
+	[tabController setApp:[tabStripModel_ IsAppTab:modelIndex]];
   [self updateFavIconForContents:contents atIndex:modelIndex];
   // If the tab is being restored and it's pinned, the mini state is set after
   // the tab has already been rendered, so re-layout the tabstrip. In all other
@@ -1338,7 +1342,7 @@ private:
 }
 
 - (NSView*)selectedTabView {
-  int selectedIndex = tabStripModel_->selected_index();
+  int selectedIndex = tabStripModel_.selected_index;
   // Take closing tabs into account. They can't ever be selected.
   selectedIndex = [self indexFromModelIndex:selectedIndex];
   return [self viewAtIndex:selectedIndex];
@@ -1384,7 +1388,9 @@ private:
 // current placeholder.
 - (void)moveTabFromIndex:(NSInteger)from {
   int toIndex = [self indexOfPlaceholder];
-  tabStripModel_->MoveTabContentsAt(from, toIndex, true);
+  [tabStripModel_ moveTabContentsAtIndex:from 
+								 toIndex:toIndex 
+						 selectAfterMove:true];
 }
 
 // Drop a given CTTabContents at the location of the current placeholder. If there
@@ -1407,10 +1413,10 @@ private:
 
   // Insert it into this tab strip. We want it in the foreground and to not
   // inherit the current tab's group.
-  tabStripModel_->InsertTabContentsAt(
-      modelIndex, contents,
-      CTTabStripModel::ADD_SELECTED |
-      (pinned ? CTTabStripModel::ADD_PINNED : 0));
+  [tabStripModel_ insertTabContents:contents 
+							atIndex:modelIndex 
+					   withAddTypes:ADD_SELECTED |
+   (pinned ? ADD_PINNED : 0)];
 }
 
 // Called when the tab strip view changes size. As we only registered for
@@ -1749,7 +1755,7 @@ private:
 }
 
 - (CTTabContentsController*)activeTabContentsController {
-  int modelIndex = tabStripModel_->selected_index();
+  int modelIndex = tabStripModel_.selected_index;
   if (modelIndex < 0)
     return nil;
   NSInteger index = [self indexFromModelIndex:modelIndex];
@@ -1769,7 +1775,8 @@ private:
   NSInteger index = [self modelIndexForContentsView:view];
   assert(index >= 0);
   if (index >= 0)
-    tabStripModel_->SelectTabContentsAt(index, false /* not a user gesture */);
+    [tabStripModel_ selectTabContentsAtIndex:index 
+								 userGesture:false] /* not a user gesture */;
 }
 
 /*- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window {

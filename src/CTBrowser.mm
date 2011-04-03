@@ -36,7 +36,8 @@
 
 - (id)init {
   if ((self = [super init])) {
-    tabStripModel_ = new CTTabStripModel(self);
+    //tabStripModel_ = new CTTabStripModel(self);
+	  tabStripModel_ = [[CTTabStripModelObject alloc] initWithDelegate:self];
   }
   return self;
 }
@@ -44,13 +45,15 @@
 
 -(void)dealloc {
   DLOG("[ChromiumTabs] deallocing browser %@", self);
-  delete tabStripModel_;
+  //delete tabStripModel_;
+	[tabStripModel_ release];
   [super dealloc];
 }
 
 
 -(void)finalize {
-  delete tabStripModel_;
+//  delete tabStripModel_;
+	[tabStripModel_ release];
   [super finalize];
 }
 
@@ -81,61 +84,66 @@
 // TabStripModel convenience helpers
 
 -(int)tabCount {
-  return tabStripModel_->count();
+  return [tabStripModel_ count];
 }
 
 -(int)selectedTabIndex {
-  return tabStripModel_->selected_index();
+  return tabStripModel_.selected_index;
 }
 
 -(CTTabContents*)selectedTabContents {
-  return tabStripModel_->GetSelectedTabContents();
+  return [tabStripModel_ selectedTabContents];
 }
 
 -(CTTabContents*)tabContentsAtIndex:(int)index {
-  return tabStripModel_->GetTabContentsAt(index);
+  return [tabStripModel_ tabContentsAtIndex:index];
 }
 
 - (NSArray*)allTabContents {
-  NSUInteger i = 0, count = tabStripModel_->count();
+  NSUInteger i = 0, count = [tabStripModel_ count];
   NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
   for (; i<count; ++i) {
-    [array insertObject:tabStripModel_->GetTabContentsAt(i) atIndex:i];
+    [array insertObject:[tabStripModel_ tabContentsAtIndex:i] atIndex:i];
   }
   return array;
 }
 
 -(int)indexOfTabContents:(CTTabContents*)contents {
-  return tabStripModel_->GetIndexOfTabContents(contents);
+	return [tabStripModel_ indexOfTabContents:contents];
 }
 
 -(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
-  tabStripModel_->SelectTabContentsAt(index, userGesture);
+  [tabStripModel_ selectTabContentsAtIndex:index
+							   userGesture:userGesture];
 }
 
 -(void)updateTabStateAtIndex:(int)index {
-  tabStripModel_->UpdateTabContentsStateAt(index, CTTabChangeTypeAll);
+  [tabStripModel_ updateTabContentsStateAtIndex:index 
+									 changeType:CTTabChangeTypeAll];
 }
 
 -(void)updateTabStateForContent:(CTTabContents*)contents {
-  int index = tabStripModel_->GetIndexOfTabContents(contents);
+	int index = [tabStripModel_ indexOfTabContents:contents];
   if (index != -1) {
-    tabStripModel_->UpdateTabContentsStateAt(index, CTTabChangeTypeAll);
+    [tabStripModel_ updateTabContentsStateAtIndex:index 
+									   changeType:CTTabChangeTypeAll];
   }
 }
 
 -(void)replaceTabContentsAtIndex:(int)index
                  withTabContents:(CTTabContents*)contents {
-  tabStripModel_->ReplaceTabContentsAt(index, contents, (CTTabReplaceType)0);
+  [tabStripModel_ replaceTabContentsAtIndex:index 
+							   withContents:contents 
+								replaceType:(CTTabReplaceType)0];
 }
 
 -(void)closeTabAtIndex:(int)index makeHistory:(BOOL)makeHistory {
-  tabStripModel_->CloseTabContentsAt(index,
-      makeHistory ? CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB : 0);
+  [tabStripModel_ closeTabContentsAtIndex:index
+							   closeTypes:makeHistory ? CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB : 0];
 }
 
 -(void)closeAllTabs {
-  tabStripModel_->CloseAllTabs();
+  [tabStripModel_ closeAllTabs];
 }
 
 #pragma mark -
@@ -146,7 +154,7 @@
 }
 
 -(void)windowDidBeginToClose {
-  tabStripModel_->CloseAllTabs();
+  [tabStripModel_ closeAllTabs];
 }
 
 
@@ -188,8 +196,10 @@
   int addTypes = foreground ? (CTTabStripModel::ADD_SELECTED |
                                CTTabStripModel::ADD_INHERIT_GROUP)
                             : CTTabStripModel::ADD_NONE;
-  index = tabStripModel_->AddTabContents(contents, index, CTPageTransitionTyped,
-                                         addTypes);
+  index = [tabStripModel_ addTabContents:contents 
+								 atIndex:index 
+						  withTransition:CTPageTransitionTyped 
+								addTypes:addTypes];
   if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
     // TabStripModel::AddTabContents invokes HideContents if not foreground.
     contents.isVisible = NO;
@@ -218,7 +228,7 @@
 
 // implementation conforms to CTTabStripModelDelegate
 -(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
-  CTTabContents* baseContents = tabStripModel_->GetSelectedTabContents();
+  CTTabContents* baseContents = [tabStripModel_ selectedTabContents];
   CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
   return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
@@ -234,37 +244,37 @@
 
 -(void)closeTab {
   if ([self canCloseTab]) {
-    tabStripModel_->CloseTabContentsAt(
-        tabStripModel_->selected_index(),
-        CTTabStripModel::CLOSE_USER_GESTURE |
-        CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+	  [tabStripModel_ closeTabContentsAtIndex:tabStripModel_.selected_index 
+								   closeTypes:CLOSE_USER_GESTURE |
+											  CLOSE_CREATE_HISTORICAL_TAB];
   }
 }
 
 -(void)selectNextTab {
-  tabStripModel_->SelectNextTab();
+  [tabStripModel_ SelectNextTab];
 }
 
 -(void)selectPreviousTab {
-  tabStripModel_->SelectPreviousTab();
+  [tabStripModel_ SelectPreviousTab];
 }
 
 -(void)moveTabNext {
-  tabStripModel_->MoveTabNext();
+  [tabStripModel_ MoveTabNext];
 }
 
 -(void)moveTabPrevious {
-  tabStripModel_->MoveTabPrevious();
+  [tabStripModel_ MoveTabPrevious];
 }
 
 -(void)selectTabAtIndex:(int)index {
-  if (index < tabStripModel_->count()) {
-    tabStripModel_->SelectTabContentsAt(index, true);
+  if (index < [tabStripModel_ count]) {
+    [tabStripModel_ selectTabContentsAtIndex:index 
+								 userGesture:true];
   }
 }
 
 -(void)selectLastTab {
-  tabStripModel_->SelectLastTab();
+  [tabStripModel_ SelectLastTab];
 }
 
 -(void)duplicateTab {
@@ -354,7 +364,8 @@
 
   // Create an empty new browser window the same size as the old one.
   CTBrowser* browser = [isa browser];
-  browser.tabStripModel->AppendTabContents(contents, true);
+  [browser.tabStripModel appendTabContents:contents
+							  inForeground:true];
   [browser loadingStateDidChange:contents];
 
   // Orig impl:
@@ -443,12 +454,12 @@
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)fetchCount {
-  NSUInteger totalCount = tabStripModel_->count();
+  NSUInteger totalCount = [tabStripModel_ count];
   NSUInteger fetchIndex = 0;
 
   while (state->state+fetchIndex < totalCount && fetchIndex < fetchCount) {
     stackbuf[fetchIndex++] =
-        tabStripModel_->GetTabContentsAt(state->state + fetchIndex);
+        [tabStripModel_ tabContentsAtIndex:(state->state + fetchIndex)];
   }
 
   state->state += fetchIndex;

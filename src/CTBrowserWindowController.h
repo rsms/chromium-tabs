@@ -1,11 +1,12 @@
 #import <Cocoa/Cocoa.h>
 #import "CTTabWindowController.h"
+#import "CTTabStripModelObject.h"
 
 @class CTBrowser;
 @class CTTabStripController;
 @class CTToolbarController;
 @class CTTabContents;
-class CTTabStripModelObserverBridge;
+//class CTTabStripModelObserverBridge;
 
 @interface NSDocumentController (CTBrowserWindowControllerAdditions)
 - (id)openUntitledDocumentWithWindowController:(NSWindowController*)windowController
@@ -13,10 +14,10 @@ class CTTabStripModelObserverBridge;
                                          error:(NSError **)outError;
 @end
 
-@interface CTBrowserWindowController : CTTabWindowController {
+@interface CTBrowserWindowController : CTTabWindowController <CTTabStripModelObserver> {
   CTBrowser* browser_; // we own the browser
   CTTabStripController *tabStripController_;
-  CTTabStripModelObserverBridge *tabStripObserver_;
+  //CTTabStripModelObserverBridge *tabStripObserver_;
   CTToolbarController *toolbarController_;
  @private
   BOOL initializing_; // true if the instance is initializing

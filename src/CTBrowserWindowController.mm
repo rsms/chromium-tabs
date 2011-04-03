@@ -1,9 +1,9 @@
 #import "CTBrowser.h"
 #import "CTBrowserWindowController.h"
-#import "CTTabStripModel.h"
+//#import "CTTabStripModel.h"
 #import "CTTabContents.h"
 #import "CTTabStripController.h"
-#import "CTTabStripModelObserverBridge.h"
+//#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "CTTabStripView.h"
 #import "CTToolbarController.h"
@@ -96,8 +96,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   browser_->windowController_ = self;
 
   // Observe tabs
-  tabStripObserver_ =
-      new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
+//  tabStripObserver_ =
+//      new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
+	[browser_.tabStripModel AddObserver:self];
 
   // Note: the below statement including [self window] implicitly loads the
   // window and thus initializes IBOutlets, needed later. If [self window] is
@@ -159,7 +160,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   if (_currentMain == self) {
     ct_casid(&_currentMain, nil);
   }
-  delete tabStripObserver_;
+  //delete tabStripObserver_;
+	[browser_.tabStripModel RemoveObserver:self];
 
   // Close all tabs
   //[browser_ closeAllTabs]; // TODO
@@ -185,7 +187,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   }
   //NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
   //NSLog(@"%@", [NSThread callStackSymbols]);
-  delete tabStripObserver_;
+  //delete tabStripObserver_;
+	[browser_.tabStripModel RemoveObserver:self];
   [super finalize];
 }
 
@@ -298,10 +301,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 -(IBAction)closeTab:(id)sender {
-  CTTabStripModel *tabStripModel = browser_.tabStripModel;
+  CTTabStripModelObject *tabStripModel = browser_.tabStripModel;
   //tabStripModel->CloseAllTabs();
-  tabStripModel->CloseTabContentsAt(tabStripModel->selected_index(),
-                                    CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB);
+  [tabStripModel closeTabContentsAtIndex:tabStripModel.selected_index 
+							  closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
 }
 
 
@@ -342,7 +345,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     CTBrowserWindowController* dragBWC = (CTBrowserWindowController*)dragController;
     int index = [dragBWC->tabStripController_ modelIndexForTabView:view];
     CTTabContents* contents =
-        [dragBWC->browser_ tabStripModel]->GetTabContentsAt(index);
+	  [[dragBWC->browser_ tabStripModel] tabContentsAtIndex:index];
     // The tab contents may have gone away if given a window.close() while it
     // is being dragged. If so, bail, we've got nothing to drop.
     if (!contents)
@@ -363,7 +366,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
     // Before the tab is detached from its originating tab strip, store the
     // pinned state so that it can be maintained between the windows.
-    bool isPinned = [dragBWC->browser_ tabStripModel]->IsTabPinned(index);
+	  bool isPinned = [[dragBWC->browser_ tabStripModel] IsTabPinned:index];
 
     // Now that we have enough information about the tab, we can remove it from
     // the dragging window. We need to do this *before* we add it to the new
@@ -405,11 +408,11 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   base::ScopedNSDisableScreenUpdates disabler;
 
   // Keep a local ref to the tab strip model object
-  CTTabStripModel *tabStripModel = [browser_ tabStripModel];
+  CTTabStripModelObject *tabStripModel = [browser_ tabStripModel];
 
   // Fetch the tab contents for the tab being dragged.
   int index = [tabStripController_ modelIndexForTabView:tabView];
-  CTTabContents* contents = tabStripModel->GetTabContentsAt(index);
+  CTTabContents* contents = [tabStripModel tabContentsAtIndex:index];
 
   // Set the window size. Need to do this before we detach the tab so it's
   // still in the window. We have to flip the coordinates as that's what
@@ -426,13 +429,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   NSRect tabRect = [tabView frame];
 
   // Before detaching the tab, store the pinned state.
-  bool isPinned = tabStripModel->IsTabPinned(index);
+	bool isPinned = [tabStripModel IsTabPinned:index];
 
   // Detach it from the source window, which just updates the model without
   // deleting the tab contents. This needs to come before creating the new
   // CTBrowser because it clears the CTTabContents' delegate, which gets hooked
   // up during creation of the new window.
-  tabStripModel->DetachTabContentsAt(index);
+  [tabStripModel detachTabContentsAtIndex:index];
 
   // Create the new browser with a single tab in its model, the one being
   // dragged. Note that we do not retain the (autoreleased) reference since the
@@ -450,7 +453,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Add the tab to the browser (we do it here after creating the window
   // controller so that notifications are properly delegated)
-  newBrowser.tabStripModel->AppendTabContents(contents, true);
+  [newBrowser.tabStripModel appendTabContents:contents
+								 inForeground:true];
   [newBrowser loadingStateDidChange:contents];
 
   // Set window frame
@@ -458,7 +462,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Propagate the tab pinned state of the new tab (which is the only tab in
   // this new window).
-  [newBrowser tabStripModel]->SetTabPinned(0, isPinned);
+	[[newBrowser tabStripModel] setTabAtIndex:0
+									   pinned:isPinned];
 
   // Force the added tab to the right size (remove stretching.)
   tabRect.size.height = [CTTabStripController defaultTabHeight];
@@ -516,28 +521,28 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 // put into a different tab strip, such as during a drop on another window.
 - (void)detachTabView:(NSView*)view {
   int index = [tabStripController_ modelIndexForTabView:view];
-  [browser_ tabStripModel]->DetachTabContentsAt(index);
+  [[browser_ tabStripModel] detachTabContentsAtIndex:index];
 }
 
 
 - (NSInteger)numberOfTabs {
   // count() includes pinned tabs (both live and phantom).
-  return [browser_ tabStripModel]->count();
+  return [[browser_ tabStripModel] count];
 }
 
 
 - (BOOL)hasLiveTabs {
-  return [browser_ tabStripModel]->HasNonPhantomTabs();
+  return [[browser_ tabStripModel] hasNonPhantomTabs];
 }
 
 
 - (int)selectedTabIndex {
-  return [browser_ tabStripModel]->selected_index();
+  return [browser_ tabStripModel].selected_index;
 }
 
 
 - (CTTabContents*)selectedTabContents {
-  return [browser_ tabStripModel]->GetSelectedTabContents();
+  return [[browser_ tabStripModel] selectedTabContents];
 }
 
 
@@ -767,7 +772,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   //       bounds in a custom manner we have to do it here, before we call
   //       orderOut:
 
-  if (browser_.tabStripModel->HasNonPhantomTabs()) {
+  if ([browser_.tabStripModel hasNonPhantomTabs]) {
     // Tab strip isn't empty.  Hide the frame (so it appears to have closed
     // immediately) and close all the tabs, allowing them to shut down. When the
     // tab strip is empty we'll be called back again.
