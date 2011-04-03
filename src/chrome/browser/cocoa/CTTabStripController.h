@@ -13,7 +13,7 @@
 #import "CTTabControllerTarget.h"
 #import "URLDropTarget.h"
 #import "GTMWindowSheetController.h"
-#import "CTTabStripModelObject.h"
+#import "CTTabStripModelProtocol.h"
 
 @class NewTabButton;
 @class CTTabContentsController;
@@ -23,8 +23,8 @@
 @class CTTabContents;
 @class CTBrowser;
 
-class CTTabStripModelObserverBridge;
-class CTTabStripModel;
+//class CTTabStripModelObserverBridge;
+//class CTTabStripModel;
 @class CTTabStripModelObject;
 
 // A class that handles managing the tab strip in a browser window. It uses

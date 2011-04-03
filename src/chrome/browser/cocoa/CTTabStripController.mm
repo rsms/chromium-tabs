@@ -17,10 +17,10 @@
 #import "CTTabStripView.h"
 #import "CTTabContentsController.h"
 #import "CTTabController.h"
-#import "CTTabStripModelObserverBridge.h"
+//#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "throbber_view.h"
-#import "CTTabStripModel.h"
+#import "CTTabStripModelObject.h"
 #import "GTMNSAnimation+Duration.h"
 #import "CTBrowserCommand.h"
 

@@ -3,6 +3,7 @@
 //#import "CTTabStripModel.h"
 #import "CTTabContents.h"
 #import "CTTabStripController.h"
+#import "CTTabStripModelObject.h"
 //#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "CTTabStripView.h"

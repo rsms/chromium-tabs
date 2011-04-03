@@ -14,7 +14,7 @@
 
 // Describes the |CTBrowserWindowController| class which represents a window with
 // tabs. It also manages one |CTBrowser| instance (owns the reference).
-//#import <ChromiumTabs/CTBrowserWindowController.h>
+#import <ChromiumTabs/CTBrowserWindowController.h>
 
 // Describes the |CTTabContents| class which represents the contents of a tab,
 // including icon, title and state (loading, crashed, etc).
