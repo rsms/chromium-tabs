@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import "CTTabWindowController.h"
-#import "CTTabStripModelObject.h"
+#import "CTTabStripModelProtocol.h"
 
 @class CTBrowser;
 @class CTTabStripController;

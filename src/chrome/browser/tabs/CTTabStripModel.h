@@ -12,6 +12,7 @@
 #import "observer_list.h"
 
 #import "CTTabStripModelDelegate.h"
+#import "CTTabStripModelProtocol.h"
 
 @class CTTabContents;
 
@@ -26,6 +27,7 @@
 class CTTabStripModelOrderController;
 class CTTabStripModel;
 
+/*
 // Enumeration of the possible values supplied to TabChangedAt.
 enum CTTabChangeType {
   // Only the loading state changed.
@@ -46,6 +48,7 @@ enum CTTabReplaceType {
   // The replace is the result of the match preview being committed.
   REPLACE_MATCH_PREVIEW
 };
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 //

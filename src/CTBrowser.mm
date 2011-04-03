@@ -1,7 +1,7 @@
 #import "CTBrowser.h"
 #import "CTTabContents.h"
 #import "CTTabStripModelObject.h"
-#import "CTTabStripController.h"
+//#import "CTTabStripController.h"
 #import "CTPageTransition.h"
 #import "CTBrowserCommand.h"
 #import "CTBrowserWindowController.h"
@@ -139,7 +139,7 @@
 
 -(void)closeTabAtIndex:(int)index makeHistory:(BOOL)makeHistory {
   [tabStripModel_ closeTabContentsAtIndex:index
-							   closeTypes:makeHistory ? CTTabStripModel::CLOSE_CREATE_HISTORICAL_TAB : 0];
+							   closeTypes:makeHistory ? CLOSE_CREATE_HISTORICAL_TAB : 0];
 }
 
 -(void)closeAllTabs {
@@ -193,14 +193,12 @@
 -(CTTabContents*)addTabContents:(CTTabContents*)contents
                         atIndex:(int)index
                    inForeground:(BOOL)foreground {
-  int addTypes = foreground ? (CTTabStripModel::ADD_SELECTED |
-                               CTTabStripModel::ADD_INHERIT_GROUP)
-                            : CTTabStripModel::ADD_NONE;
+  int addTypes = foreground ? (ADD_SELECTED | ADD_INHERIT_GROUP) : ADD_NONE;
   index = [tabStripModel_ addTabContents:contents 
 								 atIndex:index 
 						  withTransition:CTPageTransitionTyped 
 								addTypes:addTypes];
-  if ((addTypes & CTTabStripModel::ADD_SELECTED) == 0) {
+  if ((addTypes & ADD_SELECTED) == 0) {
     // TabStripModel::AddTabContents invokes HideContents if not foreground.
     contents.isVisible = NO;
   }

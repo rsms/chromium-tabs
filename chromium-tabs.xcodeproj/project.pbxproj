@@ -132,6 +132,7 @@
 		5AE6BC8A1346445800325928 /* CTTabStripModelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModelObject.h */; };
 		5AE6BC8B1346445800325928 /* CTTabStripModelObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModelObject.mm */; };
 		5AE6BC8E134644CC00325928 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC8D134644CB00325928 /* test.m */; };
+		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,6 +295,7 @@
 		5AE6BC891346445800325928 /* CTTabStripModelObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModelObject.mm; sourceTree = "<group>"; };
 		5AE6BC8C134644CA00325928 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		5AE6BC8D134644CB00325928 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelProtocol.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -595,6 +597,7 @@
 				5AE6BC891346445800325928 /* CTTabStripModelObject.mm */,
 				5ABBB69913485BB500D66B54 /* CTTabStripModelOrderControllerObject.h */,
 				5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm */,
+				5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */,
 			);
 			path = tabs;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */,
 				5AE6BC8A1346445800325928 /* CTTabStripModelObject.h in Headers */,
 				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderControllerObject.h in Headers */,
+				5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

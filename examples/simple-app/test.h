@@ -10,7 +10,7 @@
 // ChromiumTabs
 
 // Describes the |CTBrowser| class which represents one set of tabs (a window).
-//#import <ChromiumTabs/CTBrowser.h>
+#import <ChromiumTabs/CTBrowser.h>
 
 // Describes the |CTBrowserWindowController| class which represents a window with
 // tabs. It also manages one |CTBrowser| instance (owns the reference).
