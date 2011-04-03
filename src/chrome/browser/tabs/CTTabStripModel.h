@@ -1,5 +1,5 @@
 //
-//  CTTabStripModelObject.h
+//  CTTabStripModel.h
 //  chromium-tabs
 //
 //  Created by KOed on 11-4-2.
@@ -17,7 +17,7 @@
 #import "CTTabStripModelDelegate.h"
 #import "CTTabStripModelProtocol.h"
 
-@class CTTabStripModelOrderControllerObject;
+@class CTTabStripModelOrderController;
 @class CTTabContents;
 
 extern const int kNoTab;
@@ -83,7 +83,7 @@ struct TabContentsData {
 typedef std::vector<TabContentsData*> TabContentsDataVector;
 typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers;
 
-@interface CTTabStripModelObject : NSObject {
+@interface CTTabStripModel : NSObject {
 	// Policy for how new tabs are inserted.
 	enum InsertionPolicy {
 		// Newly created tabs are created after the selection. This is the default.
@@ -168,7 +168,7 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 	
 	// An object that determines where new Tabs should be inserted and where
 	// selection should move when a Tab is closed.
-	CTTabStripModelOrderControllerObject *order_controller_;
+	CTTabStripModelOrderController *order_controller_;
 	
 	// Our observers.
 	TabStripModelObservers observers_;
@@ -187,7 +187,7 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 // avoid doing meaningless or unhelpful work.
 @property (readonly) bool closing_all;
 // Access the order controller. Exposed only for unit tests.
-@property (readonly) CTTabStripModelOrderControllerObject* order_controller;
+@property (readonly) CTTabStripModelOrderController* order_controller;
 
 - (id)initWithDelegate:(NSObject<CTTabStripModelDelegate> *)delegate;
 - (void)AddObserver:(NSObject <CTTabStripModelObserver> *)observer;

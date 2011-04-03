@@ -25,7 +25,7 @@
 
 //class CTTabStripModelObserverBridge;
 //class CTTabStripModel;
-@class CTTabStripModelObject;
+@class CTTabStripModel;
 
 // A class that handles managing the tab strip in a browser window. It uses
 // a supporting C++ bridge object to register for notifications from the
@@ -54,7 +54,7 @@
   scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
   //scoped_ptr<CTTabStripModelObserverBridge> bridge_;
   __weak CTBrowser *browser_;  // weak
-  __weak CTTabStripModelObject* tabStripModel_;  // weak
+  __weak CTTabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
   // mouse is currently over the button).

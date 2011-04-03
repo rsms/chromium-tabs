@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @class CTTabContents;
-class CTTabStripModel;
 
 // A class that controls the contents of a tab. It manages displaying the native
 // view for a given CTTabContents in |contentsContainer_|.

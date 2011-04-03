@@ -1,6 +1,6 @@
 #import "CTBrowser.h"
 #import "CTTabContents.h"
-#import "CTTabStripModelObject.h"
+#import "CTTabStripModel.h"
 //#import "CTTabStripController.h"
 #import "CTPageTransition.h"
 #import "CTBrowserCommand.h"
@@ -37,7 +37,7 @@
 - (id)init {
   if ((self = [super init])) {
     //tabStripModel_ = new CTTabStripModel(self);
-	  tabStripModel_ = [[CTTabStripModelObject alloc] initWithDelegate:self];
+	  tabStripModel_ = [[CTTabStripModel alloc] initWithDelegate:self];
   }
   return self;
 }

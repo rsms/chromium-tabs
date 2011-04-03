@@ -1,5 +1,5 @@
 //
-//  CTTabStripModelObject.m
+//  CTTabStripModel.m
 //  chromium-tabs
 //
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
@@ -7,9 +7,9 @@
 // found in the LICENSE-chromium file.
 //
 
-#import "CTTabStripModelObject.h"
+#import "CTTabStripModel.h"
 #import "stl_util-inl.h"
-#import "CTTabStripModelOrderControllerObject.h"
+#import "CTTabStripModelOrderController.h"
 #import "CTPageTransition.h"
 
 #import "CTTabContents.h"
@@ -39,7 +39,7 @@ namespace {
 	}
 }  // namespace
 
-@interface CTTabStripModelObject ()
+@interface CTTabStripModel ()
 // Returns true if the specified CTTabContents is a New Tab at the end of the
 // TabStrip. We check for this because opener relationships are _not_
 // forgotten for the New Tab page opened as a result of a New Tab gesture
@@ -121,7 +121,7 @@ namespace {
 @end
 
 
-@implementation CTTabStripModelObject
+@implementation CTTabStripModel
 @synthesize delegate = delegate_;
 @synthesize selected_index = selected_index_;
 @synthesize closing_all = closing_all_;
@@ -143,7 +143,7 @@ const int kNoTab = -1;
 		 NotificationService::AllSources());
 		 registrar_.Add(this,
 		 NotificationType::EXTENSION_UNLOADED);*/
-		order_controller_ = [[CTTabStripModelOrderControllerObject alloc] initWithTabStripModel:self];
+		order_controller_ = [[CTTabStripModelOrderController alloc] initWithTabStripModel:self];
 	}
 
 	return self;

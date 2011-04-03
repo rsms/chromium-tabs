@@ -3,7 +3,7 @@
 //#import "CTTabStripModel.h"
 #import "CTTabContents.h"
 #import "CTTabStripController.h"
-#import "CTTabStripModelObject.h"
+#import "CTTabStripModel.h"
 //#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "CTTabStripView.h"
@@ -302,7 +302,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 -(IBAction)closeTab:(id)sender {
-  CTTabStripModelObject *tabStripModel = browser_.tabStripModel;
+  CTTabStripModel *tabStripModel = browser_.tabStripModel;
   //tabStripModel->CloseAllTabs();
   [tabStripModel closeTabContentsAtIndex:tabStripModel.selected_index 
 							  closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
@@ -409,7 +409,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   base::ScopedNSDisableScreenUpdates disabler;
 
   // Keep a local ref to the tab strip model object
-  CTTabStripModelObject *tabStripModel = [browser_ tabStripModel];
+  CTTabStripModel *tabStripModel = [browser_ tabStripModel];
 
   // Fetch the tab contents for the tab being dragged.
   int index = [tabStripController_ modelIndexForTabView:tabView];

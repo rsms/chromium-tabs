@@ -120,11 +120,11 @@
 		3ABF4A8B12A461630020233C /* scoped_nsautorelease_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ABF4A8912A461630020233C /* scoped_nsautorelease_pool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3ABF4A8C12A461630020233C /* scoped_nsautorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF4A8A12A461630020233C /* scoped_nsautorelease_pool.mm */; };
 		3ABF4AAC12A465100020233C /* KVOChangeScope.hh in Headers */ = {isa = PBXBuildFile; fileRef = 3ABF4AAB12A464F50020233C /* KVOChangeScope.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderControllerObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABBB69913485BB500D66B54 /* CTTabStripModelOrderControllerObject.h */; };
-		5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm */; };
+		5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABBB69913485BB500D66B54 /* CTTabStripModelOrderController.h */; };
+		5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.mm */; };
 		5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC861346399A00325928 /* URLDropTarget.h */; };
-		5AE6BC8A1346445800325928 /* CTTabStripModelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModelObject.h */; };
-		5AE6BC8B1346445800325928 /* CTTabStripModelObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModelObject.mm */; };
+		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; };
+		5AE6BC8B1346445800325928 /* CTTabStripModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModel.mm */; };
 		5AE6BC8E134644CC00325928 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC8D134644CB00325928 /* test.m */; };
 		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; };
 /* End PBXBuildFile section */
@@ -276,11 +276,11 @@
 		3ABF4AAB12A464F50020233C /* KVOChangeScope.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KVOChangeScope.hh; sourceTree = "<group>"; };
 		3AEE19521222DDEB009DA438 /* CTTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContents.h; sourceTree = "<group>"; };
 		3AEE19531222DDEB009DA438 /* CTTabContents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabContents.mm; sourceTree = "<group>"; };
-		5ABBB69913485BB500D66B54 /* CTTabStripModelOrderControllerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelOrderControllerObject.h; sourceTree = "<group>"; };
-		5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModelOrderControllerObject.mm; sourceTree = "<group>"; };
+		5ABBB69913485BB500D66B54 /* CTTabStripModelOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelOrderController.h; sourceTree = "<group>"; };
+		5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModelOrderController.mm; sourceTree = "<group>"; };
 		5AE6BC861346399A00325928 /* URLDropTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDropTarget.h; sourceTree = "<group>"; };
-		5AE6BC881346445700325928 /* CTTabStripModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelObject.h; sourceTree = "<group>"; };
-		5AE6BC891346445800325928 /* CTTabStripModelObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModelObject.mm; sourceTree = "<group>"; };
+		5AE6BC881346445700325928 /* CTTabStripModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModel.h; sourceTree = "<group>"; };
+		5AE6BC891346445800325928 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
 		5AE6BC8C134644CA00325928 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		5AE6BC8D134644CB00325928 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelProtocol.h; sourceTree = "<group>"; };
@@ -575,10 +575,10 @@
 		3AEE19401222DC5B009DA438 /* tabs */ = {
 			isa = PBXGroup;
 			children = (
-				5AE6BC881346445700325928 /* CTTabStripModelObject.h */,
-				5AE6BC891346445800325928 /* CTTabStripModelObject.mm */,
-				5ABBB69913485BB500D66B54 /* CTTabStripModelOrderControllerObject.h */,
-				5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm */,
+				5AE6BC881346445700325928 /* CTTabStripModel.h */,
+				5AE6BC891346445800325928 /* CTTabStripModel.mm */,
+				5ABBB69913485BB500D66B54 /* CTTabStripModelOrderController.h */,
+				5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.mm */,
 				5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */,
 			);
 			path = tabs;
@@ -644,8 +644,8 @@
 				3ABF4A8712A460DA0020233C /* CTBrowserFrameView.h in Headers */,
 				3ABF4A8B12A461630020233C /* scoped_nsautorelease_pool.h in Headers */,
 				5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */,
-				5AE6BC8A1346445800325928 /* CTTabStripModelObject.h in Headers */,
-				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderControllerObject.h in Headers */,
+				5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */,
+				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */,
 				5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -792,8 +792,8 @@
 				3ABF4A1A12A4592A0020233C /* CTBrowserWindow.mm in Sources */,
 				3ABF4A8812A460DA0020233C /* CTBrowserFrameView.mm in Sources */,
 				3ABF4A8C12A461630020233C /* scoped_nsautorelease_pool.mm in Sources */,
-				5AE6BC8B1346445800325928 /* CTTabStripModelObject.mm in Sources */,
-				5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderControllerObject.mm in Sources */,
+				5AE6BC8B1346445800325928 /* CTTabStripModel.mm in Sources */,
+				5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
