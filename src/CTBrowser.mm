@@ -183,7 +183,7 @@
       [[cls alloc] initWithBrowser:browser];
   [browser addBlankTabInForeground:YES];
   [windowController showWindow:self];
-  [windowController autorelease];
+  [[windowController autorelease] retain];
 }
 
 -(void)closeWindow {
@@ -361,6 +361,7 @@
   //  dock_info.AdjustOtherWindowBounds();
 
   // Create an empty new browser window the same size as the old one.
+	DLOG("create new strip");
   CTBrowser* browser = [isa browser];
   [browser.tabStripModel appendTabContents:contents
 							  inForeground:true];

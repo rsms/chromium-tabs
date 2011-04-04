@@ -279,7 +279,7 @@ private:
     tabStripView_.reset([view retain]);
     switchView_ = switchView;
     browser_ = browser;
-    tabStripModel_ = [browser_ tabStripModel];
+    tabStripModel_ = [browser_.tabStripModel retain];
 //    bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
 	[tabStripModel_ AddObserver:self];
     tabContentsArray_.reset([[NSMutableArray alloc] init]);
@@ -395,6 +395,9 @@ private:
 }
 
 - (void)dealloc {
+  [tabStripModel_ RemoveObserver:self];
+  [tabStripModel_ release];
+
   if (trackingArea_.get())
     [tabStripView_ removeTrackingArea:trackingArea_.get()];
 
@@ -406,7 +409,6 @@ private:
     [[[view animationForKey:@"frameOrigin"] delegate] invalidate];
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [tabStripModel_ RemoveObserver:self];
   [super dealloc];
 }
 
