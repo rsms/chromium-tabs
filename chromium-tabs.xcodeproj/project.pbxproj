@@ -125,7 +125,6 @@
 		5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC861346399A00325928 /* URLDropTarget.h */; };
 		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; };
 		5AE6BC8B1346445800325928 /* CTTabStripModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModel.mm */; };
-		5AE6BC8E134644CC00325928 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC8D134644CB00325928 /* test.m */; };
 		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; };
 /* End PBXBuildFile section */
 
@@ -281,8 +280,6 @@
 		5AE6BC861346399A00325928 /* URLDropTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDropTarget.h; sourceTree = "<group>"; };
 		5AE6BC881346445700325928 /* CTTabStripModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModel.h; sourceTree = "<group>"; };
 		5AE6BC891346445800325928 /* CTTabStripModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CTTabStripModel.mm; sourceTree = "<group>"; };
-		5AE6BC8C134644CA00325928 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
-		5AE6BC8D134644CB00325928 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelProtocol.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -566,8 +563,6 @@
 				3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */,
 				3A928D0A12282DE500DA7E43 /* MyTabContents.h */,
 				3A928D0B12282DE500DA7E43 /* MyTabContents.m */,
-				5AE6BC8C134644CA00325928 /* test.h */,
-				5AE6BC8D134644CB00325928 /* test.m */,
 			);
 			path = "simple-app";
 			sourceTree = "<group>";
@@ -805,7 +800,6 @@
 				3A3EDA7B1225EBFF009E2908 /* AppDelegate.m in Sources */,
 				3A928BBC1226F0AA00DA7E43 /* MyBrowser.m in Sources */,
 				3A928D0C12282DE500DA7E43 /* MyTabContents.m in Sources */,
-				5AE6BC8E134644CC00325928 /* test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
