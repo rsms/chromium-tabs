@@ -15,10 +15,12 @@ Requirements: OS X 10.5 or later.
 
 The framework is distributed with an [`@rpath`](http://www.codeshorts.ca/2007/nov/01/leopard-linking-making-relocatable-libraries-movin) which means it should be embedded into your applications' Contents/Frameworks directory. In Xcode you can add a new "Copy Files" action with the "Frameworks" destination to your target.
 
+As an alternative, with Xcode4, you can create a new workspace which includes your project and `chromium-tabs.xcodeproj`. Once this is done, `ChromiumTabs.framework` will be available for linking like any other built-in library.
+
 Then you need to do at least two things:
 
 1. `#import <ChromiumTabs/ChromiumTabs.h>`
-2. `[CTBrowser openEmptyWindow]` when your application has started (e.g. in the application delegates' `applicationDidFinishLaunching:`)
+2. `[[CTBrowser browser] newWindow]` when your application has started (e.g. in the application delegates' `applicationDidFinishLaunching:`)
 
 The example application (in `examples/simple-app/`) illustrates basic usage and likes to be inspected while you drink coffee. It looks like this:
 
