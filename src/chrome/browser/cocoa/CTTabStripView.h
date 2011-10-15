@@ -32,7 +32,7 @@
   NSPoint dropArrowPosition_;
 }
 
-@property(assign, nonatomic) IBOutlet NewTabButton* newTabButton;
+@property(assign, nonatomic, getter = getNewTabButton) IBOutlet NewTabButton* newTabButton;
 @property(assign, nonatomic) BOOL dropArrowShown;
 @property(assign, nonatomic) NSPoint dropArrowPosition;
 
