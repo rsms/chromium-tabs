@@ -61,7 +61,7 @@ namespace {
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
   if (widgetTrackingArea_) {
     [[self frameView] removeTrackingArea:widgetTrackingArea_];
-    widgetTrackingArea_.reset();
+    widgetTrackingArea_ = nil;
   }
 }
 
@@ -221,12 +221,12 @@ namespace {
     NSRect trackingRect = [closeButton_ frame];
     trackingRect.size.width = NSMaxX([zoomButton_ frame]) -
         NSMinX(trackingRect);
-    widgetTrackingArea_.reset(
+    widgetTrackingArea_ =
         [[NSTrackingArea alloc] initWithRect:trackingRect
                                      options:(NSTrackingMouseEnteredAndExited |
                                               NSTrackingActiveAlways)
                                        owner:self
-                                    userInfo:nil]);
+                                    userInfo:nil];
     [frameView addTrackingArea:widgetTrackingArea_];
 
     // Check to see if the cursor is still in trackingRect.

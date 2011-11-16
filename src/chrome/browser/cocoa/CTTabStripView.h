@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "scoped_nsobject.h"
 #import "url_drop_target.h"
 
 @class NewTabButton;
@@ -21,7 +20,7 @@
   NSTimeInterval lastMouseUp_;
 
   // Handles being a drag-and-drop target.
-  scoped_nsobject<URLDropTargetHandler> dropHandler_;
+  URLDropTargetHandler* dropHandler_;
 
   // Weak; the following come from the nib.
   NewTabButton* __unsafe_unretained newTabButton_;

@@ -28,7 +28,7 @@
 
 - (id)initWithWindow:(NSWindow*)window {
   if ((self = [super initWithWindow:window]) != nil) {
-    lockedTabs_.reset([[NSMutableSet alloc] initWithCapacity:10]);
+    lockedTabs_ = [[NSMutableSet alloc] initWithCapacity:10];
   }
   return self;
 }

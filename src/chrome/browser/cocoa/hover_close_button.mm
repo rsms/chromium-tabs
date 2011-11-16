@@ -3,7 +3,6 @@
 // found in the LICENSE-chromium file.
 
 #import "hover_close_button.h"
-#import "scoped_nsobject.h"
 #import "NSBezierPath+MCAdditions.h"
 
 namespace  {
@@ -38,7 +37,7 @@ const CGFloat kXShadowCircleAlpha = 0.1;
 }
 
 - (void)drawRect:(NSRect)rect {
-  if (!circlePath_.get() || !xPath_.get())
+  if (!circlePath_ || !xPath_)
     [self setUpDrawingPaths];
 
   // If the user is hovering over the button, a light/dark gray circle is drawn
@@ -78,7 +77,7 @@ const CGFloat kXShadowCircleAlpha = 0.1;
 - (void)setUpDrawingPaths {
   NSPoint viewCenter = MidRect([self bounds]);
 
-  circlePath_.reset([NSBezierPath bezierPath]);
+  circlePath_ = [NSBezierPath bezierPath];
   [circlePath_ moveToPoint:viewCenter];
   CGFloat radius = kCircleRadiusPercentage * NSWidth([self bounds]);
   [circlePath_ appendBezierPathWithArcWithCenter:viewCenter
@@ -88,7 +87,7 @@ const CGFloat kXShadowCircleAlpha = 0.1;
 
   // Construct an 'x' by drawing two intersecting rectangles in the shape of a
   // cross and then rotating the path by 45 degrees.
-  xPath_.reset([NSBezierPath bezierPath]);
+  xPath_ = [NSBezierPath bezierPath];
   [xPath_ appendBezierPathWithRect:NSMakeRect(3.5, 7.0, 9.0, 2.0)];
   [xPath_ appendBezierPathWithRect:NSMakeRect(7.0, 3.5, 2.0, 9.0)];
 

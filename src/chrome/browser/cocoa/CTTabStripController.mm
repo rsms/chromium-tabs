@@ -275,20 +275,20 @@ private:
            browser:(CTBrowser*)browser {
   assert(view && switchView && browser);
   if ((self = [super init])) {
-    tabStripView_.reset(view);
+    tabStripView_ = view;
     switchView_ = switchView;
     browser_ = browser;
     tabStripModel_ = [browser_ tabStripModel];
     bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
-    tabContentsArray_.reset([[NSMutableArray alloc] init]);
-    tabArray_.reset([[NSMutableArray alloc] init]);
+    tabContentsArray_ = [[NSMutableArray alloc] init];
+    tabArray_ = [[NSMutableArray alloc] init];
 
     // Important note: any non-tab subviews not added to |permanentSubviews_|
     // (see |-addSubviewToPermanentList:|) will be wiped out.
-    permanentSubviews_.reset([[NSMutableArray alloc] init]);
+    permanentSubviews_ = [[NSMutableArray alloc] init];
 
     //ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-    defaultFavIcon_.reset(kDefaultIconImage);
+    defaultFavIcon_ = kDefaultIconImage;
 
     [self setIndentForControls:[[self class] defaultIndentForControls]];
 
@@ -305,24 +305,24 @@ private:
     [newTabButton_ setImage:kNewTabImage];
     [newTabButton_ setAlternateImage:kNewTabPressedImage];
     newTabButtonShowingHoverImage_ = NO;
-    newTabTrackingArea_.reset(
+    newTabTrackingArea_ = 
         [[NSTrackingArea alloc] initWithRect:[newTabButton_ bounds]
                                      options:(NSTrackingMouseEnteredAndExited |
                                               NSTrackingActiveAlways)
                                        owner:self
-                                    userInfo:nil]);
-    [newTabButton_ addTrackingArea:newTabTrackingArea_.get()];
-    targetFrames_.reset([[NSMutableDictionary alloc] init]);
+                                    userInfo:nil];
+    [newTabButton_ addTrackingArea:newTabTrackingArea_];
+    targetFrames_ = [[NSMutableDictionary alloc] init];
 
-    dragBlockingView_.reset(
+    dragBlockingView_ =
         [[TabStripControllerDragBlockingView alloc] initWithFrame:NSZeroRect
-                                                       controller:self]);
+                                                       controller:self];
     [self addSubviewToPermanentList:dragBlockingView_];
 
     newTabTargetFrame_ = NSMakeRect(0, 0, 0, 0);
     availableResizeWidth_ = kUseFullAvailableWidth;
 
-    closingControllers_.reset([[NSMutableSet alloc] init]);
+    closingControllers_ = [[NSMutableSet alloc] init];
 
     // Install the permanent subviews.
     [self regenerateSubviewList];
@@ -335,15 +335,15 @@ private:
                name:NSViewFrameDidChangeNotification
              object:tabStripView_];
 
-    trackingArea_.reset([[NSTrackingArea alloc]
+    trackingArea_ = [[NSTrackingArea alloc]
         initWithRect:NSZeroRect  // Ignored by NSTrackingInVisibleRect
              options:NSTrackingMouseEnteredAndExited |
                      NSTrackingMouseMoved |
                      NSTrackingActiveAlways |
                      NSTrackingInVisibleRect
                owner:self
-            userInfo:nil]);
-    [tabStripView_ addTrackingArea:trackingArea_.get()];
+            userInfo:nil];
+    [tabStripView_ addTrackingArea:trackingArea_];
 
     // Check to see if the mouse is currently in our bounds so we can
     // enable the tracking areas.  Otherwise we won't get hover states
@@ -393,13 +393,13 @@ private:
 }
 
 - (void)dealloc {
-  if (trackingArea_.get())
-    [tabStripView_ removeTrackingArea:trackingArea_.get()];
+  if (trackingArea_)
+    [tabStripView_ removeTrackingArea:trackingArea_];
 
-  [newTabButton_ removeTrackingArea:newTabTrackingArea_.get()];
+  [newTabButton_ removeTrackingArea:newTabTrackingArea_];
   // Invalidate all closing animations so they don't call back to us after
   // we're gone.
-  for (CTTabController* controller in closingControllers_.get()) {
+  for (CTTabController* controller in closingControllers_) {
     NSView* view = [controller view];
     [[[view animationForKey:@"frameOrigin"] delegate] invalidate];
   }
@@ -465,7 +465,7 @@ private:
   }*/
 
   // Tell per-tab sheet manager about currently selected tab.
-  if (sheetController_.get()) {
+  if (sheetController_) {
     [sheetController_ setActiveView:newView];
   }
 }
@@ -516,7 +516,7 @@ private:
     return index;
 
   NSInteger i = 0;
-  for (CTTabController* controller in tabArray_.get()) {
+  for (CTTabController* controller in tabArray_) {
     if ([closingControllers_ containsObject:controller]) {
       assert([(CTTabView*)[controller view] isClosing]);
       ++index;
@@ -535,7 +535,7 @@ private:
 // are no longer in the model.
 - (NSInteger)modelIndexForTabView:(NSView*)view {
   NSInteger index = 0;
-  for (CTTabController* current in tabArray_.get()) {
+  for (CTTabController* current in tabArray_) {
     // If |current| is closing, skip it.
     if ([closingControllers_ containsObject:current])
       continue;
@@ -553,7 +553,7 @@ private:
 - (NSInteger)modelIndexForContentsView:(NSView*)view {
   NSInteger index = 0;
   NSInteger i = 0;
-  for (CTTabContentsController* current in tabContentsArray_.get()) {
+  for (CTTabContentsController* current in tabContentsArray_) {
     // If the CTTabController corresponding to |current| is closing, skip it.
     CTTabController* controller = [tabArray_ objectAtIndex:i];
     if ([closingControllers_ containsObject:controller]) {
@@ -758,7 +758,7 @@ private:
   CGFloat offset = [self indentForControls];
   NSUInteger i = 0;
   bool hasPlaceholderGap = false;
-  for (CTTabController* tab in tabArray_.get()) {
+  for (CTTabController* tab in tabArray_) {
     // Ignore a tab that is going through a close animation.
     if ([closingControllers_ containsObject:tab])
       continue;
@@ -1018,7 +1018,7 @@ private:
 
   // De-select all other tabs and select the new tab.
   int i = 0;
-  for (CTTabController* current in tabArray_.get()) {
+  for (CTTabController* current in tabArray_) {
     [current setSelected:(i == index) ? YES : NO];
     ++i;
   }
@@ -1110,10 +1110,10 @@ private:
   // Register delegate (owned by the animation system).
   NSView* tabView = [closingTab view];
   CAAnimation* animation = [[tabView animationForKey:@"frameOrigin"] copy];
-  scoped_nsobject<TabCloseAnimationDelegate> delegate(
+  TabCloseAnimationDelegate* delegate =
     [[TabCloseAnimationDelegate alloc] initWithTabStrip:self
-                                          tabController:closingTab]);
-  [animation setDelegate:delegate.get()];  // Retains delegate.
+                                          tabController:closingTab];
+  [animation setDelegate:delegate];  // Retains delegate.
   NSMutableDictionary* animationDictionary =
       [NSMutableDictionary dictionaryWithDictionary:[tabView animations]];
   [animationDictionary setObject:animation forKey:@"frameOrigin"];
@@ -1159,7 +1159,7 @@ private:
   // Either we don't have a valid favicon or there was some issue converting it
   // from an SkBitmap. Either way, just show the default.
   if (!image)
-    image = defaultFavIcon_.get();
+    image = defaultFavIcon_;
   NSRect frame = NSMakeRect(0, 0, kIconWidthAndHeight, kIconWidthAndHeight);
   NSImageView* view = [[NSImageView alloc] initWithFrame:frame];
   //DLOG_EXPR(image);
@@ -1292,16 +1292,16 @@ private:
   NSInteger from = [self indexFromModelIndex:modelFrom];
   NSInteger to = [self indexFromModelIndex:modelTo];
 
-  scoped_nsobject<CTTabContentsController> movedTabContentsController(
-      [tabContentsArray_ objectAtIndex:from]);
+  CTTabContentsController* movedTabContentsController =
+      [tabContentsArray_ objectAtIndex:from];
   [tabContentsArray_ removeObjectAtIndex:from];
-  [tabContentsArray_ insertObject:movedTabContentsController.get()
+  [tabContentsArray_ insertObject:movedTabContentsController
                           atIndex:to];
-  scoped_nsobject<CTTabController> movedTabController(
-      [tabArray_ objectAtIndex:from]);
+  CTTabController* movedTabController =
+      [tabArray_ objectAtIndex:from];
   assert([movedTabController isKindOfClass:[CTTabController class]]);
   [tabArray_ removeObjectAtIndex:from];
-  [tabArray_ insertObject:movedTabController.get() atIndex:to];
+  [tabArray_ insertObject:movedTabController atIndex:to];
 
   // The tab moved, which means that the mini-tab state may have changed.
   if (tabStripModel_->IsMiniTab(modelTo) != [movedTabController mini])
@@ -1510,7 +1510,7 @@ private:
 // when the mouse is in the tabstrip.
 - (void)setTabTrackingAreasEnabled:(BOOL)enabled {
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-  for (CTTabController* controller in tabArray_.get()) {
+  for (CTTabController* controller in tabArray_) {
     CTTabView* tabView = [controller tabView];
     if (enabled) {
       // Set self up to observe tabs so hover states will be correct.
@@ -1595,7 +1595,7 @@ private:
 
   assert(index && disposition);
   NSInteger i = 0;
-  for (CTTabController* tab in tabArray_.get()) {
+  for (CTTabController* tab in tabArray_) {
     NSView* view = [tab view];
     assert([view isKindOfClass:[CTTabView class]]);
 
@@ -1637,7 +1637,7 @@ private:
 
 // (URLDropTargetController protocol)
 - (void)dropURLs:(NSArray*)urls inView:(NSView*)view at:(NSPoint)point {
-  DCHECK_EQ(view, tabStripView_.get());
+  DCHECK_EQ(view, tabStripView_);
   NOTIMPLEMENTED(); // TODO
   /*if ([urls count] < 1) {
     NOTREACHED();
@@ -1683,7 +1683,7 @@ private:
 
 // (URLDropTargetController protocol)
 - (void)indicateDropURLsInView:(NSView*)view at:(NSPoint)point {
-  DCHECK_EQ(view, tabStripView_.get());
+  DCHECK_EQ(view, tabStripView_);
 
   // The minimum y-coordinate at which one should consider place the arrow.
   const CGFloat arrowBaseY = 25;
@@ -1724,7 +1724,7 @@ private:
 
 // (URLDropTargetController protocol)
 - (void)hideDropURLsIndicatorInView:(NSView*)view {
-  DCHECK_EQ(view, tabStripView_.get());
+  DCHECK_EQ(view, tabStripView_);
 
   if ([tabStripView_ dropArrowShown]) {
     [tabStripView_ setDropArrowShown:NO];
@@ -1733,16 +1733,16 @@ private:
 }
 
 - (GTMWindowSheetController*)sheetController {
-  if (!sheetController_.get())
-    sheetController_.reset([[GTMWindowSheetController alloc]
-        initWithWindow:[switchView_ window] delegate:self]);
-  return sheetController_.get();
+  if (!sheetController_)
+    sheetController_ = [[GTMWindowSheetController alloc]
+        initWithWindow:[switchView_ window] delegate:self];
+  return sheetController_;
 }
 
 - (void)destroySheetController {
   // Make sure there are no open sheets.
   DCHECK_EQ(0U, [[sheetController_ viewsWithAttachedSheets] count]);
-  sheetController_.reset();
+  sheetController_ = nil;
 }
 
 - (CTTabContentsController*)activeTabContentsController {

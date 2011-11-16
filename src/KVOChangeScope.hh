@@ -84,8 +84,6 @@ class KVOChangeScope {
   // Destructor which ends the edit if active
   ~KVOChangeScope() {
     end();
-    key_;
-    owner_;
   }
   
   // Begin an edit. Returns true if the edit was not already started.

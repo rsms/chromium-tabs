@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "scoped_nsobject.h"
 #import "scoped_ptr.h"
 #import "CTTabControllerTarget.h"
 #import "url_drop_target.h"
@@ -42,16 +41,16 @@ class CTTabStripModel;
 
  @private
   __weak CTTabContents* currentTab_;  // weak, tab for which we're showing state
-  scoped_nsobject<CTTabStripView> tabStripView_;
+  CTTabStripView* tabStripView_;
   __weak NSView* switchView_;  // weak
-  scoped_nsobject<NSView> dragBlockingView_;  // avoid bad window server drags
+  NSView* dragBlockingView_;  // avoid bad window server drags
   __weak NewTabButton* newTabButton_;  // weak, obtained from the nib.
 
   // Tracks the newTabButton_ for rollovers.
-  scoped_nsobject<NSTrackingArea> newTabTrackingArea_;
+  NSTrackingArea* newTabTrackingArea_;
   scoped_ptr<CTTabStripModelObserverBridge> bridge_;
   __weak CTBrowser *browser_;  // weak
-  __weak CTTabStripModel* tabStripModel_;  // weak
+  CTTabStripModel* tabStripModel_;  // weak
 
   // YES if the new tab button is currently displaying the hover image (if the
   // mouse is currently over the button).
@@ -65,14 +64,14 @@ class CTTabStripModel;
   // tabs are animating closed (closed tabs are removed from |tabStripModel_|
   // immediately, but from |tabContentsArray_| only after their close animation
   // has completed).
-  scoped_nsobject<NSMutableArray> tabContentsArray_;
+  NSMutableArray* tabContentsArray_;
   // An array of TabControllers which manage the actual tab views. See note
   // above |tabContentsArray_|. |tabContentsArray_| and |tabArray_| always
   // contain objects belonging to the same tabs at the same indices.
-  scoped_nsobject<NSMutableArray> tabArray_;
+  NSMutableArray* tabArray_;
 
   // Set of TabControllers that are currently animating closed.
-  scoped_nsobject<NSMutableSet> closingControllers_;
+  NSMutableSet* closingControllers_;
 
   // These values are only used during a drag, and override tab positioning.
   CTTabView* placeholderTab_;  // weak. Tab being dragged
@@ -82,7 +81,7 @@ class CTTabStripModel;
   // Frame targets for all the current views.
   // target frames are used because repeated requests to [NSView animator].
   // aren't coalesced, so we store frames to avoid redundant calls.
-  scoped_nsobject<NSMutableDictionary> targetFrames_;
+  NSMutableDictionary* targetFrames_;
   NSRect newTabTargetFrame_;
   // If YES, do not show the new tab button during layout.
   BOOL forceNewTabButtonHidden_;
@@ -98,22 +97,22 @@ class CTTabStripModel;
   float availableResizeWidth_;
   // A tracking area that's the size of the tab strip used to be notified
   // when the mouse moves in the tab strip
-  scoped_nsobject<NSTrackingArea> trackingArea_;
+  NSTrackingArea* trackingArea_;
   CTTabView* hoveredTab_;  // weak. Tab that the mouse is hovering over
 
   // Array of subviews which are permanent (and which should never be removed),
   // such as the new-tab button, but *not* the tabs themselves.
-  scoped_nsobject<NSMutableArray> permanentSubviews_;
+  NSMutableArray* permanentSubviews_;
 
   // The default favicon, so we can use one copy for all buttons.
-  scoped_nsobject<NSImage> defaultFavIcon_;
+  NSImage* defaultFavIcon_;
 
   // The amount by which to indent the tabs on the left (to make room for the
   // red/yellow/green buttons).
   CGFloat indentForControls_;
 
   // Manages per-tab sheets.
-  scoped_nsobject<GTMWindowSheetController> sheetController_;
+  GTMWindowSheetController* sheetController_;
 
   // Is the mouse currently inside the strip;
   BOOL mouseInside_;

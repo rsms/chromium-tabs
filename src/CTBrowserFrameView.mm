@@ -7,7 +7,6 @@
 #import <objc/runtime.h>
 #import <Carbon/Carbon.h>
 
-#import "scoped_nsautorelease_pool.h"
 #import "CTBrowserWindow.h"
 
 static const CGFloat kBrowserFrameViewPaintHeight = 60.0;
@@ -40,7 +39,6 @@ static BOOL gCanGetCornerRadius = NO;
   // others. If they all fail, we will lose window frame theming and
   // roll overs for our close widgets, but things should still function
   // correctly.
-  ScopedNSAutoreleasePool pool;
   Class grayFrameClass = NSClassFromString(@"NSGrayFrame");
   DCHECK(grayFrameClass);
   if (!grayFrameClass) return;

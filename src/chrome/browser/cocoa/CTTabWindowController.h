@@ -29,7 +29,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "cocoa_protocols_mac.h"
-#import "scoped_nsobject.h"
 
 @class FastResizeView;
 @class CTTabStripView;
@@ -46,7 +45,7 @@
   NSView* cachedContentView_;  // Used during dragging for identifying which
                                // view is the proper content area in the overlay
                                // (weak)
-  scoped_nsobject<NSMutableSet> lockedTabs_;
+  NSMutableSet* lockedTabs_;
   BOOL closeDeferred_;  // If YES, call performClose: in removeOverlay:.
   // Difference between height of window content area and height of the
   // |tabContentArea_|. Calculated when the window is loaded from the nib and

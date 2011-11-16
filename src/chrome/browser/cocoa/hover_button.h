@@ -4,8 +4,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "scoped_nsobject.h"
-
 // A button that changes when you hover over it and click it.
 @interface HoverButton : NSButton {
  @protected
@@ -21,7 +19,7 @@
 
  @private
   // Tracking area for button mouseover states.
-  scoped_nsobject<NSTrackingArea> trackingArea_;
+  NSTrackingArea* trackingArea_;
 }
 
 // Enables or disables the |NSTrackingRect|s for the button.

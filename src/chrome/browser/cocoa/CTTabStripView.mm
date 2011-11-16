@@ -33,7 +33,7 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
     lastMouseUp_ = -1000.0;
 
     // Register to be an URL drop target.
-    dropHandler_.reset([[URLDropTargetHandler alloc] initWithView:self]);
+    dropHandler_ = [[URLDropTargetHandler alloc] initWithView:self];
   }
   return self;
 }
