@@ -37,7 +37,7 @@
 
 @interface CTTabWindowController : NSWindowController<NSWindowDelegate> {
  @private
-  IBOutlet FastResizeView* tabContentArea_;
+  IBOutlet FastResizeView* __weak tabContentArea_;
   // TODO(pinkerton): Figure out a better way to initialize one or the other
   // w/out needing both to be in the nib.
   IBOutlet CTTabStripView* topTabStripView_;
@@ -55,7 +55,7 @@
   
   BOOL didShowNewTabButtonBeforeTemporalAction_;
 }
-@property(readonly, nonatomic) CTTabStripView* tabStripView;
+@property(weak, readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;
 @property(assign, nonatomic) BOOL didShowNewTabButtonBeforeTemporalAction;
 

@@ -6,12 +6,12 @@ NSBundle *CTHostBundle = nil;
 @implementation CTUtil
 
 + (void)load {
-  NSAutoreleasePool* pool = [NSAutoreleasePool new];
-  CTFrameworkBundle = [[NSBundle bundleForClass:self] retain];
-  assert(CTFrameworkBundle);
-  CTHostBundle = [[NSBundle mainBundle] retain];
-  assert(CTHostBundle);
-  [pool drain];
+  @autoreleasepool {
+    CTFrameworkBundle = [NSBundle bundleForClass:self];
+    assert(CTFrameworkBundle);
+    CTHostBundle = [NSBundle mainBundle];
+    assert(CTHostBundle);
+  }
 }
 
 +(NSBundle *)bundleForResource:(NSString *)name {

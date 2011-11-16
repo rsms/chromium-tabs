@@ -63,7 +63,6 @@ namespace {
     [[self frameView] removeTrackingArea:widgetTrackingArea_];
     widgetTrackingArea_.reset();
   }
-  [super dealloc];
 }
 
 - (void)setWindowController:(NSWindowController*)controller {

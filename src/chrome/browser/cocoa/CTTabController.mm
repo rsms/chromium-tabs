@@ -59,7 +59,6 @@ static NSString* const kBrowserThemeDidChangeNotification =
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[self tabView] setController:nil];
-  [super dealloc];
 }
 
 // The internals of |-setSelected:| but doesn't check if we're already set

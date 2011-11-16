@@ -16,7 +16,7 @@
   // Cache the path as it doesn't change (the coordinates are local to this
   // view). There's not much point making constants for these, as they are
   // custom.
-  imagePath_.reset([[NSBezierPath bezierPath] retain]);
+  imagePath_.reset([NSBezierPath bezierPath]);
   [imagePath_ moveToPoint:NSMakePoint(9, 7)];
   [imagePath_ lineToPoint:NSMakePoint(26, 7)];
   [imagePath_ lineToPoint:NSMakePoint(33, 23)];

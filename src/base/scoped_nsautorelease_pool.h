@@ -33,7 +33,6 @@ class ScopedNSAutoreleasePool {
   // no longer needed.
   void Recycle();
  private:
-  NSAutoreleasePool* autorelease_pool_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ScopedNSAutoreleasePool);

@@ -37,7 +37,6 @@
   if (overlayWindow_) {
     [self setUseOverlay:NO];
   }
-  [super dealloc];
 }
 
 
@@ -207,7 +206,6 @@
     [window display];
     [window removeChildWindow:overlayWindow_];
     [overlayWindow_ orderOut:nil];
-    [overlayWindow_ release];
     overlayWindow_ = nil;
     cachedContentView_ = nil;
   } else {

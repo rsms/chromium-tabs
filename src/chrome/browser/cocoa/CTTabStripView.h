@@ -24,7 +24,7 @@
   scoped_nsobject<URLDropTargetHandler> dropHandler_;
 
   // Weak; the following come from the nib.
-  NewTabButton* newTabButton_;
+  NewTabButton* __unsafe_unretained newTabButton_;
 
   // Whether the drop-indicator arrow is shown, and if it is, the coordinate of
   // its tip.
@@ -32,7 +32,7 @@
   NSPoint dropArrowPosition_;
 }
 
-@property(assign, nonatomic, getter = getNewTabButton) IBOutlet NewTabButton* newTabButton;
+@property(unsafe_unretained, nonatomic, getter = getNewTabButton) IBOutlet NewTabButton* newTabButton;
 @property(assign, nonatomic) BOOL dropArrowShown;
 @property(assign, nonatomic) NSPoint dropArrowPosition;
 

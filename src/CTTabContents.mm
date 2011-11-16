@@ -64,14 +64,10 @@ _synthRetain(NSImage*, Icon, icon);
   return [super init];
 }
 
--(void)dealloc {
-  [super dealloc];
-}
 
 -(void)destroy:(CTTabStripModel*)sender {
   // TODO: notify "disconnected"?
   sender->TabContentsWasDestroyed(self); // TODO: NSNotification
-  [self release];
 }
 
 #pragma mark Properties impl.

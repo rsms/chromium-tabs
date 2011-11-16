@@ -104,8 +104,6 @@ const char *common_strrstr(const char *string, const char *find);
   static inline id ct_objc_xch(id *dst, id src) {
     id old = *dst;
     *dst = src;
-    if (old) [old release];
-    if (src) [src retain];
     return old;
   }
   

@@ -95,7 +95,6 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)dealloc {
   // Cancel any delayed requests that may still be pending (drags or hover).
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  [super dealloc];
 }
 
 // Called to obtain the context menu for when the user hits the right mouse
@@ -318,7 +317,7 @@ const CGFloat kRapidCloseDist = 2.5;
   // strip and then deallocated. This will also result in *us* being
   // deallocated. Both these are bad, so we prevent this by retaining the
   // controller.
-  scoped_nsobject<CTTabController> controller([tabController_ retain]);
+  scoped_nsobject<CTTabController> controller(tabController_);
 
   // Because we move views between windows, we need to handle the event loop
   // ourselves. Ideally we should use the standard event loop.

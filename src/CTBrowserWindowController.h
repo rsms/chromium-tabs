@@ -15,10 +15,10 @@
 @end
 
 @interface CTBrowserWindowController : CTTabWindowController {
-  CTBrowser* browser_; // we own the browser
+  CTBrowser* __weak browser_; // we own the browser
   CTTabStripController *tabStripController_;
   CTTabStripModelObserverBridge *tabStripObserver_;
-  CTToolbarController *toolbarController_;
+  CTToolbarController * toolbarController_;
  @private
   BOOL initializing_; // true if the instance is initializing
 }

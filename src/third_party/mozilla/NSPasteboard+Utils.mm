@@ -288,9 +288,9 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
     return @"";
 
   NSAttributedString* attributed =
-      [[[NSAttributedString alloc]
+      [[NSAttributedString alloc]
              initWithRTF:[self dataForType:NSRTFPboardType]
-      documentAttributes:nil] autorelease];
+      documentAttributes:nil];
   NSDictionary* attributeDict =
       [NSDictionary dictionaryWithObject:NSHTMLTextDocumentType
                                   forKey:NSDocumentTypeDocumentAttribute];
@@ -299,8 +299,8 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
              documentAttributes:attributeDict
                           error:nil];
   // According to the docs, NSHTMLTextDocumentType is UTF8.
-  return [[[NSString alloc] 
-      initWithData:htmlData encoding:NSUTF8StringEncoding] autorelease];
+  return [[NSString alloc] 
+      initWithData:htmlData encoding:NSUTF8StringEncoding];
 }
 
 @end

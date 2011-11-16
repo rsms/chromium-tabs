@@ -44,7 +44,7 @@
 
 - (NSArray*)installedBrowserIdentifiers
 {
-  NSArray* apps = [(NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https")) autorelease];
+  NSArray* apps = (__bridge_transfer NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https"));
 
   // add the default if it isn't there
   NSString* defaultHandler = [self defaultBrowserIdentifier];
@@ -56,7 +56,7 @@
 
 - (NSArray*)installedFeedViewerIdentifiers
 {
-  NSArray* apps = [(NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed")) autorelease];
+  NSArray* apps = (__bridge_transfer NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed"));
 
   // add the default if it isn't there
   NSString* defaultHandler = [self defaultFeedViewerIdentifier];
@@ -68,7 +68,7 @@
 
 - (NSString*)defaultBrowserIdentifier
 {
-  NSString* defaultBundleId = [(NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http")) autorelease];
+  NSString* defaultBundleId = (__bridge_transfer NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http"));
   // Sometimes LaunchServices likes to pretend there's no default browser.
   // If that happens, we'll assume it's probably Safari.
   if (!defaultBundleId)
@@ -78,7 +78,7 @@
 
 - (NSString*)defaultFeedViewerIdentifier
 {
-  return [(NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed")) autorelease];
+  return (__bridge_transfer NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed"));
 }
 
 - (NSURL*)defaultBrowserURL

@@ -68,7 +68,6 @@ static void CGPathCallback(void *info, const CGPathElement *element)
   NSBezierPath *path = [self copy];
   CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
   CGPathRef pathRef = [path gtm_CGPath];
-  [path release];
   
   CGContextSaveGState(context);
     
@@ -145,8 +144,6 @@ static void CGPathCallback(void *info, const CGPathElement *element)
   
   [NSGraphicsContext restoreGraphicsState];
   
-  [path release];
-  [shadow release];
 }
 
 // Credit for the next two methods goes to Matt Gemmell

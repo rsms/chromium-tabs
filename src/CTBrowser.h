@@ -23,7 +23,7 @@ class CTTabStripModel;
 @public
   // Important: Don't ever change this value from user code. It's public just
   // so that the internal machinery can set it at the appropriate time.
-  CTBrowserWindowController *windowController_;
+  CTBrowserWindowController *__unsafe_unretained windowController_;
 }
 
 // The tab strip model
@@ -33,7 +33,7 @@ class CTTabStripModel;
 @property(readonly, nonatomic) CTBrowserWindowController* windowController;
 
 // The window. Convenience for [windowController window]
-@property(readonly, nonatomic) NSWindow* window;
+@property(unsafe_unretained, readonly, nonatomic) NSWindow* window;
 
 // Create a new browser with a window.
 // @autoreleased

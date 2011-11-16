@@ -210,7 +210,7 @@ void CTTabStripModel::InsertTabContentsAt(int index,
   // otherwise we run into problems when we try to change the selected contents
   // since the old contents and the new contents will be the same...
   CTTabContents* selected_contents = GetSelectedTabContents();
-  TabContentsData* data = new TabContentsData([contents retain]);
+  TabContentsData* data = new TabContentsData(contents);
   data->pinned = pin;
   if ((add_types & ADD_INHERIT_GROUP) && selected_contents) {
     if (foreground) {

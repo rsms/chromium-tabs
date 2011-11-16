@@ -38,7 +38,7 @@ class scoped_nsobject {
   }
 
   ~scoped_nsobject() {
-    [object_ release];
+    object_;
   }
 
   void reset(NST* object = nil) {
@@ -47,7 +47,7 @@ class scoped_nsobject {
     // and scoped_cftyperef, whether it's in the constructor or in a call to
     // reset().  In either case, it relinquishes that claim and the scoper
     // assumes it.
-    [object_ release];
+    object_;
     object_ = object;
   }
 
@@ -99,7 +99,7 @@ class scoped_nsobject<id> {
   }
 
   ~scoped_nsobject() {
-    [object_ release];
+    object_;
   }
 
   void reset(id object = nil) {
@@ -108,7 +108,7 @@ class scoped_nsobject<id> {
     // and scoped_cftyperef, whether it's in the constructor or in a call to
     // reset().  In either case, it relinquishes that claim and the scoper
     // assumes it.
-    [object_ release];
+    object_;
     object_ = object;
   }
 

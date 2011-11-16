@@ -57,7 +57,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }*/
 
 + (CTBrowserWindowController*)browserWindowController {
-  return [[[self alloc] init] autorelease];
+  return [[self alloc] init];
 }
 
 + (CTBrowserWindowController*)mainBrowserWindowController {
@@ -91,7 +91,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   initializing_ = YES;
 
   // Our browser
-  browser_ = [browser retain];
+  browser_ = browser;
   browser_->windowController_ = self;
 
   // Observe tabs
@@ -121,7 +121,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Create a toolbar controller. The browser object might return nil, in which
   // means we do not have a toolbar.
-  toolbarController_ = [[browser_ createToolbarController] retain];
+  toolbarController_ = [browser_ createToolbarController];
   if (toolbarController_) {
     [[[self window] contentView] addSubview:[toolbarController_ view]];
   }
@@ -171,10 +171,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  [browser_ release];
-  [tabStripController_ release];
   toolbarController_ = nil;
-  [super dealloc];
 }
 
 
@@ -270,7 +267,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (IBAction)newWindow:(id)sender {
   CTBrowserWindowController* windowController =
-      [[isa browserWindowController] retain];
+      [isa browserWindowController];
   [windowController newDocument:sender];
   [windowController showWindow:self];
 }

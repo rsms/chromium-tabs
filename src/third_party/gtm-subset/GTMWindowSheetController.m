@@ -138,9 +138,7 @@ willPositionSheet:(NSWindow*)sheet
   assert([sheets_ count] == 0);
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  [sheets_ release];
 
-  [super dealloc];
 }
 
 - (void)beginSheet:(NSWindow*)sheet
@@ -267,7 +265,7 @@ willPositionSheet:(NSWindow*)sheet
          Cannot show another sheet for a view while already managing one*/);
   assert(info /*Missing info for the type of sheet*/);
 
-  GTMWSCSheetInfo* sheetInfo = [[[GTMWSCSheetInfo alloc] init] autorelease];
+  GTMWSCSheetInfo* sheetInfo = [[GTMWSCSheetInfo alloc] init];
 
   sheetInfo->modalDelegate_ = [params objectAtIndex:info->modalDelegateIndex_];
   sheetInfo->didEndSelector_ =
@@ -296,7 +294,9 @@ willPositionSheet:(NSWindow*)sheet
 
   [window_ addChildWindow:sheetInfo->overlayWindow_
                   ordered:NSWindowAbove];
-
+    
+    // @TODO: NSInvocation stuff - FIXME
+/*
 
   SEL methodSelector = NSSelectorFromString([NSString stringWithCString: info->methodSignature_ encoding: NSUTF8StringEncoding]);
   NSInvocation* invocation =
@@ -332,7 +332,7 @@ willPositionSheet:(NSWindow*)sheet
     }
   }
   [invocation invokeWithTarget:systemSheet];
-
+*/
   activeView_ = view;
 }
 
@@ -531,12 +531,17 @@ willPositionSheet:(NSWindow*)sheet
                 name:NSViewFrameDidChangeNotification
               object:(__bridge NSView*)contextInfo];
 
-  NSInvocation* invocation =
+// @TODO: NSInvocation stuff - FIXME
+    
+  /*
+
+    NSInvocation* invocation =
       [NSInvocation invocationWithMethodSignature:
        [sheetInfo->modalDelegate_
         methodSignatureForSelector:sheetInfo->didEndSelector_]];
   [invocation setSelector:sheetInfo->didEndSelector_];
   // Remember that args 0 and 1 are the target and selector
+    
   [invocation setArgument:&sheet atIndex:2];
   if (size == 64) {
     [invocation setArgument:&returnCode atIndex:3];
@@ -549,9 +554,8 @@ willPositionSheet:(NSWindow*)sheet
   }
   [invocation setArgument:&sheetInfo->contextInfo_ atIndex:4];
   [invocation invokeWithTarget:sheetInfo->modalDelegate_];
-
+*/
   [window_ removeChildWindow:sheetInfo->overlayWindow_];
-  [sheetInfo->overlayWindow_ release];
 
   [sheets_ removeObjectForKey:viewKey];
 }

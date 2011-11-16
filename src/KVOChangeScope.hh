@@ -76,16 +76,16 @@ class KVOChangeScope {
   // Constructor which calls |begin| if |beginImmediately| is true
   KVOChangeScope(id owner, NSString *key, bool beginImmediately=true)
       : active_(false) {
-    owner_ = [owner retain];
-    key_ = [key retain];
+    owner_ = owner;
+    key_ = key;
     if (beginImmediately) begin();
   }
   
   // Destructor which ends the edit if active
   ~KVOChangeScope() {
     end();
-    [key_ release];
-    [owner_ release];
+    key_;
+    owner_;
   }
   
   // Begin an edit. Returns true if the edit was not already started.

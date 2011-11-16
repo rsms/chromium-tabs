@@ -4,7 +4,7 @@
 @implementation NSImage (CTAdditions)
 
 +(NSImage*)imageWithPath:(NSString *)path {
-  return [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
+  return [[NSImage alloc] initWithContentsOfFile:path];
 }
 
 +(NSImage*)imageInAppOrCTFrameworkNamed:(NSString *)name {

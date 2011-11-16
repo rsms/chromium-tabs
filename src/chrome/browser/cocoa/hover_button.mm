@@ -23,7 +23,6 @@
 
 - (void)dealloc {
   [self setTrackingEnabled:NO];
-  [super dealloc];
 }
 
 - (void)mouseEntered:(NSEvent*)theEvent {
@@ -43,7 +42,7 @@
   // it can be freed while |super mouseDown:| is in it's loop, and the
   // |checkImageState| call will crash.
   // http://crbug.com/28220
-  scoped_nsobject<HoverButton> myself([self retain]);
+  scoped_nsobject<HoverButton> myself(self);
 
   [super mouseDown:theEvent];
   // We need to check the image state after the mouseDown event loop finishes.
