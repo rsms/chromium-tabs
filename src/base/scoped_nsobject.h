@@ -153,9 +153,9 @@ class scoped_nsobject<id> {
 // ScopedNSAutoreleasePool instead. This is a compile time check. See details
 // at top of header.
 template<>
-class scoped_nsobject<NSAutoreleasePool> {
+class scoped_nsobject<NSObject> {
  private:
-  explicit scoped_nsobject(NSAutoreleasePool* object = nil);
+  explicit scoped_nsobject(NSObject* object = nil);
   DISALLOW_COPY_AND_ASSIGN(scoped_nsobject);
 };
 

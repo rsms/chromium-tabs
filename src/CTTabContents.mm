@@ -13,7 +13,7 @@ const NSString* CTTabContentsDidCloseNotification =
 #define _synthRetain(T, setname, getname) \
 - (T)getname { return getname##_; } \
 - (void)set##setname :(T)v { \
-  ct_objc_xch(&(getname##_), v); \
+  getname##_ = v; \
   if (browser_) [browser_ updateTabStateForContent:self]; \
 }
 #define _synthAssign(T, setname, getname) \

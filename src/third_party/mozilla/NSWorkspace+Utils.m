@@ -99,24 +99,24 @@
 
 - (void)setDefaultBrowserWithIdentifier:(NSString*)bundleID
 {
-  LSSetDefaultHandlerForURLScheme(CFSTR("http"), (CFStringRef)bundleID);
-  LSSetDefaultHandlerForURLScheme(CFSTR("https"), (CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("http"), (__bridge CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("https"), (__bridge CFStringRef)bundleID);
+  LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (__bridge CFStringRef)bundleID);
+  LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (__bridge CFStringRef)bundleID);
 }
 
 - (void)setDefaultFeedViewerWithIdentifier:(NSString*)bundleID
 {
-  LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (__bridge CFStringRef)bundleID);
 }
 
 - (NSURL*)urlOfApplicationWithIdentifier:(NSString*)bundleID
 {
   if (!bundleID)
     return nil;
-  NSURL* appURL = nil;
-  if (LSFindApplicationForInfo(kLSUnknownCreator, (CFStringRef)bundleID, NULL, NULL, (CFURLRef*)&appURL) == noErr)
-    return [appURL autorelease];
+  CFURLRef appURL;
+  if (LSFindApplicationForInfo(kLSUnknownCreator, (__bridge CFStringRef)bundleID, NULL, NULL, &appURL) == noErr)
+      return (__bridge NSURL*) appURL;
 
   return nil;
 }
@@ -138,9 +138,9 @@
 
 - (NSString*)displayNameForFile:(NSURL*)inFileURL
 {
-  NSString *name;
-  LSCopyDisplayNameForURL((CFURLRef)inFileURL, (CFStringRef *)&name);
-  return [name autorelease];
+  CFStringRef name;
+  LSCopyDisplayNameForURL((__bridge CFURLRef)inFileURL, &name);
+    return (__bridge NSString*) name;
 }
 
 //

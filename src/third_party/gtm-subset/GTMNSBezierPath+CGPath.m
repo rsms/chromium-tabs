@@ -64,7 +64,7 @@
         break;  // COV_NF_END
     };
   }
-  return (CGPathRef)GTMCFAutorelease(thePath);
+  return thePath;
 }
 
 @end

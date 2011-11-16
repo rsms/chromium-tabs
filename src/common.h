@@ -111,10 +111,8 @@ const char *common_strrstr(const char *string, const char *find);
   
   static inline BOOL ct_casid(id volatile *target, id newval) {
     id oldval = *target;
-    if (__sync_bool_compare_and_swap((void*volatile*)target, (void*)oldval,
-                                     (void*)newval)) {
-      [newval retain];
-      [oldval release];
+    if (oldval != newval) {
+      *target = newval;
       return YES;
     }
     return NO;

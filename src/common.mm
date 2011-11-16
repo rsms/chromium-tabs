@@ -75,7 +75,8 @@ return [NSString stringWithFormat:(formatString), (*(typeToMatch*)value)]
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(unsigned long long,@"%llu");
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(float,@"%f");
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(double,@"%f");
-  IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(id,@"%@");
+// TODO: implement this
+//  IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(id,@"%@");
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(short,@"%hi");
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(unsigned short,@"%hu");
   IF_TYPE_MATCHES_INTERPRET_WITH_FORMAT(int,@"%i");

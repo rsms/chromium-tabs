@@ -20,7 +20,7 @@
 
 @interface GTMWSCSheetInfo : NSObject {
  @public
-  __weak NSWindow* overlayWindow_;
+  NSWindow* overlayWindow_;
 
   // delegate data
   __weak id modalDelegate_;
@@ -40,8 +40,8 @@
 // The information about how to call up various AppKit-implemented sheets
 
 struct GTMWSCSystemSheetInfo {
-  NSString* className_;
-  NSString* methodSignature_;
+  char* className_;
+  char* methodSignature_;
   NSUInteger modalForWindowIndex_;
   NSUInteger modalDelegateIndex_;
   NSUInteger didEndSelectorIndex_;
@@ -297,7 +297,8 @@ willPositionSheet:(NSWindow*)sheet
   [window_ addChildWindow:sheetInfo->overlayWindow_
                   ordered:NSWindowAbove];
 
-  SEL methodSelector = NSSelectorFromString((NSString*)info->methodSignature_);
+
+  SEL methodSelector = NSSelectorFromString([NSString stringWithCString: info->methodSignature_ encoding: NSUTF8StringEncoding]);
   NSInvocation* invocation =
       [NSInvocation invocationWithMethodSignature:
        [systemSheet methodSignatureForSelector:methodSelector]];
@@ -305,9 +306,9 @@ willPositionSheet:(NSWindow*)sheet
   for (NSUInteger i = 0; i < [params count]; ++i) {
     // Remember that args 0 and 1 are the target and selector, thus the |i+2|s
     if (i == info->modalForWindowIndex_) {
-      [invocation setArgument:&sheetInfo->overlayWindow_ atIndex:i+2];
+      [invocation setArgument: &sheetInfo->overlayWindow_ atIndex:i+2];
     } else if (i == info->modalDelegateIndex_) {
-      [invocation setArgument:&self atIndex:i+2];
+      [invocation setArgument: &self atIndex:i+2];
     } else if (i == info->didEndSelectorIndex_) {
       SEL s;
       if (info->arg1OfEndSelectorSize_ == 64)
@@ -318,7 +319,7 @@ willPositionSheet:(NSWindow*)sheet
         s = @selector(sheetDidEnd:returnCode8:contextInfo:);
       [invocation setArgument:&s atIndex:i+2];
     } else if (i == info->contextInfoIndex_) {
-      [invocation setArgument:&view atIndex:i+2];
+      [invocation setArgument: &view atIndex:i+2];
     } else {
       id param = [params objectAtIndex:i];
       if ([param isKindOfClass:[NSValue class]]) {
@@ -326,7 +327,7 @@ willPositionSheet:(NSWindow*)sheet
         [param getValue:buffer];
         [invocation setArgument:buffer atIndex:i+2];
       } else {
-        [invocation setArgument:&param atIndex:i+2];
+        [invocation setArgument: &param atIndex:i+2];
       }
     }
   }
@@ -339,103 +340,103 @@ willPositionSheet:(NSWindow*)sheet
   static const struct GTMWSCSystemSheetInfo kGTMWSCSystemSheetInfoData[] =
   {
     {
-      @"ABIdentityPicker",
-      @"beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "ABIdentityPicker",
+      "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 64,
     },
     {
-      @"CBIdentityPicker",
-      @"runModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "CBIdentityPicker",
+      "runModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 64,
     },
     {
-      @"DRSetupPanel",
-      @"beginSetupSheetForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "DRSetupPanel",
+      "beginSetupSheetForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 32,
     },
     {
-      @"NSAlert",
-      @"beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "NSAlert",
+      "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 32,
     },
     {
-      @"NSApplication",
-      @"beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "NSApplication",
+      "beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
       1, 2, 3, 4, 64,
     },
     {
-      @"IKFilterBrowserPanel",
-      @"beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "IKFilterBrowserPanel",
+      "beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
       1, 2, 3, 4, 32,
     },
     {
-      @"IKPictureTaker",
-      @"beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:",
+      "IKPictureTaker",
+      "beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 64,
     },
     {
-      @"IOBluetoothDeviceSelectorController",
-      @"beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "IOBluetoothDeviceSelectorController",
+      "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 32,
     },
     {
-      @"IOBluetoothObjectPushUIController",
-      @"beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "IOBluetoothObjectPushUIController",
+      "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 32,
     },
     {
-      @"IOBluetoothServiceBrowserController",
-      @"beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "IOBluetoothServiceBrowserController",
+      "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:",
       0, 1, 2, 3, 32,
     },
     {
-      @"NSOpenPanel",
-      @"beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "NSOpenPanel",
+      "beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
       3, 4, 5, 6, 32,
     },
     {
-      @"NSPageLayout",
-      @"beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:",
+      "NSPageLayout",
+      "beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:",
       1, 2, 3, 4, 32,
     },
     {
-      @"NSPrintOperation",
-      @"runOperationModalForWindow:delegate:didRunSelector:contextInfo:",
+      "NSPrintOperation",
+      "runOperationModalForWindow:delegate:didRunSelector:contextInfo:",
       0, 1, 2, 3, 8,
     },
     {
-      @"NSPrintPanel",
-      @"beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:",
+      "NSPrintPanel",
+      "beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:",
       1, 2, 3, 4, 32,
     },
     {
-      @"NSSavePanel",
-      @"beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "NSSavePanel",
+      "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
       2, 3, 4, 5, 32,
     },
     {
-      @"SFCertificatePanel",
-      @"beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:certificates:showGroup:",
+      "SFCertificatePanel",
+      "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:certificates:showGroup:",
       0, 1, 2, 3, 32,
     },
     {
-      @"SFCertificateTrustPanel",
-      @"beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:message:",
+      "SFCertificateTrustPanel",
+      "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:message:",
       0, 1, 2, 3, 32,
     },
     {
-      @"SFChooseIdentityPanel",
-      @"beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:",
+      "SFChooseIdentityPanel",
+      "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:",
       0, 1, 2, 3, 32,
     },
     {
-      @"SFKeychainSettingsPanel",
-      @"beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:settings:keychain:",
+      "SFKeychainSettingsPanel",
+      "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:settings:keychain:",
       0, 1, 2, 3, 32,
     },
     {
-      @"SFKeychainSavePanel",
-      @"beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
+      "SFKeychainSavePanel",
+      "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:",
       2, 3, 4, 5, 32,
     },
   };
@@ -445,7 +446,7 @@ willPositionSheet:(NSWindow*)sheet
 
   for (size_t i = 0; i < kGTMWSCSystemSheetInfoDataSize; ++i) {
     Class testClass =
-      NSClassFromString(kGTMWSCSystemSheetInfoData[i].className_);
+      NSClassFromString([NSString stringWithCString: kGTMWSCSystemSheetInfoData[i].className_ encoding: NSUTF8StringEncoding] );
     if (testClass && [systemSheet isKindOfClass:testClass]) {
       return &kGTMWSCSystemSheetInfoData[i];
     }
@@ -515,7 +516,7 @@ willPositionSheet:(NSWindow*)sheet
          returnCode:(NSInteger)returnCode
         contextInfo:(void*)contextInfo
            arg1Size:(int)size {
-  NSValue* viewKey = [NSValue valueWithNonretainedObject:(NSView*)contextInfo];
+  NSValue* viewKey = [NSValue valueWithNonretainedObject:(__bridge NSView*)contextInfo];
   GTMWSCSheetInfo* sheetInfo = [sheets_ objectForKey:viewKey];
   assert(sheetInfo /*Could not find information about the sheet that just
                      ended*/);
@@ -528,7 +529,7 @@ willPositionSheet:(NSWindow*)sheet
   [[NSNotificationCenter defaultCenter]
       removeObserver:self
                 name:NSViewFrameDidChangeNotification
-              object:contextInfo];
+              object:(__bridge NSView*)contextInfo];
 
   NSInvocation* invocation =
       [NSInvocation invocationWithMethodSignature:

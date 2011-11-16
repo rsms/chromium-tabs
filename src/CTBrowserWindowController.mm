@@ -133,7 +133,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   initializing_ = NO;
   if (!_currentMain) {
-    ct_casid(&_currentMain, self);
+   _currentMain = self;
   }
   return self;
 }
@@ -156,7 +156,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 -(void)dealloc {
   DLOG("[ChromiumTabs] dealloc window controller");
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+    _currentMain = nil;
   }
   delete tabStripObserver_;
 
@@ -173,14 +173,14 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   [browser_ release];
   [tabStripController_ release];
-  ct_casid(&toolbarController_, nil);
+  toolbarController_ = nil;
   [super dealloc];
 }
 
 
 -(void)finalize {
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+    _currentMain = nil;
   }
   //NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
   //NSLog(@"%@", [NSThread callStackSymbols]);
@@ -770,7 +770,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     [[self window] orderOut:self];
     [browser_ windowDidBeginToClose];
     if (_currentMain == self) {
-      ct_casid(&_currentMain, nil);
+      _currentMain = nil;
     }
     return NO;
   }
@@ -779,18 +779,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   return YES;
 }
 
-
-- (void)windowWillClose:(NSNotification *)notification {
-  [self autorelease];
-}
-
-
 // Called right after our window became the main window.
 - (void)windowDidBecomeMain:(NSNotification*)notification {
   // NOTE: if you use custom window bounds saving/restoring, you should probably
   //       save the window bounds here.
 
-  ct_casid(&_currentMain, self);
+  _currentMain = self;
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
@@ -803,7 +797,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (void)windowDidResignMain:(NSNotification*)notification {
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+    _currentMain = nil;
   }
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care

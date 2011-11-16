@@ -261,7 +261,7 @@ private:
 
 + (void)initialize {
   NSAutoreleasePool* pool = [NSAutoreleasePool new];
-  #define PIMG(name) [[NSImage imageInAppOrCTFrameworkNamed:name] retain]
+  #define PIMG(name) [NSImage imageInAppOrCTFrameworkNamed:name]
   kNewTabHoverImage = PIMG(@"newtab_h");
   kNewTabImage = PIMG(@"newtab");
   kNewTabPressedImage = PIMG(@"newtab_p");
@@ -796,7 +796,7 @@ private:
       [target setFrame:tabFrame];
 
       // Store the frame by identifier to aviod redundant calls to animator.
-      NSValue* identifier = [NSValue valueWithPointer:[tab view]];
+      NSValue* identifier = [NSValue valueWithNonretainedObject:[tab view]];
       [targetFrames_ setObject:[NSValue valueWithRect:tabFrame]
                         forKey:identifier];
       continue;
@@ -845,7 +845,7 @@ private:
 
     // Check the frame by identifier to avoid redundant calls to animator.
     id frameTarget = visible && animate ? [[tab view] animator] : [tab view];
-    NSValue* identifier = [NSValue valueWithPointer:[tab view]];
+    NSValue* identifier = [NSValue valueWithNonretainedObject:[tab view]];
     NSValue* oldTargetValue = [targetFrames_ objectForKey:identifier];
     if (!oldTargetValue ||
         !NSEqualRects([oldTargetValue rectValue], tabFrame)) {
@@ -1079,7 +1079,7 @@ private:
   if ([hoveredTab_ isEqual:tab])
     hoveredTab_ = nil;
 
-  NSValue* identifier = [NSValue valueWithPointer:tab];
+  NSValue* identifier = [NSValue valueWithNonretainedObject:tab];
   [targetFrames_ removeObjectForKey:identifier];
 
   // Once we're totally done with the tab, delete its controller
@@ -1111,7 +1111,6 @@ private:
   // Register delegate (owned by the animation system).
   NSView* tabView = [closingTab view];
   CAAnimation* animation = [[tabView animationForKey:@"frameOrigin"] copy];
-  [animation autorelease];
   scoped_nsobject<TabCloseAnimationDelegate> delegate(
     [[TabCloseAnimationDelegate alloc] initWithTabStrip:self
                                           tabController:closingTab]);
@@ -1330,7 +1329,7 @@ private:
 
 - (void)setFrameOfSelectedTab:(NSRect)frame {
   NSView* view = [self selectedTabView];
-  NSValue* identifier = [NSValue valueWithPointer:view];
+  NSValue* identifier = [NSValue valueWithNonretainedObject:view];
   [targetFrames_ setObject:[NSValue valueWithRect:frame]
                     forKey:identifier];
   [view setFrame:frame];

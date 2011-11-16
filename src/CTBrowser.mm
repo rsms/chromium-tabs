@@ -173,7 +173,6 @@
       [[cls alloc] initWithBrowser:browser];
   [browser addBlankTabInForeground:YES];
   [windowController showWindow:self];
-  [windowController autorelease];
 }
 
 -(void)closeWindow {
@@ -439,7 +438,7 @@
 
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
-                                  objects:(id *)stackbuf
+                                  objects:(id __unsafe_unretained *)stackbuf
                                     count:(NSUInteger)fetchCount {
   NSUInteger totalCount = tabStripModel_->count();
   NSUInteger fetchIndex = 0;
@@ -451,8 +450,9 @@
 
   state->state += fetchIndex;
   state->itemsPtr = stackbuf;
-  state->mutationsPtr = (unsigned long *)self;  // TODO
-
+//  state->mutationsPtr = (unsigned long *)self;  // TODO
+  state->mutationsPtr = &state->extra[0];
+    
   return fetchIndex;
 }
 
