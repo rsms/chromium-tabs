@@ -273,9 +273,12 @@ const CGFloat kRapidCloseDist = 2.5;
 
   // Fire the action to select the tab.
   if ([[tabController_ target] respondsToSelector:[tabController_ action]])
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"      
     [[tabController_ target] performSelector:[tabController_ action]
                                withObject:self];
-
+#pragma clang diagnostic pop
+    
   [self resetDragControllers];
 
   // Resolve overlay back to original window.
