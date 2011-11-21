@@ -666,6 +666,8 @@ class CTTabStripModel /*: public NotificationObserver*/ {
       //SetGroup(NULL);
     }
 
+      virtual ~TabContentsData() {
+      }
     // Create a relationship between this CTTabContents and other CTTabContentses.
     // Used to identify which CTTabContents to select next after one is closed.
     //void SetGroup(NavigationController* a_group) {
