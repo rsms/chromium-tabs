@@ -56,7 +56,7 @@
 
 @interface GTMWindowSheetController : NSObject {
  @private
-  __weak NSWindow* window_;
+  __unsafe_unretained NSWindow* window_;
   __weak NSView* activeView_;
   __weak id <GTMWindowSheetControllerDelegate> delegate_;
 
