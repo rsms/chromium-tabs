@@ -6,7 +6,6 @@
 @class CTTabStripController;
 @class CTToolbarController;
 @class CTTabContents;
-//class CTTabStripModelObserverBridge;
 
 @interface NSDocumentController (CTBrowserWindowControllerAdditions)
 - (id)openUntitledDocumentWithWindowController:(NSWindowController*)windowController
@@ -17,7 +16,6 @@
 @interface CTBrowserWindowController : CTTabWindowController <CTTabStripModelObserver> {
   CTBrowser* browser_; // we own the browser
   CTTabStripController *tabStripController_;
-  //CTTabStripModelObserverBridge *tabStripObserver_;
   CTToolbarController *toolbarController_;
  @private
   BOOL initializing_; // true if the instance is initializing

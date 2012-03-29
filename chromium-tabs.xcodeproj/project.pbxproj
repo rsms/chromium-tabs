@@ -125,7 +125,7 @@
 		5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC861346399A00325928 /* URLDropTarget.h */; };
 		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; };
 		5AE6BC8B1346445800325928 /* CTTabStripModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModel.mm */; };
-		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; };
+		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -452,8 +452,8 @@
 				3A236DD81223414F00D21E66 /* new_tab_button.mm */,
 				3A39270A1221C566006D8305 /* CTTabView.h */,
 				3A39270B1221C566006D8305 /* CTTabView.mm */,
-				3A3921F11221AF58006D8305 /* CTTabController.h */,
 				3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */,
+				3A3921F11221AF58006D8305 /* CTTabController.h */,
 				3A3921F21221AF58006D8305 /* CTTabController.mm */,
 				3A236D9E1223375D00D21E66 /* CTTabContentsController.h */,
 				3A236D9F1223375D00D21E66 /* CTTabContentsController.mm */,
@@ -637,11 +637,11 @@
 				3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */,
 				3ABF4A1912A4592A0020233C /* CTBrowserWindow.h in Headers */,
 				3ABF4A8712A460DA0020233C /* CTBrowserFrameView.h in Headers */,
+				5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */,
 				3ABF4A8B12A461630020233C /* scoped_nsautorelease_pool.h in Headers */,
 				5AE6BC871346399E00325928 /* URLDropTarget.h in Headers */,
 				5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */,
 				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */,
-				5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,6 +693,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "chromium-tabs" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -854,7 +855,6 @@
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_MODEL_TUNING = G5;
@@ -889,7 +889,6 @@
 					"\"$(SRCROOT)\"",
 				);
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -917,7 +916,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = ChromiumTabs;
 				ZERO_LINK = NO;
 			};
@@ -932,7 +930,6 @@
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -958,7 +955,7 @@
 					"$(OTHER_CFLAGS)",
 				);
 				PRODUCT_NAME = "Chromium Tabs";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -995,7 +992,7 @@
 					"$(OTHER_CFLAGS)",
 				);
 				PRODUCT_NAME = "Chromium Tabs";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -1008,8 +1005,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1020,8 +1016,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

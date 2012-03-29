@@ -141,25 +141,6 @@
 					oldContents:(CTTabContents *)old_contents
 						atIndex:(int)index
 					userGesture:(bool)user_gesture {
-	/*NavigationController* old_opener = NULL;
-	 if (old_contents) {
-	 int index = tabStripModel_->GetIndexOfTabContents(old_contents);
-	 if (index != TabStripModel::kNoTab) {
-	 old_opener = tabStripModel_->GetOpenerOfTabContentsAt(index);
-	 
-	 // Forget any group/opener relationships that need to be reset whenever
-	 // selection changes (see comment in TabStripModel::AddTabContentsAt).
-	 if (tabStripModel_->ShouldResetGroupOnSelect(old_contents))
-	 tabStripModel_->ForgetGroup(old_contents);
-	 }
-	 }
-	 NavigationController* new_opener =
-	 tabStripModel_->GetOpenerOfTabContentsAt(index);
-	 if (user_gesture && new_opener != old_opener &&
-	 new_opener != &old_contents->controller() &&
-	 old_opener != &new_contents->controller()) {
-	 tabStripModel_->ForgetAllOpeners();
-	 }*/	
 }
 
 #pragma mark private

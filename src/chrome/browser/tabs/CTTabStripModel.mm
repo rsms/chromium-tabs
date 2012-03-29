@@ -23,22 +23,6 @@ do { \
 			methodcall; \
 } while (0)
 
-namespace {
-	
-	// Returns true if the specified transition is one of the types that cause the
-	// opener relationships for the tab in which the transition occured to be
-	// forgotten. This is generally any navigation that isn't a link click (i.e.
-	// any navigation that can be considered to be the start of a new task distinct
-	// from what had previously occurred in that tab).
-	bool ShouldForgetOpenersForTransition(CTPageTransition transition) {
-		return transition == CTPageTransitionTyped ||
-		transition == CTPageTransitionAutoBookmark ||
-		transition == CTPageTransitionGenerated ||
-		transition == CTPageTransitionKeyword ||
-		transition == CTPageTransitionStartPage;
-	}
-}  // namespace
-
 @interface CTTabStripModel ()
 // Returns true if the specified CTTabContents is a New Tab at the end of the
 // TabStrip. We check for this because opener relationships are _not_
@@ -207,7 +191,7 @@ const int kNoTab = -1;
 	return order_controller_.insertionPolicy;
 }
 
-- (bool)HasObserver:(NSObject *)observer {
+- (bool)HasObserver:(NSObject <CTTabStripModelObserver>*)observer {
 	return observers_.HasObserver(observer);
 }
 
@@ -247,22 +231,6 @@ const int kNoTab = -1;
 	CTTabContents* selected_contents = [self selectedTabContents];
 	TabContentsData* data = new TabContentsData([contents retain]);
 	data->pinned = pin;
-	if ((add_types & ADD_INHERIT_GROUP) && selected_contents) {
-		if (foreground) {
-			// Forget any existing relationships, we don't want to make things too
-			// confusing by having multiple groups active at the same time.
-			[self ForgetAllOpeners];
-		}
-		// Anything opened by a link we deem to have an opener.
-		//data->SetGroup(&selected_contents->controller());
-	} else if ((add_types & ADD_INHERIT_OPENER) && selected_contents) {
-		if (foreground) {
-			// Forget any existing relationships, we don't want to make things too
-			// confusing by having multiple groups active at the same time.
-			[self ForgetAllOpeners];
-		}
-		//data->opener = &selected_contents->controller();
-	}
 	
 	contents_data_.insert(contents_data_.begin() + index, data);
 	
@@ -417,32 +385,7 @@ const int kNoTab = -1;
 
 - (void)TabNavigating:(CTTabContents *)contents
 	   withTransition:(CTPageTransition)transition {
-	if (ShouldForgetOpenersForTransition(transition)) {
-		// Don't forget the openers if this tab is a New Tab page opened at the
-		// end of the TabStrip (e.g. by pressing Ctrl+T). Give the user one
-		// navigation of one of these transition types before resetting the
-		// opener relationships (this allows for the use case of opening a new
-		// tab to do a quick look-up of something while viewing a tab earlier in
-		// the strip). We can make this heuristic more permissive if need be.
-		if (![self IsNewTabAtEndOfTabStrip:contents]) {
-			// If the user navigates the current tab to another page in any way
-			// other than by clicking a link, we want to pro-actively forget all
-			// TabStrip opener relationships since we assume they're beginning a
-			// different task by reusing the current tab.
-			[self ForgetAllOpeners];
-			// In this specific case we also want to reset the group relationship,
-			// since it is now technically invalid.
-			//ForgetGroup(contents);
-		}
-	}
-}
-
-- (void)ForgetAllOpeners {
-	// Forget all opener memories so we don't do anything weird with tab
-	// re-selection ordering.
-	TabContentsDataVector::const_iterator iter = contents_data_.begin();
-	for (; iter != contents_data_.end(); ++iter)
-		(*iter)->ForgetOpener();
+	
 }
 
 - (void)setTabAtIndex:(int)index 

@@ -274,10 +274,11 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 - (IBAction)newWindow:(id)sender {
-  CTBrowserWindowController* windowController =
-      [[isa browserWindowController] retain];
-  [windowController newDocument:sender];
-  [windowController showWindow:self];
+//  CTBrowserWindowController* windowController =
+//      [[isa browserWindowController] retain];
+//  [windowController newDocument:sender];
+//  [windowController showWindow:self];
+	[browser_ newWindow];
 }
 
 
@@ -301,11 +302,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
--(IBAction)closeTab:(id)sender {
-  CTTabStripModel *tabStripModel = browser_.tabStripModel;
-  //tabStripModel->CloseAllTabs();
-  [tabStripModel closeTabContentsAtIndex:tabStripModel.selected_index 
-							  closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
+- (IBAction)closeTab:(id)sender {
+  //CTTabStripModel *tabStripModel = browser_.tabStripModel;
+//  //tabStripModel->CloseAllTabs();
+//  [tabStripModel closeTabContentsAtIndex:tabStripModel.selected_index 
+//							  closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
+	[browser_ closeTab];
 }
 
 
@@ -885,73 +887,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     }
   }
 }
-
-// Called when the user clicks the zoom button (or selects it from the Window
-// menu) to determine the "standard size" of the window, based on the content
-// and other factors. If the current size/location differs nontrivally from the
-// standard size, Cocoa resizes the window to the standard size, and saves the
-// current size as the "user size". If the current size/location is the same (up
-// to a fudge factor) as the standard size, Cocoa resizes the window to the
-// saved user size. (It is possible for the two to coincide.) In this way, the
-// zoom button acts as a toggle. We determine the standard size based on the
-// content, but enforce a minimum width (calculated using the dimensions of the
-// screen) to ensure websites with small intrinsic width (such as google.com)
-// don't end up with a wee window. Moreover, we always declare the standard
-// width to be at least as big as the current width, i.e., we never want zooming
-// to the standard width to shrink the window. This is consistent with other
-// browsers' behaviour, and is desirable in multi-tab situations. Note, however,
-// that the "toggle" behaviour means that the window can still be "unzoomed" to
-// the user size.
-/*- (NSRect)windowWillUseStandardFrame:(NSWindow*)window
-                        defaultFrame:(NSRect)frame {
-  // Forget that we grew the window up (if we in fact did).
-  [self resetWindowGrowthState];
-
-  // |frame| already fills the current screen. Never touch y and height since we
-  // always want to fill vertically.
-
-  // If the shift key is down, maximize. Hopefully this should make the
-  // "switchers" happy.
-  if ([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) {
-    return frame;
-  }
-
-  // To prevent strange results on portrait displays, the basic minimum zoomed
-  // width is the larger of: 60% of available width, 60% of available height
-  // (bounded by available width).
-  const CGFloat kProportion = 0.6;
-  CGFloat zoomedWidth =
-      std::max(kProportion * frame.size.width,
-               std::min(kProportion * frame.size.height, frame.size.width));
-
-  TabContents* contents = browser_.tabStripModel->GetSelectedTabContents();
-  if (contents) {
-    // If the intrinsic width is bigger, then make it the zoomed width.
-    const int kScrollbarWidth = 16;  // TODO(viettrungluu): ugh.
-    TabContentsViewMac* tab_contents_view =
-        static_cast<TabContentsViewMac*>(contents->view());
-    CGFloat intrinsicWidth = static_cast<CGFloat>(
-        tab_contents_view->preferred_width() + kScrollbarWidth);
-    zoomedWidth = std::max(zoomedWidth,
-                           std::min(intrinsicWidth, frame.size.width));
-  }
-
-  // Never shrink from the current size on zoom (see above).
-  NSRect currentFrame = [[self window] frame];
-  zoomedWidth = std::max(zoomedWidth, currentFrame.size.width);
-
-  // |frame| determines our maximum extents. We need to set the origin of the
-  // frame -- and only move it left if necessary.
-  if (currentFrame.origin.x + zoomedWidth > frame.origin.x + frame.size.width)
-    frame.origin.x = frame.origin.x + frame.size.width - zoomedWidth;
-  else
-    frame.origin.x = currentFrame.origin.x;
-
-  // Set the width. Don't touch y or height.
-  frame.size.width = zoomedWidth;
-
-  return frame;
-}*/
 
 #pragma mark -
 #pragma mark Etc (need sorting out)

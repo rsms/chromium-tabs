@@ -35,19 +35,6 @@ struct TabContentsData {
 		//SetGroup(NULL);
 	}
 	
-	// Create a relationship between this CTTabContents and other CTTabContentses.
-	// Used to identify which CTTabContents to select next after one is closed.
-	//void SetGroup(NavigationController* a_group) {
-	//  group = a_group;
-	//  opener = a_group;
-	//}
-	
-	// Forget the opener relationship so that when this CTTabContents is closed
-	// unpredictable re-selection does not occur.
-	void ForgetOpener() {
-		//opener = NULL;
-	}
-	
 	CTTabContents* contents; // weak
 	// We use NavigationControllers here since they more closely model the
 	// "identity" of a Tab, CTTabContents can change depending on the URL loaded
@@ -350,25 +337,6 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 // behavior.
 - (void)TabNavigating:(CTTabContents *)contents
 	   withTransition:(CTPageTransition)transition;
-
-// Forget all Opener relationships that are stored (but _not_ group
-// relationships!) This is to reduce unpredictable tab switching behavior
-// in complex session states. The exact circumstances under which this method
-// is called are left up to the implementation of the selected
-// CTTabStripModelOrderController.
-- (void)ForgetAllOpeners;
-
-
-// Forgets the group affiliation of the specified CTTabContents. This should be
-// called when a CTTabContents that is part of a logical group of tabs is
-// moved to a new logical context by the user (e.g. by typing a new URL or
-// selecting a bookmark). This also forgets the opener, which is considered
-// a weaker relationship than group.
-//- (void)ForgetGroup:(CTTabContents *)contents;
-
-// Returns true if the group/opener relationships present for |contents|
-// should be reset when _any_ selection change occurs in the model.
-//- (bool)ShouldResetGroupOnSelect:(CTTabContents *)contents;
 
 // Changes the blocked state of the tab at |index|.
 - (void)setTabAtIndex:(int)index 

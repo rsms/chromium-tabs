@@ -36,7 +36,6 @@
 
 - (id)init {
   if ((self = [super init])) {
-    //tabStripModel_ = new CTTabStripModel(self);
 	  tabStripModel_ = [[CTTabStripModel alloc] initWithDelegate:self];
   }
   return self;
@@ -45,14 +44,12 @@
 
 -(void)dealloc {
   DLOG("[ChromiumTabs] deallocing browser %@", self);
-  //delete tabStripModel_;
 	[tabStripModel_ release];
   [super dealloc];
 }
 
 
 -(void)finalize {
-//  delete tabStripModel_;
 	[tabStripModel_ release];
   [super finalize];
 }
