@@ -24,7 +24,7 @@
 	InsertionPolicy insertion_policy_;
 }
 // The insertion policy. Default is INSERT_AFTER.
-@property (readwrite,assign) InsertionPolicy insertionPolicy;
+@property (readwrite, assign) InsertionPolicy insertionPolicy;
 
 - (id)initWithTabStripModel:(CTTabStripModel *)tab_strip_model;
 
@@ -44,7 +44,7 @@
 								  isRemove:(bool)is_remove;
 
 // Overridden from TabStripModelObserver:
-- (void)tabSelectedWithContents:(CTTabContents*)new_contents
+- (void)tabSelectedWithContents:(CTTabContents *)new_contents
 					oldContents:(CTTabContents *)old_contents
 						atIndex:(int)index
 					userGesture:(bool)user_gesture;

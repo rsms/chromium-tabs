@@ -25,13 +25,13 @@ typedef enum {
 }
 
 // The tab strip model
-@property(readonly, nonatomic) CTTabStripModel* tabStripModel;
+@property(retain, readonly, nonatomic) CTTabStripModel* tabStripModel;
 
 // The window controller
-@property(readonly, nonatomic) CTBrowserWindowController* windowController;
+@property(strong, retain, readonly, nonatomic) CTBrowserWindowController* windowController;
 
 // The window. Convenience for [windowController window]
-@property(readonly, nonatomic) NSWindow* window;
+@property(strong, readonly, nonatomic) NSWindow* window;
 
 // Create a new browser with a window.
 // @autoreleased

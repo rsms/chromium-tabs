@@ -34,20 +34,22 @@ extern NSString *const CTTabContentsDidCloseNotification;
 //
 
 @interface CTTabContents : NSDocument {
-  BOOL isApp_;
-  BOOL isLoading_;
-  BOOL isWaitingForResponse_;
-  BOOL isCrashed_;
-  BOOL isVisible_;
-  BOOL isSelected_;
-  BOOL isTeared_; // true while being "teared" (dragged between windows)
-  id delegate_;
-  unsigned int closedByUserGesture_; // TabStripModel::CloseTypes
-  NSView *view_; // the actual content
-  NSString *title_; // title of this tab
-  NSImage *icon_; // tab icon (nil means no or default icon)
-  CTBrowser *browser_;
-  __weak CTTabContents* parentOpener_; // the tab which opened this tab (unless nil)
+	BOOL isApp_;
+	BOOL isLoading_;
+	BOOL isWaitingForResponse_;
+	BOOL isCrashed_;
+	BOOL isVisible_;
+	BOOL isSelected_;
+	BOOL isTeared_; // true while being "teared" (dragged between windows)
+	BOOL isPinned_;
+	BOOL isBlocked_;
+	id delegate_;
+	unsigned int closedByUserGesture_; // TabStripModel::CloseTypes
+	NSView *view_; // the actual content
+	NSString *title_; // title of this tab
+	NSImage *icon_; // tab icon (nil means no or default icon)
+	CTBrowser *browser_;
+	__weak CTTabContents* parentOpener_; // the tab which opened this tab (unless nil)
 }
 
 @property(assign, nonatomic) BOOL isApp;
@@ -57,6 +59,8 @@ extern NSString *const CTTabContentsDidCloseNotification;
 @property(assign, nonatomic) BOOL isVisible;
 @property(assign, nonatomic) BOOL isSelected;
 @property(assign, nonatomic) BOOL isTeared;
+@property(assign, nonatomic) BOOL isPinned;
+@property(assign, nonatomic) BOOL isBlocked;
 @property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
 @property(retain, nonatomic) IBOutlet NSView *view;

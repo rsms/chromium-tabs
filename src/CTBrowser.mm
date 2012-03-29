@@ -217,8 +217,7 @@
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
   // subclasses should override this to provide a custom CTTabContents type
   // and/or initialization
-  return [[[CTTabContents alloc]
-      initWithBaseTabContents:baseContents] autorelease];
+  return [[[CTTabContents alloc] initWithBaseTabContents:baseContents] autorelease];
 }
 
 // implementation conforms to CTTabStripModelDelegate

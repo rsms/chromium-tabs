@@ -22,52 +22,7 @@
 
 extern const int kNoTab;
 
-// A hunk of data representing a CTTabContents and (optionally) the
-// NavigationController that spawned it. This memory only sticks around while
-// the CTTabContents is in the current TabStripModel, unless otherwise
-// specified in code.
-struct TabContentsData {
-	explicit TabContentsData(CTTabContents* a_contents)
-	: contents(a_contents),
-	//reset_group_on_select(false),
-	pinned(false),
-	blocked(false) {
-		//SetGroup(NULL);
-	}
-	
-	CTTabContents* contents; // weak
-	// We use NavigationControllers here since they more closely model the
-	// "identity" of a Tab, CTTabContents can change depending on the URL loaded
-	// in the Tab.
-	// The group is used to model a set of tabs spawned from a single parent
-	// tab. This value is preserved for a given tab as long as the tab remains
-	// navigated to the link it was initially opened at or some navigation from
-	// that page (i.e. if the user types or visits a bookmark or some other
-	// navigation within that tab, the group relationship is lost). This
-	// property can safely be used to implement features that depend on a
-	// logical group of related tabs.
-	//NavigationController* group;
-	// The owner models the same relationship as group, except it is more
-	// easily discarded, e.g. when the user switches to a tab not part of the
-	// same group. This property is used to determine what tab to select next
-	// when one is closed.
-	//NavigationController* opener;
-	// True if our group should be reset the moment selection moves away from
-	// this Tab. This is the case for tabs opened in the foreground at the end
-	// of the TabStrip while viewing another Tab. If these tabs are closed
-	// before selection moves elsewhere, their opener is selected. But if
-	// selection shifts to _any_ tab (including their opener), the group
-	// relationship is reset to avoid confusing close sequencing.
-	//bool reset_group_on_select;
-	
-	// Is the tab pinned?
-	bool pinned;
-	
-	// Is the tab interaction blocked by a modal dialog?
-	bool blocked;
-};
-
-typedef std::vector<TabContentsData*> TabContentsDataVector;
+typedef std::vector<CTTabContents*> TabContentsDataVector;
 typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers;
 
 @interface CTTabStripModel : NSObject {
@@ -142,7 +97,7 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
     NSObject<CTTabStripModelDelegate> *delegate_;
 	
 	// The CTTabContents data currently hosted within this TabStripModel.
-	TabContentsDataVector contents_data_;
+	NSMutableArray *contents_data_;
 	
 	// The index of the CTTabContents in |contents_| that is currently selected.
 	int selected_index_;
@@ -167,12 +122,12 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 // The CTTabStripModelDelegate associated with this TabStripModel.
 @property (readonly) NSObject<CTTabStripModelDelegate> *delegate;
 // The index of the currently selected CTTabContents.
-@property (readonly) int selected_index;
+@property (readonly, nonatomic) int selected_index;
 // Returns true if the tabstrip is currently closing all open tabs (via a
 // call to CloseAllTabs). As tabs close, the selection in the tabstrip
 // changes which notifies observers, which can use this as an optimization to
 // avoid doing meaningless or unhelpful work.
-@property (readonly) bool closing_all;
+@property (readonly, nonatomic) bool closing_all;
 // Access the order controller. Exposed only for unit tests.
 @property (readonly) CTTabStripModelOrderController* order_controller;
 
@@ -436,7 +391,7 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 // Returns a vector of indices of the tabs that will close when executing the
 // command |id| for the tab at |index|. The returned indices are sorted in
 // descending order.
-- (std::vector<int>)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
+- (NSArray *)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
 forTabAtIndex:(int)index;
 
 // Overridden from notificationObserver:

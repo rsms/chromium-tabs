@@ -37,6 +37,8 @@ _synthRetain(NSImage*, Icon, icon);
 @synthesize view = view_;
 @synthesize isApp = isApp_;
 @synthesize browser = browser_;
+@synthesize isPinned = isPinned_;
+@synthesize isBlocked = isBlocked_;
 
 #undef _synth
 

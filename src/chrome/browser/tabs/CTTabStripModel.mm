@@ -39,7 +39,7 @@ do { \
 //
 // Returns true if the CTTabContents were closed immediately, false if we are
 // waiting for the result of an onunload handler.
-- (bool)internalCloseTabs:(const std::vector<int>&)indices
+- (bool)internalCloseTabs:(NSArray *)indices
 			   closeTypes:(uint32)close_types;
 
 // Invoked from InternalCloseTabs and when an extension is removed for an app
@@ -111,11 +111,12 @@ do { \
 @synthesize closing_all = closing_all_;
 @synthesize order_controller = order_controller_;
 
-const int kNoTab = -1;
+const int kNoTab = NSNotFound;
 
 - (id)initWithDelegate:(NSObject <CTTabStripModelDelegate>*)delegate {
 	self = [super init];
 	if (self) {	
+		contents_data_ = [[NSMutableArray alloc] init];
 		selected_index_ = kNoTab;
 		closing_all_ = false;
 		//order_controller_ = NULL;
@@ -128,6 +129,7 @@ const int kNoTab = -1;
 		 registrar_.Add(this,
 		 NotificationType::EXTENSION_UNLOADED);*/
 		order_controller_ = [[CTTabStripModelOrderController alloc] initWithTabStripModel:self];
+		
 	}
 
 	return self;
@@ -135,22 +137,11 @@ const int kNoTab = -1;
 
 - (void)dealloc {
 	CALL_EACH_OBSERVER(observers_, @selector(tabStripModelDeleted), [observer tabStripModelDeleted]);
-
 	
 	delegate_ = NULL; // weak
 	
-	// Before deleting any phantom tabs remove our notification observers so that
-	// we don't attempt to notify our delegate or do any processing.
-	//TODO: replace with nsnotificationcenter unregs
-	//registrar_.RemoveAll();
-	
-	// Phantom tabs still have valid TabConents that we own and need to delete.
-	/*for (int i = count() - 1; i >= 0; --i) {
-	 if (IsPhantomTab(i))
-	 delete contents_data_[i]->contents;
-	 }*/
-	STLDeleteContainerPointers(contents_data_.begin(), contents_data_.end());
 	[order_controller_ release];
+	[contents_data_ release];
     [super dealloc];
 }
 
@@ -166,11 +157,7 @@ const int kNoTab = -1;
 #pragma mark -
 #pragma mark getters/setters
 - (int)count {
-	return contents_data_.size();
-}
-
-- (bool)empty {
-	return contents_data_.empty();
+	return [contents_data_ count];
 }
 
 - (bool)hasNonPhantomTabs {
@@ -229,10 +216,12 @@ const int kNoTab = -1;
 	// otherwise we run into problems when we try to change the selected contents
 	// since the old contents and the new contents will be the same...
 	CTTabContents* selected_contents = [self selectedTabContents];
-	TabContentsData* data = new TabContentsData([contents retain]);
-	data->pinned = pin;
+	//TabContentsData* data = new TabContentsData([contents retain]);
+	contents.isPinned = pin;
+	//data->pinned = pin;
 	
-	contents_data_.insert(contents_data_.begin() + index, data);
+	//contents_data_.insert(contents_data_.begin() + index, data);
+	[contents_data_ insertObject:contents atIndex:index];
 	
 	if (index <= selected_index_) {
 		// If a tab is inserted before the current selected index,
@@ -254,15 +243,14 @@ const int kNoTab = -1;
 - (void)replaceTabContentsAtIndex:(int)index 
 					withContents:(CTTabContents *)new_contents 
 					 replaceType:(CTTabReplaceType)type {
-	CTTabContents* old_contents =
-	[self replaceTabContentsAtImpl:index
-					  withContents:new_contents
-					   replaceType:type];
-	[old_contents destroy:self];
+	CTTabContents* old_contents = [self replaceTabContentsAtImpl:index
+													withContents:new_contents
+													 replaceType:type];
+	//[old_contents destroy:self];
 }
 
 - (CTTabContents *)detachTabContentsAtIndex:(int)index {
-	if (contents_data_.empty())
+	if ([contents_data_ count] == 0)
 		return NULL;
 	
 	assert([self ContainsIndex:index]);
@@ -271,8 +259,9 @@ const int kNoTab = -1;
 	int next_selected_index =
 	[order_controller_ determineNewSelectedIndexAfterClose:index 
 												  isRemove:true];
-	delete contents_data_.at(index);
-	contents_data_.erase(contents_data_.begin() + index);
+//	delete contents_data_.at(index);
+//	contents_data_.erase(contents_data_.begin() + index);
+	[contents_data_ removeObjectAtIndex:index];
 	next_selected_index = [self indexOfNextNonPhantomTabFromIndex:next_selected_index ignoreIndex:-1];
 	if ([self hasNonPhantomTabs])
 		closing_all_ = true;
@@ -342,13 +331,14 @@ const int kNoTab = -1;
 }
 
 - (int)indexOfTabContents:(const CTTabContents *)contents {
-	int index = 0;
-	TabContentsDataVector::const_iterator iter = contents_data_.begin();
-	for (; iter != contents_data_.end(); ++iter, ++index) {
-		if ((*iter)->contents == contents)
-			return index;
-	}
-	return kNoTab;
+//	int index = 0;
+//	TabContentsDataVector::const_iterator iter = contents_data_.begin();
+//	for (; iter != contents_data_.end(); ++iter, ++index) {
+//		if ((*iter)->contents == contents)
+//			return index;
+//	}
+	return [contents_data_ indexOfObject:contents];
+	//return kNoTab;
 }
 
 - (void)updateTabContentsStateAtIndex:(int)index 
@@ -360,24 +350,27 @@ const int kNoTab = -1;
 
 - (void)closeAllTabs {
 	closing_all_ = true;
-	std::vector<int> closing_tabs;
+	NSMutableArray *closing_tabs = [NSMutableArray array];
 	for (int i = [self count] - 1; i >= 0; --i)
-		closing_tabs.push_back(i);
+		[closing_tabs addObject:[NSNumber numberWithInt:i]];
 	[self internalCloseTabs:closing_tabs closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
 }
 
 - (bool)closeTabContentsAtIndex:(int)index 
 				 closeTypes:(uint32)close_types {
-	std::vector<int> closing_tabs;
-	closing_tabs.push_back(index);
-	return [self internalCloseTabs:closing_tabs
+	return [self internalCloseTabs:[NSArray arrayWithObject:[NSNumber numberWithInt:index]]
 						closeTypes:close_types];
 }
 
 - (bool)tabsAreLoading {
-	TabContentsDataVector::const_iterator iter = contents_data_.begin();
-	for (; iter != contents_data_.end(); ++iter) {
-		if ((*iter)->contents.isLoading)
+//	TabContentsDataVector::const_iterator iter = contents_data_.begin();
+//	for (; iter != contents_data_.end(); ++iter) {
+//		if ((*iter)->contents.isLoading)
+//			return true;
+//	}
+//	return false;
+	for (CTTabContents *contents in contents_data_) {
+		if (contents.isLoading)
 			return true;
 	}
 	return false;
@@ -391,15 +384,23 @@ const int kNoTab = -1;
 - (void)setTabAtIndex:(int)index 
 			  blocked:(bool)blocked {
 	assert([self ContainsIndex:index]);
-	if (contents_data_[index]->blocked == blocked)
+	CTTabContents *contents = [contents_data_ objectAtIndex:index];
+//	if (contents_data_[index]->blocked == blocked)
+//		return;
+//	contents_data_[index]->blocked = blocked;
+	if (contents.isBlocked == blocked) {
 		return;
-	contents_data_[index]->blocked = blocked;
-	CALL_EACH_OBSERVER(observers_, @selector(tabBlockedStateChangedWithContents:atIndex:), [observer tabBlockedStateChangedWithContents:contents_data_[index]->contents atIndex:index]);
+	}
+	contents.isBlocked = blocked;
+//	CALL_EACH_OBSERVER(observers_, @selector(tabBlockedStateChangedWithContents:atIndex:), [observer tabBlockedStateChangedWithContents:contents_data_[index]->contents atIndex:index]);
+	CALL_EACH_OBSERVER(observers_, @selector(tabBlockedStateChangedWithContents:atIndex:), [observer tabBlockedStateChangedWithContents:contents atIndex:index]);
+
 }
 
 - (void)setTabAtIndex:(int)index 
 			   pinned:(bool)pinned {
-	if (contents_data_[index]->pinned == pinned)
+	CTTabContents *contents = [contents_data_ objectAtIndex:index];
+	if (contents.isPinned == pinned)
 		return;
 	
 	if ([self IsAppTab:index]) {
@@ -410,12 +411,12 @@ const int kNoTab = -1;
 		}
 		// Changing the pinned state of an app tab doesn't effect it's mini-tab
 		// status.
-		contents_data_[index]->pinned = pinned;
+		contents.isPinned = pinned;
 	} else {
 		// The tab is not an app tab, it's position may have to change as the
 		// mini-tab state is changing.
 		int non_mini_tab_index = [self IndexOfFirstNonMiniTab];
-		contents_data_[index]->pinned = pinned;
+		contents.isPinned = pinned;
 		if (pinned && index != non_mini_tab_index) {
 			[self moveTabContentsAtImpl:index toPosition:non_mini_tab_index selectAfterMove:false];
 			return;  // Don't send TabPinnedStateChanged notification.
@@ -424,17 +425,16 @@ const int kNoTab = -1;
 			return;  // Don't send TabPinnedStateChanged notification.
 		}
 		
-		CALL_EACH_OBSERVER(observers_, @selector(tabMiniStateChangedWithContents:atIndex:), [observer tabMiniStateChangedWithContents:contents_data_[index]->contents atIndex:index]);
+		CALL_EACH_OBSERVER(observers_, @selector(tabMiniStateChangedWithContents:atIndex:), [observer tabMiniStateChangedWithContents:contents atIndex:index]);
 	}
 	
 	// else: the tab was at the boundary and it's position doesn't need to
 	// change.
-	CALL_EACH_OBSERVER(observers_, @selector(tabPinnedStateChangedWithContents:atIndex:), [observer tabPinnedStateChangedWithContents:contents_data_[index]->contents atIndex:
-											index]);
+	CALL_EACH_OBSERVER(observers_, @selector(tabPinnedStateChangedWithContents:atIndex:), [observer tabPinnedStateChangedWithContents:contents atIndex:index]);
 }
 
 - (bool)IsTabPinned:(int)index {
-	return contents_data_[index]->pinned;
+	return ((CTTabContents *)[contents_data_ objectAtIndex:index]).isPinned;
 }
 
 - (bool)IsMiniTab:(int)index {
@@ -453,15 +453,19 @@ const int kNoTab = -1;
 }
 
 - (bool)IsTabBlocked:(int)index {
-	return contents_data_[index]->blocked;
+	return ((CTTabContents *)[contents_data_ objectAtIndex:index]).isBlocked;
 }
 
 - (int)IndexOfFirstNonMiniTab {
-	for (size_t i = 0; i < contents_data_.size(); ++i) {
-		if (![self IsMiniTab:(static_cast<int>(i))])
-			return static_cast<int>(i);
+//	for (size_t i = 0; i < contents_data_.size(); ++i) {
+//		if (![self IsMiniTab:(static_cast<int>(i))])
+//			return static_cast<int>(i);
+//	}
+	for (int i = 0; i < [contents_data_ count]; ++i) {
+		if (![self IsMiniTab:i])
+			return i;
 	}
-	// No mini-tabs.
+	// No non-mini-tabs.
 	return [self count];
 }
 
@@ -535,30 +539,7 @@ const int kNoTab = -1;
 			   withAddTypes:add_types | (inherit_group ? ADD_INHERIT_GROUP : 0)];
 	// Reset the index, just in case insert ended up moving it on us.
 	index = [self indexOfTabContents:contents];
-	
-	/*if (inherit_group && transition == CTPageTransitionTyped)
-	 contents_data_.at(index)->reset_group_on_select = true;*/
-	
-	// TODO(sky): figure out why this is here and not in InsertTabContentsAt. When
-	// here we seem to get failures in startup perf tests.
-	// Ensure that the new TabContentsView begins at the same size as the
-	// previous TabContentsView if it existed.  Otherwise, the initial WebKit
-	// layout will be performed based on a width of 0 pixels, causing a
-	// very long, narrow, inaccurate layout.  Because some scripts on pages (as
-	// well as WebKit's anchor link location calculation) are run on the
-	// initial layout and not recalculated later, we need to ensure the first
-	// layout is performed with sane view dimensions even when we're opening a
-	// new background tab.
-	/*if (CTTabContents* old_contents = GetSelectedTabContents()) {
-	 if ((add_types & ADD_SELECTED) == 0) {
-	 contents->view()->SizeContents(old_contents->view()->GetContainerSize());
-	 // We need to hide the contents or else we get and execute paints for
-	 // background tabs. With enough background tabs they will steal the
-	 // backing store of the visible tab causing flashing. See bug 20831.
-	 contents->HideContents();
-	 }
-	 }*/
-	
+		
 	return index;
 }
 
@@ -721,12 +702,12 @@ const int kNoTab = -1;
 	}
 }
 
-- (std::vector<int>)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
-forTabAtIndex:(int)index {
+- (NSArray *)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
+						 forTabAtIndex:(int)index {
 	assert([self ContainsIndex:index]);
 	
 	// NOTE: some callers assume indices are sorted in reverse order.
-	std::vector<int> indices;
+	NSMutableArray *indices = [NSMutableArray array];
 	
 	if (command_id != CommandCloseTabsToRight && command_id != CommandCloseOtherTabs)
 		return indices;
@@ -734,7 +715,7 @@ forTabAtIndex:(int)index {
 	int start = (command_id == CommandCloseTabsToRight) ? index + 1 : 0;
 	for (int i = [self count] - 1; i >= start; --i) {
 		if (i != index && ![self IsMiniTab:i])
-			indices.push_back(i);
+			[indices addObject:[NSNumber numberWithInt:i]];
 	}
 	return indices;
 }
@@ -764,48 +745,17 @@ forTabAtIndex:(int)index {
 	 contents->controller().entry_count() == 1;*/
 }
 
-- (bool)internalCloseTabs:(const std::vector<int>&)indices
+- (bool)internalCloseTabs:(NSArray *)indices
 			   closeTypes:(uint32)close_types {
 	bool retval = true;
-	
-	// We only try the fast shutdown path if the whole browser process is *not*
-	// shutting down. Fast shutdown during browser termination is handled in
-	// BrowserShutdown.
-	/*if (browser_shutdown::GetShutdownType() == browser_shutdown::NOT_VALID) {
-	 // Construct a map of processes to the number of associated tabs that are
-	 // closing.
-	 std::map<RenderProcessHost*, size_t> processes;
-	 for (size_t i = 0; i < indices.size(); ++i) {
-	 if (!delegate_->CanCloseContentsAt(indices[i])) {
-	 retval = false;
-	 continue;
-	 }
-	 
-	 CTTabContents* detached_contents = GetContentsAt(indices[i]);
-	 RenderProcessHost* process = detached_contents->GetRenderProcessHost();
-	 std::map<RenderProcessHost*, size_t>::iterator iter =
-	 processes.find(process);
-	 if (iter == processes.end()) {
-	 processes[process] = 1;
-	 } else {
-	 iter->second++;
-	 }
-	 }
-	 
-	 // Try to fast shutdown the tabs that can close.
-	 for (std::map<RenderProcessHost*, size_t>::iterator iter =
-	 processes.begin();
-	 iter != processes.end(); ++iter) {
-	 iter->first->FastShutdownForPageCount(iter->second);
-	 }
-	 }*/
-	
+		
 	// We now return to our regularly scheduled shutdown procedure.
-	for (size_t i = 0; i < indices.size(); ++i) {
-		CTTabContents* detached_contents = [self contentsAtIndex:indices[i]];
+	for (size_t i = 0; i < indices.count; ++i) {
+		int index = [[indices objectAtIndex:i] intValue];
+		CTTabContents* detached_contents = [self contentsAtIndex:index];
 		[detached_contents closingOfTabDidStart:self]; // TODO notification
 		
-		if (![delegate_ canCloseContentsAt:indices[i]]) {
+		if (![delegate_ canCloseContentsAt:index]) {
 			retval = false;
 			continue;
 		}
@@ -825,7 +775,7 @@ forTabAtIndex:(int)index {
 		}
 		
 		[self internalCloseTab:detached_contents
-					   atIndex:indices[i]
+					   atIndex:index
 		   createHistoricalTab:((close_types & CLOSE_CREATE_HISTORICAL_TAB) != 0)];
 	}
 	
@@ -846,14 +796,16 @@ forTabAtIndex:(int)index {
 	
 	// Deleting the CTTabContents will call back to us via NotificationObserver
 	// and detach it.
-	[contents destroy:self];
+//	[contents destroy:self];
+	[self detachTabContentsAtIndex:index];
 }
 
 
 - (CTTabContents *)contentsAtIndex:(int)index {
 	assert([self ContainsIndex:index]);
 	//<< "Failed to find: " << index << " in: " << count() << " entries.";
-	return contents_data_.at(index)->contents;
+	//return contents_data_.at(index)->contents;
+	return [contents_data_ objectAtIndex:index];
 }
 
 - (void)ChangeSelectedContentsFrom:(CTTabContents *)old_contents
@@ -884,7 +836,7 @@ forTabAtIndex:(int)index {
 - (void)SelectRelativeTab:(bool)forward {
 	// This may happen during automated testing or if a user somehow buffers
 	// many key accelerators.
-	if (contents_data_.empty())
+	if ([contents_data_ count] == 0)
 		return;
 	
 	// Skip pinned-app-phantom tabs when iterating.
@@ -904,7 +856,7 @@ forTabAtIndex:(int)index {
 	if (index == kNoTab)
 		return kNoTab;
 	
-	if ([self empty])
+	if ([contents_data_ count] == 0)
 		return index;
 	
 	index = std::min([self count] - 1, std::max(0, index));
@@ -946,9 +898,11 @@ const bool kPhantomTabsEnabled = false;
 - (void)moveTabContentsAtImpl:(int)index
 				   toPosition:(int)to_position
 			  selectAfterMove:(bool)select_after_move {
-	TabContentsData* moved_data = contents_data_.at(index);
-	contents_data_.erase(contents_data_.begin() + index);
-	contents_data_.insert(contents_data_.begin() + to_position, moved_data);
+	CTTabContents *movedContents = [contents_data_ objectAtIndex:index];
+	[movedContents retain];
+	[contents_data_ removeObjectAtIndex:index];
+	[contents_data_ insertObject:movedContents atIndex:to_position];
+	[movedContents release];
 	
 	// if !select_after_move, keep the same tab selected as was selected before.
 	if (select_after_move || index == selected_index_) {
@@ -960,15 +914,17 @@ const bool kPhantomTabsEnabled = false;
 	}
 	
 	CALL_EACH_OBSERVER(observers_, @selector(tabMovedWithContents:fromIndex:toIndex:),
-					  [observer tabMovedWithContents:moved_data->contents fromIndex:index toIndex:to_position]);
+					  [observer tabMovedWithContents:movedContents fromIndex:index toIndex:to_position]);
 }
 
 - (CTTabContents *)replaceTabContentsAtImpl:(int)index
 							   withContents:(CTTabContents *)new_contents
 								replaceType:(CTTabReplaceType)type {
 	assert([self ContainsIndex:index]);
+	NSLog(@"replace");
 	CTTabContents* old_contents = [self contentsAtIndex:index];
-	contents_data_[index]->contents = new_contents;
+	[contents_data_ replaceObjectAtIndex:index withObject:new_contents];
+//	contents_data_[index]->contents = new_contents;
 	CALL_EACH_OBSERVER(observers_, @selector(tabReplacedWithContents:oldContents:atIndex:replaceType:),
 					  [observer tabReplacedWithContents:new_contents 
 											oldContents:old_contents atIndex:index replaceType:type]);
