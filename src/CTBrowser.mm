@@ -15,22 +15,8 @@
 @synthesize tabStripModel = tabStripModel_;
 
 
-/*- (id)retain {
-  self = [super retain];
-  NSLog(@"%@  did retain  (retainCount: %u)", self, [self retainCount]);
-  NSLog(@"%@", [NSThread callStackSymbols]);
-  return self;
-}
-
-- (void)release {
-  NSLog(@"%@ will release (retainCount: %u)", self, [self retainCount]);
-  NSLog(@"%@", [NSThread callStackSymbols]);
-  [super release];
-}*/
-
-
 + (CTBrowser*)browser {
-  return [[[self alloc] init] autorelease];
+  return [[self alloc] init];
 }
 
 
@@ -40,34 +26,33 @@
   }
   return self;
 }
-
-
--(void)dealloc {
-  DLOG("[ChromiumTabs] deallocing browser %@", self);
-	[tabStripModel_ release];
-  [super dealloc];
-}
-
-
--(void)finalize {
-	[tabStripModel_ release];
-  [super finalize];
-}
+//
+//
+//-(void)dealloc {
+//  DLOG("[ChromiumTabs] deallocing browser %@", self);
+//	[tabStripModel_ release];
+//  [super dealloc];
+//}
+//
+//
+//-(void)finalize {
+//	[tabStripModel_ release];
+//  [super finalize];
+//}
 
 
 -(CTToolbarController *)createToolbarController {
   // subclasses could override this -- returning nil means no toolbar
   NSBundle *bundle = [CTUtil bundleForResource:@"Toolbar" ofType:@"nib"];
-  return [[[CTToolbarController alloc] initWithNibName:@"Toolbar"
+  return [[CTToolbarController alloc] initWithNibName:@"Toolbar"
                                                    bundle:bundle
-                                                  browser:self] autorelease];
+                                                  browser:self];
 }
 
 -(CTTabContentsController*)createTabContentsControllerWithContents:
     (CTTabContents*)contents {
   // subclasses could override this
-  return [[[CTTabContentsController alloc]
-      initWithContents:contents] autorelease];
+  return [[CTTabContentsController alloc] initWithContents:contents];
 }
 
 
@@ -180,7 +165,6 @@
       [[cls alloc] initWithBrowser:browser];
   [browser addBlankTabInForeground:YES];
   [windowController showWindow:self];
-  [[windowController autorelease] retain];
 }
 
 -(void)closeWindow {
@@ -217,7 +201,8 @@
 -(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
   // subclasses should override this to provide a custom CTTabContents type
   // and/or initialization
-  return [[[CTTabContents alloc] initWithBaseTabContents:baseContents] autorelease];
+//  return [[[CTTabContents alloc] initWithBaseTabContents:baseContents] autorelease];
+	  return [[CTTabContents alloc] initWithBaseTabContents:baseContents];
 }
 
 // implementation conforms to CTTabStripModelDelegate
@@ -446,23 +431,23 @@
 #pragma mark NSFastEnumeration
 
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
-                                  objects:(id *)stackbuf
-                                    count:(NSUInteger)fetchCount {
-  NSUInteger totalCount = [tabStripModel_ count];
-  NSUInteger fetchIndex = 0;
-
-  while (state->state+fetchIndex < totalCount && fetchIndex < fetchCount) {
-    stackbuf[fetchIndex++] =
-        [tabStripModel_ tabContentsAtIndex:(state->state + fetchIndex)];
-  }
-
-  state->state += fetchIndex;
-  state->itemsPtr = stackbuf;
-  state->mutationsPtr = (unsigned long *)self;  // TODO
-
-  return fetchIndex;
-}
+//- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+//                                  objects:(id __unsafe_unretained [])stackbuf
+//                                    count:(NSUInteger)fetchCount {
+//  NSUInteger totalCount = [tabStripModel_ count];
+//  NSUInteger fetchIndex = 0;
+//
+//  while (state->state+fetchIndex < totalCount && fetchIndex < fetchCount) {
+//    stackbuf[fetchIndex++] =
+//        [tabStripModel_ tabContentsAtIndex:(state->state + fetchIndex)];
+//  }
+//
+//  state->state += fetchIndex;
+//  state->itemsPtr = stackbuf;
+//  state->mutationsPtr = self;  // TODO
+//
+//  return fetchIndex;
+//}
 
 
 @end

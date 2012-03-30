@@ -79,7 +79,7 @@
               toPoint:NSMakePoint(NSMaxX(cellFrame),
                                   NSMinY(cellFrame))
               options:NSGradientDrawsBeforeStartingLocation];
-  [mask release];
+//  [mask release];
   CGContextEndTransparencyLayer(context);
   [[NSGraphicsContext currentContext] restoreGraphicsState];
 }

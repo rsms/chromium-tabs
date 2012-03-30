@@ -11,7 +11,7 @@
 
 #import <map>
 
-#import "scoped_nsobject.h"
+//#import "scoped_nsobject.h"
 #import "background_gradient_view.h"
 #import "hover_close_button.h"
 
@@ -50,7 +50,7 @@ enum AlertState {
   BOOL closing_;
 
   // Tracking area for close button mouseover images.
-  scoped_nsobject<NSTrackingArea> closeTrackingArea_;
+  NSTrackingArea* closeTrackingArea_;
 
   BOOL isMouseInside_;  // Is the mouse hovering over?
   tabs::AlertState alertState_;

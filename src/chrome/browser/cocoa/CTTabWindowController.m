@@ -4,6 +4,7 @@
 
 #import "CTTabWindowController.h"
 #import "CTTabStripView.h"
+#import "fast_resize_view.h"
 
 @interface CTTabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;
@@ -38,8 +39,8 @@
   if (overlayWindow_) {
     [self setUseOverlay:NO];
   }
-  [lockedTabs_ release];
-  [super dealloc];
+//  [lockedTabs_ release];
+//  [super dealloc];
 }
 
 
@@ -209,7 +210,7 @@
     [window display];
     [window removeChildWindow:overlayWindow_];
     [overlayWindow_ orderOut:nil];
-    [overlayWindow_ release];
+//    [overlayWindow_ release];
     overlayWindow_ = nil;
     cachedContentView_ = nil;
   } else {

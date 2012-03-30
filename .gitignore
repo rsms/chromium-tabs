@@ -7,3 +7,11 @@
 *xcodeproj/xcuserdata
 /examples/simple-app/test.*
 *CTTab*Object.*
+
+.DS_Store
+
+chromium-tabs.xcodeproj/KOed.mode1v3
+
+chromium-tabs.xcodeproj/KOed.pbxuser
+
+chromium-tabs.tmproj

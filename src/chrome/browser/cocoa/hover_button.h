@@ -4,24 +4,24 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "scoped_nsobject.h"
+//#import "scoped_nsobject.h"
 
-// A button that changes when you hover over it and click it.
-@interface HoverButton : NSButton {
- @protected
-  // Enumeration of the hover states that the close button can be in at any one
-  // time. The button cannot be in more than one hover state at a time.
-  enum HoverState {
+typedef enum {
     kHoverStateNone = 0,
     kHoverStateMouseOver = 1,
     kHoverStateMouseDown = 2
-  };
+} HoverState;
 
-  HoverState hoverState_;
-
- @private
-  // Tracking area for button mouseover states.
-  scoped_nsobject<NSTrackingArea> trackingArea_;
+// A button that changes when you hover over it and click it.
+@interface HoverButton : NSButton {
+	@protected
+	// Enumeration of the hover states that the close button can be in at any one
+	// time. The button cannot be in more than one hover state at a time.
+	HoverState hoverState_;
+	
+	@private
+	// Tracking area for button mouseover states.
+	NSTrackingArea* trackingArea_;
 }
 
 // Enables or disables the |NSTrackingRect|s for the button.

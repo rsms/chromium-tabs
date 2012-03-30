@@ -9,6 +9,8 @@
 #import "CTTabWindowController.h"
 #import "NSWindow+CTThemed.h"
 
+#import "CTTabStripView.h"
+
 // ported from mac_util.mm:
 static CFTypeRef GetValueFromDictionary(CFDictionaryRef dict,
                                         CFStringRef key,
@@ -94,7 +96,7 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)dealloc {
   // Cancel any delayed requests that may still be pending (drags or hover).
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  [super dealloc];
+//  [super dealloc];
 }
 
 // Called to obtain the context menu for when the user hits the right mouse
@@ -210,10 +212,12 @@ const CGFloat kRapidCloseDist = 2.5;
 
 // Call to clear out transient weak references we hold during drags.
 - (void)resetDragControllers {
-  ct_objc_xch(&draggedController_, nil);
+//  ct_objc_xch(&draggedController_, nil);
+	draggedController_ = nil;
   dragWindow_ = nil;
   dragOverlay_ = nil;
-  ct_objc_xch(&sourceController_, nil);
+//  ct_objc_xch(&sourceController_, nil);
+	sourceController_ = nil;
   sourceWindow_ = nil;
   //ct_objc_xch(&targetController_, nil);
   targetController_ = nil;
@@ -286,7 +290,8 @@ const CGFloat kRapidCloseDist = 2.5;
 
   sourceWindowFrame_ = [sourceWindow_ frame];
   sourceTabFrame_ = [self frame];
-  ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
+//  ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
+	sourceController_ = [sourceWindow_ windowController];
   sourceController_.didShowNewTabButtonBeforeTemporalAction = sourceController_.showsNewTabButton;
   tabWasDragged_ = NO;
   tearTime_ = 0.0;
@@ -318,7 +323,7 @@ const CGFloat kRapidCloseDist = 2.5;
   // strip and then deallocated. This will also result in *us* being
   // deallocated. Both these are bad, so we prevent this by retaining the
   // controller.
-  scoped_nsobject<CTTabController> controller([tabController_ retain]);
+  CTTabController* controller = tabController_ ;
 
   // Because we move views between windows, we need to handle the event loop
   // ourselves. Ideally we should use the standard event loop.
@@ -439,7 +444,8 @@ const CGFloat kRapidCloseDist = 2.5;
   if (targetController_ != newTarget) {
     targetDwellDate = [NSDate date];
     [targetController_ removePlaceholder];
-    ct_objc_xch(&targetController_, newTarget);
+//    ct_objc_xch(&targetController_, newTarget);
+	  targetController_ = newTarget;
     if (!newTarget) {
       tearTime_ = [NSDate timeIntervalSinceReferenceDate];
       tearOrigin_ = [dragWindow_ frame].origin;
@@ -456,12 +462,14 @@ const CGFloat kRapidCloseDist = 2.5;
     // go away (it's been autoreleased) so we need to ensure we don't reference
     // it any more. In that case the new controller becomes our source
     // controller.
-    ct_objc_xch(&draggedController_,
-                [sourceController_ detachTabToNewWindow:self]);
+//    ct_objc_xch(&draggedController_,
+//                [sourceController_ detachTabToNewWindow:self]);
+	  draggedController_ = [sourceController_ detachTabToNewWindow:self];
     dragWindow_ = [draggedController_ window];
     [dragWindow_ setAlphaValue:0.0];
     if (![sourceController_ hasLiveTabs]) {
-      ct_objc_xch(&sourceController_, draggedController_);
+//      ct_objc_xch(&sourceController_, draggedController_);
+		sourceController_ = draggedController_;
       sourceWindow_ = dragWindow_;
     }
 
@@ -705,7 +713,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
     // Draw a mouse hover gradient for the default themes.
     if (!selected && hoverAlpha > 0) {
-      scoped_nsobject<NSGradient> glow([NSGradient alloc]);
+      NSGradient* glow = [NSGradient alloc];
       [glow initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0
                                       alpha:1.0 * hoverAlpha]
                       endingColor:[NSColor colorWithCalibratedWhite:1.0
@@ -736,7 +744,7 @@ const CGFloat kRapidCloseDist = 2.5;
   if (selected) {
     NSAffineTransform* highlightTransform = [NSAffineTransform transform];
     [highlightTransform translateXBy:1.0 yBy:-1.0];
-    scoped_nsobject<NSBezierPath> highlightPath([path copy]);
+    NSBezierPath* highlightPath = [path copy];
     [highlightPath transformUsingAffineTransform:highlightTransform];
     [highlightColor setStroke];
     [highlightPath setLineWidth:1.0];

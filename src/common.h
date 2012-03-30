@@ -101,24 +101,24 @@ const char *common_strrstr(const char *string, const char *find);
 #ifdef __OBJC__
   // exchange dst with src, retaining src and safely releasing old object.
   //   id old = ct_objc_xch(&foo_, [NSColor redColor]);
-  static inline id ct_objc_xch(id *dst, id src) {
-    id old = *dst;
-    *dst = src;
-    if (old) [old release];
-    if (src) [src retain];
-    return old;
-  }
+//  static inline id ct_objc_xch(id *dst, id src) {
+//    id old = *dst;
+//    *dst = src;
+//    if (old) [old release];
+//    if (src) [src retain];
+//    return old;
+//  }
   
-  static inline BOOL ct_casid(id volatile *target, id newval) {
-    id oldval = *target;
-    if (__sync_bool_compare_and_swap((void*volatile*)target, (void*)oldval,
-                                     (void*)newval)) {
-      [newval retain];
-      [oldval release];
-      return YES;
-    }
-    return NO;
-  }
+//  static inline BOOL ct_casid(id volatile *target, id newval) {
+//    id oldval = *target;
+//    if (__sync_bool_compare_and_swap((void*volatile*)target, (void*)oldval,
+//                                     (void*)newval)) {
+//      [newval retain];
+//      [oldval release];
+//      return YES;
+//    }
+//    return NO;
+//  }
 #endif // __OBJC__
 
 #endif // COMMON_H_

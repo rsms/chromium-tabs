@@ -13,7 +13,7 @@
                                          error:(NSError **)outError;
 @end
 
-@interface CTBrowserWindowController : CTTabWindowController <CTTabStripModelObserver> {
+@interface CTBrowserWindowController : CTTabWindowController /*<CTTabStripModelObserver>*/ {
   CTBrowser* browser_; // we own the browser
   CTTabStripController *tabStripController_;
   CTToolbarController *toolbarController_;
@@ -21,9 +21,9 @@
   BOOL initializing_; // true if the instance is initializing
 }
 
-@property(readonly, nonatomic) CTTabStripController *tabStripController;
-@property(readonly, nonatomic) CTToolbarController *toolbarController;
-@property(readonly, nonatomic) CTBrowser *browser;
+@property(strong, readonly, nonatomic) CTTabStripController *tabStripController;
+@property(strong, readonly, nonatomic) CTToolbarController *toolbarController;
+@property(strong, readonly, nonatomic) CTBrowser *browser;
 @property(readonly, nonatomic) BOOL isFullscreen; // fullscreen or not
 
 // Called to check whether or not this window has a toolbar. By default returns

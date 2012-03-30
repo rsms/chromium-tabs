@@ -3,7 +3,7 @@
 // found in the LICENSE-chromium file.
 
 #import "throbber_view.h"
-#import "scoped_nsobject.h"
+//#import "scoped_nsobject.h"
 
 #import <set>
 
@@ -28,7 +28,7 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 
 @interface ThrobberFilmstripDelegate : NSObject
                                        <ThrobberDataDelegate> {
-  scoped_nsobject<NSImage> image_;
+  NSImage* image_;
   unsigned int numFrames_;  // Number of frames in this animation.
   unsigned int animationFrame_;  // Current frame of the animation,
                                  // [0..numFrames_)
@@ -54,7 +54,7 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
     assert((int)imageSize.width % (int)imageSize.height == 0);
     numFrames_ = (int)imageSize.width / (int)imageSize.height;
     assert(numFrames_);
-    image_.reset([image retain]);
+    image_ = image;
   }
   return self;
 }
@@ -82,8 +82,8 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 
 @interface ThrobberToastDelegate : NSObject
                                    <ThrobberDataDelegate> {
-  scoped_nsobject<NSImage> image1_;
-  scoped_nsobject<NSImage> image2_;
+  NSImage* image1_;
+  NSImage* image2_;
   NSSize image1Size_;
   NSSize image2Size_;
   int animationFrame_;  // Current frame of the animation,
@@ -97,8 +97,8 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 
 - (id)initWithImage1:(NSImage*)image1 image2:(NSImage*)image2 {
   if ((self = [super init])) {
-    image1_.reset([image1 retain]);
-    image2_.reset([image2 retain]);
+    image1_ = image1;
+    image2_ = image2;
     image1Size_ = [image1 size];
     image2Size_ = [image2 size];
     animationFrame_ = 0;
@@ -121,14 +121,14 @@ static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
   NSRect destRect;
 
   if (animationFrame_ < image1Size_.height) {
-    image = image1_.get();
+    image = image1_;
     srcSize = image1Size_;
     destRect = NSMakeRect(0, -animationFrame_,
                           image1Size_.width, image1Size_.height);
   } else if (animationFrame_ == image1Size_.height) {
     // nothing; intermediate blank frame
   } else {
-    image = image2_.get();
+    image = image2_;
     srcSize = image2Size_;
     destRect = NSMakeRect(0, animationFrame_ -
                                  (image1Size_.height + image2Size_.height),
@@ -286,39 +286,39 @@ typedef std::set<ThrobberView*> ThrobberSet;
 + (id)filmstripThrobberViewWithFrame:(NSRect)frame
                                image:(NSImage*)image {
   ThrobberFilmstripDelegate* delegate =
-      [[[ThrobberFilmstripDelegate alloc] initWithImage:image] autorelease];
+      [[ThrobberFilmstripDelegate alloc] initWithImage:image];
   if (!delegate)
     return nil;
 
-  return [[[ThrobberView alloc] initWithFrame:frame
-                                     delegate:delegate] autorelease];
+  return [[ThrobberView alloc] initWithFrame:frame
+                                     delegate:delegate];
 }
 
 + (id)toastThrobberViewWithFrame:(NSRect)frame
                      beforeImage:(NSImage*)beforeImage
                       afterImage:(NSImage*)afterImage {
   ThrobberToastDelegate* delegate =
-      [[[ThrobberToastDelegate alloc] initWithImage1:beforeImage
-                                              image2:afterImage] autorelease];
+      [[ThrobberToastDelegate alloc] initWithImage1:beforeImage
+                                              image2:afterImage];
   if (!delegate)
     return nil;
 
-  return [[[ThrobberView alloc] initWithFrame:frame
-                                     delegate:delegate] autorelease];
+  return [[ThrobberView alloc] initWithFrame:frame
+                                     delegate:delegate];
 }
 
 - (id)initWithFrame:(NSRect)frame delegate:(id<ThrobberDataDelegate>)delegate {
   if ((self = [super initWithFrame:frame])) {
-    dataDelegate_ = [delegate retain];
+    dataDelegate_ = delegate;
   }
   return self;
 }
 
 - (void)dealloc {
-  [dataDelegate_ release];
+//  [dataDelegate_ release];
   [[ThrobberTimer sharedThrobberTimer] removeThrobber:self];
 
-  [super dealloc];
+//  [super dealloc];
 }
 
 // Manages this ThrobberView's membership in the shared throbber timer set on

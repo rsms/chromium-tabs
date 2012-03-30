@@ -22,7 +22,7 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
 
 @implementation CTTabStripView
 
-@synthesize newTabButton = newTabButton_;
+@synthesize addTabButton = addTabButton_;
 @synthesize dropArrowShown = dropArrowShown_;
 @synthesize dropArrowPosition = dropArrowPosition_;
 
@@ -41,10 +41,10 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
   return self;
 }
 
-- (void)dealloc {
-	[dropHandler_ release];
-	[super dealloc];
-}
+//- (void)dealloc {
+//	[dropHandler_ release];
+//	[super dealloc];
+//}
 
 // Draw bottom border (a dark border and light highlight). Each tab is
 // responsible for mimicking this bottom border, unless it's the selected

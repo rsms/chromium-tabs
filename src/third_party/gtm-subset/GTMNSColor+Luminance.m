@@ -34,7 +34,7 @@ static const CGFloat kGTMLuminanceDarkCutoff = 0.6;
   CGColorSpaceRef cs = CGColorSpaceCreateLab(whitePoint, blackPoint, range);
   NSColorSpace *space = nil;
   if (cs) {
-    space = [[[NSColorSpace alloc] initWithCGColorSpace:cs] autorelease];
+    space = [[NSColorSpace alloc] initWithCGColorSpace:cs];
     CGColorSpaceRelease(cs);
   }
   return space;

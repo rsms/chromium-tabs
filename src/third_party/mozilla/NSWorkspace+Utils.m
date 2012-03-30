@@ -44,7 +44,7 @@
 
 - (NSArray*)installedBrowserIdentifiers
 {
-  NSArray* apps = [(NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https")) autorelease];
+  NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https"));
 
   // add the default if it isn't there
   NSString* defaultHandler = [self defaultBrowserIdentifier];
@@ -56,7 +56,7 @@
 
 - (NSArray*)installedFeedViewerIdentifiers
 {
-  NSArray* apps = [(NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed")) autorelease];
+  NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed"));
 
   // add the default if it isn't there
   NSString* defaultHandler = [self defaultFeedViewerIdentifier];
@@ -68,7 +68,7 @@
 
 - (NSString*)defaultBrowserIdentifier
 {
-  NSString* defaultBundleId = [(NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http")) autorelease];
+  NSString* defaultBundleId = (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http"));
   // Sometimes LaunchServices likes to pretend there's no default browser.
   // If that happens, we'll assume it's probably Safari.
   if (!defaultBundleId)
@@ -78,7 +78,7 @@
 
 - (NSString*)defaultFeedViewerIdentifier
 {
-  return [(NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed")) autorelease];
+  return (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed"));
 }
 
 - (NSURL*)defaultBrowserURL
@@ -99,24 +99,24 @@
 
 - (void)setDefaultBrowserWithIdentifier:(NSString*)bundleID
 {
-  LSSetDefaultHandlerForURLScheme(CFSTR("http"), (CFStringRef)bundleID);
-  LSSetDefaultHandlerForURLScheme(CFSTR("https"), (CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("http"), (__bridge CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("https"), (__bridge CFStringRef)bundleID);
+  LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (__bridge CFStringRef)bundleID);
+  LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (__bridge CFStringRef)bundleID);
 }
 
 - (void)setDefaultFeedViewerWithIdentifier:(NSString*)bundleID
 {
-  LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (CFStringRef)bundleID);
+  LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (__bridge CFStringRef)bundleID);
 }
 
 - (NSURL*)urlOfApplicationWithIdentifier:(NSString*)bundleID
 {
   if (!bundleID)
     return nil;
-  NSURL* appURL = nil;
-  if (LSFindApplicationForInfo(kLSUnknownCreator, (CFStringRef)bundleID, NULL, NULL, (CFURLRef*)&appURL) == noErr)
-    return [appURL autorelease];
+  CFURLRef appURL = nil;
+  if (LSFindApplicationForInfo(kLSUnknownCreator, (__bridge CFStringRef)bundleID, NULL, NULL, &appURL) == noErr)
+    return (__bridge_transfer NSURL*)appURL;
 
   return nil;
 }
@@ -138,9 +138,9 @@
 
 - (NSString*)displayNameForFile:(NSURL*)inFileURL
 {
-  NSString *name;
-  LSCopyDisplayNameForURL((CFURLRef)inFileURL, (CFStringRef *)&name);
-  return [name autorelease];
+  CFStringRef name;
+  LSCopyDisplayNameForURL((__bridge CFURLRef)inFileURL, &name);
+  return (__bridge_transfer NSString*)name;
 }
 
 //

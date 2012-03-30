@@ -49,7 +49,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 	NSString *title_; // title of this tab
 	NSImage *icon_; // tab icon (nil means no or default icon)
 	CTBrowser *browser_;
-	__weak CTTabContents* parentOpener_; // the tab which opened this tab (unless nil)
+	CTTabContents* parentOpener_; // the tab which opened this tab (unless nil)
 }
 
 @property(assign, nonatomic) BOOL isApp;
@@ -59,15 +59,13 @@ extern NSString *const CTTabContentsDidCloseNotification;
 @property(assign, nonatomic) BOOL isVisible;
 @property(assign, nonatomic) BOOL isSelected;
 @property(assign, nonatomic) BOOL isTeared;
-@property(assign, nonatomic) BOOL isPinned;
-@property(assign, nonatomic) BOOL isBlocked;
 @property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
 @property(retain, nonatomic) IBOutlet NSView *view;
 @property(retain, nonatomic) NSString *title;
 @property(retain, nonatomic) NSImage *icon;
-@property(assign, nonatomic) CTBrowser *browser;
-@property(assign, nonatomic) CTTabContents* parentOpener;
+@property(retain, nonatomic) CTBrowser *browser;
+@property(strong, nonatomic) CTTabContents* parentOpener;
 
 // If this returns true, special icons like throbbers and "crashed" is
 // displayed, even if |icon| is nil. By default this returns true.
@@ -80,7 +78,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
 // Called when the tab should be destroyed (involves some finalization).
--(void)destroy:(CTTabStripModel *)sender;
+//-(void)destroy:(CTTabStripModel *)sender;
 
 #pragma mark Action
 

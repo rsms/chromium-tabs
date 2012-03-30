@@ -81,10 +81,9 @@
         size = GetMaxResourceSize(urlResHandle);
 // Begin Google Modified
 //        ret = [NSURL URLWithString:[NSString stringWithCString:(char *)*urlResHandle length:size]];
-        NSString *urlString = [[[NSString alloc] initWithBytes:(void *)*urlResHandle
+        NSString *urlString = [[NSString alloc] initWithBytes:(void *)*urlResHandle
                                                         length:size
-                                                      encoding:NSMacOSRomanStringEncoding]  // best guess here
-                               autorelease];
+                                                      encoding:NSMacOSRomanStringEncoding];  // best guess here
         ret = [NSURL URLWithString:urlString];
 // End Google Modified
       }
@@ -96,7 +95,7 @@
       NSDictionary *plist;
       if ((plist = [[NSDictionary alloc] initWithContentsOfFile:inFile])) {
         ret = [NSURL URLWithString:[plist objectForKey:@"URL"]];
-        [plist release];
+//        [plist release];
       }
     }
   }

@@ -16,7 +16,7 @@ typedef enum {
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
-@interface CTBrowser : NSObject <CTTabStripModelDelegate, NSFastEnumeration> {
+@interface CTBrowser : NSObject <CTTabStripModelDelegate/*, NSFastEnumeration*/> {
   CTTabStripModel *tabStripModel_;
 @public
   // Important: Don't ever change this value from user code. It's public just
@@ -28,7 +28,7 @@ typedef enum {
 @property(retain, readonly, nonatomic) CTTabStripModel* tabStripModel;
 
 // The window controller
-@property(strong, retain, readonly, nonatomic) CTBrowserWindowController* windowController;
+@property(strong, retain, readwrite, nonatomic) CTBrowserWindowController* windowController;
 
 // The window. Convenience for [windowController window]
 @property(strong, readonly, nonatomic) NSWindow* window;

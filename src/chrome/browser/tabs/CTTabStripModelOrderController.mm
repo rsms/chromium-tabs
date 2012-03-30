@@ -29,7 +29,11 @@
 		tabStripModel_ = tab_strip_model;
 		insertion_policy_ = INSERT_AFTER;
 		
-		[tabStripModel_ AddObserver:self];
+		[[NSNotificationCenter defaultCenter] addObserver:self 
+												 selector:@selector(tabDidSelect:) 
+													 name:CTTabSelectedNotification 
+												   object:nil];
+//		[tabStripModel_ AddObserver:self];
     }
     
     return self;
@@ -37,8 +41,9 @@
 
 - (void)dealloc
 {
-	[tabStripModel_ RemoveObserver:self];
-    [super dealloc];
+//	[tabStripModel_ RemoveObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [super dealloc];
 }
 
 - (int)determineInsertionIndexWithContents:(CTTabContents *)new_contents
@@ -135,6 +140,14 @@
 	 }*/
 }
 
+- (void)tabDidSelect:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	[self tabSelectedWithContents:[userInfo valueForKey:CTTabNewContentsUserInfoKey] 
+					  oldContents:[userInfo valueForKey:CTTabContentsUserInfoKey] 
+						  atIndex:[[userInfo valueForKey:CTTabIndexUserInfoKey] intValue]
+					  userGesture:[userInfo valueForKey:CTTabOptionsUserInfoKey]];
+}
+
 
 // Overridden from TabStripModelObserver:
 - (void)tabSelectedWithContents:(CTTabContents*)new_contents
@@ -151,7 +164,7 @@
 		 afterRemove:(int)removing_index
 			isRemove:(bool)is_remove {
 	if (is_remove && removing_index < index)
-		index = std::max(0, index - 1);
+		index = MAX(0, index - 1);
 	return index;
 }
 @end

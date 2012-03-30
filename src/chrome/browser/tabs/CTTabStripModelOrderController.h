@@ -17,7 +17,7 @@
 //  An object that allows different types of ordering and reselection to be
 //  heuristics plugged into a TabStripModel.
 //
-@interface CTTabStripModelOrderController : NSObject <CTTabStripModelObserver> {
+@interface CTTabStripModelOrderController : NSObject /*<CTTabStripModelObserver>*/ {
 @private
 	CTTabStripModel *tabStripModel_;
 	

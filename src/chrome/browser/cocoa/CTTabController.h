@@ -63,7 +63,7 @@ typedef enum {
 @property(assign, nonatomic) BOOL phantom;
 @property(assign, nonatomic) BOOL pinned;
 @property(assign, nonatomic) BOOL selected;
-@property(assign, nonatomic) id target;
+@property(retain, nonatomic) id target;
 
 // Minimum and maximum allowable tab width. The minimum width does not show
 // the icon or the close button. The selected tab always has at least a close

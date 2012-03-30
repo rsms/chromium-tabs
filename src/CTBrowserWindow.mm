@@ -62,10 +62,10 @@ namespace {
   if (widgetTrackingArea_) {
     [[self frameView] removeTrackingArea:widgetTrackingArea_];
     //widgetTrackingArea_.reset();
-	[widgetTrackingArea_ release];
+//	[widgetTrackingArea_ release];
 	widgetTrackingArea_ = nil;
   }
-  [super dealloc];
+//  [super dealloc];
 }
 
 - (void)setWindowController:(NSWindowController*)controller {
@@ -230,7 +230,7 @@ namespace {
 //                                              NSTrackingActiveAlways)
 //                                       owner:self
 //                                    userInfo:nil]);
-	[widgetTrackingArea_ release];
+//	[widgetTrackingArea_ release];
 	widgetTrackingArea_ = [[NSTrackingArea alloc] initWithRect:trackingRect
 													   options:(NSTrackingMouseEnteredAndExited |
 																NSTrackingActiveAlways) 

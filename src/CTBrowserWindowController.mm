@@ -59,7 +59,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }*/
 
 + (CTBrowserWindowController*)browserWindowController {
-  return [[[self alloc] init] autorelease];
+  return [[self alloc] init];
 }
 
 + (CTBrowserWindowController*)mainBrowserWindowController {
@@ -93,14 +93,43 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   initializing_ = YES;
 
   // Our browser
-  browser_ = [browser retain];
-  browser_->windowController_ = self;
+  browser_ = browser;
+  browser_.windowController = self;
 
   // Observe tabs
 //  tabStripObserver_ =
 //      new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
-	[browser_.tabStripModel AddObserver:self];
+//	[browser_.tabStripModel AddObserver:self];
 
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabDidSelect:) 
+												 name:CTTabSelectedNotification 
+											   object:browser_.tabStripModel];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabDidInsert:) 
+												 name:CTTabInsertedNotification 
+											   object:browser_.tabStripModel];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabDidReplace:) 
+												 name:CTTabReplacedNotification 
+											   object:browser_.tabStripModel];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabDidDetach:) 
+												 name:CTTabDetachedNotification 
+											   object:browser_.tabStripModel];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabWillClose:) 
+												 name:CTTabClosingNotification 
+											   object:browser_.tabStripModel];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(tabStripDidBecomeEmpty) 
+												 name:CTTabStripEmptyNotification
+											   object:browser_.tabStripModel];
   // Note: the below statement including [self window] implicitly loads the
   // window and thus initializes IBOutlets, needed later. If [self window] is
   // not called (i.e. code removed), substitute the loading with a call to
@@ -124,7 +153,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   // Create a toolbar controller. The browser object might return nil, in which
   // means we do not have a toolbar.
-  toolbarController_ = [[browser_ createToolbarController] retain];
+  toolbarController_ = [browser_ createToolbarController];
   if (toolbarController_) {
     [[[self window] contentView] addSubview:[toolbarController_ view]];
   }
@@ -136,7 +165,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   initializing_ = NO;
   if (!_currentMain) {
-    ct_casid(&_currentMain, self);
+//    ct_casid(&_currentMain, self);
+	  _currentMain = self;
   }
   return self;
 }
@@ -159,10 +189,11 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 -(void)dealloc {
   DLOG("[ChromiumTabs] dealloc window controller");
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+//    ct_casid(&_currentMain, nil);
+	  _currentMain = nil;
   }
   //delete tabStripObserver_;
-	[browser_.tabStripModel RemoveObserver:self];
+//	[browser_.tabStripModel RemoveObserver:self];
 
   // Close all tabs
   //[browser_ closeAllTabs]; // TODO
@@ -175,21 +206,24 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  [browser_ release];
-  [tabStripController_ release];
-  ct_casid(&toolbarController_, nil);
-  [super dealloc];
+//  [browser_ release];
+//  [tabStripController_ release];
+//  ct_casid(&toolbarController_, nil);
+	toolbarController_ = nil;
+//  [super dealloc];
 }
 
 
 -(void)finalize {
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+//    ct_casid(&_currentMain, nil);
+	  _currentMain = nil;
   }
   //NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
   //NSLog(@"%@", [NSThread callStackSymbols]);
   //delete tabStripObserver_;
-	[browser_.tabStripModel RemoveObserver:self];
+//	[browser_.tabStripModel RemoveObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
   [super finalize];
 }
 
@@ -782,7 +816,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     [[self window] orderOut:self];
     [browser_ windowDidBeginToClose];
     if (_currentMain == self) {
-      ct_casid(&_currentMain, nil);
+//      ct_casid(&_currentMain, nil);
+		_currentMain = nil;
     }
     return NO;
   }
@@ -793,7 +828,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 - (void)windowWillClose:(NSNotification *)notification {
-  [self autorelease];
+//  [self autorelease];
 }
 
 
@@ -802,7 +837,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   // NOTE: if you use custom window bounds saving/restoring, you should probably
   //       save the window bounds here.
 
-  ct_casid(&_currentMain, self);
+//  ct_casid(&_currentMain, self);
+	_currentMain = self;
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
   // about the active window state should be registering for notifications.
@@ -815,7 +851,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (void)windowDidResignMain:(NSNotification*)notification {
   if (_currentMain == self) {
-    ct_casid(&_currentMain, nil);
+//    ct_casid(&_currentMain, nil);
+	  _currentMain = nil;
   }
 
   // TODO(dmaclach): Instead of redrawing the whole window, views that care
@@ -911,71 +948,104 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 // doing things like restoring focus is not possible.
 
 // Note: this is called _before_ the view is on screen
-- (void)tabSelectedWithContents:(CTTabContents*)newContents
-               previousContents:(CTTabContents*)oldContents
-                        atIndex:(NSInteger)index
-                    userGesture:(bool)wasUserGesture {
-  assert(newContents != oldContents);
-  [self updateToolbarWithContents:newContents
-               shouldRestoreState:!!oldContents];
+- (void)tabDidSelect:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	CTTabContents *newContents = [userInfo valueForKey:CTTabNewContentsUserInfoKey];
+	CTTabContents *oldContents = [userInfo valueForKey:CTTabContentsUserInfoKey];
+	assert(newContents != oldContents);
+	[self updateToolbarWithContents:newContents
+				 shouldRestoreState:!!oldContents];
 }
 
+//- (void)tabSelectedWithContents:(CTTabContents*)newContents
+//               previousContents:(CTTabContents*)oldContents
+//                        atIndex:(NSInteger)index
+//                    userGesture:(bool)wasUserGesture {
+//  assert(newContents != oldContents);
+//  [self updateToolbarWithContents:newContents
+//               shouldRestoreState:!!oldContents];
+//}
 
-- (void)tabClosingWithContents:(CTTabContents*)contents
-                       atIndex:(NSInteger)index {
-  [contents tabWillCloseInBrowser:browser_ atIndex:index];
-  if (contents.isSelected)
-    [self updateToolbarWithContents:nil shouldRestoreState:NO];
+
+- (void)tabWillClose:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
+	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
+	[contents tabWillCloseInBrowser:browser_ atIndex:index];
+	if (contents.isSelected)
+		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
+//- (void)tabClosingWithContents:(CTTabContents*)contents
+//                       atIndex:(NSInteger)index {
+//  [contents tabWillCloseInBrowser:browser_ atIndex:index];
+//  if (contents.isSelected)
+//    [self updateToolbarWithContents:nil shouldRestoreState:NO];
+//}
 
-- (void)tabInsertedWithContents:(CTTabContents*)contents
-                      atIndex:(NSInteger)index
-                 inForeground:(bool)foreground {
-  [contents tabDidInsertIntoBrowser:browser_
-                            atIndex:index
-                       inForeground:foreground];
+- (void)tabDidInsert:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
+	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
+	BOOL isInForeground = [[userInfo valueForKey:CTTabOptionsUserInfoKey] boolValue];
+	[contents tabDidInsertIntoBrowser:browser_
+							  atIndex:index
+						 inForeground:isInForeground];
 }
 
+//- (void)tabInsertedWithContents:(CTTabContents*)contents
+//                      atIndex:(NSInteger)index
+//                 inForeground:(bool)foreground {
+//  [contents tabDidInsertIntoBrowser:browser_
+//                            atIndex:index
+//                       inForeground:foreground];
+//}
 
-- (void)tabReplacedWithContents:(CTTabContents*)contents
-                    oldContents:(CTTabContents*)oldContents
-                        atIndex:(NSInteger)index {
-  [contents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
-  if ([self selectedTabIndex] == index) {
-    [self updateToolbarWithContents:contents
-                 shouldRestoreState:!!oldContents];
-  }
+- (void)tabDidReplace:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	CTTabContents *newContents = [userInfo valueForKey:CTTabNewContentsUserInfoKey];
+	CTTabContents *oldContents = [userInfo valueForKey:CTTabContentsUserInfoKey];
+	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
+	[newContents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
+	if ([self selectedTabIndex] == index) {
+		[self updateToolbarWithContents:newContents
+					 shouldRestoreState:!!oldContents];
+	}
 }
 
+//- (void)tabReplacedWithContents:(CTTabContents*)contents
+//                    oldContents:(CTTabContents*)oldContents
+//                        atIndex:(NSInteger)index {
+//  [contents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
+//  if ([self selectedTabIndex] == index) {
+//    [self updateToolbarWithContents:contents
+//                 shouldRestoreState:!!oldContents];
+//  }
+//}
 
-- (void)tabDetachedWithContents:(CTTabContents*)contents
-                        atIndex:(NSInteger)index {
-  [contents tabDidDetachFromBrowser:browser_ atIndex:index];
-  if (contents.isSelected)
-    [self updateToolbarWithContents:nil shouldRestoreState:NO];
+- (void)tabDidDetach:(NSNotification *)notification {
+	NSDictionary *userInfo = notification.userInfo;
+	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
+	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
+	[contents tabDidDetachFromBrowser:browser_ atIndex:index];
+	if (contents.isSelected)
+		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
-/*
-- (void)tabMovedWithContents:(CTTabContents*)contents
-                    fromIndex:(NSInteger)from
-                      toIndex:(NSInteger)to {
-  DLOG_TRACE();
-}
-- (void)tabChangedWithContents:(CTTabContents*)contents
-                       atIndex:(NSInteger)index
-                    changeType:(CTTabChangeType)change {
-  DLOG_TRACE();
-}
-- (void)tabMiniStateChangedWithContents:(CTTabContents*)contents
-                                atIndex:(NSInteger)index {
-  DLOG_TRACE();
-}
-//*/
+//- (void)tabDetachedWithContents:(CTTabContents*)contents
+//                        atIndex:(NSInteger)index {
+//  [contents tabDidDetachFromBrowser:browser_ atIndex:index];
+//  if (contents.isSelected)
+//    [self updateToolbarWithContents:nil shouldRestoreState:NO];
+//}
 
-- (void)tabStripEmpty {
-  [self close];
+- (void)tabStripDidBecomeEmpty {
+	[self close];
 }
+//
+//- (void)tabStripEmpty {
+//  [self close];
+//}
 
 
 @end

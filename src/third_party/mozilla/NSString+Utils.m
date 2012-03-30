@@ -60,10 +60,10 @@
   NSString* uuidString = nil;
   CFUUIDRef newUUID = CFUUIDCreate(kCFAllocatorDefault);
   if (newUUID) {
-    uuidString = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, newUUID);
+    uuidString = (__bridge NSString *)CFUUIDCreateString(kCFAllocatorDefault, newUUID);
     CFRelease(newUUID);
   }
-  return [uuidString autorelease];
+  return uuidString;
 }
 
 - (BOOL)isEqualToStringIgnoringCase:(NSString*)inString
@@ -149,7 +149,7 @@
   {
     NSMutableString *mutableCopy = [self mutableCopy];
     [mutableCopy truncateTo:maxCharacters at:truncationType];
-    return [mutableCopy autorelease];
+    return mutableCopy;
   }
 
   return self;
@@ -162,7 +162,7 @@
   {
     NSMutableString *mutableCopy = [self mutableCopy];
     [mutableCopy truncateToWidth:inWidth at:truncationType withAttributes:attributes];
-    return [mutableCopy autorelease];
+    return mutableCopy;
   }
 
   return self;
@@ -312,7 +312,7 @@
   // Perform the final cut (unless this was already a perfect match).
   if (width != maxWidth)
     [self truncateTo:hi at:truncationType];
-  [backup release];
+//  [backup release];
 }
 
 @end
@@ -356,11 +356,11 @@
 // Excluded character list comes from RFC2396 and by examining Safari's behaviour
 - (NSString*)unescapedURI
 {
-  NSString *unescapedURI = (NSString*)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-                                                                            (CFStringRef)self,
+  NSString *unescapedURI = (__bridge NSString*)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+                                                                            (__bridge CFStringRef)self,
                                                                             CFSTR(" \"\';/?:@&=+$,#"),
                                                                             kCFStringEncodingUTF8);
-  return unescapedURI ? [unescapedURI autorelease] : self;
+  return unescapedURI ? unescapedURI : self;
 }
 
 @end

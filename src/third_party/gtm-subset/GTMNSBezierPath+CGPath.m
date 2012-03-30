@@ -19,7 +19,7 @@
 //
 #import "GTMNSBezierPath+CGPath.h"
 #import "GTMDefines.h"
-#import "GTMGarbageCollection.h"
+//#import "GTMGarbageCollection.h"
 
 @implementation NSBezierPath (GTMBezierPathCGPathAdditions)
 
@@ -64,7 +64,7 @@
         break;  // COV_NF_END
     };
   }
-  return (CGPathRef)GTMCFAutorelease(thePath);
+  return (CGPathRef)thePath;
 }
 
 @end

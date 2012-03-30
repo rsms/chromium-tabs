@@ -9,10 +9,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import <vector>
+//#import <vector>
 
 #import "CTPageTransition.h"
-#import "observer_list.h"
+//#import "observer_list.h"
 
 #import "CTTabStripModelDelegate.h"
 #import "CTTabStripModelProtocol.h"
@@ -20,78 +20,100 @@
 @class CTTabStripModelOrderController;
 @class CTTabContents;
 
+extern NSString* const CTTabInsertedNotification;
+extern NSString* const CTTabClosingNotification;
+extern NSString* const CTTabDetachedNotification;
+extern NSString* const CTTabDeselectedNotification;
+extern NSString* const CTTabSelectedNotification;
+extern NSString* const CTTabMovedNotification;
+extern NSString* const CTTabChangedNotification;
+extern NSString* const CTTabReplacedNotification;
+extern NSString* const CTTabPinnedStateChangedNotification;
+extern NSString* const CTTabBlockedStateChangedNotification;
+extern NSString* const CTTabMiniStateChangedNotification;
+extern NSString* const CTTabStripEmptyNotification;
+extern NSString* const CTTabStripModelDeletedNotification;
+
+extern NSString* const CTTabContentsUserInfoKey;
+extern NSString* const CTTabNewContentsUserInfoKey;
+extern NSString* const CTTabIndexUserInfoKey;
+extern NSString* const CTTabToIndexUserInfoKey;
+extern NSString* const CTTabForegroundUserInfoKey;
+extern NSString* const CTTabOptionsUserInfoKey;
+
 extern const int kNoTab;
 
-typedef std::vector<CTTabContents*> TabContentsDataVector;
-typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers;
+//typedef std::vector<CTTabContents*> TabContentsDataVector;
+//typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers;
+// Policy for how new tabs are inserted.
+typedef enum {
+	// Newly created tabs are created after the selection. This is the default.
+	INSERT_AFTER,
+	
+	// Newly created tabs are inserted before the selection.
+	INSERT_BEFORE,
+} InsertionPolicy;
+
+// Used to specify what should happen when the tab is closed.
+typedef enum {
+	CLOSE_NONE                     = 0,
+	
+	// Indicates the tab was closed by the user. If true,
+	// CTTabContents::set_closed_by_user_gesture(true) is invoked.
+	CLOSE_USER_GESTURE             = 1 << 0,
+	
+	// If true the history is recorded so that the tab can be reopened later.
+	// You almost always want to set this.
+	CLOSE_CREATE_HISTORICAL_TAB    = 1 << 1,
+} CloseTypes;
+
+// Constants used when adding tabs.
+typedef enum {
+	// Used to indicate nothing special should happen to the newly inserted
+	// tab.
+	ADD_NONE          = 0,
+	
+	// The tab should be selected.
+	ADD_SELECTED      = 1 << 0,
+	
+	// The tab should be pinned.
+	ADD_PINNED        = 1 << 1,
+	
+	// If not set the insertion index of the CTTabContents is left up to the Order
+	// Controller associated, so the final insertion index may differ from the
+	// specified index. Otherwise the index supplied is used.
+	ADD_FORCE_INDEX   = 1 << 2,
+	
+	// If set the newly inserted tab inherits the group of the currently
+	// selected tab. If not set the tab may still inherit the group under
+	// certain situations.
+	ADD_INHERIT_GROUP = 1 << 3,
+	
+	// If set the newly inserted tab's opener is set to the currently selected
+	// tab. If not set the tab may still inherit the group/opener under certain
+	// situations.
+	// NOTE: this is ignored if ADD_INHERIT_GROUP is set.
+	ADD_INHERIT_OPENER = 1 << 4,
+} AddTabTypes;
+
+// Context menu functions.
+typedef enum {
+	CommandFirst = 0,
+	CommandNewTab,
+	CommandReload,
+	CommandDuplicate,
+	CommandCloseTab,
+	CommandCloseOtherTabs,
+	CommandCloseTabsToRight,
+	CommandRestoreTab,
+	CommandTogglePinned,
+	CommandBookmarkAllTabs,
+	CommandUseVerticalTabs,
+	CommandLast,
+} ContextMenuCommand;
 
 @interface CTTabStripModel : NSObject {
-	// Policy for how new tabs are inserted.
-	enum InsertionPolicy {
-		// Newly created tabs are created after the selection. This is the default.
-		INSERT_AFTER,
-		
-		// Newly created tabs are inserted before the selection.
-		INSERT_BEFORE,
-	};
-	
-	// Used to specify what should happen when the tab is closed.
-	enum CloseTypes {
-		CLOSE_NONE                     = 0,
-		
-		// Indicates the tab was closed by the user. If true,
-		// CTTabContents::set_closed_by_user_gesture(true) is invoked.
-		CLOSE_USER_GESTURE             = 1 << 0,
-		
-		// If true the history is recorded so that the tab can be reopened later.
-		// You almost always want to set this.
-		CLOSE_CREATE_HISTORICAL_TAB    = 1 << 1,
-	};
-	
-	// Constants used when adding tabs.
-	enum AddTabTypes {
-		// Used to indicate nothing special should happen to the newly inserted
-		// tab.
-		ADD_NONE          = 0,
-		
-		// The tab should be selected.
-		ADD_SELECTED      = 1 << 0,
-		
-		// The tab should be pinned.
-		ADD_PINNED        = 1 << 1,
-		
-		// If not set the insertion index of the CTTabContents is left up to the Order
-		// Controller associated, so the final insertion index may differ from the
-		// specified index. Otherwise the index supplied is used.
-		ADD_FORCE_INDEX   = 1 << 2,
-		
-		// If set the newly inserted tab inherits the group of the currently
-		// selected tab. If not set the tab may still inherit the group under
-		// certain situations.
-		ADD_INHERIT_GROUP = 1 << 3,
-		
-		// If set the newly inserted tab's opener is set to the currently selected
-		// tab. If not set the tab may still inherit the group/opener under certain
-		// situations.
-		// NOTE: this is ignored if ADD_INHERIT_GROUP is set.
-		ADD_INHERIT_OPENER = 1 << 4,
-	};
-	
-	// Context menu functions.
-	enum ContextMenuCommand {
-		CommandFirst = 0,
-		CommandNewTab,
-		CommandReload,
-		CommandDuplicate,
-		CommandCloseTab,
-		CommandCloseOtherTabs,
-		CommandCloseTabsToRight,
-		CommandRestoreTab,
-		CommandTogglePinned,
-		CommandBookmarkAllTabs,
-		CommandUseVerticalTabs,
-		CommandLast
-	};
+
 @private
 	// Our delegate.
     NSObject<CTTabStripModelDelegate> *delegate_;
@@ -113,7 +135,7 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 	CTTabStripModelOrderController *order_controller_;
 	
 	// Our observers.
-	TabStripModelObservers observers_;
+//	TabStripModelObservers observers_;
 	
 	// A scoped container for notification registries.
 	//NotificationRegistrar registrar_;	
@@ -132,12 +154,11 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 @property (readonly) CTTabStripModelOrderController* order_controller;
 
 - (id)initWithDelegate:(NSObject<CTTabStripModelDelegate> *)delegate;
-- (void)AddObserver:(NSObject <CTTabStripModelObserver> *)observer;
-- (void)RemoveObserver:(NSObject <CTTabStripModelObserver> *)observer;
+//- (void)AddObserver:(NSObject <CTTabStripModelObserver> *)observer;
+//- (void)RemoveObserver:(NSObject <CTTabStripModelObserver> *)observer;
 
 // Retrieve the number of CTTabContentses/emptiness of the TabStripModel.
-- (int)count;
-- (bool)empty;
+- (NSUInteger)count;
 
 // Returns true if there are any non-phantom tabs. When there are no
 // non-phantom tabs the delegate is notified by way of TabStripEmpty and the
@@ -150,14 +171,14 @@ typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers
 
 // Returns true if |observer| is in the list of observers. This is intended
 // for debugging.
-- (bool)HasObserver:(NSObject *)observer;
+//- (bool)HasObserver:(NSObject *)observer;
 
 #pragma mark -
 #pragma mark Basic API
 // Basic API /////////////////////////////////////////////////////////////////
 
 // Determines if the specified index is contained within the TabStripModel.
-- (bool)ContainsIndex:(int)index;
+- (BOOL)containsIndex:(NSInteger)index;
 
 // Adds the specified CTTabContents in the default location. Tabs opened in the
 // foreground inherit the group of the previously selected tab.

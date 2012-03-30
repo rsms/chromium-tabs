@@ -19,7 +19,7 @@
 
 @interface CTTabContentsController : NSViewController {
  @private
-  __weak CTTabContents* contents_;  // weak
+  CTTabContents* contents_;  // weak
 
   IBOutlet NSSplitView* contentsContainer_;
 }

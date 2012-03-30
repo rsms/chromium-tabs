@@ -4,7 +4,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "scoped_nsobject.h"
+//#import "scoped_nsobject.h"
 #import "hover_button.h"
 
 // The standard close button for our Mac UI which is the "x" that changes to a
@@ -13,10 +13,10 @@
 @interface HoverCloseButton : HoverButton {
  @private
   // Bezier path for drawing the 'x' within the button.
-  scoped_nsobject<NSBezierPath> xPath_;
+  NSBezierPath* xPath_;
 
   // Bezier path for drawing the hover state circle behind the 'x'.
-  scoped_nsobject<NSBezierPath> circlePath_;
+  NSBezierPath* circlePath_;
 }
 
 // Sets up the button's tracking areas and accessibility info when instantiated

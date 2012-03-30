@@ -25,7 +25,7 @@
   URLDropTargetHandler *dropHandler_;
 
   // Weak; the following come from the nib.
-  NewTabButton* newTabButton_;
+  NewTabButton* addTabButton_;
 
   // Whether the drop-indicator arrow is shown, and if it is, the coordinate of
   // its tip.
@@ -33,7 +33,7 @@
   NSPoint dropArrowPosition_;
 }
 
-@property(assign, nonatomic) IBOutlet NewTabButton* newTabButton;
+@property(retain, nonatomic) IBOutlet NewTabButton* addTabButton;
 @property(assign, nonatomic) BOOL dropArrowShown;
 @property(assign, nonatomic) NSPoint dropArrowPosition;
 
