@@ -9,13 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
 
-#import <map>
+//#import <map>
 
 //#import "scoped_nsobject.h"
 #import "background_gradient_view.h"
 #import "hover_close_button.h"
-
-namespace tabs {
 
 // Nomenclature:
 // Tabs _glow_ under two different circumstances, when they are _hovered_ (by
@@ -26,14 +24,12 @@ namespace tabs {
 // This is more complicated than a simple on/off since we want to allow the
 // alert glow to go through a full rise-hold-fall cycle to avoid flickering (or
 // always holding).
-enum AlertState {
+typedef enum {
   kAlertNone = 0,  // Obj-C initializes to this.
   kAlertRising,
   kAlertHolding,
   kAlertFalling
-};
-
-}  // namespace tabs
+} AlertState;
 
 @class CTTabController, CTTabWindowController;
 
@@ -53,7 +49,7 @@ enum AlertState {
   NSTrackingArea* closeTrackingArea_;
 
   BOOL isMouseInside_;  // Is the mouse hovering over?
-  tabs::AlertState alertState_;
+  AlertState alertState_;
 
   CGFloat hoverAlpha_;  // How strong the hover glow is.
   NSTimeInterval hoverHoldEndTime_;  // When the hover glow will begin dimming.
@@ -85,12 +81,6 @@ enum AlertState {
   CTTabWindowController* draggedController_;  // weak. Controller being dragged.
   NSWindow* dragWindow_;  // weak. The window being dragged
   NSWindow* dragOverlay_;  // weak. The overlay being dragged
-  // Cache workspace IDs per-drag because computing them on 10.5 with
-  // CGWindowListCreateDescriptionFromArray is expensive.
-  // resetDragControllers clears this cache.
-  //
-  // TODO(davidben): When 10.5 becomes unsupported, remove this.
-  std::map<CGWindowID, int> workspaceIDCache_;
 
   CTTabWindowController* targetController_;  // weak. Controller being targeted
   NSCellStateValue state_;

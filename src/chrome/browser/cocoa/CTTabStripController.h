@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 //#import "scoped_nsobject.h"
-#import "scoped_ptr.h"
+//#import "scoped_ptr.h"
 #import "CTTabControllerTarget.h"
 #import "URLDropTarget.h"
 //#import "GTMWindowSheetController.h"

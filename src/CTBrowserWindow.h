@@ -8,18 +8,18 @@
 
 // Offset from the top of the window frame to the top of the window controls
 // (zoom, close, miniaturize) for a window with a tabstrip.
-const NSInteger CTWindowButtonsWithTabStripOffsetFromTop = 4;
+const NSInteger CTWindowButtonsWithTabStripOffsetFromTop;
 
 // Offset from the top of the window frame to the top of the window controls
 // (zoom, close, miniaturize) for a window without a tabstrip.
-const NSInteger CTWindowButtonsWithoutTabStripOffsetFromTop = 4;
+const NSInteger CTWindowButtonsWithoutTabStripOffsetFromTop;
 
 // Offset from the left of the window frame to the top of the window controls
 // (zoom, close, miniaturize).
-const NSInteger CTWindowButtonsOffsetFromLeft = 8;
+const NSInteger CTWindowButtonsOffsetFromLeft;
 
 // Offset between the window controls (zoom, close, miniaturize).
-const NSInteger CTWindowButtonsInterButtonSpacing = 7;
+const NSInteger CTWindowButtonsInterButtonSpacing;
 
 // Cocoa class representing a Chrome browser window.
 // We need to override NSWindow with our own class since we need access to all

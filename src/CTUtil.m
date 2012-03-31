@@ -3,6 +3,11 @@
 NSBundle *CTFrameworkBundle = nil;
 NSBundle *CTHostBundle = nil;
 
+NSString *L10n(NSString *key) {
+	assert(CTFrameworkBundle);
+	return [CTFrameworkBundle localizedStringForKey:key value:nil table:nil];
+}
+
 @implementation CTUtil
 
 + (void)load {

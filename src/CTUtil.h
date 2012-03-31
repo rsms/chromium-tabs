@@ -5,10 +5,7 @@
 extern NSBundle *CTFrameworkBundle;
 extern NSBundle *CTHostBundle; // main bundle -- the hosts' bundle
 
-inline NSString *L10n(NSString *key) {
-  assert(CTFrameworkBundle);
-  return [CTFrameworkBundle localizedStringForKey:key value:nil table:nil];
-}
+inline NSString *L10n(NSString *key);
 
 @interface CTUtil : NSObject {
 }
