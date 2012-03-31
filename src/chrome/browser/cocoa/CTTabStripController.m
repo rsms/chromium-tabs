@@ -13,7 +13,7 @@
 //#import <limits>
 //#import <string>
 
-#import "new_tab_button.h"
+#import "NewTabButton.h"
 #import "CTTabStripView.h"
 #import "CTTabContentsController.h"
 #import "CTTabController.h"
