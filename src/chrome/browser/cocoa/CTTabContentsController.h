@@ -18,10 +18,10 @@
 // |-ensureContentsVisible| to display the render widget host view.
 
 @interface CTTabContentsController : NSViewController {
- @private
-  CTTabContents* contents_;  // weak
-
-  IBOutlet NSSplitView* contentsContainer_;
+@private
+	CTTabContents* contents_;  // weak
+	
+	IBOutlet NSSplitView* contentsContainer_;
 }
 
 // Create the contents of a tab represented by |contents| and loaded from the

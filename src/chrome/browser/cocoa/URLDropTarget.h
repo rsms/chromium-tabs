@@ -2,13 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#ifndef CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_
-#define CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_
 #pragma once
 
 #import <Cocoa/Cocoa.h>
-
-
 #import <Foundation/Foundation.h>
 
 // Protocol for the controller which handles the actual drop data/drop updates.
@@ -47,11 +43,7 @@
 
 // Object which coordinates the dropping of URLs on a given view, sending data
 // and updates to a controller.
-@interface URLDropTargetHandler : NSObject {
- @private
-  NSView<URLDropTarget>* view_;  // weak
-}
-
+@interface URLDropTargetHandler : NSObject
 // Initialize the given view, which must implement the |URLDropTarget| (below),
 // to accept drops of URLs.
 - (id)initWithView:(NSView<URLDropTarget>*)view;
@@ -65,5 +57,3 @@
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender;
 
 @end  // @interface URLDropTargetHandler
-
-#endif  // CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_

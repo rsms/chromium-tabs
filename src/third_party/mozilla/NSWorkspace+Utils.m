@@ -42,105 +42,94 @@
 
 @implementation NSWorkspace(CaminoDefaultBrowserAdditions)
 
-- (NSArray*)installedBrowserIdentifiers
-{
-  NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https"));
-
-  // add the default if it isn't there
-  NSString* defaultHandler = [self defaultBrowserIdentifier];
-  if (defaultHandler && ([apps indexOfObject:defaultHandler] == NSNotFound))
-    apps = [apps arrayByAddingObject:defaultHandler];
-
-  return apps;
+- (NSArray*)installedBrowserIdentifiers {
+	NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("https"));
+	
+	// add the default if it isn't there
+	NSString* defaultHandler = [self defaultBrowserIdentifier];
+	if (defaultHandler && ([apps indexOfObject:defaultHandler] == NSNotFound))
+		apps = [apps arrayByAddingObject:defaultHandler];
+	
+	return apps;
 }
 
-- (NSArray*)installedFeedViewerIdentifiers
-{
-  NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed"));
-
-  // add the default if it isn't there
-  NSString* defaultHandler = [self defaultFeedViewerIdentifier];
-  if (defaultHandler && ([apps indexOfObject:defaultHandler] == NSNotFound))
-    apps = [apps arrayByAddingObject:defaultHandler];
-
-  return apps;
+- (NSArray*)installedFeedViewerIdentifiers {
+	NSArray* apps = (__bridge NSArray*)LSCopyAllHandlersForURLScheme(CFSTR("feed"));
+	
+	// add the default if it isn't there
+	NSString* defaultHandler = [self defaultFeedViewerIdentifier];
+	if (defaultHandler && ([apps indexOfObject:defaultHandler] == NSNotFound))
+		apps = [apps arrayByAddingObject:defaultHandler];
+	
+	return apps;
 }
 
-- (NSString*)defaultBrowserIdentifier
-{
-  NSString* defaultBundleId = (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http"));
-  // Sometimes LaunchServices likes to pretend there's no default browser.
-  // If that happens, we'll assume it's probably Safari.
-  if (!defaultBundleId)
-    defaultBundleId = @"com.apple.safari";
-  return defaultBundleId;
+- (NSString*)defaultBrowserIdentifier {
+	NSString* defaultBundleId = (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("http"));
+	// Sometimes LaunchServices likes to pretend there's no default browser.
+	// If that happens, we'll assume it's probably Safari.
+	if (!defaultBundleId)
+		defaultBundleId = @"com.apple.safari";
+	return defaultBundleId;
 }
 
-- (NSString*)defaultFeedViewerIdentifier
-{
-  return (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed"));
+- (NSString*)defaultFeedViewerIdentifier {
+	return (__bridge NSString*)LSCopyDefaultHandlerForURLScheme(CFSTR("feed"));
 }
 
-- (NSURL*)defaultBrowserURL
-{
-  NSString* defaultBundleId = [self defaultBrowserIdentifier];
-  if (defaultBundleId)
-    return [self urlOfApplicationWithIdentifier:defaultBundleId];
-  return nil;
+- (NSURL*)defaultBrowserURL {
+	NSString* defaultBundleId = [self defaultBrowserIdentifier];
+	if (defaultBundleId)
+		return [self urlOfApplicationWithIdentifier:defaultBundleId];
+	return nil;
 }
 
-- (NSURL*)defaultFeedViewerURL
-{
-  NSString* defaultBundleId = [self defaultFeedViewerIdentifier];
-  if (defaultBundleId)
-    return [self urlOfApplicationWithIdentifier:defaultBundleId];
-  return nil;
+- (NSURL*)defaultFeedViewerURL {
+	NSString* defaultBundleId = [self defaultFeedViewerIdentifier];
+	if (defaultBundleId)
+		return [self urlOfApplicationWithIdentifier:defaultBundleId];
+	return nil;
 }
 
-- (void)setDefaultBrowserWithIdentifier:(NSString*)bundleID
-{
-  LSSetDefaultHandlerForURLScheme(CFSTR("http"), (__bridge CFStringRef)bundleID);
-  LSSetDefaultHandlerForURLScheme(CFSTR("https"), (__bridge CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (__bridge CFStringRef)bundleID);
-  LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (__bridge CFStringRef)bundleID);
+- (void)setDefaultBrowserWithIdentifier:(NSString*)bundleID {
+	LSSetDefaultHandlerForURLScheme(CFSTR("http"), (__bridge CFStringRef)bundleID);
+	LSSetDefaultHandlerForURLScheme(CFSTR("https"), (__bridge CFStringRef)bundleID);
+	LSSetDefaultRoleHandlerForContentType(kUTTypeHTML, kLSRolesViewer, (__bridge CFStringRef)bundleID);
+	LSSetDefaultRoleHandlerForContentType(kUTTypeURL, kLSRolesViewer, (__bridge CFStringRef)bundleID);
 }
 
-- (void)setDefaultFeedViewerWithIdentifier:(NSString*)bundleID
-{
-  LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (__bridge CFStringRef)bundleID);
+- (void)setDefaultFeedViewerWithIdentifier:(NSString*)bundleID {
+	LSSetDefaultHandlerForURLScheme(CFSTR("feed"), (__bridge CFStringRef)bundleID);
 }
 
-- (NSURL*)urlOfApplicationWithIdentifier:(NSString*)bundleID
-{
-  if (!bundleID)
-    return nil;
-  CFURLRef appURL = nil;
-  if (LSFindApplicationForInfo(kLSUnknownCreator, (__bridge CFStringRef)bundleID, NULL, NULL, &appURL) == noErr)
-    return (__bridge_transfer NSURL*)appURL;
-
-  return nil;
+- (NSURL*)urlOfApplicationWithIdentifier:(NSString*)bundleID {
+	if (!bundleID)
+		return nil;
+	CFURLRef appURL = nil;
+	if (LSFindApplicationForInfo(kLSUnknownCreator, (__bridge CFStringRef)bundleID, NULL, NULL, &appURL) == noErr)
+		return (__bridge_transfer NSURL*)appURL;
+	
+	return nil;
 }
 
-- (NSString*)identifierForBundle:(NSURL*)inBundleURL
-{
-  if (!inBundleURL) return nil;
-
-  NSBundle* tmpBundle = [NSBundle bundleWithPath:[[inBundleURL path] stringByStandardizingPath]];
-  if (tmpBundle)
-  {
-    NSString* tmpBundleID = [tmpBundle bundleIdentifier];
-    if (tmpBundleID && ([tmpBundleID length] > 0)) {
-      return tmpBundleID;
-    }
-  }
-  return nil;
+- (NSString*)identifierForBundle:(NSURL*)inBundleURL {
+	if (!inBundleURL) return nil;
+	
+	NSBundle* tmpBundle = [NSBundle bundleWithPath:[[inBundleURL path] stringByStandardizingPath]];
+	if (tmpBundle)
+	{
+		NSString* tmpBundleID = [tmpBundle bundleIdentifier];
+		if (tmpBundleID && ([tmpBundleID length] > 0)) {
+			return tmpBundleID;
+		}
+	}
+	return nil;
 }
 
-- (NSString*)displayNameForFile:(NSURL*)inFileURL
-{
-  CFStringRef name;
-  LSCopyDisplayNameForURL((__bridge CFURLRef)inFileURL, &name);
-  return (__bridge_transfer NSString*)name;
+- (NSString*)displayNameForFile:(NSURL*)inFileURL {
+	CFStringRef name;
+	LSCopyDisplayNameForURL((__bridge CFURLRef)inFileURL, &name);
+	return (__bridge_transfer NSString*)name;
 }
 
 //
@@ -150,10 +139,9 @@
 // /System/Library/CoreServices/SystemVersion.plist
 // (as recommended by Apple).
 //
-+ (NSString*)osVersionString
-{
-  NSDictionary* versionInfo = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-  return [versionInfo objectForKey:@"ProductVersion"];
++ (NSString*)osVersionString {
+	NSDictionary* versionInfo = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
+	return [versionInfo objectForKey:@"ProductVersion"];
 }
 
 //
@@ -162,13 +150,12 @@
 // Returns the host's OS version as returned by the 'sysv' gestalt selector,
 // 10.x.y = 0x000010xy
 //
-+ (SInt32)systemVersion
-{
-  // Note: SInt32 is retardedly defined as "int" on 64-bit systems.
-  static SInt32 sSystemVersion = 0;
-  if (!sSystemVersion)
-    Gestalt(gestaltSystemVersion, (SInt32*)&sSystemVersion);
-  return sSystemVersion;
++ (SInt32)systemVersion {
+	// Note: SInt32 is retardedly defined as "int" on 64-bit systems.
+	static SInt32 sSystemVersion = 0;
+	if (!sSystemVersion)
+		Gestalt(gestaltSystemVersion, (SInt32*)&sSystemVersion);
+	return sSystemVersion;
 }
 
 //
@@ -176,12 +163,11 @@
 //
 // returns YES if we're on 10.5 or better
 //
-+ (BOOL)isLeopardOrHigher
-{
++ (BOOL)isLeopardOrHigher {
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4
-  return YES;
+	return YES;
 #else
-  return [self systemVersion] >= 0x1050;
+	return [self systemVersion] >= 0x1050;
 #endif
 }
 

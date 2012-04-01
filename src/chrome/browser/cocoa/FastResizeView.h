@@ -14,11 +14,7 @@
 // size is not changed and the subview is clipped to fit, if necessary.  Fast
 // resize mode is useful when animating a view that normally takes a significant
 // amount of time to relayout and redraw when its size is changed.
-@interface FastResizeView : NSView {
- @private
-  BOOL fastResizeMode_;
-}
-
+@interface FastResizeView : NSView
 // Turns fast resizing mode on or off, which determines how this view resizes
 // its subviews.  Turning fast resizing mode off has the effect of immediately
 // resizing subviews to fit; callers do not need to explictly call |setFrame:|

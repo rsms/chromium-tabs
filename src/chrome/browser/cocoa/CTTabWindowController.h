@@ -32,27 +32,8 @@
 @class CTTabStripView;
 @class CTTabView;
 
-@interface CTTabWindowController : NSWindowController<NSWindowDelegate> {
- @private
-  IBOutlet FastResizeView* tabContentArea_;
-  // TODO(pinkerton): Figure out a better way to initialize one or the other
-  // w/out needing both to be in the nib.
-  IBOutlet CTTabStripView* topTabStripView_;
-  IBOutlet CTTabStripView* sideTabStripView_;
-  NSWindow* overlayWindow_;  // Used during dragging for window opacity tricks
-  NSView* cachedContentView_;  // Used during dragging for identifying which
-                               // view is the proper content area in the overlay
-                               // (weak)
-  //scoped_nsobject<NSMutableSet> lockedTabs_;
-  NSMutableSet *lockedTabs_;
-  BOOL closeDeferred_;  // If YES, call performClose: in removeOverlay:.
-  // Difference between height of window content area and height of the
-  // |tabContentArea_|. Calculated when the window is loaded from the nib and
-  // cached in order to restore the delta when switching tab modes.
-  CGFloat contentAreaHeightDelta_;
-  
-  BOOL didShowNewTabButtonBeforeTemporalAction_;
-}
+@interface CTTabWindowController : NSWindowController<NSWindowDelegate>
+
 @property(readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;
 @property(assign, nonatomic) BOOL didShowNewTabButtonBeforeTemporalAction;

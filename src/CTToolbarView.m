@@ -5,7 +5,11 @@
 #import "CTToolbarView.h"
 #import "NSWindow+CTThemed.h"
 
-@implementation CTToolbarView
+@implementation CTToolbarView {
+	// The opacity of the divider line (at the bottom of the toolbar); used when
+	// the detached bookmark bar is morphing to the normal bar and vice versa.
+	CGFloat dividerOpacity_;
+}
 
 @synthesize dividerOpacity = dividerOpacity_;
 

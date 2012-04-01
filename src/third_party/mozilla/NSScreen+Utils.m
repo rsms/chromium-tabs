@@ -41,19 +41,18 @@
 
 @implementation NSScreen (CHScreenAdditions)
 
-+ (NSScreen*)screenForPoint:(NSPoint)point
-{
-  NSArray* screens = [NSScreen screens];
-  NSEnumerator* screenEnum = [screens objectEnumerator];
-  NSScreen* screen;
-  
-  while ( (screen = [screenEnum nextObject]) ) {
-    NSRect frame = [screen frame];
-    if (NSPointInRect(point, frame))
-      break;
-  }
-  
-  return screen;
++ (NSScreen*)screenForPoint:(NSPoint)point {
+	NSArray* screens = [NSScreen screens];
+	NSEnumerator* screenEnum = [screens objectEnumerator];
+	NSScreen* screen;
+	
+	while ( (screen = [screenEnum nextObject]) ) {
+		NSRect frame = [screen frame];
+		if (NSPointInRect(point, frame))
+			break;
+	}
+	
+	return screen;
 }
 
 @end

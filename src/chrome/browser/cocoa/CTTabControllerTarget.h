@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#ifndef CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_
-#define CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_
 #pragma once
 
 @class CTTabController;
@@ -21,5 +19,3 @@
 //- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
 //           forController:(CTTabController*)controller;
 @end
-
-#endif  // CHROME_BROWSER_COCOA_TAB_CONTROLLER_TARGET_H_

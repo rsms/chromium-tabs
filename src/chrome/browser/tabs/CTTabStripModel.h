@@ -15,7 +15,6 @@
 //#import "observer_list.h"
 
 #import "CTTabStripModelDelegate.h"
-#import "CTTabStripModelProtocol.h"
 
 @class CTTabStripModelOrderController;
 @class CTTabContents;
@@ -96,6 +95,28 @@ typedef enum {
 	ADD_INHERIT_OPENER = 1 << 4,
 } AddTabTypes;
 
+// Enumeration of the possible values supplied to TabChangedAt.
+typedef enum {
+	// Only the loading state changed.
+	CTTabChangeTypeLoadingOnly,
+	
+	// Only the title changed and page isn't loading.
+	CTTabChangeTypeTitleNotLoading,
+	
+	// Change not characterized by CTTabChangeTypeLoadingOnly or CTTabChangeTypeTitleNotLoading.
+	CTTabChangeTypeAll
+} CTTabChangeType;
+
+// Enum used by ReplaceTabContentsAt.
+typedef enum {
+	// The replace is the result of the tab being made phantom.
+	REPLACE_MADE_PHANTOM,
+	
+	// The replace is the result of the match preview being committed.
+	REPLACE_MATCH_PREVIEW
+} CTTabReplaceType;
+
+
 // Context menu functions.
 typedef enum {
 	CommandFirst = 0,
@@ -112,34 +133,7 @@ typedef enum {
 	CommandLast,
 } ContextMenuCommand;
 
-@interface CTTabStripModel : NSObject {
-
-@private
-	// Our delegate.
-    NSObject<CTTabStripModelDelegate> *delegate_;
-	
-	// The CTTabContents data currently hosted within this TabStripModel.
-	NSMutableArray *contents_data_;
-	
-	// The index of the CTTabContents in |contents_| that is currently selected.
-	int selected_index_;
-	
-	// A profile associated with this TabStripModel, used when creating new Tabs.
-	//Profile* profile_;
-	
-	// True if all tabs are currently being closed via CloseAllTabs.
-	bool closing_all_;
-	
-	// An object that determines where new Tabs should be inserted and where
-	// selection should move when a Tab is closed.
-	CTTabStripModelOrderController *order_controller_;
-	
-	// Our observers.
-//	TabStripModelObservers observers_;
-	
-	// A scoped container for notification registries.
-	//NotificationRegistrar registrar_;	
-}
+@interface CTTabStripModel : NSObject
 
 // The CTTabStripModelDelegate associated with this TabStripModel.
 @property (readonly) NSObject<CTTabStripModelDelegate> *delegate;

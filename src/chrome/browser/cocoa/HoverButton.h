@@ -4,8 +4,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-//#import "scoped_nsobject.h"
-
 typedef enum {
     kHoverStateNone = 0,
     kHoverStateMouseOver = 1,
@@ -18,10 +16,6 @@ typedef enum {
 	// Enumeration of the hover states that the close button can be in at any one
 	// time. The button cannot be in more than one hover state at a time.
 	HoverState hoverState_;
-	
-	@private
-	// Tracking area for button mouseover states.
-	NSTrackingArea* trackingArea_;
 }
 
 // Enables or disables the |NSTrackingRect|s for the button.

@@ -7,8 +7,7 @@ extern NSBundle *CTHostBundle; // main bundle -- the hosts' bundle
 
 inline NSString *L10n(NSString *key);
 
-@interface CTUtil : NSObject {
-}
+@interface CTUtil : NSObject
 
 +(NSBundle *)bundleForResource:(NSString *)name ofType:(NSString *)ext;
 +(NSBundle *)bundleForResource:(NSString *)name; // ofType:nil

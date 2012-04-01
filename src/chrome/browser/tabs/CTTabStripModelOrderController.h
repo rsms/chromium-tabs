@@ -17,12 +17,8 @@
 //  An object that allows different types of ordering and reselection to be
 //  heuristics plugged into a TabStripModel.
 //
-@interface CTTabStripModelOrderController : NSObject /*<CTTabStripModelObserver>*/ {
-@private
-	CTTabStripModel *tabStripModel_;
-	
-	InsertionPolicy insertion_policy_;
-}
+@interface CTTabStripModelOrderController : NSObject
+
 // The insertion policy. Default is INSERT_AFTER.
 @property (readwrite, assign) InsertionPolicy insertionPolicy;
 

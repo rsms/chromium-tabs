@@ -3,9 +3,9 @@
 #import "CTTabStripModelDelegate.h"
 
 typedef enum {
-  CTWindowOpenDispositionCurrentTab,
-  CTWindowOpenDispositionNewForegroundTab,
-  CTWindowOpenDispositionNewBackgroundTab,
+	CTWindowOpenDispositionCurrentTab,
+	CTWindowOpenDispositionNewForegroundTab,
+	CTWindowOpenDispositionNewBackgroundTab,
 } CTWindowOpenDisposition;
 
 @class CTTabStripModel;
@@ -16,12 +16,11 @@ typedef enum {
 // There is one CTBrowser instance per percieved window.
 // A CTBrowser instance has one TabStripModel.
 
-@interface CTBrowser : NSObject <CTTabStripModelDelegate/*, NSFastEnumeration*/> {
-  CTTabStripModel *tabStripModel_;
+@interface CTBrowser : NSObject <CTTabStripModelDelegate> {
 @public
-  // Important: Don't ever change this value from user code. It's public just
-  // so that the internal machinery can set it at the appropriate time.
-  CTBrowserWindowController *windowController_;
+	// Important: Don't ever change this value from user code. It's public just
+	// so that the internal machinery can set it at the appropriate time.
+	CTBrowserWindowController *windowController_;
 }
 
 // The tab strip model
@@ -51,7 +50,7 @@ typedef enum {
 // CTTabContentsController subclass.
 // @autoreleased
 -(CTTabContentsController*)createTabContentsControllerWithContents:
-    (CTTabContents*)contents;
+(CTTabContents*)contents;
 
 // Create a new default/blank CTTabContents.
 // |baseContents| represents the CTTabContents which is currently in the

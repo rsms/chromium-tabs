@@ -10,7 +10,7 @@
 #import "CTTabStripModelOrderController.h"
 #import "CTTabContents.h"
 
-@interface CTTabStripModelOrderController ()
+@interface CTTabStripModelOrderController (PrivateMethods)
 // Returns a valid index to be selected after the tab at |removing_index| is
 // closed. If |index| is after |removing_index| and |is_remove| is true,
 // |index| is adjusted to reflect the fact that |removing_index| is going
@@ -20,7 +20,11 @@
 			isRemove:(bool)is_remove;
 @end
 
-@implementation CTTabStripModelOrderController
+@implementation CTTabStripModelOrderController {
+	CTTabStripModel *tabStripModel_;
+	
+	InsertionPolicy insertion_policy_;
+}
 @synthesize insertionPolicy = insertion_policy_;
 
 - (id)initWithTabStripModel:(CTTabStripModel *)tab_strip_model {
@@ -33,17 +37,13 @@
 												 selector:@selector(tabDidSelect:) 
 													 name:CTTabSelectedNotification 
 												   object:nil];
-//		[tabStripModel_ AddObserver:self];
     }
     
     return self;
 }
 
-- (void)dealloc
-{
-//	[tabStripModel_ RemoveObserver:self];
+- (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [super dealloc];
 }
 
 - (int)determineInsertionIndexWithContents:(CTTabContents *)new_contents

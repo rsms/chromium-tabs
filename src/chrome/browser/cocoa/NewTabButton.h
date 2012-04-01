@@ -15,11 +15,7 @@
 // use, but no other buttons are so irregularly shaped with respect to their
 // bounding box.
 
-@interface NewTabButton : NSButton {
- @private
-  NSBezierPath* imagePath_;
-}
-
+@interface NewTabButton : NSButton
 // Returns YES if the given point is over the button.  |point| is in the
 // superview's coordinate system.
 - (BOOL)pointIsOverButton:(NSPoint)point;

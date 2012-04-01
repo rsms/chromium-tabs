@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#ifndef CHROME_BROWSER_COCOA_THROBBER_VIEW_H_
-#define CHROME_BROWSER_COCOA_THROBBER_VIEW_H_
 #pragma once
 
 #import <Cocoa/Cocoa.h>
@@ -21,10 +19,7 @@
 // - Toast: Draws an image animating down to the bottom and then another image
 //   animating up from the bottom. Stops once the animation is complete.
 
-@interface ThrobberView : NSView {
- @private
-  id<ThrobberDataDelegate> dataDelegate_;
-}
+@interface ThrobberView : NSView
 
 // Creates a filmstrip view with |frame| and image |image|.
 + (id)filmstripThrobberViewWithFrame:(NSRect)frame
@@ -36,5 +31,3 @@
                       afterImage:(NSImage*)afterImage;
 
 @end
-
-#endif  // CHROME_BROWSER_COCOA_THROBBER_VIEW_H_

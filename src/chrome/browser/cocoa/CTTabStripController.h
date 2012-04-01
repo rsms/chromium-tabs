@@ -13,7 +13,7 @@
 #import "CTTabControllerTarget.h"
 #import "URLDropTarget.h"
 //#import "GTMWindowSheetController.h"
-#import "CTTabStripModelProtocol.h"
+#import "CTTabStripModel.h"
 
 @class NewTabButton;
 @class CTTabContentsController;
@@ -32,92 +32,10 @@
 //
 // For a full description of the design, see
 // http://www.chromium.org/developers/design-documents/tab-strip-mac
-@interface CTTabStripController :
-  NSObject<CTTabControllerTarget,
-           URLDropTargetController/*,
-           GTMWindowSheetControllerDelegate,
-		   CTTabStripModelObserver*/> {
- @protected
-  // YES if tabs are to be laid out vertically instead of horizontally.
-  BOOL verticalLayout_;
-
- @private
-  CTTabContents* currentTab_;  // weak, tab for which we're showing state
-  CTTabStripView* tabStripView_;
-  NSView* switchView_;  // weak
-  NSView* dragBlockingView_;  // avoid bad window server drags
-  NewTabButton* newTabButton_;  // weak, obtained from the nib.
-
-  // Tracks the newTabButton_ for rollovers.
-  NSTrackingArea* newTabTrackingArea_;
-  //scoped_ptr<CTTabStripModelObserverBridge> bridge_;
-  CTBrowser *browser_;  // weak
-  CTTabStripModel* tabStripModel_;  // weak
-
-  // YES if the new tab button is currently displaying the hover image (if the
-  // mouse is currently over the button).
-  BOOL newTabButtonShowingHoverImage_;
-
-  // Access to the TabContentsControllers (which own the parent view
-  // for the toolbar and associated tab contents) given an index. Call
-  // |indexFromModelIndex:| to convert a |tabStripModel_| index to a
-  // |tabContentsArray_| index. Do NOT assume that the indices of
-  // |tabStripModel_| and this array are identical, this is e.g. not true while
-  // tabs are animating closed (closed tabs are removed from |tabStripModel_|
-  // immediately, but from |tabContentsArray_| only after their close animation
-  // has completed).
-  NSMutableArray* tabContentsArray_;
-  // An array of TabControllers which manage the actual tab views. See note
-  // above |tabContentsArray_|. |tabContentsArray_| and |tabArray_| always
-  // contain objects belonging to the same tabs at the same indices.
-  NSMutableArray* tabArray_;
-
-  // Set of TabControllers that are currently animating closed.
-  NSMutableSet* closingControllers_;
-
-  // These values are only used during a drag, and override tab positioning.
-  CTTabView* placeholderTab_;  // weak. Tab being dragged
-  NSRect placeholderFrame_;  // Frame to use
-  CGFloat placeholderStretchiness_; // Vertical force shown by streching tab.
-  NSRect droppedTabFrame_;  // Initial frame of a dropped tab, for animation.
-  // Frame targets for all the current views.
-  // target frames are used because repeated requests to [NSView animator].
-  // aren't coalesced, so we store frames to avoid redundant calls.
-  NSMutableDictionary* targetFrames_;
-  NSRect newTabTargetFrame_;
-  // If YES, do not show the new tab button during layout.
-  BOOL forceNewTabButtonHidden_;
-  // YES if we've successfully completed the initial layout. When this is
-  // NO, we probably don't want to do any animation because we're just coming
-  // into being.
-  BOOL initialLayoutComplete_;
-
-  // Width available for resizing the tabs (doesn't include the new tab
-  // button). Used to restrict the available width when closing many tabs at
-  // once to prevent them from resizing to fit the full width. If the entire
-  // width should be used, this will have a value of |kUseFullAvailableWidth|.
-  float availableResizeWidth_;
-  // A tracking area that's the size of the tab strip used to be notified
-  // when the mouse moves in the tab strip
-  NSTrackingArea* trackingArea_;
-  CTTabView* hoveredTab_;  // weak. Tab that the mouse is hovering over
-
-  // Array of subviews which are permanent (and which should never be removed),
-  // such as the new-tab button, but *not* the tabs themselves.
-  NSMutableArray* permanentSubviews_;
-
-  // The default favicon, so we can use one copy for all buttons.
-  NSImage* defaultFavIcon_;
-
-  // The amount by which to indent the tabs on the left (to make room for the
-  // red/yellow/green buttons).
-  CGFloat indentForControls_;
-
-  // Manages per-tab sheets.
-//  GTMWindowSheetController* sheetController_;
-
-  // Is the mouse currently inside the strip;
-  BOOL mouseInside_;
+@interface CTTabStripController : NSObject<CTTabControllerTarget, URLDropTargetController> {
+@protected
+	// YES if tabs are to be laid out vertically instead of horizontally.
+	BOOL verticalLayout_;
 }
 
 @property(nonatomic) CGFloat indentForControls;
@@ -218,8 +136,8 @@
 // Returns the currently active CTTabContentsController.
 - (CTTabContentsController*)activeTabContentsController;
 
-  // See comments in browser_window_controller.h for documentation about these
-  // functions.
+// See comments in browser_window_controller.h for documentation about these
+// functions.
 //- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window;
 //- (void)removeConstrainedWindow:(ConstrainedWindowMac*)window;
 //- (void)updateDevToolsForContents:(CTTabContents*)contents;

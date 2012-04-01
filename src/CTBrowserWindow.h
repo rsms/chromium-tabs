@@ -4,7 +4,6 @@
 
 #pragma once
 #import <Cocoa/Cocoa.h>
-//#import "scoped_nsobject.h"
 
 // Offset from the top of the window frame to the top of the window controls
 // (zoom, close, miniaturize) for a window with a tabstrip.
@@ -25,16 +24,7 @@ const NSInteger CTWindowButtonsInterButtonSpacing;
 // We need to override NSWindow with our own class since we need access to all
 // unhandled keyboard events and subclassing NSWindow is the only method to do
 // this. We also handle our own window controls and custom window frame drawing.
-@interface CTBrowserWindow : NSWindow {
- @private
-  BOOL shouldHideTitle_;
-  NSButton* closeButton_;
-  NSButton* miniaturizeButton_;
-  NSButton* zoomButton_;
-  BOOL entered_;
-  //scoped_nsobject<NSTrackingArea> widgetTrackingArea_;
-  NSTrackingArea *widgetTrackingArea_;
-}
+@interface CTBrowserWindow : NSWindow
 
 // Tells the window to suppress title drawing.
 - (void)setShouldHideTitle:(BOOL)flag;

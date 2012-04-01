@@ -79,8 +79,11 @@ typedef enum
 
 @interface NSMutableString (ChimeraMutableStringUtils)
 
-- (void)truncateTo:(unsigned)maxCharacters at:(ETruncationType)truncationType;
-- (void)truncateToWidth:(float)maxWidth at:(ETruncationType)truncationType withAttributes:(NSDictionary *)attributes;
+- (void)truncateTo:(unsigned)maxCharacters 
+				at:(ETruncationType)truncationType;
+- (void)truncateToWidth:(float)maxWidth 
+					 at:(ETruncationType)truncationType 
+		 withAttributes:(NSDictionary *)attributes;
 
 @end
 

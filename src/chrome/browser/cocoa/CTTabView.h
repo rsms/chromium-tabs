@@ -37,54 +37,7 @@ typedef enum {
 // on the tab strip. Relies on an associated CTTabController to provide a
 // target/action for selecting the tab.
 
-@interface CTTabView : BackgroundGradientView {
- @private
-  IBOutlet CTTabController* tabController_;
-  // TODO(rohitrao): Add this button to a CoreAnimation layer so we can fade it
-  // in and out on mouseovers.
-  IBOutlet HoverCloseButton* closeButton_;
-  BOOL closing_;
-
-  // Tracking area for close button mouseover images.
-  NSTrackingArea* closeTrackingArea_;
-
-  BOOL isMouseInside_;  // Is the mouse hovering over?
-  AlertState alertState_;
-
-  CGFloat hoverAlpha_;  // How strong the hover glow is.
-  NSTimeInterval hoverHoldEndTime_;  // When the hover glow will begin dimming.
-
-  CGFloat alertAlpha_;  // How strong the alert glow is.
-  NSTimeInterval alertHoldEndTime_;  // When the hover glow will begin dimming.
-
-  NSTimeInterval lastGlowUpdate_;  // Time either glow was last updated.
-
-  NSPoint hoverPoint_;  // Current location of hover in view coords.
-
-  // All following variables are valid for the duration of a drag.
-  // These are released on mouseUp:
-  BOOL moveWindowOnDrag_;  // Set if the only tab of a window is dragged.
-  BOOL tabWasDragged_;  // Has the tab been dragged?
-  BOOL draggingWithinTabStrip_;  // Did drag stay in the current tab strip?
-  BOOL chromeIsVisible_;
-
-  NSTimeInterval tearTime_;  // Time since tear happened
-  NSPoint tearOrigin_;  // Origin of the tear rect
-  NSPoint dragOrigin_;  // Origin point of the drag
-  // TODO(alcor): these references may need to be strong to avoid crashes
-  // due to JS closing windows
-  CTTabWindowController* sourceController_;  // weak. controller starting the drag
-  NSWindow* sourceWindow_;  // weak. The window starting the drag
-  NSRect sourceWindowFrame_;
-  NSRect sourceTabFrame_;
-
-  CTTabWindowController* draggedController_;  // weak. Controller being dragged.
-  NSWindow* dragWindow_;  // weak. The window being dragged
-  NSWindow* dragOverlay_;  // weak. The overlay being dragged
-
-  CTTabWindowController* targetController_;  // weak. Controller being targeted
-  NSCellStateValue state_;
-}
+@interface CTTabView : BackgroundGradientView
 
 @property(assign, nonatomic) NSCellStateValue state;
 @property(assign, nonatomic) CGFloat hoverAlpha;

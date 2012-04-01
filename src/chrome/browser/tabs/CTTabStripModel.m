@@ -13,16 +13,7 @@
 
 #import "CTTabContents.h"
 
-//#define CALL_EACH_OBSERVER(observer_list, selector, methodcall)  \
-//do { \
-//	ObserverListBase<NSObject <CTTabStripModelObserver> >::Iterator it(observer_list); \
-//	NSObject <CTTabStripModelObserver>* observer; \
-//	while ((observer = it.GetNext()) != NULL) \
-//		if ([observer respondsToSelector:selector]) \
-//			methodcall; \
-//} while (0)
-
-@interface CTTabStripModel ()
+@interface CTTabStripModel (PrivateMethods)
 // Returns true if the specified CTTabContents is a New Tab at the end of the
 // TabStrip. We check for this because opener relationships are _not_
 // forgotten for the New Tab page opened as a result of a New Tab gesture
@@ -113,7 +104,33 @@
 
 @end
 
-@implementation CTTabStripModel
+@implementation CTTabStripModel {
+	// Our delegate.
+    NSObject<CTTabStripModelDelegate> *delegate_;
+	
+	// The CTTabContents data currently hosted within this TabStripModel.
+	NSMutableArray *contents_data_;
+	
+	// The index of the CTTabContents in |contents_| that is currently selected.
+	int selected_index_;
+	
+	// A profile associated with this TabStripModel, used when creating new Tabs.
+	//Profile* profile_;
+	
+	// True if all tabs are currently being closed via CloseAllTabs.
+	bool closing_all_;
+	
+	// An object that determines where new Tabs should be inserted and where
+	// selection should move when a Tab is closed.
+	CTTabStripModelOrderController *order_controller_;
+	
+	// Our observers.
+	//	TabStripModelObservers observers_;
+	
+	// A scoped container for notification registries.
+	//NotificationRegistrar registrar_;	
+}
+
 @synthesize delegate = delegate_;
 @synthesize selected_index = selected_index_;
 @synthesize closing_all = closing_all_;

@@ -31,40 +31,40 @@
 //    Converted CGPathRef.
 //    nil if failure.
 - (CGPathRef)gtm_CGPath {
-  CGMutablePathRef thePath = CGPathCreateMutable();
-  if (!thePath) return nil;
-  
-  NSInteger elementCount = [self elementCount];
-  
-  // The maximum number of points is 3 for a NSCurveToBezierPathElement.
-  // (controlPoint1, controlPoint2, and endPoint)
-  NSPoint controlPoints[3];
-  
-  for (NSInteger i = 0; i < elementCount; i++) {
-    switch ([self elementAtIndex:i associatedPoints:controlPoints]) {
-      case NSMoveToBezierPathElement:
-        CGPathMoveToPoint(thePath, &CGAffineTransformIdentity, 
-                              controlPoints[0].x, controlPoints[0].y);
-        break;
-      case NSLineToBezierPathElement:
-        CGPathAddLineToPoint(thePath, &CGAffineTransformIdentity, 
-                              controlPoints[0].x, controlPoints[0].y);
-        break;
-      case NSCurveToBezierPathElement:
-        CGPathAddCurveToPoint(thePath, &CGAffineTransformIdentity, 
-                              controlPoints[0].x, controlPoints[0].y,
-                              controlPoints[1].x, controlPoints[1].y,
-                              controlPoints[2].x, controlPoints[2].y);
-        break;
-      case NSClosePathBezierPathElement:
-        CGPathCloseSubpath(thePath);
-        break;
-      default:  // COV_NF_START
-        _GTMDevLog(@"Unknown element at [NSBezierPath (GTMBezierPathCGPathAdditions) cgPath]");
-        break;  // COV_NF_END
-    };
-  }
-  return (CGPathRef)thePath;
+	CGMutablePathRef thePath = CGPathCreateMutable();
+	if (!thePath) return nil;
+	
+	NSInteger elementCount = [self elementCount];
+	
+	// The maximum number of points is 3 for a NSCurveToBezierPathElement.
+	// (controlPoint1, controlPoint2, and endPoint)
+	NSPoint controlPoints[3];
+	
+	for (NSInteger i = 0; i < elementCount; i++) {
+		switch ([self elementAtIndex:i associatedPoints:controlPoints]) {
+			case NSMoveToBezierPathElement:
+				CGPathMoveToPoint(thePath, &CGAffineTransformIdentity, 
+								  controlPoints[0].x, controlPoints[0].y);
+				break;
+			case NSLineToBezierPathElement:
+				CGPathAddLineToPoint(thePath, &CGAffineTransformIdentity, 
+									 controlPoints[0].x, controlPoints[0].y);
+				break;
+			case NSCurveToBezierPathElement:
+				CGPathAddCurveToPoint(thePath, &CGAffineTransformIdentity, 
+									  controlPoints[0].x, controlPoints[0].y,
+									  controlPoints[1].x, controlPoints[1].y,
+									  controlPoints[2].x, controlPoints[2].y);
+				break;
+			case NSClosePathBezierPathElement:
+				CGPathCloseSubpath(thePath);
+				break;
+			default:  // COV_NF_START
+				_GTMDevLog(@"Unknown element at [NSBezierPath (GTMBezierPathCGPathAdditions) cgPath]");
+				break;  // COV_NF_END
+		};
+	}
+	return (CGPathRef)thePath;
 }
 
 @end

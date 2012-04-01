@@ -31,29 +31,7 @@ typedef enum {
 // progress. The default in the nib is an image view so nothing special is
 // required if that's all you need.
 
-@interface CTTabController : NSViewController {
-	@private
-	IBOutlet NSView* iconView_;
-	IBOutlet NSTextField* titleView_;
-	IBOutlet HoverCloseButton* closeButton_;
-	
-	NSRect originalIconFrame_;  // frame of iconView_ as loaded from nib
-	BOOL isIconShowing_;  // last state of iconView_ in updateVisibility
-	
-	BOOL app_;
-	BOOL mini_;
-	BOOL pinned_;
-	BOOL phantom_;
-	BOOL selected_;
-	CTTabLoadingState loadingState_;
-	CGFloat iconTitleXOffset_;  // between left edges of icon and title
-	CGFloat titleCloseWidthOffset_;  // between right edges of icon and close btn.
-	id<CTTabControllerTarget> target_;  // weak, where actions are sent
-	SEL action_;  // selector sent when tab is selected by clicking
-	//scoped_ptr<TabMenuModel> contextMenuModel_;
-	//scoped_ptr<TabControllerInternal::MenuDelegate> contextMenuDelegate_;
-	//scoped_nsobject<MenuController> contextMenuController_;
-}
+@interface CTTabController : NSViewController
 
 @property(assign, nonatomic) CTTabLoadingState loadingState;
 

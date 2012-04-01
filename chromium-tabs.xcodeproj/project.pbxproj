@@ -111,7 +111,6 @@
 		5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.m */; };
 		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; };
 		5AE6BC8B1346445800325928 /* CTTabStripModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModel.m */; };
-		5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -252,7 +251,6 @@
 		5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabStripModelOrderController.m; sourceTree = "<group>"; };
 		5AE6BC881346445700325928 /* CTTabStripModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModel.h; sourceTree = "<group>"; };
 		5AE6BC891346445800325928 /* CTTabStripModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabStripModel.m; sourceTree = "<group>"; };
-		5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripModelProtocol.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -524,7 +522,6 @@
 				5AE6BC891346445800325928 /* CTTabStripModel.m */,
 				5ABBB69913485BB500D66B54 /* CTTabStripModelOrderController.h */,
 				5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.m */,
-				5AEF70231348E4DB003238C7 /* CTTabStripModelProtocol.h */,
 			);
 			path = tabs;
 			sourceTree = "<group>";
@@ -577,7 +574,6 @@
 				3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */,
 				3ABF4A1912A4592A0020233C /* CTBrowserWindow.h in Headers */,
 				3ABF4A8712A460DA0020233C /* CTBrowserFrameView.h in Headers */,
-				5AEF70241348E4DB003238C7 /* CTTabStripModelProtocol.h in Headers */,
 				5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */,
 				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */,
 			);

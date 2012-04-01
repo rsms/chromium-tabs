@@ -12,13 +12,7 @@
 // A view that handles any special rendering of the toolbar bar. At this time it
 // simply draws a gradient and an optional divider at the bottom.
 
-@interface CTToolbarView : BackgroundGradientView {
- @private
-  // The opacity of the divider line (at the bottom of the toolbar); used when
-  // the detached bookmark bar is morphing to the normal bar and vice versa.
-  CGFloat dividerOpacity_;
-}
-
+@interface CTToolbarView : BackgroundGradientView
 @property(assign, nonatomic) CGFloat dividerOpacity;
 @end
 

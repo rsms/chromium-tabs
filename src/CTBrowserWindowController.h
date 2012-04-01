@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 #import "CTTabWindowController.h"
-#import "CTTabStripModelProtocol.h"
+#import "CTTabStripModel.h"
 
 @class CTBrowser;
 @class CTTabStripController;
@@ -13,12 +13,12 @@
                                          error:(NSError **)outError;
 @end
 
-@interface CTBrowserWindowController : CTTabWindowController /*<CTTabStripModelObserver>*/ {
-  CTBrowser* browser_; // we own the browser
-  CTTabStripController *tabStripController_;
-  CTToolbarController *toolbarController_;
- @private
-  BOOL initializing_; // true if the instance is initializing
+@interface CTBrowserWindowController : CTTabWindowController {
+	CTBrowser* browser_; // we own the browser
+	CTTabStripController *tabStripController_;
+	CTToolbarController *toolbarController_;
+@private
+	BOOL initializing_; // true if the instance is initializing
 }
 
 @property(strong, readonly, nonatomic) CTTabStripController *tabStripController;

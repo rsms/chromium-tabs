@@ -42,20 +42,20 @@
 
 + (NSURL*)decodeLocalFileURL:(NSURL*)url
 {
-  NSString* urlPathString = [url path];
-  NSString* ext = [[urlPathString pathExtension] lowercaseString];
-  OSType fileType = NSHFSTypeCodeFromFileType(NSHFSTypeOfFile(urlPathString));
-
-  if ([ext isEqualToString:@"url"] || fileType == 'LINK') {
-    url = [NSURL URLFromIEURLFile:urlPathString];
-  }
-  else if ([ext isEqualToString:@"webloc"] || [ext isEqualToString:@"ftploc"] ||
-           fileType == 'ilht' || fileType == 'ilft')
-  {
-    url = [NSURL URLFromInetloc:urlPathString];
-  }
-
-  return url;
+	NSString* urlPathString = [url path];
+	NSString* ext = [[urlPathString pathExtension] lowercaseString];
+	OSType fileType = NSHFSTypeCodeFromFileType(NSHFSTypeOfFile(urlPathString));
+	
+	if ([ext isEqualToString:@"url"] || fileType == 'LINK') {
+		url = [NSURL URLFromIEURLFile:urlPathString];
+	}
+	else if ([ext isEqualToString:@"webloc"] || [ext isEqualToString:@"ftploc"] ||
+			 fileType == 'ilht' || fileType == 'ilft')
+	{
+		url = [NSURL URLFromInetloc:urlPathString];
+	}
+	
+	return url;
 }
 
 //
@@ -64,43 +64,43 @@
 //
 +(NSURL*)URLFromInetloc:(NSString*)inFile
 {
-  FSRef ref;
-  NSURL *ret = nil;
-  
-  if (inFile && FSPathMakeRef((UInt8 *)[inFile fileSystemRepresentation], &ref, NULL) == noErr) {
-    short resRef;
-    
-    resRef = FSOpenResFile(&ref, fsRdPerm);
-    
-    if (resRef != -1) { // Has resouce fork.
-      Handle urlResHandle;
-      
-      if ((urlResHandle = Get1Resource('url ', 256))) { // Has 'url ' resource with ID 256.
-        long size;
-        
-        size = GetMaxResourceSize(urlResHandle);
-// Begin Google Modified
-//        ret = [NSURL URLWithString:[NSString stringWithCString:(char *)*urlResHandle length:size]];
-        NSString *urlString = [[NSString alloc] initWithBytes:(void *)*urlResHandle
-                                                        length:size
-                                                      encoding:NSMacOSRomanStringEncoding];  // best guess here
-        ret = [NSURL URLWithString:urlString];
-// End Google Modified
-      }
-      
-      CloseResFile(resRef);
-    }
-
-    if (!ret) { // Look for valid plist data.
-      NSDictionary *plist;
-      if ((plist = [[NSDictionary alloc] initWithContentsOfFile:inFile])) {
-        ret = [NSURL URLWithString:[plist objectForKey:@"URL"]];
-//        [plist release];
-      }
-    }
-  }
-  
-  return ret;
+	FSRef ref;
+	NSURL *ret = nil;
+	
+	if (inFile && FSPathMakeRef((UInt8 *)[inFile fileSystemRepresentation], &ref, NULL) == noErr) {
+		short resRef;
+		
+		resRef = FSOpenResFile(&ref, fsRdPerm);
+		
+		if (resRef != -1) { // Has resouce fork.
+			Handle urlResHandle;
+			
+			if ((urlResHandle = Get1Resource('url ', 256))) { // Has 'url ' resource with ID 256.
+				long size;
+				
+				size = GetMaxResourceSize(urlResHandle);
+				// Begin Google Modified
+				//        ret = [NSURL URLWithString:[NSString stringWithCString:(char *)*urlResHandle length:size]];
+				NSString *urlString = [[NSString alloc] initWithBytes:(void *)*urlResHandle
+															   length:size
+															 encoding:NSMacOSRomanStringEncoding];  // best guess here
+				ret = [NSURL URLWithString:urlString];
+				// End Google Modified
+			}
+			
+			CloseResFile(resRef);
+		}
+		
+		if (!ret) { // Look for valid plist data.
+			NSDictionary *plist;
+			if ((plist = [[NSDictionary alloc] initWithContentsOfFile:inFile])) {
+				ret = [NSURL URLWithString:[plist objectForKey:@"URL"]];
+				//        [plist release];
+			}
+		}
+	}
+	
+	return ret;
 }
 
 //
@@ -109,39 +109,39 @@
 //
 +(NSURL*)URLFromIEURLFile:(NSString*)inFile
 {
-  NSURL *ret = nil;
-  
-  // Is this really an IE .url file?
-  if (inFile) {
-    NSCharacterSet *newlines = [NSCharacterSet characterSetWithCharactersInString:@"\r\n"];
-    // Begin Google Modified
-//    NSScanner *scanner = [NSScanner scannerWithString:[NSString stringWithContentsOfFile:inFile]];
-    NSString *fileString = [NSString stringWithContentsOfFile:inFile
-                                                     encoding:NSWindowsCP1252StringEncoding  // best guess here
-                                                        error:nil];
-    NSScanner *scanner = [NSScanner scannerWithString:fileString];
-    // End Google Modified
-    [scanner scanUpToString:@"[InternetShortcut]" intoString:nil];
-    
-    if ([scanner scanString:@"[InternetShortcut]" intoString:nil]) {
-      // Scan each non-empty line in this section. We don't need to explicitly scan the newlines or
-      // whitespace because NSScanner ignores these by default.
-      NSString *line;
-      
-      while ([scanner scanUpToCharactersFromSet:newlines intoString:&line]) {
-        if ([line hasPrefix:@"URL="]) {
-          ret = [NSURL URLWithString:[line substringFromIndex:4]];
-          break;
-        }
-        else if ([line hasPrefix:@"["]) {
-          // This is the start of a new section, so if we haven't found an URL yet, we should bail.
-          break;
-        }
-      }
-    }
-  }
-  
-  return ret;
+	NSURL *ret = nil;
+	
+	// Is this really an IE .url file?
+	if (inFile) {
+		NSCharacterSet *newlines = [NSCharacterSet characterSetWithCharactersInString:@"\r\n"];
+		// Begin Google Modified
+		//    NSScanner *scanner = [NSScanner scannerWithString:[NSString stringWithContentsOfFile:inFile]];
+		NSString *fileString = [NSString stringWithContentsOfFile:inFile
+														 encoding:NSWindowsCP1252StringEncoding  // best guess here
+															error:nil];
+		NSScanner *scanner = [NSScanner scannerWithString:fileString];
+		// End Google Modified
+		[scanner scanUpToString:@"[InternetShortcut]" intoString:nil];
+		
+		if ([scanner scanString:@"[InternetShortcut]" intoString:nil]) {
+			// Scan each non-empty line in this section. We don't need to explicitly scan the newlines or
+			// whitespace because NSScanner ignores these by default.
+			NSString *line;
+			
+			while ([scanner scanUpToCharactersFromSet:newlines intoString:&line]) {
+				if ([line hasPrefix:@"URL="]) {
+					ret = [NSURL URLWithString:[line substringFromIndex:4]];
+					break;
+				}
+				else if ([line hasPrefix:@"["]) {
+					// This is the start of a new section, so if we haven't found an URL yet, we should bail.
+					break;
+				}
+			}
+		}
+	}
+	
+	return ret;
 }
 
 @end

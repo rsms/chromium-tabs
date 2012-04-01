@@ -7,7 +7,7 @@
 @implementation NSWindow (CTThemed)
 
 - (NSPoint)themePatternPhase {
-  return NSZeroPoint;
+	return NSZeroPoint;
 }
 
 @end
