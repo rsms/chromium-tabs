@@ -21,11 +21,9 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
 }
 
 @implementation CTTabStripView {
-@private
 	NSTimeInterval lastMouseUp_;
 	
 	// Handles being a drag-and-drop target.
-	//scoped_nsobject<URLDropTargetHandler> dropHandler_;
 	URLDropTargetHandler *dropHandler_;
 	
 	// Weak; the following come from the nib.
