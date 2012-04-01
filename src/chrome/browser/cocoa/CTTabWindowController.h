@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#ifndef CHROME_BROWSER_TAB_WINDOW_CONTROLLER_H_
-#define CHROME_BROWSER_TAB_WINDOW_CONTROLLER_H_
 #pragma once
 
 // A class acting as the Objective-C window controller for a window that has
@@ -158,5 +156,3 @@
 // position specific views. Base class implementation does nothing.
 - (void)layoutSubviews;
 @end
-
-#endif  // CHROME_BROWSER_TAB_WINDOW_CONTROLLER_H_

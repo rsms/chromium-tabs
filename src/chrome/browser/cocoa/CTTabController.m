@@ -6,6 +6,7 @@
 #import "CTTabControllerTarget.h"
 #import "CTTabView.h"
 #import "CTUtil.h"
+#import "HoverCloseButton.h"
 
 static NSString* const kBrowserThemeDidChangeNotification =
 @"BrowserThemeDidChangeNotification";

@@ -9,11 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-//#import <vector>
-
 #import "CTPageTransition.h"
-//#import "observer_list.h"
-
 #import "CTTabStripModelDelegate.h"
 
 @class CTTabStripModelOrderController;
@@ -407,7 +403,7 @@ typedef enum {
 // command |id| for the tab at |index|. The returned indices are sorted in
 // descending order.
 - (NSArray *)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
-forTabAtIndex:(int)index;
+						 forTabAtIndex:(int)index;
 
 // Overridden from notificationObserver:
 /*virtual void Observe(NotificationType type,

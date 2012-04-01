@@ -4,8 +4,6 @@
 
 #pragma once
 
-@class CTTabController;
-
 // A protocol to be implemented by a CTTabController's target.
 @protocol CTTabControllerTarget
 - (void)selectTab:(id)sender;

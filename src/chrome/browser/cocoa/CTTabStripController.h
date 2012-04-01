@@ -1,19 +1,12 @@
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
-
-#ifndef CHROME_BROWSER_COCOA_TAB_STRIP_CONTROLLER_H_
-#define CHROME_BROWSER_COCOA_TAB_STRIP_CONTROLLER_H_
 #pragma once
 
 #import <Cocoa/Cocoa.h>
 
-//#import "scoped_nsobject.h"
-//#import "scoped_ptr.h"
 #import "CTTabControllerTarget.h"
 #import "URLDropTarget.h"
-//#import "GTMWindowSheetController.h"
-#import "CTTabStripModel.h"
 
 @class NewTabButton;
 @class CTTabContentsController;
@@ -147,5 +140,3 @@
 // Notification sent when the number of tabs changes. The object will be this
 // controller.
 extern NSString* const kTabStripNumberOfTabsChanged;
-
-#endif  // CHROME_BROWSER_COCOA_TAB_STRIP_CONTROLLER_H_

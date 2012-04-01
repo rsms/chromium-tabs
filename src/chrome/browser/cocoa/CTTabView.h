@@ -13,7 +13,6 @@
 
 //#import "scoped_nsobject.h"
 #import "BackgroundGradientView.h"
-#import "HoverCloseButton.h"
 
 // Nomenclature:
 // Tabs _glow_ under two different circumstances, when they are _hovered_ (by
@@ -31,7 +30,7 @@ typedef enum {
   kAlertFalling
 } AlertState;
 
-@class CTTabController, CTTabWindowController;
+@class CTTabController;
 
 // A view that handles the event tracking (clicking and dragging) for a tab
 // on the tab strip. Relies on an associated CTTabController to provide a

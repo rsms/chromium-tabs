@@ -1,9 +1,6 @@
 // Copyright (c) 2010 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
-
-#ifndef CHROME_BROWSER_COCOA_NEW_TAB_BUTTON
-#define CHROME_BROWSER_COCOA_NEW_TAB_BUTTON
 #pragma once
 
 #import <Cocoa/Cocoa.h>
@@ -20,5 +17,3 @@
 // superview's coordinate system.
 - (BOOL)pointIsOverButton:(NSPoint)point;
 @end
-
-#endif  // CHROME_BROWSER_COCOA_NEW_TAB_BUTTON

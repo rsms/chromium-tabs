@@ -106,7 +106,7 @@
 		3ABF4A8812A460DA0020233C /* CTBrowserFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABF4A8612A460DA0020233C /* CTBrowserFrameView.m */; };
 		5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABBB69913485BB500D66B54 /* CTTabStripModelOrderController.h */; };
 		5ABBB69C13485BB600D66B54 /* CTTabStripModelOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBB69A13485BB600D66B54 /* CTTabStripModelOrderController.m */; };
-		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; };
+		5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE6BC881346445700325928 /* CTTabStripModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE6BC8B1346445800325928 /* CTTabStripModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE6BC891346445800325928 /* CTTabStripModel.m */; };
 /* End PBXBuildFile section */
 
@@ -538,6 +538,7 @@
 				3A928BE01226F81600DA7E43 /* CTTabStripController.h in Headers */,
 				3A928BE11226F81600DA7E43 /* CTTabWindowController.h in Headers */,
 				3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */,
+				5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */,
 				3A3EDAD01225FACA009E2908 /* CTTabStripModelDelegate.h in Headers */,
 				3A3EDAD21225FACA009E2908 /* CTBrowserCommand.h in Headers */,
 				3A3EDAD41225FACA009E2908 /* CTBrowserWindowController.h in Headers */,
@@ -563,7 +564,6 @@
 				3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */,
 				3ABF4A1912A4592A0020233C /* CTBrowserWindow.h in Headers */,
 				3ABF4A8712A460DA0020233C /* CTBrowserFrameView.h in Headers */,
-				5AE6BC8A1346445800325928 /* CTTabStripModel.h in Headers */,
 				5ABBB69B13485BB600D66B54 /* CTTabStripModelOrderController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

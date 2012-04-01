@@ -4,7 +4,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-//#import "scoped_nsobject.h"
 #import "HoverButton.h"
 
 // The standard close button for our Mac UI which is the "x" that changes to a
