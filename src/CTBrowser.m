@@ -177,10 +177,10 @@
                         atIndex:(int)index
                    inForeground:(BOOL)foreground {
 	int addTypes = foreground ? (ADD_SELECTED | ADD_INHERIT_GROUP) : ADD_NONE;
-	index = [tabStripModel_ addTabContents:contents 
-								   atIndex:index 
-							withTransition:CTPageTransitionTyped 
-								  addTypes:addTypes];
+	[tabStripModel_ addTabContents:contents 
+						   atIndex:index 
+					withTransition:CTPageTransitionTyped 
+						  addTypes:addTypes];
 	if ((addTypes & ADD_SELECTED) == 0) {
 		// TabStripModel::AddTabContents invokes HideContents if not foreground.
 		contents.isVisible = NO;

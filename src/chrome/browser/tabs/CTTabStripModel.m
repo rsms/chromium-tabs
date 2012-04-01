@@ -305,10 +305,9 @@ const int kNoTab = NSNotFound;
 - (void)replaceTabContentsAtIndex:(int)index 
 					withContents:(CTTabContents *)new_contents 
 					 replaceType:(CTTabReplaceType)type {
-	CTTabContents* old_contents = [self replaceTabContentsAtImpl:index
-													withContents:new_contents
-													 replaceType:type];
-	//[old_contents destroy:self];
+	[self replaceTabContentsAtImpl:index
+					  withContents:new_contents
+					   replaceType:type];
 }
 
 - (CTTabContents *)detachTabContentsAtIndex:(int)index {
