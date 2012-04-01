@@ -96,7 +96,6 @@
 		3A9291AD1229BF0100DA7E43 /* NSURL+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A71225CEB1009E2908 /* NSURL+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291AE1229BF0100DA7E43 /* NSWorkspace+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A91225CEB1009E2908 /* NSWorkspace+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291AF1229BF0100DA7E43 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74F1225DDF2009E2908 /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291B01229BF0100DA7E43 /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74B1225DDBE009E2908 /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B11229BF0100DA7E43 /* GTMNSBezierPath+CGPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED74C1225DDBE009E2908 /* GTMNSBezierPath+CGPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B21229BF0100DA7E43 /* GTMNSAnimation+Duration.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -206,7 +205,6 @@
 		3A3ED6A91225CEB1009E2908 /* NSWorkspace+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWorkspace+Utils.h"; sourceTree = "<group>"; };
 		3A3ED6AA1225CEB1009E2908 /* NSWorkspace+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWorkspace+Utils.m"; sourceTree = "<group>"; };
 		3A3ED7071225D7A6009E2908 /* build_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = build_config.h; sourceTree = "<group>"; };
-		3A3ED74B1225DDBE009E2908 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		3A3ED74C1225DDBE009E2908 /* GTMNSBezierPath+CGPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSBezierPath+CGPath.h"; sourceTree = "<group>"; };
 		3A3ED74D1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSBezierPath+CGPath.m"; sourceTree = "<group>"; };
 		3A3ED74F1225DDF2009E2908 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -450,7 +448,6 @@
 			isa = PBXGroup;
 			children = (
 				3A3ED74F1225DDF2009E2908 /* GTMDefines.h */,
-				3A3ED74B1225DDBE009E2908 /* GTMGarbageCollection.h */,
 				3A3ED74C1225DDBE009E2908 /* GTMNSBezierPath+CGPath.h */,
 				3A3ED74D1225DDBE009E2908 /* GTMNSBezierPath+CGPath.m */,
 				3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */,
@@ -566,7 +563,6 @@
 				3A9291AD1229BF0100DA7E43 /* NSURL+Utils.h in Headers */,
 				3A9291AE1229BF0100DA7E43 /* NSWorkspace+Utils.h in Headers */,
 				3A9291AF1229BF0100DA7E43 /* GTMDefines.h in Headers */,
-				3A9291B01229BF0100DA7E43 /* GTMGarbageCollection.h in Headers */,
 				3A9291B11229BF0100DA7E43 /* GTMNSBezierPath+CGPath.h in Headers */,
 				3A9291B21229BF0100DA7E43 /* GTMNSAnimation+Duration.h in Headers */,
 				3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */,
