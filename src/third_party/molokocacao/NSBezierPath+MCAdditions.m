@@ -6,7 +6,6 @@
 //
 
 #import "NSBezierPath+MCAdditions.h"
-#import "GTMNSBezierPath+CGPath.h"
 
 // remove/comment out this line of you don't want to use undocumented functions
 #define MCBEZIER_USE_PRIVATE_FUNCTION
@@ -15,8 +14,7 @@
 extern CGPathRef CGContextCopyPath(CGContextRef context);
 #endif
 
-static void CGPathCallback(void *info, const CGPathElement *element)
-{
+static void CGPathCallback(void *info, const CGPathElement *element) {
 	NSBezierPath *path = (__bridge_transfer NSBezierPath *)info;
 	CGPoint *points = element->points;
 	
@@ -52,22 +50,68 @@ static void CGPathCallback(void *info, const CGPathElement *element)
 	}
 }
 
+///  Category for extracting a CGPathRef from a NSBezierPath
+@implementation NSBezierPath (GTMBezierPathCGPathAdditions)
+
+//  Extract a CGPathRef from a NSBezierPath.
+//
+//  Args: 
+//
+//  Returns:
+//    Converted CGPathRef.
+//    nil if failure.
+- (CGPathRef)getCGPathRef {
+	CGMutablePathRef thePath = CGPathCreateMutable();
+	if (!thePath) return nil;
+	
+	NSInteger elementCount = [self elementCount];
+	
+	// The maximum number of points is 3 for a NSCurveToBezierPathElement.
+	// (controlPoint1, controlPoint2, and endPoint)
+	NSPoint controlPoints[3];
+	
+	for (NSInteger i = 0; i < elementCount; i++) {
+		switch ([self elementAtIndex:i associatedPoints:controlPoints]) {
+			case NSMoveToBezierPathElement:
+				CGPathMoveToPoint(thePath, &CGAffineTransformIdentity, 
+								  controlPoints[0].x, controlPoints[0].y);
+				break;
+			case NSLineToBezierPathElement:
+				CGPathAddLineToPoint(thePath, &CGAffineTransformIdentity, 
+									 controlPoints[0].x, controlPoints[0].y);
+				break;
+			case NSCurveToBezierPathElement:
+				CGPathAddCurveToPoint(thePath, &CGAffineTransformIdentity, 
+									  controlPoints[0].x, controlPoints[0].y,
+									  controlPoints[1].x, controlPoints[1].y,
+									  controlPoints[2].x, controlPoints[2].y);
+				break;
+			case NSClosePathBezierPathElement:
+				CGPathCloseSubpath(thePath);
+				break;
+			default:  // COV_NF_START
+				//				_GTMDevLog(@"Unknown element at [NSBezierPath (GTMBezierPathCGPathAdditions) cgPath]");
+				break;  // COV_NF_END
+		};
+	}
+	return (CGPathRef)thePath;
+}
+@end
+
 @implementation NSBezierPath (MCAdditions)
 
-+ (NSBezierPath *)bezierPathWithCGPath:(CGPathRef)pathRef
-{
++ (NSBezierPath *)bezierPathWithCGPath:(CGPathRef)pathRef {
 	NSBezierPath *path = [NSBezierPath bezierPath];
 	CGPathApply(pathRef, (__bridge void*)path, CGPathCallback);
 	
 	return path;
 }
 
-- (NSBezierPath *)pathWithStrokeWidth:(CGFloat)strokeWidth
-{
+- (NSBezierPath *)pathWithStrokeWidth:(CGFloat)strokeWidth {
 #ifdef MCBEZIER_USE_PRIVATE_FUNCTION
 	NSBezierPath *path = [self copy];
 	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-	CGPathRef pathRef = [path gtm_CGPath];
+	CGPathRef pathRef = [path getCGPathRef];
 	//  [path release];
 	
 	CGContextSaveGState(context);
@@ -90,8 +134,7 @@ static void CGPathCallback(void *info, const CGPathElement *element)
 #endif  // MCBEZIER_USE_PRIVATE_FUNCTION
 }
 
-- (void)fillWithInnerShadow:(NSShadow *)shadow
-{
+- (void)fillWithInnerShadow:(NSShadow *)shadow {
 	[NSGraphicsContext saveGraphicsState];
 	
 	NSSize offset = shadow.shadowOffset;
@@ -121,8 +164,7 @@ static void CGPathCallback(void *info, const CGPathElement *element)
 	[NSGraphicsContext restoreGraphicsState];
 }
 
-- (void)drawBlurWithColor:(NSColor *)color radius:(CGFloat)radius
-{
+- (void)drawBlurWithColor:(NSColor *)color radius:(CGFloat)radius {
 	NSRect bounds = NSInsetRect(self.bounds, -radius, -radius);
 	NSShadow *shadow = [[NSShadow alloc] init];
 	shadow.shadowOffset = NSMakeSize(0, bounds.size.height);
@@ -148,14 +190,12 @@ static void CGPathCallback(void *info, const CGPathElement *element)
 }
 
 // Credit for the next two methods goes to Matt Gemmell
-- (void)strokeInside
-{
+- (void)strokeInside {
     /* Stroke within path using no additional clipping rectangle. */
     [self strokeInsideWithinRect:NSZeroRect];
 }
 
-- (void)strokeInsideWithinRect:(NSRect)clipRect
-{
+- (void)strokeInsideWithinRect:(NSRect)clipRect {
     NSGraphicsContext *thisContext = [NSGraphicsContext currentContext];
     float lineWidth = [self lineWidth];
     
