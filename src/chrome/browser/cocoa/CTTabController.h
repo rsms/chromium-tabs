@@ -7,7 +7,7 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
-#import "hover_close_button.h"
+#import "HoverCloseButton.h"
 
 // The loading/waiting state of the tab.
 typedef enum {

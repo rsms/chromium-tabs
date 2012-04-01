@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#import "hover_close_button.h"
+#import "HoverCloseButton.h"
 //#import "scoped_nsobject.h"
 #import "NSBezierPath+MCAdditions.h"
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
-#import "background_gradient_view.h"
+#import "BackgroundGradientView.h"
 
 // A view that handles any special rendering of the toolbar bar. At this time it
 // simply draws a gradient and an optional divider at the bottom.

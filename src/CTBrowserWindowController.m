@@ -9,7 +9,7 @@
 #import "CTTabStripView.h"
 #import "CTToolbarController.h"
 #import "CTUtil.h"
-#import "fast_resize_view.h"
+#import "FastResizeView.h"
 
 //#import "scoped_nsdisable_screen_updates.h"
 

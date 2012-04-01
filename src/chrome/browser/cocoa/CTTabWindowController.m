@@ -4,7 +4,7 @@
 
 #import "CTTabWindowController.h"
 #import "CTTabStripView.h"
-#import "fast_resize_view.h"
+#import "FastResizeView.h"
 
 @interface CTTabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;

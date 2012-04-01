@@ -2,7 +2,7 @@
 #import "CTBrowser.h"
 #import "CTToolbarView.h"
 #import "CTTabContents.h"
-#import "background_gradient_view.h"
+#import "BackgroundGradientView.h"
 
 @interface CTToolbarController (Private)
 - (BackgroundGradientView*)backgroundGradientView;

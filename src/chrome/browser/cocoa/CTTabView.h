@@ -12,8 +12,8 @@
 //#import <map>
 
 //#import "scoped_nsobject.h"
-#import "background_gradient_view.h"
-#import "hover_close_button.h"
+#import "BackgroundGradientView.h"
+#import "HoverCloseButton.h"
 
 // Nomenclature:
 // Tabs _glow_ under two different circumstances, when they are _hovered_ (by

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE-chromium file.
 
-#import "throbber_view.h"
+#import "ThrobberView.h"
 
 static const float kAnimationIntervalSeconds = 0.03;  // 30ms, same as windows
 

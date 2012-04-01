@@ -19,7 +19,7 @@
 #import "CTTabController.h"
 //#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
-#import "throbber_view.h"
+#import "ThrobberView.h"
 #import "CTTabStripModel.h"
 #import "GTMNSAnimation+Duration.h"
 #import "CTBrowserCommand.h"
