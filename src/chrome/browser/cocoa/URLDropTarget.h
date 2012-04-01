@@ -1,43 +1,35 @@
-//
-//  URLDropTarget.h
-//  chromium-tabs
-//
-//  Created by Liu Junliang on 11-4-2.
-//  Copyright 2011年 HKUST. All rights reserved.
-//
+// Copyright (c) 2009 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE-chromium file.
 
-#import <Foundation/Foundation.h>
+#ifndef CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_
+#define CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_
+#pragma once
 
-// Protocol for the controller which handles the actual drop data/drop updates.
-@protocol URLDropTargetController
+#import <Cocoa/Cocoa.h>
 
-// The given URLs (an |NSArray| of |NSString|s) were dropped in the given view
-// at the given point (in that view's coordinates).
-- (void)dropURLs:(NSArray*)urls inView:(NSView*)view at:(NSPoint)point;
+@protocol URLDropTarget;
+@protocol URLDropTargetController;
 
-// Dragging is in progress over the owner view (at the given point, in view
-// coordinates) and any indicator of location -- e.g., an arrow -- should be
-// updated/shown.
-- (void)indicateDropURLsInView:(NSView*)view at:(NSPoint)point;
+// Object which coordinates the dropping of URLs on a given view, sending data
+// and updates to a controller.
+@interface URLDropTargetHandler : NSObject {
+ @private
+  NSView<URLDropTarget>* view_;  // weak
+}
 
-// Dragging is over, and any indicator should be hidden.
-- (void)hideDropURLsIndicatorInView:(NSView*)view;
+// Initialize the given view, which must implement the |URLDropTarget| (below),
+// to accept drops of URLs.
+- (id)initWithView:(NSView<URLDropTarget>*)view;
 
-@end  // @protocol URLDropTargetController
-
-
-// Protocol which views that are URL drop targets and use |URLDropTargetHandler|
-// must implement.
-@protocol URLDropTarget
-
-// Returns the controller which handles the drop.
-- (id<URLDropTargetController>)urlDropController;
-
-// The following, which come from |NSDraggingDestination|, must be implemented
-// by calling the |URLDropTargetHandler|'s implementations.
+// The owner view should implement the following methods by calling the
+// |URLDropTargetHandler|'s version, and leave the others to the default
+// implementation provided by |NSView|/|NSWindow|.
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender;
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender;
 - (void)draggingExited:(id<NSDraggingInfo>)sender;
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender;
 
-@end  // @protocol URLDropTarget
+@end  // @interface URLDropTargetHandler
+
+#endif  // CHROME_BROWSER_COCOA_URL_DROP_TARGET_H_
