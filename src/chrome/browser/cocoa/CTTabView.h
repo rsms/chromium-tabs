@@ -49,7 +49,7 @@ enum AlertState {
   BOOL closing_;
 
   // Tracking area for close button mouseover images.
-  NSTrackingArea* closeTrackingArea_;
+//  NSTrackingArea* closeTrackingArea_;
 
   BOOL isMouseInside_;  // Is the mouse hovering over?
   tabs::AlertState alertState_;

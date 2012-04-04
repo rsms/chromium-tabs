@@ -40,7 +40,7 @@ class CTTabStripModel;
   BOOL verticalLayout_;
 
  @private
-  __weak CTTabContents* currentTab_;  // weak, tab for which we're showing state
+//  __weak CTTabContents* currentTab_;  // weak, tab for which we're showing state
   CTTabStripView* tabStripView_;
   __weak NSView* switchView_;  // weak
   NSView* dragBlockingView_;  // avoid bad window server drags

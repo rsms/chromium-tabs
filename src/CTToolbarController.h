@@ -23,7 +23,7 @@
   __weak CTBrowser* browser_;  // weak, one per window
  @private
   // Tracking area for mouse enter/exit/moved in the toolbar.
-  NSTrackingArea* trackingArea_;
+  // NSTrackingArea* trackingArea_;
 }
 
 - (id)initWithNibName:(NSString*)nibName

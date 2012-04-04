@@ -577,13 +577,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   //    (floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
   //        [fullscreenController_ floatingBarVerticalOffset]) : 0;
   CGFloat maxY = NSMaxY(contentBounds) + yOffset;
-  CGFloat startMaxY = maxY;
+//  CGFloat startMaxY = maxY;
 
   if ([self hasTabStrip] && ![self useVerticalTabs]) {
     // If we need to lay out the top tab strip, replace |maxY| and |startMaxY|
     // with higher values, and then lay out the tab strip.
     NSRect windowFrame = [contentView convertRect:[window frame] fromView:nil];
-    startMaxY = maxY = NSHeight(windowFrame) + yOffset;
+    maxY = NSHeight(windowFrame) + yOffset;
     maxY = [self layoutTabStripAtMaxY:maxY width:width fullscreen:isFullscreen];
   }
 
