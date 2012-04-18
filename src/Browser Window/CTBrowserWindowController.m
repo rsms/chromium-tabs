@@ -31,6 +31,10 @@
 @interface CTBrowserWindowController (FullScreen)
 - (void)registerForContentViewResizeNotifications;
 - (void)deregisterForContentViewResizeNotifications;
+
+// Creates the button used to toggle presentation mode.  Must only be called on
+// Lion or later.  Does nothing if the button already exists.
+- (void)createAndInstallPresentationModeToggleButton;
 @end
 
 @implementation NSDocumentController (CTBrowserWindowControllerAdditions)
@@ -656,6 +660,11 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	//        [fullscreenController_ floatingBarVerticalOffset]) : 0;
 	CGFloat maxY = NSMaxY(contentBounds) + yOffset;
 	
+	CGFloat overlayMaxY = NSMaxY([window frame]);
+//		+ floor((1 - floatingBarShownFraction_) * floatingBarHeight);
+	[self layoutPresentationModeToggleAtOverlayMaxX:NSMaxX([window frame])
+										overlayMaxY:overlayMaxY];
+	
 	if ([self hasTabStrip] && ![self useVerticalTabs]) {
 		// If we need to lay out the top tab strip, replace |maxY| and |startMaxY|
 		// with higher values, and then lay out the tab strip.
@@ -750,8 +759,23 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[tabStripController_ layoutTabs];
 }
 
-#pragma mark -
-#pragma mark Private
+- (void)layoutPresentationModeToggleAtOverlayMaxX:(CGFloat)maxX
+                                      overlayMaxY:(CGFloat)maxY {
+	// Lay out the presentation mode toggle button at the very top of the
+	// tab strip.
+	if ([self shouldShowPresentationModeToggle]) {
+		[self createAndInstallPresentationModeToggleButton];
+		
+		NSPoint origin =
+        NSMakePoint(maxX - NSWidth([presentationModeToggleButton_ frame]),
+                    maxY - NSHeight([presentationModeToggleButton_ frame]));
+		[presentationModeToggleButton_ setFrameOrigin:origin];
+	} else {
+		[presentationModeToggleButton_ removeFromSuperview];
+		presentationModeToggleButton_ = nil;
+	}
+}
+
 - (CGFloat)layoutTabStripAtMaxY:(CGFloat)maxY
                           width:(CGFloat)width
                      fullscreen:(BOOL)fullscreen {
@@ -1125,5 +1149,26 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 #pragma mark -
 #pragma mark Presentation Mode
+- (BOOL)shouldShowPresentationModeToggle {
+	return [self isFullscreen];
+}
+
+- (void)createAndInstallPresentationModeToggleButton {
+	if (presentationModeToggleButton_)
+		return;
+	
+	// TODO(rohitrao): Make this button prettier.
+	presentationModeToggleButton_ = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 25, 25)];
+	[presentationModeToggleButton_ setButtonType:NSMomentaryLightButton];
+	[presentationModeToggleButton_ setBezelStyle:NSRegularSquareBezelStyle];
+	[presentationModeToggleButton_ setBordered:NO];
+	[[presentationModeToggleButton_ cell] setHighlightsBy:NSContentsCellMask];
+	[[presentationModeToggleButton_ cell] setShowsStateBy:NSContentsCellMask];
+	[presentationModeToggleButton_ setImage:[NSImage imageNamed:NSImageNameIChatTheaterTemplate]];
+	[presentationModeToggleButton_ setTarget:self];
+	[presentationModeToggleButton_ setAction:@selector(togglePresentationModeForLionOrLater:)];
+	[[[[self window] contentView] superview] addSubview:presentationModeToggleButton_];
+}
+
 
 @end
