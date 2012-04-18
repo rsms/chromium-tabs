@@ -280,11 +280,6 @@ const int kNoTab = NSNotFound;
 		++selected_index_;
 	}
 	
-//	CALL_EACH_OBSERVER(observers_,
-//					  @selector(tabInsertedWithContents:atIndex:inForeground:),
-//					  [observer tabInsertedWithContents:contents atIndex:index inForeground:foreground]);
-	NSLog(@"here1");
-	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               contents, CTTabContentsUserInfoKey,
                               [NSNumber numberWithInt:index], CTTabIndexUserInfoKey,
@@ -294,7 +289,6 @@ const int kNoTab = NSNotFound;
 														object:self 
 													  userInfo:userInfo];
 	
-	NSLog(@"here2");
 	if (foreground)
 		[self ChangeSelectedContentsFrom:selected_contents
 								 toIndex:index
@@ -1048,7 +1042,6 @@ const bool kPhantomTabsEnabled = false;
 							   withContents:(CTTabContents *)new_contents
 								replaceType:(CTTabReplaceType)type {
 	assert([self containsIndex:index]);
-	NSLog(@"replace");
 	CTTabContents* old_contents = [self tabContentsAtIndex:index];
 	TabContentsData* data = [contents_data_ objectAtIndex:index];
 	data->contents = new_contents;
