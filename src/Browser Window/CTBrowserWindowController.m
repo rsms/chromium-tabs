@@ -35,6 +35,18 @@
 // Creates the button used to toggle presentation mode.  Must only be called on
 // Lion or later.  Does nothing if the button already exists.
 - (void)createAndInstallPresentationModeToggleButton;
+
+// Toggles presentation mode without exiting fullscreen mode.  Should only be
+// called by the presentation mode toggle button. 
+- (void)togglePresentationModeForLionOrLater:(id)sender;
+
+// Sets presentation mode, creating the PresentationModeController if needed and
+// forcing a relayout.  If |forceDropdown| is YES, this method will always
+// initially show the floating bar when entering presentation mode, even if the
+// floating bar does not have focus.  This method is safe to call on all OS
+// versions.
+- (void)setPresentationModeInternal:(BOOL)presentationMode
+                      forceDropdown:(BOOL)forceDropdown;
 @end
 
 @implementation NSDocumentController (CTBrowserWindowControllerAdditions)
@@ -1118,12 +1130,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)windowDidEnterFullScreen:(NSNotification*)notification {
 	[self deregisterForContentViewResizeNotifications];
 	enteringFullscreen_ = NO;
-//	[self showFullscreenExitBubbleIfNecessary];
 }
 
 - (void)windowWillExitFullScreen:(NSNotification*)notification {
 	[self registerForContentViewResizeNotifications];
-//	[self destroyFullscreenExitBubbleIfNecessary];
 //	[self setPresentationModeInternal:NO forceDropdown:NO];
 }
 
@@ -1170,5 +1180,102 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[[[[self window] contentView] superview] addSubview:presentationModeToggleButton_];
 }
 
+- (void)togglePresentationModeForLionOrLater:(id)sender {
+	// Called only by the presentation mode toggle button.
+	enteredPresentationModeFromFullscreen_ = YES;
+//	browser_->ExecuteCommand(IDC_PRESENTATION_MODE);
 
+	if ([self inPresentationMode])
+		[self exitPresentationMode];
+	else
+		[self enterPresentationMode];
+//	TODO: Post notification on WindowFullscreenStateChanged
+}
+
+// On Lion, this function is called by either the presentation mode toggle
+// button or the "Enter Presentation Mode" menu item.  In the latter case, this
+// function also triggers the Lion machinery to enter fullscreen mode as well as
+// set presentation mode.  On Snow Leopard, this function is called by the
+// "Enter Presentation Mode" menu item, and triggering presentation mode always
+// moves the user into fullscreen mode.
+- (void)setPresentationMode:(BOOL)presentationMode {
+	if (presentationMode) {
+		BOOL fullscreen = [self isFullscreen];
+		
+//		[self setShouldUsePresentationModeWhenEnteringFullscreen:YES];
+		enteredPresentationModeFromFullscreen_ = fullscreen;
+		
+		if (fullscreen) {
+			// If already in fullscreen mode, just toggle the presentation mode
+			// setting.  Go through an elaborate dance to force the overlay to show,
+			// then animate out once the mouse moves away.  This helps draw attention
+			// to the fact that the UI is in an overlay.  Focus the tab contents
+			// because the omnibox is the most likely source of bar visibility locks,
+			// and taking focus away from the omnibox releases its lock.
+//			[self lockBarVisibilityForOwner:self withAnimation:NO delay:NO];
+			[self focusTabContents];
+			[self setPresentationModeInternal:YES forceDropdown:YES];
+//			[self releaseBarVisibilityForOwner:self withAnimation:YES delay:YES];
+		} else {
+			// If not in fullscreen mode, trigger the Lion fullscreen mode machinery.
+			// Presentation mode will automatically be enabled in
+			// |-windowWillEnterFullScreen:|.
+//			NSWindow* window = [self window];
+//			if ([window isKindOfClass:[CTBrowser class]])
+//				[static_cast<FramedBrowserWindow*>(window) toggleSystemFullScreen];
+			[[self window] toggleFullScreen:nil];
+		}
+	} else {
+		if (enteredPresentationModeFromFullscreen_) {
+			// The window is currently in fullscreen mode, but the user is choosing to
+			// turn presentation mode off (choosing to always show the UI).  Set the
+			// preference to ensure that presentation mode will stay off for the next
+			// window that goes fullscreen.
+//			[self setShouldUsePresentationModeWhenEnteringFullscreen:NO];
+			[self setPresentationModeInternal:NO forceDropdown:NO];
+		} else {
+			// The user entered presentation mode directly from non-fullscreen mode
+			// using the "Enter Presentation Mode" menu item and is using that same
+			// menu item to exit presentation mode.  In this case, exit fullscreen
+			// mode as well (using the Lion machinery).
+//			NSWindow* window = [self window];
+//			if ([window isKindOfClass:[FramedBrowserWindow class]])
+//				[static_cast<FramedBrowserWindow*>(window) toggleSystemFullScreen];
+			[[self window] toggleFullScreen:nil];
+		}
+	}
+}
+
+- (void)setPresentationModeInternal:(BOOL)presentationMode
+                      forceDropdown:(BOOL)forceDropdown {
+	if (presentationMode == [self inPresentationMode])
+		return;
+	
+	if (presentationMode) {
+//		BOOL showDropdown = forceDropdown || [self floatingBarHasFocus];
+		NSView* contentView = [[self window] contentView];
+//		presentationModeController_ = [[PresentationModeController alloc] initWithBrowserController:self];
+//		[presentationModeController_ enterPresentationModeForContentView:contentView
+//															showDropdown:showDropdown];
+	} else {
+//		[presentationModeController_ exitPresentationMode];
+//		presentationModeController_ = nil;
+	}
+	
+//	[self adjustUIForPresentationMode:presentationMode];
+	[self layoutSubviews];
+}
+
+- (void)enterPresentationMode {
+	[self setPresentationMode:YES];
+}
+
+- (void)exitPresentationMode {
+	[self setPresentationMode:NO];
+}
+
+- (BOOL)inPresentationMode {
+//	return presentationModeController_ && [presentationModeController_ inPresentationMode];
+	return NO;
+}
 @end
