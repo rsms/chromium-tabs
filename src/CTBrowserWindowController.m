@@ -515,12 +515,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Default implementation of the below are both YES. Until we have fullscreen
 // support these will always be true.
-/*- (BOOL)tabTearingAllowed {
- return ![self isFullscreen];
- }
- - (BOOL)windowMovementAllowed {
- return ![self isFullscreen];
- }*/
+- (BOOL)tabTearingAllowed {
+	return ![self isFullscreen];
+}
+- (BOOL)windowMovementAllowed {
+	return ![self isFullscreen];
+}
 
 - (BOOL)isTabFullyVisible:(CTTabView*)tab {
 	return [tabStripController_ isTabFullyVisible:tab];
