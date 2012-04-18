@@ -703,8 +703,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 	// If in fullscreen mode, reset |maxY| to top of screen, so that the floating
 	// bar slides over the things which appear to be in the content area.
-	if (isFullscreen)
-		maxY = NSMaxY(contentBounds);
+//	if (isFullscreen)
+//		maxY = NSMaxY(contentBounds);
 	
 	// Also place the infobar container immediate below the toolbar, except in
 	// fullscreen mode in which case it's at the top of the visual content area.
