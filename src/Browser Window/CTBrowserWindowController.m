@@ -1039,8 +1039,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 //}
 @end
 
+#pragma mark -
 
 @implementation CTBrowserWindowController (FullScreen)
+#pragma mark Full Screen Mode
 - (void)contentViewDidResize:(NSNotification*)notification {
 	[self layoutSubviews];
 }
@@ -1120,5 +1122,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	// Force a relayout to try and get the window back into a reasonable state.
 	[self layoutSubviews];
 }
+
+#pragma mark -
+#pragma mark Presentation Mode
 
 @end
