@@ -64,27 +64,6 @@ static BOOL gCanGetCornerRadius = NO;
 		}
 	}
 	
-	// Add _mouseInGroup
-	m0 = class_getInstanceMethod([self class], @selector(_mouseInGroup:));
-	DCHECK(m0);
-	if (m0) {
-		BOOL didAdd = class_addMethod(grayFrameClass,
-									  @selector(_mouseInGroup:),
-									  method_getImplementation(m0),
-									  method_getTypeEncoding(m0));
-		DCHECK(didAdd);
-	}
-	// Add updateTrackingArea
-	m0 = class_getInstanceMethod([self class], @selector(updateTrackingAreas));
-	DCHECK(m0);
-	if (m0) {
-		BOOL didAdd = class_addMethod(grayFrameClass,
-									  @selector(updateTrackingAreas),
-									  method_getImplementation(m0),
-									  method_getTypeEncoding(m0));
-		DCHECK(didAdd);
-	}
-	
 	gCanDrawTitle =
 	[grayFrameClass
 	 instancesRespondToSelector:@selector(_titlebarTitleRect)] &&
@@ -155,26 +134,4 @@ static BOOL gCanGetCornerRadius = NO;
 	
 	// -- removed: themed window drawing routines --
 }
-
-// Check to see if the mouse is currently in one of our window widgets.
-- (BOOL)_mouseInGroup:(NSButton*)widget {
-	BOOL mouseInGroup = NO;
-	NSWindow *window = [self window];
-	if ([window isKindOfClass:[CTBrowserWindow class]]) {
-		mouseInGroup = [(CTBrowserWindow *)(window) mouseInGroup:widget];
-	} else if ([super respondsToSelector:@selector(_mouseInGroup:)]) {
-		mouseInGroup = [super _mouseInGroup:widget];
-	}
-	return mouseInGroup;
-}
-
-// Let our window handle updating the window widget tracking area.
-- (void)updateTrackingAreas {
-	[super updateTrackingAreas];
-	NSWindow *window = [self window];
-	if ([window isKindOfClass:[CTBrowserWindow class]]) {
-		[(CTBrowserWindow *)(window) updateTrackingAreas];
-	}
-}
-
 @end

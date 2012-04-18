@@ -11,20 +11,16 @@
 // like what the heuristic does when there are just a few tabs.
 const CGFloat kWindowGradientHeight = 24.0;
 
-// Offset from the top of the window frame to the top of the window controls
-// (zoom, close, miniaturize) for a window with a tabstrip.
-const NSInteger CTWindowButtonsWithTabStripOffsetFromTop = 4;
 
-// Offset from the top of the window frame to the top of the window controls
-// (zoom, close, miniaturize) for a window without a tabstrip.
+// Offsets from the top/left of the window frame to the top of the window
+// controls (zoom, close, miniaturize) for a window with a tabstrip.
+const NSInteger CTWindowButtonsWithTabStripOffsetFromTop = 11;
+const NSInteger CTWindowButtonsWithTabStripOffsetFromLeft = 11;
+
+// Offsets from the top/left of the window frame to the top of the window
+// controls (zoom, close, miniaturize) for a window without a tabstrip.
 const NSInteger CTWindowButtonsWithoutTabStripOffsetFromTop = 4;
-
-// Offset from the left of the window frame to the top of the window controls
-// (zoom, close, miniaturize).
-const NSInteger CTWindowButtonsOffsetFromLeft = 8;
-
-// Offset between the window controls (zoom, close, miniaturize).
-const NSInteger CTWindowButtonsInterButtonSpacing = 7;
+const NSInteger CTWindowButtonsWithoutTabStripOffsetFromLeft = 8;
 
 // Our browser window does some interesting things to get the behaviors that
 // we want. We replace the standard window controls (zoom, close, miniaturize)
@@ -48,10 +44,11 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
 	NSButton* closeButton_;
 	NSButton* miniaturizeButton_;
 	NSButton* zoomButton_;
-	BOOL entered_;
-	//scoped_nsobject<NSTrackingArea> widgetTrackingArea_;
-	NSTrackingArea *widgetTrackingArea_;
+	CGFloat windowButtonsInterButtonSpacing_;
+
+	BOOL hasTabStrip_;
 }
+@synthesize windowButtonsInterButtonSpacing = windowButtonsInterButtonSpacing_;
 
 - (id)initWithContentRect:(NSRect)contentRect
                 styleMask:(NSUInteger)aStyle
@@ -70,121 +67,108 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
 			[self setAutorecalculatesContentBorderThickness:NO forEdge:NSMaxYEdge];
 			[self setContentBorderThickness:kWindowGradientHeight forEdge:NSMaxYEdge];
 		}
+		
+		closeButton_ = [self standardWindowButton:NSWindowCloseButton];
+		[closeButton_ setPostsFrameChangedNotifications:YES];
+		miniaturizeButton_ = [self standardWindowButton:NSWindowMiniaturizeButton];
+		[miniaturizeButton_ setPostsFrameChangedNotifications:YES];
+		zoomButton_ = [self standardWindowButton:NSWindowZoomButton];
+		[zoomButton_ setPostsFrameChangedNotifications:YES];
+		
+		windowButtonsInterButtonSpacing_ =
+        NSMinX([miniaturizeButton_ frame]) - NSMaxX([closeButton_ frame]);
+		
+		NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+		[center addObserver:self
+				   selector:@selector(adjustCloseButton:)
+					   name:NSViewFrameDidChangeNotification
+					 object:closeButton_];
+		[center addObserver:self
+				   selector:@selector(adjustMiniaturizeButton:)
+					   name:NSViewFrameDidChangeNotification
+					 object:miniaturizeButton_];
+		[center addObserver:self
+				   selector:@selector(adjustZoomButton:)
+					   name:NSViewFrameDidChangeNotification
+					 object:zoomButton_];
 	}
 	return self;
-}
-
-- (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
-	if (widgetTrackingArea_) {
-		[[self frameView] removeTrackingArea:widgetTrackingArea_];
-		//widgetTrackingArea_.reset();
-		//	[widgetTrackingArea_ release];
-		widgetTrackingArea_ = nil;
-	}
-	//  [super dealloc];
 }
 
 - (void)setWindowController:(NSWindowController*)controller {
 	if (controller == [self windowController]) {
 		return;
 	}
-	// Clean up our old stuff.
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
-	[closeButton_ removeFromSuperview];
-	closeButton_ = nil;
-	[miniaturizeButton_ removeFromSuperview];
-	miniaturizeButton_ = nil;
-	[zoomButton_ removeFromSuperview];
-	zoomButton_ = nil;
 	
 	[super setWindowController:controller];
 	
-	CTBrowserWindowController* browserController
-	= (CTBrowserWindowController *)(controller);
+	CTBrowserWindowController* browserController = 
+		(CTBrowserWindowController *)(controller);
 	if ([browserController isKindOfClass:[CTBrowserWindowController class]]) {
-		//NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-		//[defaultCenter addObserver:self
-		//                  selector:@selector(themeDidChangeNotification:)
-		//                      name:kBrowserThemeDidChangeNotification
-		//                    object:nil];
-		
-		// Hook ourselves up to get notified if the user changes the system
-		// theme on us.
-		NSDistributedNotificationCenter* distCenter =
-        [NSDistributedNotificationCenter defaultCenter];
-		[distCenter addObserver:self
-					   selector:@selector(systemThemeDidChangeNotification:)
-						   name:@"AppleAquaColorVariantChanged"
-						 object:nil];
-		// Set up our buttons how we like them.
-		NSView* frameView = [self frameView];
-		NSRect frameViewBounds = [frameView bounds];
-		
-		// Find all the "original" buttons, and hide them. We can't use the original
-		// buttons because the OS likes to move them around when we resize windows
-		// and will put them back in what it considers to be their "preferred"
-		// locations.
-		NSButton* oldButton = [self standardWindowButton:NSWindowCloseButton];
-		[oldButton setHidden:YES];
-		oldButton = [self standardWindowButton:NSWindowMiniaturizeButton];
-		[oldButton setHidden:YES];
-		oldButton = [self standardWindowButton:NSWindowZoomButton];
-		[oldButton setHidden:YES];
-		
-		// Create and position our new buttons.
-		NSUInteger aStyle = [self styleMask];
-		closeButton_ = [NSWindow standardWindowButton:NSWindowCloseButton
-										 forStyleMask:aStyle];
-		NSRect closeButtonFrame = [closeButton_ frame];
-		CGFloat yOffset = [browserController hasTabStrip] ?
-        CTWindowButtonsWithTabStripOffsetFromTop :
-        CTWindowButtonsWithoutTabStripOffsetFromTop;
-		closeButtonFrame.origin =
-        NSMakePoint(CTWindowButtonsOffsetFromLeft,
-                    (NSHeight(frameViewBounds) -
-                     NSHeight(closeButtonFrame) - yOffset));
-		
-		[closeButton_ setFrame:closeButtonFrame];
-		[closeButton_ setTarget:self];
-		[closeButton_ setAutoresizingMask:NSViewMaxXMargin | NSViewMinYMargin];
-		[frameView addSubview:closeButton_];
-		
-		miniaturizeButton_ =
-        [NSWindow standardWindowButton:NSWindowMiniaturizeButton
-                          forStyleMask:aStyle];
-		NSRect miniaturizeButtonFrame = [miniaturizeButton_ frame];
-		miniaturizeButtonFrame.origin =
-        NSMakePoint((NSMaxX(closeButtonFrame) +
-                     CTWindowButtonsInterButtonSpacing),
-                    NSMinY(closeButtonFrame));
-		[miniaturizeButton_ setFrame:miniaturizeButtonFrame];
-		[miniaturizeButton_ setTarget:self];
-		[miniaturizeButton_ setAutoresizingMask:(NSViewMaxXMargin |
-												 NSViewMinYMargin)];
-		[frameView addSubview:miniaturizeButton_];
-		
-		zoomButton_ = [NSWindow standardWindowButton:NSWindowZoomButton
-										forStyleMask:aStyle];
-		NSRect zoomButtonFrame = [zoomButton_ frame];
-		zoomButtonFrame.origin =
-        NSMakePoint((NSMaxX(miniaturizeButtonFrame) +
-                     CTWindowButtonsInterButtonSpacing),
-                    NSMinY(miniaturizeButtonFrame));
-		[zoomButton_ setFrame:zoomButtonFrame];
-		[zoomButton_ setTarget:self];
-		[zoomButton_ setAutoresizingMask:(NSViewMaxXMargin |
-										  NSViewMinYMargin)];
-		
-		[frameView addSubview:zoomButton_];
+		hasTabStrip_ = [browserController hasTabStrip];
+	} else {
+		hasTabStrip_ = NO;
 	}
 	
-	// Update our tracking areas. We want to update them even if we haven't
-	// added buttons above as we need to remove the old tracking area. If the
-	// buttons aren't to be shown, updateTrackingAreas won't add new ones.
-	[self updateTrackingAreas];
+	// Force re-layout of the window buttons by wiggling the size of the frame
+	// view.
+	NSView* frameView = [[self contentView] superview];
+	BOOL frameViewDidAutoresizeSubviews = [frameView autoresizesSubviews];
+	[frameView setAutoresizesSubviews:NO];
+	NSRect oldFrame = [frameView frame];
+	[frameView setFrame:NSZeroRect];
+	[frameView setFrame:oldFrame];
+	[frameView setAutoresizesSubviews:frameViewDidAutoresizeSubviews];
+}
+
+
+- (void)adjustCloseButton:(NSNotification*)notification {
+	[self adjustButton:[notification object]
+				ofKind:NSWindowCloseButton];
+}
+
+- (void)adjustMiniaturizeButton:(NSNotification*)notification {
+	[self adjustButton:[notification object]
+				ofKind:NSWindowMiniaturizeButton];
+}
+
+- (void)adjustZoomButton:(NSNotification*)notification {
+	[self adjustButton:[notification object]
+				ofKind:NSWindowZoomButton];
+}
+
+- (void)adjustButton:(NSButton*)button
+              ofKind:(NSWindowButton)kind {
+	NSRect buttonFrame = [button frame];
+	NSRect frameViewBounds = [[self frameView] bounds];
+	
+	CGFloat xOffset = hasTabStrip_ 
+		? CTWindowButtonsWithTabStripOffsetFromLeft
+		: CTWindowButtonsWithoutTabStripOffsetFromLeft;
+	CGFloat yOffset = hasTabStrip_
+		? CTWindowButtonsWithTabStripOffsetFromTop
+		: CTWindowButtonsWithoutTabStripOffsetFromTop;
+	buttonFrame.origin =
+	NSMakePoint(xOffset, (NSHeight(frameViewBounds) -
+						  NSHeight(buttonFrame) - yOffset));
+	
+	switch (kind) {
+		case NSWindowZoomButton:
+			buttonFrame.origin.x += NSWidth([miniaturizeButton_ frame]);
+			buttonFrame.origin.x += windowButtonsInterButtonSpacing_;
+			// fallthrough
+		case NSWindowMiniaturizeButton:
+			buttonFrame.origin.x += NSWidth([closeButton_ frame]);
+			buttonFrame.origin.x += windowButtonsInterButtonSpacing_;
+			// fallthrough
+		default:
+			break;
+	}
+	
+	BOOL didPost = [button postsBoundsChangedNotifications];
+	[button setPostsFrameChangedNotifications:NO];
+	[button setFrame:buttonFrame];
+	[button setPostsFrameChangedNotifications:didPost];
 }
 
 - (NSView*)frameView {
@@ -209,71 +193,7 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
 	return value;
 }
 
-// Map our custom buttons into the accessibility hierarchy correctly.
-- (id)accessibilityAttributeValue:(NSString*)attribute {
-	id value = nil;
-	struct {
-		__unsafe_unretained NSString* attribute_;
-		__unsafe_unretained id value_;
-	} attributeMap[] = {
-		{ NSAccessibilityCloseButtonAttribute, [closeButton_ cell]},
-		{ NSAccessibilityZoomButtonAttribute, [zoomButton_ cell]},
-		{ NSAccessibilityMinimizeButtonAttribute, [miniaturizeButton_ cell]},
-	};
-	
-	for (size_t i = 0; i < sizeof(attributeMap) / sizeof(attributeMap[0]); ++i) {
-		if ([attributeMap[i].attribute_ isEqualToString:attribute]) {
-			value = attributeMap[i].value_;
-			break;
-		}
-	}
-	if (!value) {
-		value = [super accessibilityAttributeValue:attribute];
-	}
-	return value;
-}
-
-- (void)updateTrackingAreas {
-	NSView* frameView = [self frameView];
-	if (widgetTrackingArea_) {
-		[frameView removeTrackingArea:widgetTrackingArea_];
-	}
-	if (closeButton_) {
-		NSRect trackingRect = [closeButton_ frame];
-		trackingRect.size.width = NSMaxX([zoomButton_ frame]) -
-        NSMinX(trackingRect);
-		//    widgetTrackingArea_.reset(
-		//        [[NSTrackingArea alloc] initWithRect:trackingRect
-		//                                     options:(NSTrackingMouseEnteredAndExited |
-		//                                              NSTrackingActiveAlways)
-		//                                       owner:self
-		//                                    userInfo:nil]);
-		//	[widgetTrackingArea_ release];
-		widgetTrackingArea_ = [[NSTrackingArea alloc] initWithRect:trackingRect
-														   options:(NSTrackingMouseEnteredAndExited |
-																	NSTrackingActiveAlways) 
-															 owner:self 
-														  userInfo:nil];
-		[frameView addTrackingArea:widgetTrackingArea_];
-		
-		// Check to see if the cursor is still in trackingRect.
-		NSPoint point = [self mouseLocationOutsideOfEventStream];
-		point = [[self contentView] convertPoint:point fromView:nil];
-		BOOL newEntered = NSPointInRect (point, trackingRect);
-		if (newEntered != entered_) {
-			// Buttons have moved, so update button state.
-			entered_ = newEntered;
-			[closeButton_ setNeedsDisplay];
-			[zoomButton_ setNeedsDisplay];
-			[miniaturizeButton_ setNeedsDisplay];
-		}
-	}
-}
-
 - (void)windowMainStatusChanged {
-	[closeButton_ setNeedsDisplay];
-	[zoomButton_ setNeedsDisplay];
-	[miniaturizeButton_ setNeedsDisplay];
 	NSView* frameView = [self frameView];
 	NSView* contentView = [self contentView];
 	NSRect updateRect = [frameView frame];
@@ -297,12 +217,6 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
 // Called after the current theme has changed.
 - (void)themeDidChangeNotification:(NSNotification*)aNotification {
 	[[self frameView] setNeedsDisplay:YES];
-}
-
-- (void)systemThemeDidChangeNotification:(NSNotification*)aNotification {
-	[closeButton_ setNeedsDisplay];
-	[zoomButton_ setNeedsDisplay];
-	[miniaturizeButton_ setNeedsDisplay];
 }
 
 - (void)sendEvent:(NSEvent*)event {
@@ -330,26 +244,6 @@ const NSInteger CTWindowButtonsInterButtonSpacing = 7;
 	if (!eventHandled) {
 		[super sendEvent:event];
 	}
-}
-
-// Update our buttons so that they highlight correctly.
-- (void)mouseEntered:(NSEvent*)event {
-	entered_ = YES;
-	[closeButton_ setNeedsDisplay];
-	[zoomButton_ setNeedsDisplay];
-	[miniaturizeButton_ setNeedsDisplay];
-}
-
-// Update our buttons so that they highlight correctly.
-- (void)mouseExited:(NSEvent*)event {
-	entered_ = NO;
-	[closeButton_ setNeedsDisplay];
-	[zoomButton_ setNeedsDisplay];
-	[miniaturizeButton_ setNeedsDisplay];
-}
-
-- (BOOL)mouseInGroup:(NSButton*)widget {
-	return entered_;
 }
 
 - (void)setShouldHideTitle:(BOOL)flag {
