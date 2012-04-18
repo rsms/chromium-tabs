@@ -13,18 +13,6 @@
 		3A3ED9C01225E320009E2908 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9751225E0A7009E2908 /* QuartzCore.framework */; };
 		3A3ED9C11225E32A009E2908 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C21225404F00757641 /* common.c */; };
 		3A3ED9C21225E32A009E2908 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1168C41225404F00757641 /* common.m */; };
-		3A3ED9C41225E32A009E2908 /* HoverCloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F01221AF58006D8305 /* HoverCloseButton.m */; };
-		3A3ED9C51225E32A009E2908 /* HoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921EE1221AF58006D8305 /* HoverButton.m */; };
-		3A3ED9C71225E32A009E2908 /* CTPageTransition.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921DA1221AA4B006D8305 /* CTPageTransition.c */; };
-		3A3ED9C81225E32A009E2908 /* BackgroundGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3927121221C596006D8305 /* BackgroundGradientView.m */; };
-		3A3ED9C91225E32A009E2908 /* CTTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3921F21221AF58006D8305 /* CTTabController.m */; };
-		3A3ED9CA1225E32A009E2908 /* CTTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A39270B1221C566006D8305 /* CTTabView.m */; };
-		3A3ED9CE1225E32A009E2908 /* URLDropTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FC11222D10700F1BB78 /* URLDropTarget.m */; };
-		3A3ED9CF1225E32A009E2908 /* ThrobberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A286FE81222D53500F1BB78 /* ThrobberView.m */; };
-		3A3ED9D01225E32A009E2908 /* CTTabContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE19531222DDEB009DA438 /* CTTabContents.m */; };
-		3A3ED9D31225E32A009E2908 /* CTTabContentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A236D9F1223375D00D21E66 /* CTTabContentsController.m */; };
-		3A3ED9D51225E32A009E2908 /* NewTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A236DD81223414F00D21E66 /* NewTabButton.m */; };
-		3A3ED9D81225E32A009E2908 /* FastResizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF98812235CEE008A3B8C /* FastResizeView.m */; };
 		3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */; };
 		3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED6841225CE7A009E2908 /* GTMNSColor+Luminance.m */; };
 		3A3ED9DE1225E32A009E2908 /* NSBezierPath+MCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3ED68A1225CE7A009E2908 /* NSBezierPath+MCAdditions.m */; };
@@ -49,30 +37,12 @@
 		3A3EDA7B1225EBFF009E2908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.m */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
 		3A3EDA7E1225EC13009E2908 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDA741225EBBB009E2908 /* MainMenu.xib */; };
-		3A3EDA9E1225EF84009E2908 /* CTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA9C1225EF84009E2908 /* CTUtil.m */; };
 		3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A3EDAA71225F192009E2908 /* Localizable.strings */; };
 		3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED97D1225E116009E2908 /* ChromiumTabs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AEE19521222DDEB009DA438 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */; };
 		3A928BBC1226F0AA00DA7E43 /* MyBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */; };
-		3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A39270A1221C566006D8305 /* CTTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921F11221AF58006D8305 /* CTTabController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A928BDD1226F81600DA7E43 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A928BDE1226F81600DA7E43 /* CTTabContentsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236D9E1223375D00D21E66 /* CTTabContentsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A928D0C12282DE500DA7E43 /* MyTabContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A928D0B12282DE500DA7E43 /* MyTabContents.m */; };
 		3A928F991228648F00DA7E43 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1168C31225404F00757641 /* common.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.m */; };
 		3A92907612295BC400DA7E43 /* Toolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A92907512295BC400DA7E43 /* Toolbar.xib */; };
-		3A9291981229BEB600DA7E43 /* CTPageTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921DB1221AA4B006D8305 /* CTPageTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A31229BEE900DA7E43 /* ThrobberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FE71222D53500F1BB78 /* ThrobberView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A41229BEE900DA7E43 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A286FC01222D10700F1BB78 /* URLDropTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A51229BEE900DA7E43 /* BackgroundGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3927111221C596006D8305 /* BackgroundGradientView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A61229BEE900DA7E43 /* HoverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921ED1221AF58006D8305 /* HoverButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A71229BEE900DA7E43 /* HoverCloseButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3921EF1221AF58006D8305 /* HoverCloseButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A81229BEE900DA7E43 /* NewTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A236DD71223414F00D21E66 /* NewTabButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9291A91229BEE900DA7E43 /* FastResizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A1CF98712235CEE008A3B8C /* FastResizeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291AA1229BF0100DA7E43 /* NSPasteboard+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A11225CEB1009E2908 /* NSPasteboard+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291AB1229BF0100DA7E43 /* NSScreen+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A31225CEB1009E2908 /* NSScreen+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291AC1229BF0100DA7E43 /* NSString+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6A51225CEB1009E2908 /* NSString+Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,7 +53,6 @@
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A9292A21229D43300DA7E43 /* CTUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3EDA9B1225EF84009E2908 /* CTUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304B4153F0AFA001FCF20 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */; };
 		5AE304B5153F0AFA001FCF20 /* CTToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304B1153F0AFA001FCF20 /* CTToolbarController.m */; };
 		5AE304B6153F0AFA001FCF20 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */; };
@@ -108,6 +77,37 @@
 		5AE304DF153F0C8C001FCF20 /* CTBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304D5153F0C8C001FCF20 /* CTBrowserWindowController.m */; };
 		5AE304E2153F0C9B001FCF20 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E0153F0C9B001FCF20 /* CTTabWindowController.h */; };
 		5AE304E3153F0C9B001FCF20 /* CTTabWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304E1153F0C9B001FCF20 /* CTTabWindowController.m */; };
+		5AE304E7153F0CF7001FCF20 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E5153F0CF7001FCF20 /* CTTabContents.h */; };
+		5AE304E8153F0CF7001FCF20 /* CTTabContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304E6153F0CF7001FCF20 /* CTTabContents.m */; };
+		5AE304F0153F0D01001FCF20 /* CTTabContentsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E9153F0D01001FCF20 /* CTTabContentsController.h */; };
+		5AE304F1153F0D01001FCF20 /* CTTabContentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EA153F0D01001FCF20 /* CTTabContentsController.m */; };
+		5AE304F2153F0D01001FCF20 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EB153F0D01001FCF20 /* CTTabController.h */; };
+		5AE304F3153F0D01001FCF20 /* CTTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EC153F0D01001FCF20 /* CTTabController.m */; };
+		5AE304F4153F0D01001FCF20 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304ED153F0D01001FCF20 /* CTTabControllerTarget.h */; };
+		5AE304F5153F0D01001FCF20 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EE153F0D01001FCF20 /* CTTabView.h */; };
+		5AE304F6153F0D01001FCF20 /* CTTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EF153F0D01001FCF20 /* CTTabView.m */; };
+		5AE304FE153F0D41001FCF20 /* HoverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304F8153F0D41001FCF20 /* HoverButton.h */; };
+		5AE304FF153F0D41001FCF20 /* HoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304F9153F0D41001FCF20 /* HoverButton.m */; };
+		5AE30500153F0D41001FCF20 /* HoverCloseButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FA153F0D41001FCF20 /* HoverCloseButton.h */; };
+		5AE30501153F0D41001FCF20 /* HoverCloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304FB153F0D41001FCF20 /* HoverCloseButton.m */; };
+		5AE30502153F0D41001FCF20 /* NewTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FC153F0D41001FCF20 /* NewTabButton.h */; };
+		5AE30503153F0D41001FCF20 /* NewTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304FD153F0D41001FCF20 /* NewTabButton.m */; };
+		5AE3050C153F0D8E001FCF20 /* BackgroundGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */; };
+		5AE3050D153F0D8E001FCF20 /* BackgroundGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30507153F0D8E001FCF20 /* BackgroundGradientView.m */; };
+		5AE3050E153F0D8E001FCF20 /* FastResizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30508153F0D8E001FCF20 /* FastResizeView.h */; };
+		5AE3050F153F0D8E001FCF20 /* FastResizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30509153F0D8E001FCF20 /* FastResizeView.m */; };
+		5AE30510153F0D8E001FCF20 /* ThrobberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3050A153F0D8E001FCF20 /* ThrobberView.h */; };
+		5AE30511153F0D8E001FCF20 /* ThrobberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3050B153F0D8E001FCF20 /* ThrobberView.m */; };
+		5AE30516153F0DB2001FCF20 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30512153F0DB2001FCF20 /* URLDropTarget.h */; };
+		5AE30517153F0DB2001FCF20 /* URLDropTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30513153F0DB2001FCF20 /* URLDropTarget.m */; };
+		5AE30518153F0DB2001FCF20 /* CTPageTransition.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30514153F0DB2001FCF20 /* CTPageTransition.c */; };
+		5AE30519153F0DB2001FCF20 /* CTPageTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30515153F0DB2001FCF20 /* CTPageTransition.h */; };
+		5AE30520153F0DD6001FCF20 /* CTUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051A153F0DD6001FCF20 /* CTUtil.h */; };
+		5AE30521153F0DD6001FCF20 /* CTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051B153F0DD6001FCF20 /* CTUtil.m */; };
+		5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051C153F0DD6001FCF20 /* NSImage+CTAdditions.h */; };
+		5AE30523153F0DD6001FCF20 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051D153F0DD6001FCF20 /* NSImage+CTAdditions.m */; };
+		5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */; };
+		5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,39 +142,16 @@
 		3A1168C21225404F00757641 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
 		3A1168C31225404F00757641 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		3A1168C41225404F00757641 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = common.m; sourceTree = "<group>"; };
-		3A1CF98712235CEE008A3B8C /* FastResizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastResizeView.h; path = chrome/browser/cocoa/FastResizeView.h; sourceTree = "<group>"; };
-		3A1CF98812235CEE008A3B8C /* FastResizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FastResizeView.m; path = chrome/browser/cocoa/FastResizeView.m; sourceTree = "<group>"; };
-		3A236D9E1223375D00D21E66 /* CTTabContentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTTabContentsController.h; path = chrome/browser/cocoa/CTTabContentsController.h; sourceTree = "<group>"; };
-		3A236D9F1223375D00D21E66 /* CTTabContentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTTabContentsController.m; path = chrome/browser/cocoa/CTTabContentsController.m; sourceTree = "<group>"; };
-		3A236DD71223414F00D21E66 /* NewTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTabButton.h; path = chrome/browser/cocoa/NewTabButton.h; sourceTree = "<group>"; };
-		3A236DD81223414F00D21E66 /* NewTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTabButton.m; path = chrome/browser/cocoa/NewTabButton.m; sourceTree = "<group>"; };
-		3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTTabControllerTarget.h; path = chrome/browser/cocoa/CTTabControllerTarget.h; sourceTree = "<group>"; };
 		3A286EA51222C8EA00F1BB78 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		3A286F9E1222CDBE00F1BB78 /* BrowserWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowserWindow.xib; sourceTree = "<group>"; };
 		3A286F9F1222CDBE00F1BB78 /* TabContents.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabContents.xib; sourceTree = "<group>"; };
 		3A286FA01222CDBE00F1BB78 /* TabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabView.xib; sourceTree = "<group>"; };
-		3A286FC01222D10700F1BB78 /* URLDropTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URLDropTarget.h; path = chrome/browser/cocoa/URLDropTarget.h; sourceTree = "<group>"; };
-		3A286FC11222D10700F1BB78 /* URLDropTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = URLDropTarget.m; path = chrome/browser/cocoa/URLDropTarget.m; sourceTree = "<group>"; };
-		3A286FE71222D53500F1BB78 /* ThrobberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThrobberView.h; path = chrome/browser/cocoa/ThrobberView.h; sourceTree = "<group>"; };
-		3A286FE81222D53500F1BB78 /* ThrobberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThrobberView.m; path = chrome/browser/cocoa/ThrobberView.m; sourceTree = "<group>"; };
 		3A286FEA1222D61900F1BB78 /* newtab_h.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab_h.pdf; path = gfx/newtab_h.pdf; sourceTree = "<group>"; };
 		3A286FEB1222D61900F1BB78 /* newtab_p.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab_p.pdf; path = gfx/newtab_p.pdf; sourceTree = "<group>"; };
 		3A286FEC1222D61900F1BB78 /* newtab.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = newtab.pdf; path = gfx/newtab.pdf; sourceTree = "<group>"; };
 		3A286FF71222D85300F1BB78 /* default-icon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "default-icon.pdf"; path = "gfx/default-icon.pdf"; sourceTree = "<group>"; };
 		3A286FFA1222D94600F1BB78 /* throbber_waiting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber_waiting.png; path = gfx/throbber_waiting.png; sourceTree = "<group>"; };
 		3A286FFD1222D99B00F1BB78 /* sadfavicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sadfavicon.png; path = gfx/sadfavicon.png; sourceTree = "<group>"; };
-		3A3921DA1221AA4B006D8305 /* CTPageTransition.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = CTPageTransition.c; path = chrome/common/CTPageTransition.c; sourceTree = "<group>"; };
-		3A3921DB1221AA4B006D8305 /* CTPageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTPageTransition.h; path = chrome/common/CTPageTransition.h; sourceTree = "<group>"; };
-		3A3921ED1221AF58006D8305 /* HoverButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = HoverButton.h; path = chrome/browser/cocoa/HoverButton.h; sourceTree = "<group>"; };
-		3A3921EE1221AF58006D8305 /* HoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HoverButton.m; path = chrome/browser/cocoa/HoverButton.m; sourceTree = "<group>"; };
-		3A3921EF1221AF58006D8305 /* HoverCloseButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = HoverCloseButton.h; path = chrome/browser/cocoa/HoverCloseButton.h; sourceTree = "<group>"; };
-		3A3921F01221AF58006D8305 /* HoverCloseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HoverCloseButton.m; path = chrome/browser/cocoa/HoverCloseButton.m; sourceTree = "<group>"; };
-		3A3921F11221AF58006D8305 /* CTTabController.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = CTTabController.h; path = chrome/browser/cocoa/CTTabController.h; sourceTree = "<group>"; };
-		3A3921F21221AF58006D8305 /* CTTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTTabController.m; path = chrome/browser/cocoa/CTTabController.m; sourceTree = "<group>"; };
-		3A39270A1221C566006D8305 /* CTTabView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = CTTabView.h; path = chrome/browser/cocoa/CTTabView.h; sourceTree = "<group>"; };
-		3A39270B1221C566006D8305 /* CTTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CTTabView.m; path = chrome/browser/cocoa/CTTabView.m; sourceTree = "<group>"; };
-		3A3927111221C596006D8305 /* BackgroundGradientView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = BackgroundGradientView.h; path = chrome/browser/cocoa/BackgroundGradientView.h; sourceTree = "<group>"; };
-		3A3927121221C596006D8305 /* BackgroundGradientView.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BackgroundGradientView.m; path = chrome/browser/cocoa/BackgroundGradientView.m; sourceTree = "<group>"; };
 		3A3ED35012256F06009E2908 /* throbber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throbber.png; path = gfx/throbber.png; sourceTree = "<group>"; };
 		3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSAnimation+Duration.h"; sourceTree = "<group>"; };
 		3A3ED6821225CE7A009E2908 /* GTMNSAnimation+Duration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSAnimation+Duration.m"; sourceTree = "<group>"; };
@@ -206,21 +183,13 @@
 		3A3EDA751225EBBB009E2908 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3A3EDA761225EBBB009E2908 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A3EDA771225EBBB009E2908 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3A3EDA9B1225EF84009E2908 /* CTUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTUtil.h; sourceTree = "<group>"; };
-		3A3EDA9C1225EF84009E2908 /* CTUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTUtil.m; sourceTree = "<group>"; };
 		3A3EDAA81225F192009E2908 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CTAdditions.h"; sourceTree = "<group>"; };
-		3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
 		3A928A771226E01900DA7E43 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		3A928BBA1226F0AA00DA7E43 /* MyBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBrowser.h; sourceTree = "<group>"; };
 		3A928BBB1226F0AA00DA7E43 /* MyBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBrowser.m; sourceTree = "<group>"; };
 		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
 		3A928D0B12282DE500DA7E43 /* MyTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabContents.m; sourceTree = "<group>"; };
-		3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+CTThemed.h"; sourceTree = "<group>"; };
-		3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+CTThemed.m"; sourceTree = "<group>"; };
 		3A92907512295BC400DA7E43 /* Toolbar.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; path = Toolbar.xib; sourceTree = "<group>"; };
-		3AEE19521222DDEB009DA438 /* CTTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContents.h; sourceTree = "<group>"; };
-		3AEE19531222DDEB009DA438 /* CTTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabContents.m; sourceTree = "<group>"; };
 		5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarController.h; sourceTree = "<group>"; };
 		5AE304B1153F0AFA001FCF20 /* CTToolbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTToolbarController.m; sourceTree = "<group>"; };
 		5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarView.h; sourceTree = "<group>"; };
@@ -245,6 +214,37 @@
 		5AE304D5153F0C8C001FCF20 /* CTBrowserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBrowserWindowController.m; sourceTree = "<group>"; };
 		5AE304E0153F0C9B001FCF20 /* CTTabWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabWindowController.h; sourceTree = "<group>"; };
 		5AE304E1153F0C9B001FCF20 /* CTTabWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabWindowController.m; sourceTree = "<group>"; };
+		5AE304E5153F0CF7001FCF20 /* CTTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContents.h; sourceTree = "<group>"; };
+		5AE304E6153F0CF7001FCF20 /* CTTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabContents.m; sourceTree = "<group>"; };
+		5AE304E9153F0D01001FCF20 /* CTTabContentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabContentsController.h; sourceTree = "<group>"; };
+		5AE304EA153F0D01001FCF20 /* CTTabContentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabContentsController.m; sourceTree = "<group>"; };
+		5AE304EB153F0D01001FCF20 /* CTTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabController.h; sourceTree = "<group>"; };
+		5AE304EC153F0D01001FCF20 /* CTTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabController.m; sourceTree = "<group>"; };
+		5AE304ED153F0D01001FCF20 /* CTTabControllerTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabControllerTarget.h; sourceTree = "<group>"; };
+		5AE304EE153F0D01001FCF20 /* CTTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabView.h; sourceTree = "<group>"; };
+		5AE304EF153F0D01001FCF20 /* CTTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabView.m; sourceTree = "<group>"; };
+		5AE304F8153F0D41001FCF20 /* HoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoverButton.h; sourceTree = "<group>"; };
+		5AE304F9153F0D41001FCF20 /* HoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoverButton.m; sourceTree = "<group>"; };
+		5AE304FA153F0D41001FCF20 /* HoverCloseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoverCloseButton.h; sourceTree = "<group>"; };
+		5AE304FB153F0D41001FCF20 /* HoverCloseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoverCloseButton.m; sourceTree = "<group>"; };
+		5AE304FC153F0D41001FCF20 /* NewTabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTabButton.h; sourceTree = "<group>"; };
+		5AE304FD153F0D41001FCF20 /* NewTabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTabButton.m; sourceTree = "<group>"; };
+		5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundGradientView.h; sourceTree = "<group>"; };
+		5AE30507153F0D8E001FCF20 /* BackgroundGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundGradientView.m; sourceTree = "<group>"; };
+		5AE30508153F0D8E001FCF20 /* FastResizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastResizeView.h; sourceTree = "<group>"; };
+		5AE30509153F0D8E001FCF20 /* FastResizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastResizeView.m; sourceTree = "<group>"; };
+		5AE3050A153F0D8E001FCF20 /* ThrobberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThrobberView.h; sourceTree = "<group>"; };
+		5AE3050B153F0D8E001FCF20 /* ThrobberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThrobberView.m; sourceTree = "<group>"; };
+		5AE30512153F0DB2001FCF20 /* URLDropTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDropTarget.h; sourceTree = "<group>"; };
+		5AE30513153F0DB2001FCF20 /* URLDropTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLDropTarget.m; sourceTree = "<group>"; };
+		5AE30514153F0DB2001FCF20 /* CTPageTransition.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CTPageTransition.c; sourceTree = "<group>"; };
+		5AE30515153F0DB2001FCF20 /* CTPageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPageTransition.h; sourceTree = "<group>"; };
+		5AE3051A153F0DD6001FCF20 /* CTUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTUtil.h; sourceTree = "<group>"; };
+		5AE3051B153F0DD6001FCF20 /* CTUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTUtil.m; sourceTree = "<group>"; };
+		5AE3051C153F0DD6001FCF20 /* NSImage+CTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CTAdditions.h"; sourceTree = "<group>"; };
+		5AE3051D153F0DD6001FCF20 /* NSImage+CTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+CTAdditions.m"; sourceTree = "<group>"; };
+		5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+CTThemed.h"; sourceTree = "<group>"; };
+		5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+CTThemed.m"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -275,12 +275,12 @@
 			isa = PBXGroup;
 			children = (
 				5AE304CB153F0C80001FCF20 /* Browser Window */,
-				5AE30476153F0585001FCF20 /* Tab */,
+				5AE304E4153F0CEF001FCF20 /* Tab */,
 				5AE304B8153F0B57001FCF20 /* Tab Strip */,
 				5AE304AF153F0AE2001FCF20 /* Toolbar */,
-				5AE30479153F069D001FCF20 /* Buttons */,
-				5AE30478153F067E001FCF20 /* Views */,
-				5AE3047A153F06C5001FCF20 /* Utils */,
+				5AE304F7153F0D39001FCF20 /* Buttons */,
+				5AE30505153F0D85001FCF20 /* Views */,
+				5AE30504153F0D6E001FCF20 /* Utils */,
 				3A3ED97D1225E116009E2908 /* ChromiumTabs.h */,
 				256AC3F00F4B6AF500CF3369 /* prefix.pch */,
 				3A3ED7071225D7A6009E2908 /* build_config.h */,
@@ -429,65 +429,6 @@
 			path = "simple-app";
 			sourceTree = "<group>";
 		};
-		5AE30476153F0585001FCF20 /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				3A39270A1221C566006D8305 /* CTTabView.h */,
-				3A39270B1221C566006D8305 /* CTTabView.m */,
-				3A286E8C1222C63D00F1BB78 /* CTTabControllerTarget.h */,
-				3A3921F11221AF58006D8305 /* CTTabController.h */,
-				3A3921F21221AF58006D8305 /* CTTabController.m */,
-				3A236D9E1223375D00D21E66 /* CTTabContentsController.h */,
-				3A236D9F1223375D00D21E66 /* CTTabContentsController.m */,
-				3AEE19521222DDEB009DA438 /* CTTabContents.h */,
-				3AEE19531222DDEB009DA438 /* CTTabContents.m */,
-			);
-			name = Tab;
-			sourceTree = "<group>";
-		};
-		5AE30478153F067E001FCF20 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				3A286FE71222D53500F1BB78 /* ThrobberView.h */,
-				3A286FE81222D53500F1BB78 /* ThrobberView.m */,
-				3A3927111221C596006D8305 /* BackgroundGradientView.h */,
-				3A3927121221C596006D8305 /* BackgroundGradientView.m */,
-				3A1CF98712235CEE008A3B8C /* FastResizeView.h */,
-				3A1CF98812235CEE008A3B8C /* FastResizeView.m */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		5AE30479153F069D001FCF20 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				3A3921ED1221AF58006D8305 /* HoverButton.h */,
-				3A3921EE1221AF58006D8305 /* HoverButton.m */,
-				3A3921EF1221AF58006D8305 /* HoverCloseButton.h */,
-				3A3921F01221AF58006D8305 /* HoverCloseButton.m */,
-				3A236DD71223414F00D21E66 /* NewTabButton.h */,
-				3A236DD81223414F00D21E66 /* NewTabButton.m */,
-			);
-			name = Buttons;
-			sourceTree = "<group>";
-		};
-		5AE3047A153F06C5001FCF20 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				3A3EDA9B1225EF84009E2908 /* CTUtil.h */,
-				3A3EDA9C1225EF84009E2908 /* CTUtil.m */,
-				3A3EDAF21225FBFF009E2908 /* NSImage+CTAdditions.h */,
-				3A3EDAF31225FBFF009E2908 /* NSImage+CTAdditions.m */,
-				3A92902112294CDC00DA7E43 /* NSWindow+CTThemed.h */,
-				3A92902212294CDC00DA7E43 /* NSWindow+CTThemed.m */,
-				3A286FC01222D10700F1BB78 /* URLDropTarget.h */,
-				3A286FC11222D10700F1BB78 /* URLDropTarget.m */,
-				3A3921DA1221AA4B006D8305 /* CTPageTransition.c */,
-				3A3921DB1221AA4B006D8305 /* CTPageTransition.h */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
 		5AE304AF153F0AE2001FCF20 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +474,65 @@
 			path = "Browser Window";
 			sourceTree = "<group>";
 		};
+		5AE304E4153F0CEF001FCF20 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				5AE304E5153F0CF7001FCF20 /* CTTabContents.h */,
+				5AE304E6153F0CF7001FCF20 /* CTTabContents.m */,
+				5AE304E9153F0D01001FCF20 /* CTTabContentsController.h */,
+				5AE304EA153F0D01001FCF20 /* CTTabContentsController.m */,
+				5AE304EB153F0D01001FCF20 /* CTTabController.h */,
+				5AE304EC153F0D01001FCF20 /* CTTabController.m */,
+				5AE304ED153F0D01001FCF20 /* CTTabControllerTarget.h */,
+				5AE304EE153F0D01001FCF20 /* CTTabView.h */,
+				5AE304EF153F0D01001FCF20 /* CTTabView.m */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		5AE304F7153F0D39001FCF20 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				5AE304F8153F0D41001FCF20 /* HoverButton.h */,
+				5AE304F9153F0D41001FCF20 /* HoverButton.m */,
+				5AE304FA153F0D41001FCF20 /* HoverCloseButton.h */,
+				5AE304FB153F0D41001FCF20 /* HoverCloseButton.m */,
+				5AE304FC153F0D41001FCF20 /* NewTabButton.h */,
+				5AE304FD153F0D41001FCF20 /* NewTabButton.m */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		5AE30504153F0D6E001FCF20 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5AE30512153F0DB2001FCF20 /* URLDropTarget.h */,
+				5AE30513153F0DB2001FCF20 /* URLDropTarget.m */,
+				5AE30514153F0DB2001FCF20 /* CTPageTransition.c */,
+				5AE30515153F0DB2001FCF20 /* CTPageTransition.h */,
+				5AE3051A153F0DD6001FCF20 /* CTUtil.h */,
+				5AE3051B153F0DD6001FCF20 /* CTUtil.m */,
+				5AE3051C153F0DD6001FCF20 /* NSImage+CTAdditions.h */,
+				5AE3051D153F0DD6001FCF20 /* NSImage+CTAdditions.m */,
+				5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */,
+				5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		5AE30505153F0D85001FCF20 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */,
+				5AE30507153F0D8E001FCF20 /* BackgroundGradientView.m */,
+				5AE30508153F0D8E001FCF20 /* FastResizeView.h */,
+				5AE30509153F0D8E001FCF20 /* FastResizeView.m */,
+				5AE3050A153F0D8E001FCF20 /* ThrobberView.h */,
+				5AE3050B153F0D8E001FCF20 /* ThrobberView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -542,22 +542,6 @@
 			files = (
 				3A3EDACF1225FACA009E2908 /* ChromiumTabs.h in Headers */,
 				3A928F991228648F00DA7E43 /* common.h in Headers */,
-				3A9292A21229D43300DA7E43 /* CTUtil.h in Headers */,
-				3A9291981229BEB600DA7E43 /* CTPageTransition.h in Headers */,
-				3A3EDAD51225FACA009E2908 /* CTTabContents.h in Headers */,
-				3A928BDB1226F81600DA7E43 /* CTTabView.h in Headers */,
-				3A928BDC1226F81600DA7E43 /* CTTabController.h in Headers */,
-				3A928BDD1226F81600DA7E43 /* CTTabControllerTarget.h in Headers */,
-				3A928BDE1226F81600DA7E43 /* CTTabContentsController.h in Headers */,
-				3A3EDAF41225FBFF009E2908 /* NSImage+CTAdditions.h in Headers */,
-				3A92902312294CDC00DA7E43 /* NSWindow+CTThemed.h in Headers */,
-				3A9291A31229BEE900DA7E43 /* ThrobberView.h in Headers */,
-				3A9291A41229BEE900DA7E43 /* URLDropTarget.h in Headers */,
-				3A9291A51229BEE900DA7E43 /* BackgroundGradientView.h in Headers */,
-				3A9291A61229BEE900DA7E43 /* HoverButton.h in Headers */,
-				3A9291A71229BEE900DA7E43 /* HoverCloseButton.h in Headers */,
-				3A9291A81229BEE900DA7E43 /* NewTabButton.h in Headers */,
-				3A9291A91229BEE900DA7E43 /* FastResizeView.h in Headers */,
 				3A9291AA1229BF0100DA7E43 /* NSPasteboard+Utils.h in Headers */,
 				3A9291AB1229BF0100DA7E43 /* NSScreen+Utils.h in Headers */,
 				3A9291AC1229BF0100DA7E43 /* NSString+Utils.h in Headers */,
@@ -581,6 +565,22 @@
 				5AE304DC153F0C8C001FCF20 /* CTBrowserWindow.h in Headers */,
 				5AE304DE153F0C8C001FCF20 /* CTBrowserWindowController.h in Headers */,
 				5AE304E2153F0C9B001FCF20 /* CTTabWindowController.h in Headers */,
+				5AE304E7153F0CF7001FCF20 /* CTTabContents.h in Headers */,
+				5AE304F0153F0D01001FCF20 /* CTTabContentsController.h in Headers */,
+				5AE304F2153F0D01001FCF20 /* CTTabController.h in Headers */,
+				5AE304F4153F0D01001FCF20 /* CTTabControllerTarget.h in Headers */,
+				5AE304F5153F0D01001FCF20 /* CTTabView.h in Headers */,
+				5AE304FE153F0D41001FCF20 /* HoverButton.h in Headers */,
+				5AE30500153F0D41001FCF20 /* HoverCloseButton.h in Headers */,
+				5AE30502153F0D41001FCF20 /* NewTabButton.h in Headers */,
+				5AE3050C153F0D8E001FCF20 /* BackgroundGradientView.h in Headers */,
+				5AE3050E153F0D8E001FCF20 /* FastResizeView.h in Headers */,
+				5AE30510153F0D8E001FCF20 /* ThrobberView.h in Headers */,
+				5AE30516153F0DB2001FCF20 /* URLDropTarget.h in Headers */,
+				5AE30519153F0DB2001FCF20 /* CTPageTransition.h in Headers */,
+				5AE30520153F0DD6001FCF20 /* CTUtil.h in Headers */,
+				5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */,
+				5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,18 +691,6 @@
 			files = (
 				3A3ED9C11225E32A009E2908 /* common.c in Sources */,
 				3A3ED9C21225E32A009E2908 /* common.m in Sources */,
-				3A3ED9C41225E32A009E2908 /* HoverCloseButton.m in Sources */,
-				3A3ED9C51225E32A009E2908 /* HoverButton.m in Sources */,
-				3A3ED9C71225E32A009E2908 /* CTPageTransition.c in Sources */,
-				3A3ED9C81225E32A009E2908 /* BackgroundGradientView.m in Sources */,
-				3A3ED9C91225E32A009E2908 /* CTTabController.m in Sources */,
-				3A3ED9CA1225E32A009E2908 /* CTTabView.m in Sources */,
-				3A3ED9CE1225E32A009E2908 /* URLDropTarget.m in Sources */,
-				3A3ED9CF1225E32A009E2908 /* ThrobberView.m in Sources */,
-				3A3ED9D01225E32A009E2908 /* CTTabContents.m in Sources */,
-				3A3ED9D31225E32A009E2908 /* CTTabContentsController.m in Sources */,
-				3A3ED9D51225E32A009E2908 /* NewTabButton.m in Sources */,
-				3A3ED9D81225E32A009E2908 /* FastResizeView.m in Sources */,
 				3A3ED9DB1225E32A009E2908 /* GTMNSAnimation+Duration.m in Sources */,
 				3A3ED9DC1225E32A009E2908 /* GTMNSColor+Luminance.m in Sources */,
 				3A3ED9DE1225E32A009E2908 /* NSBezierPath+MCAdditions.m in Sources */,
@@ -712,9 +700,6 @@
 				3A3ED9E21225E32A009E2908 /* NSURL+Utils.m in Sources */,
 				3A3ED9E31225E32A009E2908 /* NSWorkspace+Utils.m in Sources */,
 				3A3ED9E51225E32A009E2908 /* GTMFadeTruncatingTextFieldCell.m in Sources */,
-				3A3EDA9E1225EF84009E2908 /* CTUtil.m in Sources */,
-				3A3EDAF51225FBFF009E2908 /* NSImage+CTAdditions.m in Sources */,
-				3A92902412294CDC00DA7E43 /* NSWindow+CTThemed.m in Sources */,
 				5AE304B5153F0AFA001FCF20 /* CTToolbarController.m in Sources */,
 				5AE304B7153F0AFA001FCF20 /* CTToolbarView.m in Sources */,
 				5AE304BE153F0B78001FCF20 /* CTTabStripController.m in Sources */,
@@ -726,6 +711,21 @@
 				5AE304DD153F0C8C001FCF20 /* CTBrowserWindow.m in Sources */,
 				5AE304DF153F0C8C001FCF20 /* CTBrowserWindowController.m in Sources */,
 				5AE304E3153F0C9B001FCF20 /* CTTabWindowController.m in Sources */,
+				5AE304E8153F0CF7001FCF20 /* CTTabContents.m in Sources */,
+				5AE304F1153F0D01001FCF20 /* CTTabContentsController.m in Sources */,
+				5AE304F3153F0D01001FCF20 /* CTTabController.m in Sources */,
+				5AE304F6153F0D01001FCF20 /* CTTabView.m in Sources */,
+				5AE304FF153F0D41001FCF20 /* HoverButton.m in Sources */,
+				5AE30501153F0D41001FCF20 /* HoverCloseButton.m in Sources */,
+				5AE30503153F0D41001FCF20 /* NewTabButton.m in Sources */,
+				5AE3050D153F0D8E001FCF20 /* BackgroundGradientView.m in Sources */,
+				5AE3050F153F0D8E001FCF20 /* FastResizeView.m in Sources */,
+				5AE30511153F0D8E001FCF20 /* ThrobberView.m in Sources */,
+				5AE30517153F0DB2001FCF20 /* URLDropTarget.m in Sources */,
+				5AE30518153F0DB2001FCF20 /* CTPageTransition.c in Sources */,
+				5AE30521153F0DD6001FCF20 /* CTUtil.m in Sources */,
+				5AE30523153F0DD6001FCF20 /* NSImage+CTAdditions.m in Sources */,
+				5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
