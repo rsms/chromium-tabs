@@ -1,4 +1,5 @@
 #import "CTBrowser.h"
+#import "CTBrowserWindow.h"
 #import "CTBrowserWindowController.h"
 //#import "CTTabStripModel.h"
 #import "CTTabContents.h"
@@ -38,8 +39,7 @@
 
 static CTBrowserWindowController* _currentMain = nil; // weak
 
-@implementation CTBrowserWindowController
-
+@implementation CTBrowserWindowController 
 @synthesize tabStripController = tabStripController_;
 @synthesize toolbarController = toolbarController_;
 @synthesize browser = browser_;
@@ -211,11 +211,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	//	[browser_.tabStripModel RemoveObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super finalize];
-}
-
-
-- (BOOL)isFullscreen {
-	return NO; // TODO
 }
 
 - (BOOL)hasToolbar {
@@ -1049,6 +1044,23 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 //- (void)tabStripEmpty {
 //  [self close];
 //}
+@end
 
+@implementation CTBrowserWindowController (FullScreen)
+// On Lion, this method is called by either the Lion fullscreen button or the
+// "Enter Full Screen" menu item.  On Snow Leopard, this function is never
+// called by the UI directly, but it provides the implementation for
+// |-setPresentationMode:|.
+- (void)setFullscreen:(BOOL)fullscreen {
+	if (fullscreen == [self isFullscreen])
+		return;
+	
+	enteredPresentationModeFromFullscreen_ = YES;
+	[self.window toggleFullScreen:nil];
+}
+
+- (BOOL)isFullscreen {
+	return ([[self window] styleMask] & NSFullScreenWindowMask) || enteringFullscreen_;
+}
 
 @end
