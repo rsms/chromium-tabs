@@ -18,9 +18,9 @@
 // 3. Implement createToolbarController in your CTBrowser subclass to initialize
 //    and return a CTToolbarController based on your nib.
 //
-@interface CTToolbarController : NSViewController <URLDropTargetController> {
-	CTBrowser* browser_;  // weak, one per window
-}
+@interface CTToolbarController : NSViewController <URLDropTargetController>
+
+@property (nonatomic, readonly) CTBrowser *browser;
 
 - (id)initWithNibName:(NSString*)nibName
                bundle:(NSBundle*)bundle

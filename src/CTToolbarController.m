@@ -9,7 +9,11 @@
 - (void)toolbarFrameChanged;
 @end
 
-@implementation CTToolbarController
+@implementation CTToolbarController {
+	CTBrowser* browser_;  // weak, one per window
+}
+
+@synthesize browser = browser_;
 
 - (id)initWithNibName:(NSString*)nibName
                bundle:(NSBundle*)bundle
