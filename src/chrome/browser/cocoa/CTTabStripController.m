@@ -484,7 +484,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 + (CGFloat)defaultIndentForControls {
 	// Default indentation leaves enough room so tabs don't overlap with the
 	// window controls.
-	return 64.0;
+//	return 64.0;
+	return 70.0;
 }
 
 // Finds the CTTabContentsController associated with the given index into the tab
@@ -1009,6 +1010,10 @@ const NSTimeInterval kAnimationDuration = 0.125;
 // except when it's the first time.
 - (void)layoutTabs {
 	[self layoutTabsWithAnimation:initialLayoutComplete_ regenerateSubviews:YES];
+}
+
+- (void)layoutTabsWithoutAnimation {
+	[self layoutTabsWithAnimation:NO regenerateSubviews:YES];
 }
 
 // Handles setting the title of the tab based on the given |contents|. Uses

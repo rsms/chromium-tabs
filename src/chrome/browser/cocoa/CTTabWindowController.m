@@ -4,7 +4,6 @@
 
 #import "CTTabWindowController.h"
 #import "CTTabStripView.h"
-#import "FastResizeView.h"
 
 @interface CTTabWindowController(PRIVATE)
 - (void)setUseOverlay:(BOOL)useOverlay;
@@ -23,7 +22,7 @@
 
 @implementation CTTabWindowController {
 @private
-	IBOutlet FastResizeView* tabContentArea_;
+	IBOutlet NSView* tabContentArea_;
 	// TODO(pinkerton): Figure out a better way to initialize one or the other
 	// w/out needing both to be in the nib.
 	IBOutlet CTTabStripView* topTabStripView_;
