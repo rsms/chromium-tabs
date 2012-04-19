@@ -49,6 +49,12 @@
 // versions.
 - (void)setPresentationModeInternal:(BOOL)presentationMode
                       forceDropdown:(BOOL)forceDropdown;
+
+// Allows/prevents bar visibility locks and releases from updating the visual
+// state. Enabling makes changes instantaneously; disabling cancels any
+// timers/animation.
+- (void)enableBarVisibilityUpdates;
+- (void)disableBarVisibilityUpdates;
 @end
 
 @implementation NSDocumentController (CTBrowserWindowControllerAdditions)
@@ -168,6 +174,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	// When using NSDocuments
 	[self setShouldCloseDocument:YES];
 	
+    // Allow bar visibility to be changed.
+    [self enableBarVisibilityUpdates];
+	
+    // Force a relayout of all the various bars.
 	[self layoutSubviews];
 	
 	initializing_ = NO;
@@ -1251,6 +1261,28 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	DCHECK(owner);
 	DCHECK(barVisibilityLocks_);
 	return [barVisibilityLocks_ containsObject:owner];
+}
+
+- (void)enableBarVisibilityUpdates {
+	// Early escape if there's nothing to do.
+	if (barVisibilityUpdatesEnabled_)
+		return;
+	
+	barVisibilityUpdatesEnabled_ = YES;
+	
+	if ([barVisibilityLocks_ count])
+		[presentationModeController_ ensureOverlayShownWithAnimation:NO delay:NO];
+	else
+		[presentationModeController_ ensureOverlayHiddenWithAnimation:NO delay:NO];
+}
+
+- (void)disableBarVisibilityUpdates {
+	// Early escape if there's nothing to do.
+	if (!barVisibilityUpdatesEnabled_)
+		return;
+	
+	barVisibilityUpdatesEnabled_ = NO;
+	[presentationModeController_ cancelAnimationAndTimers];
 }
 
 - (void)lockBarVisibilityForOwner:(id)owner
