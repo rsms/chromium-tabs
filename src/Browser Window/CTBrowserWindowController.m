@@ -438,8 +438,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
-- (NSView*)selectedTabView {
-	return [tabStripController_ selectedTabView];
+- (NSView*)activeTabView {
+	return [tabStripController_ activeTabView];
 }
 
 // Creates a new window by pulling the given tab out and placing it in
@@ -520,19 +520,16 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 - (void)insertPlaceholderForTab:(CTTabView*)tab
-                          frame:(NSRect)frame
-				  yStretchiness:(CGFloat)yStretchiness {
-	[super insertPlaceholderForTab:tab frame:frame yStretchiness:yStretchiness];
+                          frame:(NSRect)frame {
+	[super insertPlaceholderForTab:tab frame:frame];
 	[tabStripController_ insertPlaceholderForTab:tab
-										   frame:frame
-								   yStretchiness:yStretchiness];
+										   frame:frame];
 }
 
 - (void)removePlaceholder {
 	[super removePlaceholder];
 	[tabStripController_ insertPlaceholderForTab:nil
-										   frame:NSZeroRect
-								   yStretchiness:0];
+										   frame:NSZeroRect];
 }
 
 - (BOOL)tabDraggingAllowed {

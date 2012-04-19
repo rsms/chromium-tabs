@@ -30,9 +30,6 @@ const NSTimeInterval kAlertHideDuration = 0.4;
 // increasing/decreasing).
 const NSTimeInterval kGlowUpdateInterval = 0.025;
 
-const CGFloat kTearDistance = 36.0;
-const NSTimeInterval kTearDuration = 0.333;
-
 // This is used to judge whether the mouse has moved during rapid closure; if it
 // has moved less than the threshold, we want to close the tab.
 const CGFloat kRapidCloseDist = 2.5;
@@ -70,28 +67,9 @@ const CGFloat kRapidCloseDist = 2.5;
 	
 	NSPoint hoverPoint_;  // Current location of hover in view coords.
 	
-	// All following variables are valid for the duration of a drag.
-	// These are released on mouseUp:
-	BOOL moveWindowOnDrag_;  // Set if the only tab of a window is dragged.
-	BOOL tabWasDragged_;  // Has the tab been dragged?
-	BOOL draggingWithinTabStrip_;  // Did drag stay in the current tab strip?
-	BOOL chromeIsVisible_;
+	// The location of the current mouseDown event in window coordinates.
+	NSPoint mouseDownPoint_;
 	
-	NSTimeInterval tearTime_;  // Time since tear happened
-	NSPoint tearOrigin_;  // Origin of the tear rect
-	NSPoint dragOrigin_;  // Origin point of the drag
-	// TODO(alcor): these references may need to be strong to avoid crashes
-	// due to JS closing windows
-	CTTabWindowController* sourceController_;  // weak. controller starting the drag
-	NSWindow* sourceWindow_;  // weak. The window starting the drag
-	NSRect sourceWindowFrame_;
-	NSRect sourceTabFrame_;
-	
-	CTTabWindowController* draggedController_;  // weak. Controller being dragged.
-	NSWindow* dragWindow_;  // weak. The window being dragged
-	NSWindow* dragOverlay_;  // weak. The overlay being dragged
-	
-	CTTabWindowController* targetController_;  // weak. Controller being targeted
 	NSCellStateValue state_;
 }
 
@@ -100,11 +78,14 @@ const CGFloat kRapidCloseDist = 2.5;
 @synthesize alertAlpha = alertAlpha_;
 @synthesize closing = closing_;
 
++ (CGFloat)insetMultiplier {
+	return kInsetMultiplier;
+}
+
 - (id)initWithFrame:(NSRect)frame {
 	self = [super initWithFrame:frame];
 	if (self) {
 		[self setShowsDivider:NO];
-		// TODO(alcor): register for theming
 	}
 	return self;
 }
@@ -155,7 +136,7 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)mouseExited:(NSEvent*)theEvent {
 	isMouseInside_ = NO;
 	hoverHoldEndTime_ =
-	[NSDate timeIntervalSinceReferenceDate] + kHoverHoldDuration;
+		[NSDate timeIntervalSinceReferenceDate] + kHoverHoldDuration;
 	[self resetLastGlowUpdateTime];
 	[self adjustGlowValue];
 }
@@ -167,95 +148,32 @@ const CGFloat kRapidCloseDist = 2.5;
 // Determines which view a click in our frame actually hit. It's either this
 // view or our child close button.
 - (NSView*)hitTest:(NSPoint)aPoint {
+//	NSPoint viewPoint = [self convertPoint:aPoint fromView:[self superview]];
+//	NSRect frame = [self frame];
+//	
+//	// Reduce the width of the hit rect slightly to remove the overlap
+//	// between adjacent tabs.  The drawing code in TabCell has the top
+//	// corners of the tab inset by height*2/3, so we inset by half of
+//	// that here.  This doesn't completely eliminate the overlap, but it
+//	// works well enough.
+//	NSRect hitRect = NSInsetRect(frame, frame.size.height / 3.0f, 0);
+//	if (![closeButton_ isHidden])
+//		if (NSPointInRect(viewPoint, [closeButton_ frame])) return closeButton_;
+//	if (NSPointInRect(aPoint, hitRect)) return self;
+//	return nil;
 	NSPoint viewPoint = [self convertPoint:aPoint fromView:[self superview]];
-	NSRect frame = [self frame];
+	NSRect rect = [self bounds];
+	NSBezierPath* path = [self bezierPathForRect:rect];
 	
-	// Reduce the width of the hit rect slightly to remove the overlap
-	// between adjacent tabs.  The drawing code in TabCell has the top
-	// corners of the tab inset by height*2/3, so we inset by half of
-	// that here.  This doesn't completely eliminate the overlap, but it
-	// works well enough.
-	NSRect hitRect = NSInsetRect(frame, frame.size.height / 3.0f, 0);
 	if (![closeButton_ isHidden])
 		if (NSPointInRect(viewPoint, [closeButton_ frame])) return closeButton_;
-	if (NSPointInRect(aPoint, hitRect)) return self;
+	if ([path containsPoint:viewPoint]) return self;
 	return nil;
 }
 
 // Returns |YES| if this tab can be torn away into a new window.
 - (BOOL)canBeDragged {
-	if ([self isClosing])
-		return NO;
-	NSWindowController* controller = [sourceWindow_ windowController];
-	if ([controller isKindOfClass:[CTTabWindowController class]]) {
-		CTTabWindowController* realController = (CTTabWindowController*)controller;
-		return [realController isTabDraggable:self];
-	}
-	return YES;
-}
-
-// Returns an array of controllers that could be a drop target, ordered front to
-// back. It has to be of the appropriate class, and visible (obviously). Note
-// that the window cannot be a target for itself.
-- (NSArray*)dropTargetsForController:(CTTabWindowController*)dragController {
-	NSMutableArray* targets = [NSMutableArray array];
-	NSWindow* dragWindow = [dragController window];
-	for (NSWindow* window in [NSApp orderedWindows]) {
-		if (window == dragWindow) continue;
-		if (![window isVisible]) continue;
-		// Skip windows on the wrong space.
-		if ([window respondsToSelector:@selector(isOnActiveSpace)]) {
-			if (![window performSelector:@selector(isOnActiveSpace)])
-				continue;
-		}
-		NSWindowController* controller = [window windowController];
-		if ([controller isKindOfClass:[CTTabWindowController class]]) {
-			CTTabWindowController* realController =
-			(CTTabWindowController*)controller;
-			if ([realController canReceiveFrom:dragController])
-				[targets addObject:controller];
-		}
-	}
-	return targets;
-}
-
-// Call to clear out transient weak references we hold during drags.
-- (void)resetDragControllers {
-	//  ct_objc_xch(&draggedController_, nil);
-	draggedController_ = nil;
-	dragWindow_ = nil;
-	dragOverlay_ = nil;
-	//  ct_objc_xch(&sourceController_, nil);
-	sourceController_ = nil;
-	sourceWindow_ = nil;
-	//ct_objc_xch(&targetController_, nil);
-	targetController_ = nil;
-}
-
-// Sets whether the window background should be visible or invisible when
-// dragging a tab. The background should be invisible when the mouse is over a
-// potential drop target for the tab (the tab strip). It should be visible when
-// there's no drop target so the window looks more fully realized and ready to
-// become a stand-alone window.
-- (void)setWindowBackgroundVisibility:(BOOL)shouldBeVisible {
-	if (chromeIsVisible_ == shouldBeVisible)
-		return;
-	
-	// There appears to be a race-condition in CoreAnimation where if we use
-	// animators to set the alpha values, we can't guarantee that we cancel them.
-	// This has the side effect of sometimes leaving the dragged window
-	// translucent or invisible. As a result, don't animate the alpha change.
-	[[draggedController_ overlayWindow] setAlphaValue:1.0];
-	if (targetController_) {
-		[dragWindow_ setAlphaValue:0.0];
-		[[draggedController_ overlayWindow] setHasShadow:YES];
-		[[targetController_ window] makeMainWindow];
-	} else {
-		[dragWindow_ setAlphaValue:0.5];
-		[[draggedController_ overlayWindow] setHasShadow:NO];
-		[[draggedController_ window] makeMainWindow];
-	}
-	chromeIsVisible_ = shouldBeVisible;
+	return [tabController_ tabCanBeDragged:tabController_];
 }
 
 // Handle clicks and drags in this button. We get here because we have
@@ -264,22 +182,55 @@ const CGFloat kRapidCloseDist = 2.5;
 	if ([self isClosing])
 		return;
 	
-	NSPoint downLocation = [theEvent locationInWindow];
+	// Record the point at which this event happened. This is used by other mouse
+	// events that are dispatched from |-maybeStartDrag::|.
+	mouseDownPoint_ = [theEvent locationInWindow];
 	
 	// Record the state of the close button here, because selecting the tab will
 	// unhide it.
-	BOOL closeButtonActive = [closeButton_ isHidden] ? NO : YES;
+	BOOL closeButtonActive = ![closeButton_ isHidden];
 	
 	// During the tab closure animation (in particular, during rapid tab closure),
 	// we may get incorrectly hit with a mouse down. If it should have gone to the
 	// close button, we send it there -- it should then track the mouse, so we
 	// don't have to worry about mouse ups.
 	if (closeButtonActive && [tabController_ inRapidClosureMode]) {
-		NSPoint hitLocation = [[self superview] convertPoint:downLocation
+		NSPoint hitLocation = [[self superview] convertPoint:mouseDownPoint_
 													fromView:nil];
 		if ([self hitTest:hitLocation] == closeButton_) {
 			[closeButton_ mouseDown:theEvent];
 			return;
+		}
+	}
+	
+	// Try to initiate a drag. This will spin a custom event loop and may
+	// dispatch other mouse events.
+	[tabController_ maybeStartDrag:theEvent forTab:tabController_];
+	
+	// The custom loop has ended, so clear the point.
+	mouseDownPoint_ = NSZeroPoint;
+}
+
+- (void)mouseUp:(NSEvent*)theEvent {
+	// Check for rapid tab closure.
+	if ([theEvent type] == NSLeftMouseUp) {
+		NSPoint upLocation = [theEvent locationInWindow];
+		CGFloat dx = upLocation.x - mouseDownPoint_.x;
+		CGFloat dy = upLocation.y - mouseDownPoint_.y;
+		
+		// During rapid tab closure (mashing tab close buttons), we may get hit
+		// with a mouse down. As long as the mouse up is over the close button,
+		// and the mouse hasn't moved too much, we close the tab.
+		if (![closeButton_ isHidden] &&
+			(dx*dx + dy*dy) <= kRapidCloseDist*kRapidCloseDist &&
+			[tabController_ inRapidClosureMode]) {
+			NSPoint hitLocation =
+			[[self superview] convertPoint:[theEvent locationInWindow]
+								  fromView:nil];
+			if ([self hitTest:hitLocation] == closeButton_) {
+				[tabController_ closeTab:self];
+				return;
+			}
 		}
 	}
 	
@@ -288,368 +239,12 @@ const CGFloat kRapidCloseDist = 2.5;
 		[[tabController_ target] performSelector:[tabController_ action]
 									  withObject:self];
 	
-	[self resetDragControllers];
-	
-	// Resolve overlay back to original window.
-	sourceWindow_ = [self window];
-	if ([sourceWindow_ isKindOfClass:[NSPanel class]]) {
-		sourceWindow_ = [sourceWindow_ parentWindow];
-	}
-	
-	sourceWindowFrame_ = [sourceWindow_ frame];
-	sourceTabFrame_ = [self frame];
-	//  ct_objc_xch(&sourceController_, [sourceWindow_ windowController]);
-	sourceController_ = [sourceWindow_ windowController];
-	sourceController_.didShowNewTabButtonBeforeTemporalAction = sourceController_.showsNewTabButton;
-	tabWasDragged_ = NO;
-	tearTime_ = 0.0;
-	draggingWithinTabStrip_ = YES;
-	chromeIsVisible_ = NO;
-	
-	// If there's more than one potential window to be a drop target, we want to
-	// treat a drag of a tab just like dragging around a tab that's already
-	// detached. Note that unit tests might have |-numberOfTabs| reporting zero
-	// since the model won't be fully hooked up. We need to be prepared for that
-	// and not send them into the "magnetic" codepath.
-	NSArray* targets = [self dropTargetsForController:sourceController_];
-	moveWindowOnDrag_ =
-	([sourceController_ numberOfTabs] < 2 && ![targets count]) ||
-	![self canBeDragged] ||
-	![sourceController_ tabDraggingAllowed];
-	// If we are dragging a tab, a window with a single tab should immediately
-	// snap off and not drag within the tab strip.
-	if (!moveWindowOnDrag_)
-		draggingWithinTabStrip_ = [sourceController_ numberOfTabs] > 1;
-	
-	if (!draggingWithinTabStrip_) {
-		[sourceController_ willStartTearingTab];
-	}
-	
-	dragOrigin_ = [NSEvent mouseLocation];
-	
-	// If the tab gets torn off, the tab controller will be removed from the tab
-	// strip and then deallocated. This will also result in *us* being
-	// deallocated. Both these are bad, so we prevent this by retaining the
-	// controller.
-	CTTabController* controller = tabController_ ;
-	
-	// Because we move views between windows, we need to handle the event loop
-	// ourselves. Ideally we should use the standard event loop.
-	while (1) {
-		theEvent =
-        [NSApp nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask
-                           untilDate:[NSDate distantFuture]
-                              inMode:NSDefaultRunLoopMode dequeue:YES];
-		NSEventType type = [theEvent type];
-		if (type == NSLeftMouseDragged) {
-			[self mouseDragged:theEvent];
-		} else if (type == NSLeftMouseUp) {
-			NSPoint upLocation = [theEvent locationInWindow];
-			CGFloat dx = upLocation.x - downLocation.x;
-			CGFloat dy = upLocation.y - downLocation.y;
-			
-			// During rapid tab closure (mashing tab close buttons), we may get hit
-			// with a mouse down. As long as the mouse up is over the close button,
-			// and the mouse hasn't moved too much, we close the tab.
-			if (closeButtonActive &&
-				(dx*dx + dy*dy) <= kRapidCloseDist*kRapidCloseDist &&
-				[controller inRapidClosureMode]) {
-				NSPoint hitLocation =
-				[[self superview] convertPoint:[theEvent locationInWindow]
-									  fromView:nil];
-				if ([self hitTest:hitLocation] == closeButton_) {
-					[controller closeTab:self];
-					break;
-				}
-			}
-			
-			[self mouseUp:theEvent];
-			break;
-		} else {
-			// TODO(viettrungluu): [crbug.com/23830] We can receive right-mouse-ups
-			// (and maybe even others?) for reasons I don't understand. So we
-			// explicitly check for both events we're expecting, and log others. We
-			// should figure out what's going on.
-			WLOG("Spurious event received of type %d", type);
-		}
-	}
-}
-
-- (void)mouseDragged:(NSEvent*)theEvent {
-	// Special-case this to keep the logic below simpler.
-	if (moveWindowOnDrag_) {
-		if ([sourceController_ windowMovementAllowed]) {
-			NSPoint thisPoint = [NSEvent mouseLocation];
-			NSPoint origin = sourceWindowFrame_.origin;
-			origin.x += (thisPoint.x - dragOrigin_.x);
-			origin.y += (thisPoint.y - dragOrigin_.y);
-			[sourceWindow_ setFrameOrigin:NSMakePoint(origin.x, origin.y)];
-		}  // else do nothing.
-		return;
-	}
-	
-	// First, go through the magnetic drag cycle. We break out of this if
-	// "stretchiness" ever exceeds a set amount.
-	tabWasDragged_ = YES;
-	
-	if (draggingWithinTabStrip_) {
-		NSPoint thisPoint = [NSEvent mouseLocation];
-		CGFloat stretchiness = thisPoint.y - dragOrigin_.y;
-		stretchiness = copysign(sqrtf(fabs(stretchiness))/sqrtf(kTearDistance),
-								stretchiness) / 2.0;
-		CGFloat offset = thisPoint.x - dragOrigin_.x;
-		if (fabsf(offset) > 100) stretchiness = 0;
-		[sourceController_ insertPlaceholderForTab:self
-											 frame:NSOffsetRect(sourceTabFrame_,
-																offset, 0)
-									 yStretchiness:stretchiness];
-		// Check that we haven't pulled the tab too far to start a drag. This
-		// can include either pulling it too far down, or off the side of the tab
-		// strip that would cause it to no longer be fully visible.
-		BOOL stillVisible = [sourceController_ isTabFullyVisible:self];
-		CGFloat tearForce = fabs(thisPoint.y - dragOrigin_.y);
-		if ([sourceController_ tabTearingAllowed] &&
-			(tearForce > kTearDistance || !stillVisible)) {
-			draggingWithinTabStrip_ = NO;
-			[sourceController_ willStartTearingTab];
-			// When you finally leave the strip, we treat that as the origin.
-			dragOrigin_.x = thisPoint.x;
-		} else {
-			// Still dragging within the tab strip, wait for the next drag event.
-			return;
-		}
-	}
-	
-	// Do not start dragging until the user has "torn" the tab off by
-	// moving more than 3 pixels.
-	NSDate* targetDwellDate = nil;  // The date this target was first chosen.
-	
-	NSPoint thisPoint = [NSEvent mouseLocation];
-	
-	// Iterate over possible targets checking for the one the mouse is in.
-	// If the tab is just in the frame, bring the window forward to make it
-	// easier to drop something there. If it's in the tab strip, set the new
-	// target so that it pops into that window. We can't cache this because we
-	// need the z-order to be correct.
-	NSArray* targets = [self dropTargetsForController:draggedController_];
-	CTTabWindowController* newTarget = nil;
-	for (CTTabWindowController* target in targets) {
-		NSRect windowFrame = [[target window] frame];
-		if (NSPointInRect(thisPoint, windowFrame)) {
-			[[target window] orderFront:self];
-			NSRect tabStripFrame = [[target tabStripView] frame];
-			tabStripFrame.origin = [[target window]
-									convertBaseToScreen:tabStripFrame.origin];
-			if (NSPointInRect(thisPoint, tabStripFrame)) {
-				newTarget = target;
-			}
-			break;
-		}
-	}
-	
-	// If we're now targeting a new window, re-layout the tabs in the old
-	// target and reset how long we've been hovering over this new one.
-	if (targetController_ != newTarget) {
-		targetDwellDate = [NSDate date];
-		[targetController_ removePlaceholder];
-		//    ct_objc_xch(&targetController_, newTarget);
-		targetController_ = newTarget;
-		if (!newTarget) {
-			tearTime_ = [NSDate timeIntervalSinceReferenceDate];
-			tearOrigin_ = [dragWindow_ frame].origin;
-		}
-	}
-	
-	// Create or identify the dragged controller.
-	if (!draggedController_) {
-		// Get rid of any placeholder remaining in the original source window.
-		[sourceController_ removePlaceholder];
-		
-		// Detach from the current window and put it in a new window. If there are
-		// no more tabs remaining after detaching, the source window is about to
-		// go away (it's been autoreleased) so we need to ensure we don't reference
-		// it any more. In that case the new controller becomes our source
-		// controller.
-		//    ct_objc_xch(&draggedController_,
-		//                [sourceController_ detachTabToNewWindow:self]);
-		draggedController_ = [sourceController_ detachTabToNewWindow:self];
-		dragWindow_ = [draggedController_ window];
-		[dragWindow_ setAlphaValue:0.0];
-		if (![sourceController_ hasLiveTabs]) {
-			//      ct_objc_xch(&sourceController_, draggedController_);
-			sourceController_ = draggedController_;
-			sourceWindow_ = dragWindow_;
-		}
-		
-		// If dragging the tab only moves the current window, do not show overlay
-		// so that sheets stay on top of the window.
-		// Bring the target window to the front and make sure it has a border.
-		[dragWindow_ setLevel:NSFloatingWindowLevel];
-		[dragWindow_ setHasShadow:YES];
-		[dragWindow_ orderFront:nil];
-		[dragWindow_ makeMainWindow];
-		[draggedController_ showOverlay];
-		dragOverlay_ = [draggedController_ overlayWindow];
-		// Force the new tab button to be hidden. We'll reset it on mouse up.
-		draggedController_.didShowNewTabButtonBeforeTemporalAction =
-        draggedController_.showsNewTabButton;
-		draggedController_.showsNewTabButton = NO;
-		tearTime_ = [NSDate timeIntervalSinceReferenceDate];
-		tearOrigin_ = sourceWindowFrame_.origin;
-	}
-	
-	// TODO(pinkerton): http://crbug.com/25682 demonstrates a way to get here by
-	// some weird circumstance that doesn't first go through mouseDown:. We
-	// really shouldn't go any farther.
-	if (!draggedController_ || !sourceController_)
-		return;
-	
-	// When the user first tears off the window, we want slide the window to
-	// the current mouse location (to reduce the jarring appearance). We do this
-	// by calling ourselves back with additional mouseDragged calls (not actual
-	// events). |tearProgress| is a normalized measure of how far through this
-	// tear "animation" (of length kTearDuration) we are and has values [0..1].
-	// We use sqrt() so the animation is non-linear (slow down near the end
-	// point).
-	NSTimeInterval tearProgress =
-	[NSDate timeIntervalSinceReferenceDate] - tearTime_;
-	tearProgress /= kTearDuration;  // Normalize.
-	tearProgress = sqrtf(MAX(MIN(tearProgress, 1.0), 0.0));
-	
-	// Move the dragged window to the right place on the screen.
-	NSPoint origin = sourceWindowFrame_.origin;
-	origin.x += (thisPoint.x - dragOrigin_.x);
-	origin.y += (thisPoint.y - dragOrigin_.y);
-	
-	if (tearProgress < 1) {
-		// If the tear animation is not complete, call back to ourself with the
-		// same event to animate even if the mouse isn't moving. We need to make
-		// sure these get cancelled in mouseUp:.
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		[self performSelector:@selector(mouseDragged:)
-				   withObject:theEvent
-				   afterDelay:1.0f/30.0f];
-		
-		// Set the current window origin based on how far we've progressed through
-		// the tear animation.
-		origin.x = (1 - tearProgress) * tearOrigin_.x + tearProgress * origin.x;
-		origin.y = (1 - tearProgress) * tearOrigin_.y + tearProgress * origin.y;
-	}
-	
-	if (targetController_) {
-		// In order to "snap" two windows of different sizes together at their
-		// toolbar, we can't just use the origin of the target frame. We also have
-		// to take into consideration the difference in height.
-		NSRect targetFrame = [[targetController_ window] frame];
-		NSRect sourceFrame = [dragWindow_ frame];
-		origin.y = NSMinY(targetFrame) +
-		(NSHeight(targetFrame) - NSHeight(sourceFrame));
-	}
-	[dragWindow_ setFrameOrigin:NSMakePoint(origin.x, origin.y)];
-	
-	// If we're not hovering over any window, make the window fully
-	// opaque. Otherwise, find where the tab might be dropped and insert
-	// a placeholder so it appears like it's part of that window.
-	if (targetController_) {
-		if (![[targetController_ window] isKeyWindow]) {
-			// && ([targetDwellDate timeIntervalSinceNow] < -REQUIRED_DWELL)) {
-			[[targetController_ window] orderFront:nil];
-			targetDwellDate = nil;
-		}
-		
-		// Compute where placeholder should go and insert it into the
-		// destination tab strip.
-		CTTabView* draggedTabView = (CTTabView*)[draggedController_ selectedTabView];
-		NSRect tabFrame = [draggedTabView frame];
-		tabFrame.origin = [dragWindow_ convertBaseToScreen:tabFrame.origin];
-		tabFrame.origin = [[targetController_ window]
-						   convertScreenToBase:tabFrame.origin];
-		tabFrame = [[targetController_ tabStripView]
-					convertRect:tabFrame fromView:nil];
-		[targetController_ insertPlaceholderForTab:self
-											 frame:tabFrame
-									 yStretchiness:0];
-		[targetController_ layoutTabs];
-	} else {
-		[dragWindow_ makeKeyAndOrderFront:nil];
-	}
-	
-	// Adjust the visibility of the window background. If there is a drop target,
-	// we want to hide the window background so the tab stands out for
-	// positioning. If not, we want to show it so it looks like a new window will
-	// be realized.
-	BOOL chromeShouldBeVisible = targetController_ == nil;
-	[self setWindowBackgroundVisibility:chromeShouldBeVisible];
-}
-
-- (void)mouseUp:(NSEvent*)theEvent {
-	// The drag/click is done. If the user dragged the mouse, finalize the drag
-	// and clean up.
-	
-	// Special-case this to keep the logic below simpler.
-	if (moveWindowOnDrag_)
-		return;
-	
-	// Cancel any delayed -mouseDragged: requests that may still be pending.
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	
-	// TODO(pinkerton): http://crbug.com/25682 demonstrates a way to get here by
-	// some weird circumstance that doesn't first go through mouseDown:. We
-	// really shouldn't go any farther.
-	if (!sourceController_)
-		return;
-	
-	// We are now free to re-display the new tab button in the window we're
-	// dragging. It will show when the next call to -layoutTabs (which happens
-	// indrectly by several of the calls below, such as removing the placeholder).
-	draggedController_.showsNewTabButton =
-	draggedController_.didShowNewTabButtonBeforeTemporalAction;
-	
-	if (draggingWithinTabStrip_) {
-		if (tabWasDragged_) {
-			// Move tab to new location.
-			assert([sourceController_ numberOfTabs]);
-			[sourceController_ moveTabView:[sourceController_ selectedTabView]
-							fromController:nil];
-		}
-	} else {
-		// call willEndTearingTab before potentially moving the tab so the same
-		// controller which got willStartTearingTab can reference the tab.
-		[draggedController_ willEndTearingTab];
-		if (targetController_) {
-			// Move between windows. If |targetController_| is nil, we're not dropping
-			// into any existing window.
-			NSView* draggedTabView = [draggedController_ selectedTabView];
-			[targetController_ moveTabView:draggedTabView
-							fromController:draggedController_];
-			// Force redraw to avoid flashes of old content before returning to event
-			// loop.
-			[[targetController_ window] display];
-			[targetController_ showWindow:nil];
-			//[draggedController_ removeOverlay]; // <- causes an exception
-			//DLOG_EXPR(targetController_);
-			[targetController_ didEndTearingTab];
-		} else {
-			// Only move the window around on screen. Make sure it's set back to
-			// normal state (fully opaque, has shadow, has key, etc).
-			[draggedController_ removeOverlay];
-			// Don't want to re-show the window if it was closed during the drag.
-			if ([dragWindow_ isVisible]) {
-				[dragWindow_ setAlphaValue:1.0];
-				[dragOverlay_ setHasShadow:NO];
-				[dragWindow_ setHasShadow:YES];
-				[dragWindow_ makeKeyAndOrderFront:nil];
-			}
-			[[draggedController_ window] setLevel:NSNormalWindowLevel];
-			[draggedController_ removePlaceholder];
-			//DLOG_EXPR(draggedController_);
-			[draggedController_ didEndTearingTab];
-		}
-	}
-	[sourceController_ removePlaceholder];
-	chromeIsVisible_ = YES;
-	
-	[self resetDragControllers];
+	// Messaging the drag controller with |-endDrag:| would seem like the right
+	// thing to do here. But, when a tab has been detached, the controller's
+	// target is nil until the drag is finalized. Since |-mouseUp:| gets called
+	// via the manual event loop inside -[TabStripDragController
+	// maybeStartDrag:forTab:], the drag controller can end the dragging session
+	// itself directly after calling this.
 }
 
 - (void)otherMouseUp:(NSEvent*)theEvent {
@@ -660,8 +255,8 @@ const CGFloat kRapidCloseDist = 2.5;
 	if ([theEvent buttonNumber] == 2) {
 		// |-hitTest:| takes a location in the superview's coordinates.
 		NSPoint upLocation =
-        [[self superview] convertPoint:[theEvent locationInWindow]
-                              fromView:nil];
+			[[self superview] convertPoint:[theEvent locationInWindow]
+								  fromView:nil];
 		// If the mouse up occurred in our view or over the close button, then
 		// close.
 		if ([self hitTest:upLocation])

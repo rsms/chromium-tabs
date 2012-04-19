@@ -291,4 +291,14 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	return NO;
 }
 
+// The following methods are invoked from the TabView and are forwarded to the
+// TabStripDragController.
+- (BOOL)tabCanBeDragged:(CTTabController*)controller {
+	return [[target_ dragController] tabCanBeDragged:controller];
+}
+
+- (void)maybeStartDrag:(NSEvent*)event forTab:(CTTabController*)tab {
+	[[target_ dragController] maybeStartDrag:event forTab:tab];
+}
+
 @end

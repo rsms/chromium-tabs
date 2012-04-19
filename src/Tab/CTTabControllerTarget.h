@@ -4,6 +4,8 @@
 
 #pragma once
 
+@protocol TabDraggingEventTarget;
+
 // A protocol to be implemented by a CTTabController's target.
 @protocol CTTabControllerTarget
 - (void)selectTab:(id)sender;
@@ -16,4 +18,8 @@
 // controller.
 //- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
 //           forController:(CTTabController*)controller;
+
+// Returns a weak reference to the controller that manages dragging of tabs.
+- (id<TabDraggingEventTarget>)dragController;
+
 @end

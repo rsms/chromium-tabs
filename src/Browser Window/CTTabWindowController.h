@@ -33,7 +33,6 @@
 
 @property(readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) NSView* tabContentArea;
-@property(assign, nonatomic) BOOL didShowNewTabButtonBeforeTemporalAction;
 
 // Used during tab dragging to turn on/off the overlay window when a tab
 // is torn off. If -deferPerformClose (below) is used, -removeOverlay will
@@ -61,8 +60,7 @@
 // new tab button while there's a placeholder. Subclasses need to call the
 // superclass implementation.
 - (void)insertPlaceholderForTab:(CTTabView*)tab
-                          frame:(NSRect)frame
-                  yStretchiness:(CGFloat)yStretchiness;
+                          frame:(NSRect)frame;
 
 // Removes the placeholder installed by |-insertPlaceholderForTab:atLocation:|
 // and restores the new tab button. Subclasses need to call the superclass
@@ -117,7 +115,7 @@
 - (BOOL)hasLiveTabs;
 
 // Return the view of the selected tab.
-- (NSView *)selectedTabView;
+- (NSView *)activeTabView;
 
 // The title of the selected tab.
 - (NSString*)selectedTabTitle;

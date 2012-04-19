@@ -38,13 +38,9 @@
 	// |tabContentArea_|. Calculated when the window is loaded from the nib and
 	// cached in order to restore the delta when switching tab modes.
 	CGFloat contentAreaHeightDelta_;
-	
-	BOOL didShowNewTabButtonBeforeTemporalAction_;
 }
 
-@synthesize tabContentArea = tabContentArea_,
-didShowNewTabButtonBeforeTemporalAction = 
-didShowNewTabButtonBeforeTemporalAction_;
+@synthesize tabContentArea = tabContentArea_;
 
 - (id)initWithWindow:(NSWindow*)window {
 	if ((self = [super initWithWindow:window]) != nil) {
@@ -259,7 +255,7 @@ didShowNewTabButtonBeforeTemporalAction_;
 	NOTIMPLEMENTED();
 }
 
-- (NSView*)selectedTabView {
+- (NSView*)activeTabView {
 	NOTIMPLEMENTED();
 	return nil;
 }
@@ -276,14 +272,12 @@ didShowNewTabButtonBeforeTemporalAction_;
 }
 
 - (void)insertPlaceholderForTab:(CTTabView*)tab
-                          frame:(NSRect)frame
-                  yStretchiness:(CGFloat)yStretchiness {
+                          frame:(NSRect)frame {
 	self.showsNewTabButton = NO;
 }
 
 - (void)removePlaceholder {
-	if (didShowNewTabButtonBeforeTemporalAction_)
-		self.showsNewTabButton = YES;
+	self.showsNewTabButton = YES;
 }
 
 - (BOOL)tabDraggingAllowed {

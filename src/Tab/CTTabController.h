@@ -7,6 +7,7 @@
 #pragma once
 
 #import <Cocoa/Cocoa.h>
+#import "CTTabStripDragController.h"
 
 // The loading/waiting state of the tab.
 typedef enum {
@@ -30,7 +31,7 @@ typedef enum {
 // progress. The default in the nib is an image view so nothing special is
 // required if that's all you need.
 
-@interface CTTabController : NSViewController
+@interface CTTabController : NSViewController<TabDraggingEventTarget>
 
 @property(assign, nonatomic) CTTabLoadingState loadingState;
 

@@ -53,6 +53,8 @@
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A142BBF1540483D00E6B055 /* CTTabStripDragController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A142BBD1540483D00E6B055 /* CTTabStripDragController.h */; };
+		5A142BC01540483D00E6B055 /* CTTabStripDragController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A142BBE1540483D00E6B055 /* CTTabStripDragController.m */; };
 		5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */; };
 		5A163433153FEC1600B6D159 /* CTFloatingBarBackingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */; };
 		5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A535248153F282200123D9D /* CTPresentationModeController.h */; };
@@ -194,6 +196,8 @@
 		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
 		3A928D0B12282DE500DA7E43 /* MyTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabContents.m; sourceTree = "<group>"; };
 		3A92907512295BC400DA7E43 /* Toolbar.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; path = Toolbar.xib; sourceTree = "<group>"; };
+		5A142BBD1540483D00E6B055 /* CTTabStripDragController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTabStripDragController.h; sourceTree = "<group>"; };
+		5A142BBE1540483D00E6B055 /* CTTabStripDragController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTabStripDragController.m; sourceTree = "<group>"; };
 		5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTFloatingBarBackingView.h; sourceTree = "<group>"; };
 		5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTFloatingBarBackingView.m; sourceTree = "<group>"; };
 		5A535248153F282200123D9D /* CTPresentationModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPresentationModeController.h; sourceTree = "<group>"; };
@@ -460,6 +464,8 @@
 				5AE304BA153F0B78001FCF20 /* CTTabStripController.m */,
 				5AE304BB153F0B78001FCF20 /* CTTabStripView.h */,
 				5AE304BC153F0B78001FCF20 /* CTTabStripView.m */,
+				5A142BBD1540483D00E6B055 /* CTTabStripDragController.h */,
+				5A142BBE1540483D00E6B055 /* CTTabStripDragController.m */,
 			);
 			path = "Tab Strip";
 			sourceTree = "<group>";
@@ -595,6 +601,7 @@
 				5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */,
 				5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */,
 				5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */,
+				5A142BBF1540483D00E6B055 /* CTTabStripDragController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +749,7 @@
 				5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */,
 				5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */,
 				5A163433153FEC1600B6D159 /* CTFloatingBarBackingView.m in Sources */,
+				5A142BC01540483D00E6B055 /* CTTabStripDragController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

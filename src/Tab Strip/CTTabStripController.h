@@ -47,7 +47,7 @@
            browser:(CTBrowser*)browser;
 
 // Return the view for the currently selected tab.
-- (NSView*)selectedTabView;
+- (NSView*)activeTabView;
 
 // Set the frame of the selected tab, also updates the internal frame dict.
 - (void)setFrameOfSelectedTab:(NSRect)frame;
@@ -86,8 +86,7 @@
 // Set the placeholder for a dragged tab, allowing the |frame| and |strechiness|
 // to be specified. This causes this tab to be rendered in an arbitrary position
 - (void)insertPlaceholderForTab:(CTTabView*)tab
-                          frame:(NSRect)frame
-                  yStretchiness:(CGFloat)yStretchiness;
+                          frame:(NSRect)frame;
 
 // Returns whether or not |tab| can still be fully seen in the tab strip or if
 // its current position would cause it be obscured by things such as the edge

@@ -48,6 +48,9 @@ typedef enum {
 // clicks inside it from sending messages.
 @property(assign, nonatomic, getter=isClosing) BOOL closing;
 
+// Returns the inset multiplier used to compute the inset of the top of the tab.
++ (CGFloat)insetMultiplier;
+
 // Enables/Disables tracking regions for the tab.
 - (void)setTrackingEnabled:(BOOL)enabled;
 

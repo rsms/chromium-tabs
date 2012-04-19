@@ -39,17 +39,16 @@ static NSImage* kDefaultIconImage = nil;
 const CGFloat kUseFullAvailableWidth = -1.0;
 
 // The amount by which tabs overlap.
-const CGFloat kTabOverlap = 20.0;
+const CGFloat kTabOverlap = 19.0;
+
+// The amount by which mini tabs are separated from normal tabs.
+const CGFloat kLastMiniTabSpacing = 3.0;
 
 // The width and height for a tab's icon.
 const CGFloat kIconWidthAndHeight = 16.0;
 
 // The amount by which the new tab button is offset (from the tabs).
 const CGFloat kNewTabButtonOffset = 8.0;
-
-// The amount by which to shrink the tab strip (on the right) when the
-// incognito badge is present.
-const CGFloat kIncognitoBadgeTabStripShrink = 18;
 
 // Time (in seconds) in which tabs animate to their final position.
 const NSTimeInterval kAnimationDuration = 0.125;
@@ -218,6 +217,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	NSView* dragBlockingView_;  // avoid bad window server drags
 	NewTabButton* newTabButton_;  // weak, obtained from the nib.
 	
+	// The controller that manages all the interactions of dragging tabs.
+	CTTabStripDragController* dragController_;
+	
 	// Tracks the newTabButton_ for rollovers.
 	NSTrackingArea* newTabTrackingArea_;
 	//scoped_ptr<CTTabStripModelObserverBridge> bridge_;
@@ -248,7 +250,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// These values are only used during a drag, and override tab positioning.
 	CTTabView* placeholderTab_;  // weak. Tab being dragged
 	NSRect placeholderFrame_;  // Frame to use
-	CGFloat placeholderStretchiness_; // Vertical force shown by streching tab.
 	NSRect droppedTabFrame_;  // Initial frame of a dropped tab, for animation.
 	// Frame targets for all the current views.
 	// target frames are used because repeated requests to [NSView animator].
@@ -346,6 +347,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 													 name:CTTabMiniStateChangedNotification
 												   object:tabStripModel_];
 		
+		dragController_ = [[CTTabStripDragController alloc] initWithTabStripController:self];
 		tabContentsArray_ = [[NSMutableArray alloc] init];
 		tabArray_ = [[NSMutableArray alloc] init];
 		
@@ -726,11 +728,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (void)insertPlaceholderForTab:(CTTabView*)tab
-                          frame:(NSRect)frame
-                  yStretchiness:(CGFloat)yStretchiness {
+                          frame:(NSRect)frame {
 	placeholderTab_ = tab;
 	placeholderFrame_ = frame;
-	placeholderStretchiness_ = yStretchiness;
 	[self layoutTabsWithAnimation:initialLayoutComplete_ regenerateSubviews:NO];
 }
 
@@ -740,14 +740,12 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	NSMaxX(frame) <= NSMaxX([tabStripView_ frame]);
 }
 
-
 - (void)setShowsNewTabButton:(BOOL)show {
 	if (!!forceNewTabButtonHidden_ == !!show) {
 		forceNewTabButtonHidden_ = !show;
 		[newTabButton_ setHidden:forceNewTabButtonHidden_];
 	}
 }
-
 
 - (BOOL)showsNewTabButton {
 	return !forceNewTabButtonHidden_ && newTabButton_;
@@ -796,30 +794,33 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			availableSpace = availableResizeWidth_;
 		} else {
 			availableSpace = NSWidth([tabStripView_ frame]);
-			// Account for the new tab button and the incognito badge.
-			if (forceNewTabButtonHidden_) {
-				availableSpace -= 5.0; // margin
-			} else {
-				availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
-			}
-			/*if (browser_->profile()->IsOffTheRecord())
-			 availableSpace -= kIncognitoBadgeTabStripShrink;*/
+			
+			// Account for the width of the new tab button.
+			availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
 		}
+		
+		// Need to leave room for the left-side controls even in rapid closure mode.
 		availableSpace -= [self indentForControls];
 	}
+	
+	// If there are any mini tabs, account for the extra spacing between the last
+	// mini tab and the first regular tab.
+	if ([self numberOfOpenMiniTabs])
+		availableSpace -= kLastMiniTabSpacing;
 	
 	// This may be negative, but that's okay (taken care of by |MAX()| when
 	// calculating tab sizes). "mini" tabs in horizontal mode just get a special
 	// section, they don't change size.
 	CGFloat availableSpaceForNonMini = availableSpace;
 	if (!verticalLayout_) {
-		availableSpaceForNonMini -=
-		[self numberOfOpenMiniTabs] * (kMiniTabWidth - kTabOverlap);
+		availableSpaceForNonMini -= 
+			[self numberOfOpenMiniTabs] * (kMiniTabWidth - kTabOverlap);
 	}
 	
 	// Initialize |nonMiniTabWidth| in case there aren't any non-mini-tabs; this
 	// value shouldn't actually be used.
 	CGFloat nonMiniTabWidth = kMaxTabWidth;
+	CGFloat nonMiniTabWidthFraction = 0;
 	const NSInteger numberOfOpenNonMiniTabs = [self numberOfOpenNonMiniTabs];
 	if (!verticalLayout_ && numberOfOpenNonMiniTabs) {
 		// Find the width of a non-mini-tab. This only applies to horizontal
@@ -831,6 +832,11 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		
 		// Clamp the width between the max and min.
 		nonMiniTabWidth = MAX(MIN(nonMiniTabWidth, kMaxTabWidth), kMinTabWidth);
+		
+		// Separate integral and fractional parts.
+		CGFloat integralPart = floor(nonMiniTabWidth);
+		nonMiniTabWidthFraction = nonMiniTabWidth - integralPart;
+		nonMiniTabWidth = integralPart;
 	}
 	
 	BOOL visible = [[tabStripView_ window] isVisible];
@@ -838,6 +844,11 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	CGFloat offset = [self indentForControls];
 	NSUInteger i = 0;
 	bool hasPlaceholderGap = false;
+	// Whether or not the last tab processed by the loop was a mini tab.
+	BOOL isLastTabMini = NO;
+	CGFloat tabWidthAccumulatedFraction = 0;
+	NSInteger laidOutNonMiniTabs = 0;
+	
 	for (CTTabController* tab in tabArray_) {
 		// Ignore a tab that is going through a close animation.
 		if ([closingControllers_ containsObject:tab])
@@ -874,8 +885,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 				tabFrame.origin.y = availableSpace - tabFrame.size.height - offset;
 			else
 				tabFrame.origin.x = placeholderFrame_.origin.x;
-			// TODO(alcor): reenable this
-			//tabFrame.size.height += 10.0 * placeholderStretchiness_;
+			
 			id target = animate ? [[tab view] animator] : [tab view];
 			[target setFrame:tabFrame];
 			
@@ -889,8 +899,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		
 		if (placeholderTab_ && !hasPlaceholderGap) {
 			const CGFloat placeholderMin =
-			verticalLayout_ ? NSMinY(placeholderFrame_) :
-			NSMinX(placeholderFrame_);
+				verticalLayout_ ? NSMinY(placeholderFrame_) :
+				NSMinX(placeholderFrame_);
 			if (verticalLayout_) {
 				if (NSMidY(tabFrame) > placeholderMin) {
 					hasPlaceholderGap = true;
@@ -911,10 +921,42 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		
 		// Set the width. Selected tabs are slightly wider when things get really
 		// small and thus we enforce a different minimum width.
-		tabFrame.size.width = [tab mini] ?
-        ([tab app] ? kAppTabWidth : kMiniTabWidth) : nonMiniTabWidth;
+		BOOL isMini = [tab mini];
+		if (isMini) {
+			tabFrame.size.width = [tab app] ? kAppTabWidth : kMiniTabWidth;
+		} else {
+			// Tabs have non-integer widths. Assign the integer part to the tab, and
+			// keep an accumulation of the fractional parts. When the fractional
+			// accumulation gets to be more than one pixel, assign that to the current
+			// tab being laid out. This is vaguely inspired by Bresenham's line
+			// algorithm.
+			tabFrame.size.width = nonMiniTabWidth;
+			tabWidthAccumulatedFraction += nonMiniTabWidthFraction;
+			
+			if (tabWidthAccumulatedFraction >= 1.0) {
+				++tabFrame.size.width;
+				--tabWidthAccumulatedFraction;
+			}
+			
+			// In case of rounding error, give any left over pixels to the last tab.
+			if (laidOutNonMiniTabs == numberOfOpenNonMiniTabs - 1 &&
+				tabWidthAccumulatedFraction > 0.5) {
+				++tabFrame.size.width;
+			}
+			
+			++laidOutNonMiniTabs;
+		}
+		
 		if ([tab selected])
 			tabFrame.size.width = MAX(tabFrame.size.width, kMinSelectedTabWidth);
+		
+		// If this is the first non-mini tab, then add a bit of spacing between this
+		// and the last mini tab.
+		if (!isMini && isLastTabMini) {
+			offset += kLastMiniTabSpacing;
+			tabFrame.origin.x = offset;
+		}
+		isLastTabMini = isMini;
 		
 		// Animate a new tab in by putting it below the horizon unless told to put
 		// it in a specific location (i.e., from a drop).
@@ -947,7 +989,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			offset += NSWidth(tabFrame);
 			offset -= kTabOverlap;
 		}
-		i++;
+		
 		[NSAnimationContext endGrouping];
 	}
 	
@@ -960,11 +1002,12 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		NSRect newTabNewFrame = [newTabButton_ frame];
 		// We've already ensured there's enough space for the new tab button
 		// so we don't have to check it against the available space. We do need
-		// to make sure we put it after any placeholder.
-		newTabNewFrame.origin = NSMakePoint(offset, 0);
-		newTabNewFrame.origin.x = MAX(newTabNewFrame.origin.x,
-									  NSMaxX(placeholderFrame_)) +
-		kNewTabButtonOffset;
+		// to make sure we put it after any placeholder.		
+		CGFloat maxTabX = MAX(offset, NSMaxX(placeholderFrame_) - kTabOverlap);
+		newTabNewFrame.origin = NSMakePoint(maxTabX + kNewTabButtonOffset, 0);		
+//		newTabNewFrame.origin = NSMakePoint(offset, 0);
+//		newTabNewFrame.origin.x = MAX(newTabNewFrame.origin.x, 
+//									  NSMaxX(placeholderFrame_)) + kNewTabButtonOffset;
 		if ([tabContentsArray_ count])
 			[newTabButton_ setHidden:NO];
 		
@@ -983,11 +1026,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			// to use a very small duration to make sure we cancel any in-flight
 			// animation to the left.
 			if (visible && animate) {
-				//        ScopedNSAnimationContextGroup localAnimationGroup(true);
 				[NSAnimationContext beginGrouping];
 				BOOL movingLeft = NSMinX(newTabNewFrame) < NSMinX(newTabTargetFrame_);
 				if (!movingLeft) {
-					//          localAnimationGroup.SetCurrentContextShortestDuration();
 					[[NSAnimationContext currentContext] setDuration:0];
 				}
 				[[newTabButton_ animator] setFrame:newTabNewFrame];
@@ -1209,14 +1250,14 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (void)setFrameOfSelectedTab:(NSRect)frame {
-	NSView* view = [self selectedTabView];
+	NSView* view = [self activeTabView];
 	NSValue* identifier = [NSValue valueWithPointer:(__bridge const void*)view];
 	[targetFrames_ setObject:[NSValue valueWithRect:frame]
 					  forKey:identifier];
 	[view setFrame:frame];
 }
 
-- (NSView*)selectedTabView {
+- (NSView*)activeTabView {
 	int selectedIndex = tabStripModel_.selected_index;
 	// Take closing tabs into account. They can't ever be selected.
 	selectedIndex = [self indexFromModelIndex:selectedIndex];
@@ -1327,11 +1368,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 
 - (BOOL)inRapidClosureMode {
 	return availableResizeWidth_ != kUseFullAvailableWidth;
-}
-
-// Disable tab dragging when there are any pending animations.
-- (BOOL)tabDraggingAllowed {
-	return [closingControllers_ count] == 0;
 }
 
 - (void)mouseMoved:(NSEvent*)event {
@@ -1719,6 +1755,18 @@ const NSTimeInterval kAnimationDuration = 0.125;
  DevToolsWindow::GetDevToolsContents(contents) : NULL;
  [tabController showDevToolsContents:devtoolsContents];
  }*/
+
+#pragma mark -
+#pragma mark Drag & Drop
+// Returns a weak reference to the controller that manages dragging of tabs.
+- (id<TabDraggingEventTarget>)dragController {
+	return dragController_;
+}
+
+// Disable tab dragging when there are any pending animations.
+- (BOOL)tabDraggingAllowed {
+	return [closingControllers_ count] == 0;
+}
 
 #pragma mark -
 #pragma mark Delegate methods
