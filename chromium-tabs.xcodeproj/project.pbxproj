@@ -53,6 +53,8 @@
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */; };
+		5A163433153FEC1600B6D159 /* CTFloatingBarBackingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */; };
 		5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A535248153F282200123D9D /* CTPresentationModeController.h */; };
 		5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A535249153F282200123D9D /* CTPresentationModeController.m */; };
 		5AE304B4153F0AFA001FCF20 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */; };
@@ -192,6 +194,8 @@
 		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
 		3A928D0B12282DE500DA7E43 /* MyTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabContents.m; sourceTree = "<group>"; };
 		3A92907512295BC400DA7E43 /* Toolbar.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; path = Toolbar.xib; sourceTree = "<group>"; };
+		5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTFloatingBarBackingView.h; sourceTree = "<group>"; };
+		5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTFloatingBarBackingView.m; sourceTree = "<group>"; };
 		5A535248153F282200123D9D /* CTPresentationModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPresentationModeController.h; sourceTree = "<group>"; };
 		5A535249153F282200123D9D /* CTPresentationModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTPresentationModeController.m; sourceTree = "<group>"; };
 		5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarController.h; sourceTree = "<group>"; };
@@ -529,6 +533,8 @@
 		5AE30505153F0D85001FCF20 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */,
+				5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */,
 				5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */,
 				5AE30507153F0D8E001FCF20 /* BackgroundGradientView.m */,
 				5AE30508153F0D8E001FCF20 /* FastResizeView.h */,
@@ -588,6 +594,7 @@
 				5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */,
 				5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */,
 				5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */,
+				5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +741,7 @@
 				5AE30523153F0DD6001FCF20 /* NSImage+CTAdditions.m in Sources */,
 				5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */,
 				5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */,
+				5A163433153FEC1600B6D159 /* CTFloatingBarBackingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -134,4 +134,5 @@ static BOOL gCanGetCornerRadius = NO;
 	
 	// -- removed: themed window drawing routines --
 }
+
 @end
