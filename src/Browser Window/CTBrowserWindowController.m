@@ -462,8 +462,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		NSWindow* sourceWindow = [tabView window];
 		NSRect windowRect = [sourceWindow frame];
 		NSScreen* screen = [sourceWindow screen];
-		windowRect.origin.y =
-		[screen frame].size.height - windowRect.size.height - windowRect.origin.y;
+		windowRect.origin.y = 
+			[screen frame].size.height - windowRect.size.height - windowRect.origin.y;
 		
 		//gfx::Rect browserRect(windowRect.origin.x, windowRect.origin.y,
 		//                      windowRect.size.width, windowRect.size.height);
@@ -485,13 +485,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		//--oldimpl--
 		//CTBrowser* newBrowser =
 		//    [tabStripModel->delegate() createNewStripWithContents:contents];
-		
+//		CTBrowser* newBrowser = [[tabStripModel delegate] createNewStripWithContents:contents];
 		// New browser
 		CTBrowser* newBrowser = [[browser_ class] browser];
 		
 		// Create a new window controller with the browser.
-		CTBrowserWindowController* controller =
-		[[[self class] alloc] initWithBrowser:newBrowser];
+		CTBrowserWindowController* controller = [[[self class] alloc] initWithBrowser:newBrowser];
 		
 		// Add the tab to the browser (we do it here after creating the window
 		// controller so that notifications are properly delegated)
@@ -927,8 +926,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[[self window] setViewsNeedDisplay:YES];
 	
 	// TODO(viettrungluu): For some reason, the above doesn't suffice.
-	//if ([self isFullscreen])
-	//  [floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
+	if ([self isFullscreen])
+		[floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
 }
 
 - (void)windowDidResignMain:(NSNotification*)notification {
@@ -942,8 +941,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[[self window] setViewsNeedDisplay:YES];
 	
 	// TODO(viettrungluu): For some reason, the above doesn't suffice.
-	//if ([self isFullscreen])
-	//  [floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
+	if ([self isFullscreen])
+		[floatingBarBackingView_ setNeedsDisplay:YES];  // Okay even if nil.
 }
 
 // Called when we are activated (when we gain focus).
