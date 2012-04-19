@@ -1187,7 +1187,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (void)windowWillExitFullScreen:(NSNotification*)notification {
 	[self registerForContentViewResizeNotifications];
-//	[self setPresentationModeInternal:NO forceDropdown:NO];
+	[self setPresentationModeInternal:NO forceDropdown:NO];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification*)notification {
@@ -1197,7 +1197,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)windowDidFailToEnterFullScreen:(NSWindow*)window {
 	[self deregisterForContentViewResizeNotifications];
 	enteringFullscreen_ = NO;
-//	[self setPresentationModeInternal:NO forceDropdown:NO];
+	[self setPresentationModeInternal:NO forceDropdown:NO];
 	
 	// Force a relayout to try and get the window back into a reasonable state.
 	[self layoutSubviews];
