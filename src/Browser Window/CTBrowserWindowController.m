@@ -659,18 +659,16 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 //			BOOL aboveBookmarkBar = [self placeBookmarkBarBelowInfoBar];
 //			
 //			// Insert it into the view hierarchy if necessary.
-//			if (![floatingBarBackingView_ superview] ||
-//				aboveBookmarkBar != floatingBarAboveBookmarkBar_) {
-//				NSView* contentView = [[self window] contentView];
-//				// z-order gets messed up unless we explicitly remove the floatingbar
-//				// view and re-add it.
-//				[floatingBarBackingView_ removeFromSuperview];
-//				[contentView addSubview:floatingBarBackingView_
-//							 positioned:(aboveBookmarkBar ?
-//										 NSWindowAbove : NSWindowBelow)
-//							 relativeTo:[bookmarkBarController_ view]];
+			if (![floatingBarBackingView_ superview]) {
+				NSView* contentView = [[self window] contentView];
+				// z-order gets messed up unless we explicitly remove the floatingbar
+				// view and re-add it.
+				[floatingBarBackingView_ removeFromSuperview];
+				[contentView addSubview:floatingBarBackingView_
+							 positioned:NSWindowBelow
+							 relativeTo:[toolbarController_ view]];
 //				floatingBarAboveBookmarkBar_ = aboveBookmarkBar;
-//			}
+			}
 			
 			// Set its frame.
 			[floatingBarBackingView_ setFrame:frame];
