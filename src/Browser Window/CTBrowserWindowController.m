@@ -2,6 +2,7 @@
 #import "CTBrowserWindow.h"
 #import "CTBrowserWindowController.h"
 #import "CTPresentationModeController.h"
+#import "CTFloatingBarBackingView.h"
 
 #import "CTTabContents.h"
 #import "CTTabStripController.h"
@@ -29,6 +30,7 @@
 @end
 
 @interface CTBrowserWindowController (FullScreen)
+
 - (void)registerForContentViewResizeNotifications;
 - (void)deregisterForContentViewResizeNotifications;
 
@@ -99,15 +101,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	// Set initialization boolean state so subroutines can act accordingly
 	initializing_ = YES;
 	
+	barVisibilityLocks_ = [NSMutableSet set];
+	
 	// Our browser
 	browser_ = browser;
 	browser_.windowController = self;
 	
-	// Observe tabs
-	//  tabStripObserver_ =
-	//      new CTTabStripModelObserverBridge([browser_ tabStripModel], self);
-	//	[browser_.tabStripModel AddObserver:self];
-	
+	// Observe tabs	
 	[[NSNotificationCenter defaultCenter] addObserver:self 
 											 selector:@selector(tabDidSelect:) 
 												 name:CTTabSelectedNotification 
@@ -627,6 +627,64 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 #pragma mark -
 #pragma mark Layout
 
+// Find the total height of the floating bar (in presentation mode). Safe to
+// call even when not in presentation mode.
+- (CGFloat)floatingBarHeight {
+	if (![self inPresentationMode])
+		return 0;
+	
+	CGFloat totalHeight = [presentationModeController_ floatingBarVerticalOffset];
+	
+	if ([self hasTabStrip])
+		totalHeight += NSHeight([[self tabStripView] frame]);
+	
+	if ([self hasToolbar]) {
+		totalHeight += NSHeight([[toolbarController_ view] frame]);
+	}
+	
+	return totalHeight;
+}
+
+// Lay out the view which draws the background for the floating bar when in
+// presentation mode, with the given frame and presentation-mode-status. Should
+// be called even when not in presentation mode to hide the backing view.
+- (void)layoutFloatingBarBackingView:(NSRect)frame
+                    presentationMode:(BOOL)presentationMode {
+	// Only display when in presentation mode.
+	if (presentationMode) {
+		// For certain window types such as app windows (e.g., the dev tools
+		// window), there's no actual overlay. (Displaying one would result in an
+		// overly sliding in only under the menu, which gives an ugly effect.)
+		if (floatingBarBackingView_) {
+//			BOOL aboveBookmarkBar = [self placeBookmarkBarBelowInfoBar];
+//			
+//			// Insert it into the view hierarchy if necessary.
+//			if (![floatingBarBackingView_ superview] ||
+//				aboveBookmarkBar != floatingBarAboveBookmarkBar_) {
+//				NSView* contentView = [[self window] contentView];
+//				// z-order gets messed up unless we explicitly remove the floatingbar
+//				// view and re-add it.
+//				[floatingBarBackingView_ removeFromSuperview];
+//				[contentView addSubview:floatingBarBackingView_
+//							 positioned:(aboveBookmarkBar ?
+//										 NSWindowAbove : NSWindowBelow)
+//							 relativeTo:[bookmarkBarController_ view]];
+//				floatingBarAboveBookmarkBar_ = aboveBookmarkBar;
+//			}
+			
+			// Set its frame.
+			[floatingBarBackingView_ setFrame:frame];
+		}
+		
+		// But we want the logic to work as usual (for show/hide/etc. purposes).
+		[presentationModeController_ overlayFrameChanged:frame];
+	} else {
+		// Okay to call even if |floatingBarBackingView_| is nil.
+		if ([floatingBarBackingView_ superview])
+			[floatingBarBackingView_ removeFromSuperview];
+	}
+}
+
 - (void)layoutTabContentArea:(NSRect)newFrame {
 	NSView* tabContentView = self.tabContentArea;
 	NSRect tabContentFrame = tabContentView.frame;
@@ -662,18 +720,26 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if ([window respondsToSelector:@selector(setShouldHideTitle:)])
 		[window setShouldHideTitle:YES];
 	
-	BOOL isFullscreen = [self isFullscreen];
-	//CGFloat floatingBarHeight = [self floatingBarHeight];
-	// In fullscreen mode, |yOffset| accounts for the sliding position of the
+//	BOOL isFullscreen = [self isFullscreen];
+//	//CGFloat floatingBarHeight = [self floatingBarHeight];
+//	// In fullscreen mode, |yOffset| accounts for the sliding position of the
+//	// floating bar and the extra offset needed to dodge the menu bar.
+//	CGFloat yOffset = 0;
+//	//CGFloat yOffset = isFullscreen ?
+//	//    (floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
+//	//        [fullscreenController_ floatingBarVerticalOffset]) : 0;
+//	CGFloat maxY = NSMaxY(contentBounds) + yOffset;
+	
+	BOOL inPresentationMode = [self inPresentationMode];
+	CGFloat floatingBarHeight = [self floatingBarHeight];
+	// In presentation mode, |yOffset| accounts for the sliding position of the
 	// floating bar and the extra offset needed to dodge the menu bar.
-	CGFloat yOffset = 0;
-	//CGFloat yOffset = isFullscreen ?
-	//    (floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
-	//        [fullscreenController_ floatingBarVerticalOffset]) : 0;
+	CGFloat yOffset = inPresentationMode ?
+		(floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
+		 [presentationModeController_ floatingBarVerticalOffset]) : 0;
 	CGFloat maxY = NSMaxY(contentBounds) + yOffset;
 	
-	CGFloat overlayMaxY = NSMaxY([window frame]);
-//		+ floor((1 - floatingBarShownFraction_) * floatingBarHeight);
+	CGFloat overlayMaxY = NSMaxY([window frame]) + floor((1 - floatingBarShownFraction_) * floatingBarHeight);
 	[self layoutPresentationModeToggleAtOverlayMaxX:NSMaxX([window frame])
 										overlayMaxY:overlayMaxY];
 	
@@ -684,7 +750,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		maxY = NSHeight(windowFrame) + yOffset;
 		maxY = [self layoutTabStripAtMaxY:maxY 
 									width:width 
-							   fullscreen:isFullscreen];
+							   fullscreen:[self isFullscreen]];
 	}
 	
 	// Sanity-check |maxY|.
@@ -705,38 +771,15 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if ([self hasToolbar])
 		maxY = [self layoutToolbarAtMinX:minX maxY:maxY width:width];
 	
-	// If we're not displaying the bookmark bar below the infobar, then it goes
-	// immediately below the toolbar.
-	//BOOL placeBookmarkBarBelowInfoBar = [self placeBookmarkBarBelowInfoBar];
-	//if (!placeBookmarkBarBelowInfoBar)
-	//  maxY = [self layoutBookmarkBarAtMinX:minX maxY:maxY width:width];
-	
 	// The floating bar backing view doesn't actually add any height.
-	//NSRect floatingBarBackingRect =
-	//    NSMakeRect(minX, maxY, width, floatingBarHeight);
-	//[self layoutFloatingBarBackingView:floatingBarBackingRect
-	//                        fullscreen:isFullscreen];
+	NSRect floatingBarBackingRect =	NSMakeRect(minX, maxY, width, floatingBarHeight);
+	[self layoutFloatingBarBackingView:floatingBarBackingRect
+					  presentationMode:inPresentationMode];
 	
-	// Place the find bar immediately below the toolbar/attached bookmark bar. In
-	// fullscreen mode, it hangs off the top of the screen when the bar is hidden.
-	// The find bar is unaffected by the side tab positioning.
-	//[findBarCocoaController_ positionFindBarViewAtMaxY:maxY maxWidth:width];
-	
-	// If in fullscreen mode, reset |maxY| to top of screen, so that the floating
-	// bar slides over the things which appear to be in the content area.
-//	if (isFullscreen)
-//		maxY = NSMaxY(contentBounds);
-	
-	// Also place the infobar container immediate below the toolbar, except in
-	// fullscreen mode in which case it's at the top of the visual content area.
-	//maxY = [self layoutInfoBarAtMinX:minX maxY:maxY width:width];
-	
-	// If the bookmark bar is detached, place it next in the visual content area.
-	//if (placeBookmarkBarBelowInfoBar)
-	//  maxY = [self layoutBookmarkBarAtMinX:minX maxY:maxY width:width];
-	
-	// Place the download shelf, if any, at the bottom of the view.
-	//minY = [self layoutDownloadShelfAtMinX:minX minY:minY width:width];
+	// If in presentation mode, reset |maxY| to top of screen, so that the
+	// floating bar slides over the things which appear to be in the content area.
+	if (inPresentationMode)
+		maxY = NSMaxY(contentBounds);
 	
 	// Finally, the content area takes up all of the remaining space.
 	NSRect contentAreaRect = NSMakeRect(minX, minY, width, maxY - minY);
@@ -750,6 +793,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if (toolbarController_) {
 		[toolbarController_ setDividerOpacity:0.4];
 	}
+	// TODO: check this	
+//	[toolbarController_
+//	 setDividerOpacity:[bookmarkBarController_ toolbarDividerOpacity]];
 }
 
 - (CGFloat)layoutToolbarAtMinX:(CGFloat)minX
@@ -817,7 +863,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 	return maxY;
 }
-
 
 #pragma mark -
 #pragma mark NSWindowController impl
@@ -1192,6 +1237,53 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 //	TODO: Post notification on WindowFullscreenStateChanged
 }
 
+// Adjust the UI when entering or leaving presentation mode.  This method is
+// safe to call on all OS versions.
+- (void)adjustUIForPresentationMode:(BOOL)fullscreen {
+	// Create the floating bar backing view if necessary.
+	if (fullscreen && !floatingBarBackingView_ &&
+		([self hasTabStrip] || [self hasToolbar])) {
+		floatingBarBackingView_ = [[CTFloatingBarBackingView alloc] initWithFrame:NSZeroRect];
+		[floatingBarBackingView_ setAutoresizingMask:(NSViewWidthSizable |
+													  NSViewMinYMargin)];
+	}
+}
+
+- (BOOL)isBarVisibilityLockedForOwner:(id)owner {
+	DCHECK(owner);
+	DCHECK(barVisibilityLocks_);
+	return [barVisibilityLocks_ containsObject:owner];
+}
+
+- (void)lockBarVisibilityForOwner:(id)owner
+                    withAnimation:(BOOL)animate
+                            delay:(BOOL)delay {
+	if (![self isBarVisibilityLockedForOwner:owner]) {
+		[barVisibilityLocks_ addObject:owner];
+		
+		// If enabled, show the overlay if necessary (and if in presentation mode).
+		if (barVisibilityUpdatesEnabled_) {
+			[presentationModeController_ ensureOverlayShownWithAnimation:animate
+																   delay:delay];
+		}
+	}
+}
+
+- (void)releaseBarVisibilityForOwner:(id)owner
+                       withAnimation:(BOOL)animate
+                               delay:(BOOL)delay {
+	if ([self isBarVisibilityLockedForOwner:owner]) {
+		[barVisibilityLocks_ removeObject:owner];
+		
+		// If enabled, hide the overlay if necessary (and if in presentation mode).
+		if (barVisibilityUpdatesEnabled_ &&
+			![barVisibilityLocks_ count]) {
+			[presentationModeController_ ensureOverlayHiddenWithAnimation:animate
+																	delay:delay];
+		}
+	}
+}
+
 // On Lion, this function is called by either the presentation mode toggle
 // button or the "Enter Presentation Mode" menu item.  In the latter case, this
 // function also triggers the Lion machinery to enter fullscreen mode as well as
@@ -1212,10 +1304,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 			// to the fact that the UI is in an overlay.  Focus the tab contents
 			// because the omnibox is the most likely source of bar visibility locks,
 			// and taking focus away from the omnibox releases its lock.
-//			[self lockBarVisibilityForOwner:self withAnimation:NO delay:NO];
+			[self lockBarVisibilityForOwner:self withAnimation:NO delay:NO];
 			[self focusTabContents];
 			[self setPresentationModeInternal:YES forceDropdown:YES];
-//			[self releaseBarVisibilityForOwner:self withAnimation:YES delay:YES];
+			[self releaseBarVisibilityForOwner:self withAnimation:YES delay:YES];
 		} else {
 			// If not in fullscreen mode, trigger the Lion fullscreen mode machinery.
 			// Presentation mode will automatically be enabled in
@@ -1255,7 +1347,8 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 //		BOOL showDropdown = forceDropdown || [self floatingBarHasFocus];
 		BOOL showDropdown = forceDropdown;
 		NSView* contentView = [[self window] contentView];
-		presentationModeController_ = [[CTPresentationModeController alloc] initWithBrowserController:self];
+		presentationModeController_ = [[CTPresentationModeController alloc] 
+									   initWithBrowserController:self];
 		[presentationModeController_ enterPresentationModeForContentView:contentView
 															showDropdown:showDropdown];
 	} else {
@@ -1263,7 +1356,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		presentationModeController_ = nil;
 	}
 	
-//	[self adjustUIForPresentationMode:presentationMode];
+	[self adjustUIForPresentationMode:presentationMode];
 	[self layoutSubviews];
 }
 
@@ -1277,6 +1370,14 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (BOOL)inPresentationMode {
 	return presentationModeController_ && [presentationModeController_ inPresentationMode];
-//	return NO;
+}
+
+- (CGFloat)floatingBarShownFraction {
+	return floatingBarShownFraction_;
+}
+
+- (void)setFloatingBarShownFraction:(CGFloat)fraction {
+	floatingBarShownFraction_ = fraction;
+	[self layoutSubviews];
 }
 @end

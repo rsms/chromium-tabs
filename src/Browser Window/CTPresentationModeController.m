@@ -324,7 +324,8 @@ const CGFloat kFloatingBarVerticalOffset = 22;
 	[self setupTrackingArea];
 }
 
-- (void)ensureOverlayShownWithAnimation:(BOOL)animate delay:(BOOL)delay {
+- (void)ensureOverlayShownWithAnimation:(BOOL)animate 
+								  delay:(BOOL)delay {
 	if (!inPresentationMode_)
 		return;
 	
@@ -533,8 +534,7 @@ const CGFloat kFloatingBarVerticalOffset = 22;
 	
 	// Create and add a new tracking area for |frame|.
 	trackingArea_ = [[NSTrackingArea alloc] initWithRect:trackingAreaBounds_
-												 options:NSTrackingMouseEnteredAndExited |
-					 NSTrackingActiveInKeyWindow
+												 options:NSTrackingMouseEnteredAndExited |					 NSTrackingActiveInKeyWindow
 												   owner:self
 												userInfo:nil];
 	DCHECK(contentView_);

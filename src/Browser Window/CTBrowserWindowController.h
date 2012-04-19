@@ -34,6 +34,25 @@
 	BOOL enteringFullscreen_;
 	
 	CTPresentationModeController* presentationModeController_;
+	
+	// Lazily created view which draws the background for the floating set of bars
+	// in presentation mode (for window types having a floating bar; it remains
+	// nil for those which don't).
+	NSView* floatingBarBackingView_;
+	
+	// The proportion of the floating bar which is shown (in presentation mode).
+	CGFloat floatingBarShownFraction_;
+	
+	// Various UI elements/events may want to ensure that the floating bar is
+	// visible (in presentation mode), e.g., because of where the mouse is or
+	// where keyboard focus is. Whenever an object requires bar visibility, it has
+	// itself added to |barVisibilityLocks_|. When it no longer requires bar
+	// visibility, it has itself removed.
+	NSMutableSet* barVisibilityLocks_;
+	
+	// Bar visibility locks and releases only result (when appropriate) in changes
+	// in visible state when the following is |YES|.
+	BOOL barVisibilityUpdatesEnabled_;
 }
 
 @property(strong, readonly, nonatomic) CTTabStripController *tabStripController;
@@ -97,7 +116,8 @@
 
 // Methods having to do with fullscreen and presentation mode.
 @interface CTBrowserWindowController(Fullscreen)
-@property(readonly, nonatomic) BOOL isFullscreen; // fullscreen or not
+@property(nonatomic, readonly) BOOL isFullscreen; // fullscreen or not
+@property(nonatomic, readonly) BOOL inPresentationMode;
 
 // Returns fullscreen state.  This method is safe to call on all OS versions.
 - (BOOL)isFullscreen;
