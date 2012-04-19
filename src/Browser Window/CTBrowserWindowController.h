@@ -53,6 +53,8 @@
 	// Bar visibility locks and releases only result (when appropriate) in changes
 	// in visible state when the following is |YES|.
 	BOOL barVisibilityUpdatesEnabled_;
+	
+	BOOL shouldUsePresentationModeWhenEnteringFullscreen_;
 }
 
 @property(strong, readonly, nonatomic) CTTabStripController *tabStripController;
@@ -62,6 +64,8 @@
 // Called to check whether or not this window has a toolbar. By default returns
 // true if toolbarController_ is not nil.
 @property(readonly, nonatomic) BOOL hasToolbar;
+
+@property(readwrite, nonatomic, assign) BOOL shouldUsePresentationModeWhenEnteringFullscreen;
 
 //@property(readonly, nonatomic) BOOL shouldShowPresentationModeToggle;
 

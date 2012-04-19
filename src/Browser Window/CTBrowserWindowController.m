@@ -72,6 +72,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 @synthesize tabStripController = tabStripController_;
 @synthesize toolbarController = toolbarController_;
 @synthesize browser = browser_;
+@synthesize shouldUsePresentationModeWhenEnteringFullscreen = shouldUsePresentationModeWhenEnteringFullscreen_;
 
 + (CTBrowserWindowController*)browserWindowController {
 	return [[self alloc] init];
@@ -1174,10 +1175,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 //	NSWindow* window = [self window];
 //	savedRegularWindowFrame_ = [window frame];
-//	BOOL mode = [self shouldUsePresentationModeWhenEnteringFullscreen];
+	BOOL mode = [self shouldUsePresentationModeWhenEnteringFullscreen];
 //	mode = mode || browser_->IsFullscreenForTabOrPending();
 	enteringFullscreen_ = YES;
-//	[self setPresentationModeInternal:mode forceDropdown:NO];
+	[self setPresentationModeInternal:mode forceDropdown:NO];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification*)notification {
@@ -1324,7 +1325,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if (presentationMode) {
 		BOOL fullscreen = [self isFullscreen];
 		
-//		[self setShouldUsePresentationModeWhenEnteringFullscreen:YES];
+		[self setShouldUsePresentationModeWhenEnteringFullscreen:YES];
 		enteredPresentationModeFromFullscreen_ = fullscreen;
 		
 		if (fullscreen) {
@@ -1353,7 +1354,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 			// turn presentation mode off (choosing to always show the UI).  Set the
 			// preference to ensure that presentation mode will stay off for the next
 			// window that goes fullscreen.
-//			[self setShouldUsePresentationModeWhenEnteringFullscreen:NO];
+			[self setShouldUsePresentationModeWhenEnteringFullscreen:NO];
 			[self setPresentationModeInternal:NO forceDropdown:NO];
 		} else {
 			// The user entered presentation mode directly from non-fullscreen mode
