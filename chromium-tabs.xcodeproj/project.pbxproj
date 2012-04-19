@@ -53,6 +53,8 @@
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B51229BF0100DA7E43 /* GTMFadeTruncatingTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED7671225DF06009E2908 /* GTMFadeTruncatingTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A535248153F282200123D9D /* CTPresentationModeController.h */; };
+		5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A535249153F282200123D9D /* CTPresentationModeController.m */; };
 		5AE304B4153F0AFA001FCF20 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */; };
 		5AE304B5153F0AFA001FCF20 /* CTToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304B1153F0AFA001FCF20 /* CTToolbarController.m */; };
 		5AE304B6153F0AFA001FCF20 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */; };
@@ -190,6 +192,8 @@
 		3A928D0A12282DE500DA7E43 /* MyTabContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabContents.h; sourceTree = "<group>"; };
 		3A928D0B12282DE500DA7E43 /* MyTabContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabContents.m; sourceTree = "<group>"; };
 		3A92907512295BC400DA7E43 /* Toolbar.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; path = Toolbar.xib; sourceTree = "<group>"; };
+		5A535248153F282200123D9D /* CTPresentationModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTPresentationModeController.h; sourceTree = "<group>"; };
+		5A535249153F282200123D9D /* CTPresentationModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTPresentationModeController.m; sourceTree = "<group>"; };
 		5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarController.h; sourceTree = "<group>"; };
 		5AE304B1153F0AFA001FCF20 /* CTToolbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTToolbarController.m; sourceTree = "<group>"; };
 		5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToolbarView.h; sourceTree = "<group>"; };
@@ -470,6 +474,8 @@
 				5AE304E1153F0C9B001FCF20 /* CTTabWindowController.m */,
 				5AE304D4153F0C8C001FCF20 /* CTBrowserWindowController.h */,
 				5AE304D5153F0C8C001FCF20 /* CTBrowserWindowController.m */,
+				5A535248153F282200123D9D /* CTPresentationModeController.h */,
+				5A535249153F282200123D9D /* CTPresentationModeController.m */,
 			);
 			path = "Browser Window";
 			sourceTree = "<group>";
@@ -581,6 +587,7 @@
 				5AE30520153F0DD6001FCF20 /* CTUtil.h in Headers */,
 				5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */,
 				5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */,
+				5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,6 +733,7 @@
 				5AE30521153F0DD6001FCF20 /* CTUtil.m in Sources */,
 				5AE30523153F0DD6001FCF20 /* NSImage+CTAdditions.m in Sources */,
 				5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */,
+				5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

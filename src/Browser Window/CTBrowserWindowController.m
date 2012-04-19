@@ -1,11 +1,11 @@
 #import "CTBrowser.h"
 #import "CTBrowserWindow.h"
 #import "CTBrowserWindowController.h"
-//#import "CTTabStripModel.h"
+#import "CTPresentationModeController.h"
+
 #import "CTTabContents.h"
 #import "CTTabStripController.h"
 #import "CTTabStripModel.h"
-//#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "CTTabStripView.h"
 #import "CTToolbarController.h"
@@ -1253,13 +1253,14 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 	if (presentationMode) {
 //		BOOL showDropdown = forceDropdown || [self floatingBarHasFocus];
+		BOOL showDropdown = forceDropdown;
 		NSView* contentView = [[self window] contentView];
-//		presentationModeController_ = [[PresentationModeController alloc] initWithBrowserController:self];
-//		[presentationModeController_ enterPresentationModeForContentView:contentView
-//															showDropdown:showDropdown];
+		presentationModeController_ = [[CTPresentationModeController alloc] initWithBrowserController:self];
+		[presentationModeController_ enterPresentationModeForContentView:contentView
+															showDropdown:showDropdown];
 	} else {
-//		[presentationModeController_ exitPresentationMode];
-//		presentationModeController_ = nil;
+		[presentationModeController_ exitPresentationMode];
+		presentationModeController_ = nil;
 	}
 	
 //	[self adjustUIForPresentationMode:presentationMode];
@@ -1275,7 +1276,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 - (BOOL)inPresentationMode {
-//	return presentationModeController_ && [presentationModeController_ inPresentationMode];
-	return NO;
+	return presentationModeController_ && [presentationModeController_ inPresentationMode];
+//	return NO;
 }
 @end
