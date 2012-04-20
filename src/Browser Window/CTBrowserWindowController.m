@@ -108,11 +108,75 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	// Set initialization boolean state so subroutines can act accordingly
 	initializing_ = YES;
 	
-	barVisibilityLocks_ = [NSMutableSet set];
-	
 	// Our browser
 	browser_ = browser;
 	browser_.windowController = self;
+    NSWindow* window = [self window];
+	
+    // Lion will attempt to automagically save and restore the UI. This
+    // functionality appears to be leaky (or at least interacts badly with our
+    // architecture) and thus BrowserWindowController never gets released. This
+    // prevents the browser from being able to quit <http://crbug.com/79113>.
+    if ([window respondsToSelector:@selector(setRestorable:)])
+		[window setRestorable:NO];
+	
+    // Create the bar visibility lock set; 10 is arbitrary, but should hopefully
+    // be big enough to hold all locks that'll ever be needed.
+	barVisibilityLocks_ = [NSMutableSet setWithCapacity:10];
+	
+	// Note: the below statement including [self window] implicitly loads the
+	// window and thus initializes IBOutlets, needed later. If [self window] is
+	// not called (i.e. code removed), substitute the loading with a call to
+	// [self loadWindow]
+	
+    // Set the window to not have rounded corners, which prevents the resize
+    // control from being inset slightly and looking ugly. Only bother to do
+    // this on Snow Leopard and earlier; on Lion and later all windows have
+    // rounded bottom corners, and this won't work anyway.
+	if ([window respondsToSelector:@selector(setBottomCornerRounded:)])
+		[window setBottomCornerRounded:NO];
+	[[window contentView] setAutoresizesSubviews:YES];
+	
+    // Lion will attempt to automagically save and restore the UI. This
+    // functionality appears to be leaky (or at least interacts badly with our
+    // architecture) and thus BrowserWindowController never gets released. This
+    // prevents the browser from being able to quit <http://crbug.com/79113>.
+    if ([window respondsToSelector:@selector(setRestorable:)])
+		[window setRestorable:NO];
+	
+	// Note: when using the default BrowserWindow.xib, window bounds are saved and
+	// restored by Cocoa using NSUserDefaults key "browserWindow".
+	
+    // Get the windows to swish in on Lion.
+    if ([window respondsToSelector:@selector(setAnimationBehavior:)])
+		[window setAnimationBehavior:NSWindowAnimationBehaviorDocumentWindow];
+	
+    // Set the window to participate in Lion Fullscreen mode.  Setting this flag
+    // has no effect on Snow Leopard or earlier.  Panels can share a fullscreen
+    // space with a tabbed window, but they can not be primary fullscreen
+    // windows.
+    NSUInteger collectionBehavior = [window collectionBehavior];
+    collectionBehavior |= NSWindowCollectionBehaviorFullScreenPrimary;
+    [window setCollectionBehavior:collectionBehavior];
+	
+	// Create a tab strip controller
+	tabStripController_ =
+	[[CTTabStripController alloc] initWithView:self.tabStripView
+                                    switchView:self.tabContentArea
+                                       browser:browser_];
+	
+	// Create a toolbar controller. The browser object might return nil, in which
+	// means we do not have a toolbar.
+	toolbarController_ = [browser_ createToolbarController];
+	if (toolbarController_) {
+		[[[self window] contentView] addSubview:[toolbarController_ view]];
+	}
+	
+	// When using NSDocuments
+	[self setShouldCloseDocument:YES];
+	
+    // Allow bar visibility to be changed.
+    [self enableBarVisibilityUpdates];
 	
 	// Observe tabs	
 	[[NSNotificationCenter defaultCenter] addObserver:self 
@@ -144,39 +208,16 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 											 selector:@selector(tabStripDidBecomeEmpty) 
 												 name:CTTabStripEmptyNotification
 											   object:browser_.tabStripModel];
-	// Note: the below statement including [self window] implicitly loads the
-	// window and thus initializes IBOutlets, needed later. If [self window] is
-	// not called (i.e. code removed), substitute the loading with a call to
-	// [self loadWindow]
 	
-	// Sets the window to not have rounded corners, which prevents the resize
-	// control from being inset slightly and looking ugly.
-	NSWindow *window = [self window];
-	if ([window respondsToSelector:@selector(setBottomCornerRounded:)])
-		[window setBottomCornerRounded:NO];
-	[[window contentView] setAutoresizesSubviews:YES];
-	
-	// Note: when using the default BrowserWindow.xib, window bounds are saved and
-	// restored by Cocoa using NSUserDefaults key "browserWindow".
-	
-	// Create a tab strip controller
-	tabStripController_ =
-	[[CTTabStripController alloc] initWithView:self.tabStripView
-                                    switchView:self.tabContentArea
-                                       browser:browser_];
-	
-	// Create a toolbar controller. The browser object might return nil, in which
-	// means we do not have a toolbar.
-	toolbarController_ = [browser_ createToolbarController];
-	if (toolbarController_) {
-		[[[self window] contentView] addSubview:[toolbarController_ view]];
-	}
-	
-	// When using NSDocuments
-	[self setShouldCloseDocument:YES];
-	
-    // Allow bar visibility to be changed.
-    [self enableBarVisibilityUpdates];
+    // Register for application hide/unhide notifications.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(applicationDidHide:)
+												 name:NSApplicationDidHideNotification
+											   object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(applicationDidUnhide:)
+												 name:NSApplicationDidUnhideNotification
+											   object:nil];	
 	
     // Force a relayout of all the various bars.
 	[self layoutSubviews];
