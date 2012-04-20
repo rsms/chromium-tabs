@@ -166,7 +166,6 @@ const int kNoTab = NSNotFound;
 		contents_data_ = [[NSMutableArray alloc] init];
 		selected_index_ = kNoTab;
 		closing_all_ = false;
-		//order_controller_ = NULL;
 		
 		delegate_ = delegate; // weak
 		// TODO replace with nsnotificationcenter?
@@ -183,25 +182,9 @@ const int kNoTab = NSNotFound;
 }
 
 - (void)dealloc {
-//	CALL_EACH_OBSERVER(observers_, @selector(tabStripModelDeleted), [observer tabStripModelDeleted]);
     [[NSNotificationCenter defaultCenter] postNotificationName:CTTabStripModelDeletedNotification 
 														object:self];
-	
-	delegate_ = NULL; // weak
-	
-//	[order_controller_ release];
-//	[contents_data_ release];
-//    [super dealloc];
 }
-
-//- (void)AddObserver:(NSObject <CTTabStripModelObserver>*)observer {
-//	observers_.AddObserver(observer);
-//}
-//
-//- (void)RemoveObserver:(NSObject <CTTabStripModelObserver>*)observer {
-//	observers_.RemoveObserver(observer);	
-//}
-
 
 #pragma mark -
 #pragma mark getters/setters
@@ -226,10 +209,6 @@ const int kNoTab = NSNotFound;
 - (InsertionPolicy)insertion_policy {
 	return order_controller_.insertionPolicy;
 }
-//
-//- (bool)HasObserver:(NSObject <CTTabStripModelObserver>*)observer {
-//	return observers_.HasObserver(observer);
-//}
 
 #pragma mark -
 #pragma mark Basic API
@@ -268,10 +247,7 @@ const int kNoTab = NSNotFound;
 	TabContentsData* data = [[TabContentsData alloc] init];
 	data->contents = contents;
 	data->isPinned = pin;
-//	contents.isPinned = pin;
-	//data->pinned = pin;
 	
-	//contents_data_.insert(contents_data_.begin() + index, data);
 	[contents_data_ insertObject:data atIndex:index];
 	
 	if (index <= selected_index_) {
@@ -314,21 +290,10 @@ const int kNoTab = NSNotFound;
 	int next_selected_index =
 	[order_controller_ determineNewSelectedIndexAfterClose:index 
 												  isRemove:true];
-//	delete contents_data_.at(index);
-//	contents_data_.erase(contents_data_.begin() + index);
 	[contents_data_ removeObjectAtIndex:index];
 	next_selected_index = [self indexOfNextNonPhantomTabFromIndex:next_selected_index ignoreIndex:-1];
 	if ([self hasNonPhantomTabs])
 		closing_all_ = true;
-//	TabStripModelObservers::Iterator iter(observers_);
-//	while (NSObject <CTTabStripModelObserver> *obs = iter.GetNext()) {
-//		if ([obs respondsToSelector:@selector(tabDetachedWithContents:atIndex:)]) {
-//			[obs tabDetachedWithContents:removed_contents
-//								 atIndex:index];
-//			if (![self hasNonPhantomTabs] && [obs respondsToSelector:@selector(tabStripEmpty)])
-//			[obs tabStripEmpty];
-//		}
-//	}
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               removed_contents, CTTabContentsUserInfoKey,
@@ -415,8 +380,6 @@ const int kNoTab = NSNotFound;
 - (void)updateTabContentsStateAtIndex:(int)index 
 						   changeType:(CTTabChangeType)changeType {
 	assert([self containsIndex:index]);
-//	CALL_EACH_OBSERVER(observers_, @selector(tabChangedWithContents:atIndex:changeType:),
-//					  [observer tabChangedWithContents:[self contentsAtIndex:index] atIndex:index changeType:change_type]);
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  [self tabContentsAtIndex:index], CTTabContentsUserInfoKey,
@@ -443,12 +406,6 @@ const int kNoTab = NSNotFound;
 }
 
 - (bool)tabsAreLoading {
-//	TabContentsDataVector::const_iterator iter = contents_data_.begin();
-//	for (; iter != contents_data_.end(); ++iter) {
-//		if ((*iter)->contents.isLoading)
-//			return true;
-//	}
-//	return false;
 	for (TabContentsData *data in contents_data_) {
 		if (data->contents.isLoading)
 			return true;
@@ -470,7 +427,6 @@ const int kNoTab = NSNotFound;
 		return;
 	}
 	data->isBlocked = blocked;
-//	CALL_EACH_OBSERVER(observers_, @selector(tabBlockedStateChangedWithContents:atIndex:), [observer tabBlockedStateChangedWithContents:contents atIndex:index]);
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  contents, CTTabContentsUserInfoKey,
@@ -518,9 +474,6 @@ const int kNoTab = NSNotFound;
 		[[NSNotificationCenter defaultCenter] postNotificationName:CTTabMiniStateChangedNotification
 															object:self 
 														  userInfo:userInfo];
-	
-		
-//		CALL_EACH_OBSERVER(observers_, @selector(tabMiniStateChangedWithContents:atIndex:), [observer tabMiniStateChangedWithContents:contents atIndex:index]);
 	}
 	
 	// else: the tab was at the boundary and it's position doesn't need to
@@ -534,7 +487,6 @@ const int kNoTab = NSNotFound;
 	[[NSNotificationCenter defaultCenter] postNotificationName:CTTabPinnedStateChangedNotification
 														object:self
 													  userInfo:userInfo];
-//	CALL_EACH_OBSERVER(observers_, @selector(tabPinnedStateChangedWithContents:atIndex:), [observer tabPinnedStateChangedWithContents:contents atIndex:index]);
 }
 
 - (bool)IsTabPinned:(int)index {
@@ -888,8 +840,6 @@ const int kNoTab = NSNotFound;
 - (void)internalCloseTab:(CTTabContents *)contents
 				 atIndex:(int)index
 	 createHistoricalTab:(bool)create_historical_tabs {
-//	CALL_EACH_OBSERVER(observers_, @selector(tabClosingWithContents:atIndex:), [observer tabClosingWithContents:contents atIndex:index]);
-	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               contents, CTTabContentsUserInfoKey,
                               [NSNumber numberWithInt:index], CTTabIndexUserInfoKey,
@@ -906,7 +856,6 @@ const int kNoTab = NSNotFound;
 	
 	// Deleting the CTTabContents will call back to us via NotificationObserver
 	// and detach it.
-//	[contents destroy:self];
 	[self detachTabContentsAtIndex:index];
 }
 
@@ -936,11 +885,6 @@ const int kNoTab = NSNotFound;
     [[NSNotificationCenter defaultCenter] postNotificationName:CTTabSelectedNotification 
 														object:self 
 													  userInfo:userInfo];
-//	CALL_EACH_OBSERVER(observers_, @selector(tabSelectedWithContents:previousContents:atIndex:userGesture:),
-//					  [observer tabSelectedWithContents:new_contents 
-//									   previousContents:last_selected_contents 
-//												atIndex:selected_index_ 
-//											userGesture:user_gesture]);
 }
 
 // Selects either the next tab (|foward| is true), or the previous tab
@@ -993,16 +937,7 @@ const bool kPhantomTabsEnabled = false;
 		if (![self IsAppTab:index])
 			return true;  // Always make non-app tabs go phantom.
 		
-		//ExtensionsService* extension_service = profile()->GetExtensionsService();
-		//if (!extension_service)
 		return false;
-		
-		//Extension* extension_app = GetTabContentsAt(index)->extension_app();
-		//assert(extension_app);
-		
-		// Only allow the tab to be made phantom if the extension still exists.
-		//return extension_service->GetExtensionById(extension_app->id(),
-		//                                           false) != NULL;
 	}
 	return false;
 }
@@ -1011,10 +946,8 @@ const bool kPhantomTabsEnabled = false;
 				   toPosition:(int)to_position
 			  selectAfterMove:(bool)select_after_move {
 	TabContentsData* movedData = [contents_data_ objectAtIndex:index];
-//	[movedContents retain];
 	[contents_data_ removeObjectAtIndex:index];
 	[contents_data_ insertObject:movedData atIndex:to_position];
-//	[movedContents release];
 	
 	// if !select_after_move, keep the same tab selected as was selected before.
 	if (select_after_move || index == selected_index_) {
@@ -1024,9 +957,6 @@ const bool kPhantomTabsEnabled = false;
 	} else if (index > selected_index_ && to_position <= selected_index_) {
 		selected_index_++;
 	}
-	
-//	CALL_EACH_OBSERVER(observers_, @selector(tabMovedWithContents:fromIndex:toIndex:),
-//					  [observer tabMovedWithContents:movedContents fromIndex:index toIndex:to_position]);
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               movedData->contents, CTTabNewContentsUserInfoKey,
@@ -1045,11 +975,6 @@ const bool kPhantomTabsEnabled = false;
 	CTTabContents* old_contents = [self tabContentsAtIndex:index];
 	TabContentsData* data = [contents_data_ objectAtIndex:index];
 	data->contents = new_contents;
-//	[contents_data_ replaceObjectAtIndex:index withObject:new_contents];
-//	contents_data_[index]->contents = new_contents;
-//	CALL_EACH_OBSERVER(observers_, @selector(tabReplacedWithContents:oldContents:atIndex:replaceType:),
-//					  [observer tabReplacedWithContents:new_contents 
-//											oldContents:old_contents atIndex:index replaceType:type]);
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               old_contents, CTTabContentsUserInfoKey,

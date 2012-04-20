@@ -1,7 +1,6 @@
 #import "CTBrowser.h"
 #import "CTTabContents.h"
 #import "CTTabStripModel.h"
-//#import "CTTabStripController.h"
 #import "CTPageTransition.h"
 #import "CTBrowserCommand.h"
 #import "CTBrowserWindowController.h"
@@ -28,20 +27,6 @@
 	}
 	return self;
 }
-//
-//
-//-(void)dealloc {
-//  DLOG("[ChromiumTabs] deallocing browser %@", self);
-//	[tabStripModel_ release];
-//  [super dealloc];
-//}
-//
-//
-//-(void)finalize {
-//	[tabStripModel_ release];
-//  [super finalize];
-//}
-
 
 -(CTToolbarController *)createToolbarController {
 	// subclasses could override this -- returning nil means no toolbar
@@ -427,29 +412,4 @@
 -(BOOL)canCloseTab {
 	return YES;
 }
-
-
-#pragma mark -
-#pragma mark NSFastEnumeration
-
-
-//- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
-//                                  objects:(id __unsafe_unretained [])stackbuf
-//                                    count:(NSUInteger)fetchCount {
-//  NSUInteger totalCount = [tabStripModel_ count];
-//  NSUInteger fetchIndex = 0;
-//
-//  while (state->state+fetchIndex < totalCount && fetchIndex < fetchCount) {
-//    stackbuf[fetchIndex++] =
-//        [tabStripModel_ tabContentsAtIndex:(state->state + fetchIndex)];
-//  }
-//
-//  state->state += fetchIndex;
-//  state->itemsPtr = stackbuf;
-//  state->mutationsPtr = self;  // TODO
-//
-//  return fetchIndex;
-//}
-
-
 @end

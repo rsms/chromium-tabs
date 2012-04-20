@@ -28,7 +28,6 @@
 
 - (void)dealloc {
 	[self setTrackingEnabled:NO];
-	//  [super dealloc];
 }
 
 - (void)mouseEntered:(NSEvent*)theEvent {

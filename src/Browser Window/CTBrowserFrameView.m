@@ -6,7 +6,6 @@
 
 #import <objc/runtime.h>
 
-//#import "scoped_nsautorelease_pool.h"
 #import "CTBrowserWindow.h"
 
 static const CGFloat kBrowserFrameViewPaintHeight = 60.0;

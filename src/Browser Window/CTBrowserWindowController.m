@@ -251,8 +251,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		//    ct_casid(&_currentMain, nil);
 		_currentMain = nil;
 	}
-	//delete tabStripObserver_;
-	//	[browser_.tabStripModel RemoveObserver:self];
 	
 	// Close all tabs
 	//[browser_ closeAllTabs]; // TODO
@@ -264,12 +262,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	//fullscreenController_.reset();
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	//  [browser_ release];
-	//  [tabStripController_ release];
-	//  ct_casid(&toolbarController_, nil);
-	toolbarController_ = nil;
-	//  [super dealloc];
 }
 
 
@@ -278,10 +270,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		//    ct_casid(&_currentMain, nil);
 		_currentMain = nil;
 	}
-	//NSLog(@"%@ will finalize (retainCount: %u)", self, [self retainCount]);
-	//NSLog(@"%@", [NSThread callStackSymbols]);
-	//delete tabStripObserver_;
-	//	[browser_.tabStripModel RemoveObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super finalize];
 }
@@ -360,18 +348,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 - (IBAction)newWindow:(id)sender {
-	//  CTBrowserWindowController* windowController =
-	//      [[isa browserWindowController] retain];
-	//  [windowController newDocument:sender];
-	//  [windowController showWindow:self];
 	[browser_ newWindow];
 }
 
 - (IBAction)closeTab:(id)sender {
-	//CTTabStripModel *tabStripModel = browser_.tabStripModel;
-	//  //tabStripModel->CloseAllTabs();
-	//  [tabStripModel closeTabContentsAtIndex:tabStripModel.selected_index 
-	//							  closeTypes:CLOSE_CREATE_HISTORICAL_TAB];
 	[browser_ closeTab];
 }
 
@@ -766,16 +746,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if ([window respondsToSelector:@selector(setShouldHideTitle:)])
 		[window setShouldHideTitle:YES];
 	
-//	BOOL isFullscreen = [self isFullscreen];
-//	//CGFloat floatingBarHeight = [self floatingBarHeight];
-//	// In fullscreen mode, |yOffset| accounts for the sliding position of the
-//	// floating bar and the extra offset needed to dodge the menu bar.
-//	CGFloat yOffset = 0;
-//	//CGFloat yOffset = isFullscreen ?
-//	//    (floor((1 - floatingBarShownFraction_) * floatingBarHeight) -
-//	//        [fullscreenController_ floatingBarVerticalOffset]) : 0;
-//	CGFloat maxY = NSMaxY(contentBounds) + yOffset;
-	
 	BOOL inPresentationMode = [self inPresentationMode];
 	CGFloat floatingBarHeight = [self floatingBarHeight];
 	// In presentation mode, |yOffset| accounts for the sliding position of the
@@ -898,15 +868,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 	[tabStripController_ layoutTabsWithoutAnimation];
 	
-	// Now lay out incognito badge together with the tab strip.
-	//if (incognitoBadge_.get()) {
-	//  // Actually place the badge *above* |maxY|.
-	//  NSPoint origin = NSMakePoint(width - NSWidth([incognitoBadge_ frame]) -
-	//                                   kIncognitoBadgeOffset, maxY);
-	//  [incognitoBadge_ setFrameOrigin:origin];
-	//  [incognitoBadge_ setHidden:NO];  // Make sure it's shown.
-	//}
-	
 	return maxY;
 }
 
@@ -955,8 +916,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 - (void)windowDidBecomeMain:(NSNotification*)notification {
 	// NOTE: if you use custom window bounds saving/restoring, you should probably
 	//       save the window bounds here.
-	
-	//  ct_casid(&_currentMain, self);
+
 	_currentMain = self;
 	
 	// TODO(dmaclach): Instead of redrawing the whole window, views that care
@@ -970,7 +930,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 - (void)windowDidResignMain:(NSNotification*)notification {
 	if (_currentMain == self) {
-		//    ct_casid(&_currentMain, nil);
 		_currentMain = nil;
 	}
 	
@@ -1075,16 +1034,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 				 shouldRestoreState:!!oldContents];
 }
 
-//- (void)tabSelectedWithContents:(CTTabContents*)newContents
-//               previousContents:(CTTabContents*)oldContents
-//                        atIndex:(NSInteger)index
-//                    userGesture:(bool)wasUserGesture {
-//  assert(newContents != oldContents);
-//  [self updateToolbarWithContents:newContents
-//               shouldRestoreState:!!oldContents];
-//}
-
-
 - (void)tabWillClose:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
 	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
@@ -1093,13 +1042,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	if (contents.isSelected)
 		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
-
-//- (void)tabClosingWithContents:(CTTabContents*)contents
-//                       atIndex:(NSInteger)index {
-//  [contents tabWillCloseInBrowser:browser_ atIndex:index];
-//  if (contents.isSelected)
-//    [self updateToolbarWithContents:nil shouldRestoreState:NO];
-//}
 
 - (void)tabDidInsert:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
@@ -1110,14 +1052,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 							  atIndex:index
 						 inForeground:isInForeground];
 }
-
-//- (void)tabInsertedWithContents:(CTTabContents*)contents
-//                      atIndex:(NSInteger)index
-//                 inForeground:(bool)foreground {
-//  [contents tabDidInsertIntoBrowser:browser_
-//                            atIndex:index
-//                       inForeground:foreground];
-//}
 
 - (void)tabDidReplace:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
@@ -1131,16 +1065,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	}
 }
 
-//- (void)tabReplacedWithContents:(CTTabContents*)contents
-//                    oldContents:(CTTabContents*)oldContents
-//                        atIndex:(NSInteger)index {
-//  [contents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
-//  if ([self selectedTabIndex] == index) {
-//    [self updateToolbarWithContents:contents
-//                 shouldRestoreState:!!oldContents];
-//  }
-//}
-
 - (void)tabDidDetach:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
 	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
@@ -1150,20 +1074,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
-//- (void)tabDetachedWithContents:(CTTabContents*)contents
-//                        atIndex:(NSInteger)index {
-//  [contents tabDidDetachFromBrowser:browser_ atIndex:index];
-//  if (contents.isSelected)
-//    [self updateToolbarWithContents:nil shouldRestoreState:NO];
-//}
-
 - (void)tabStripDidBecomeEmpty {
 	[self close];
 }
-//
-//- (void)tabStripEmpty {
-//  [self close];
-//}
 @end
 
 #pragma mark -

@@ -322,10 +322,7 @@ static ThrobberTimer* _sharedThrobberTimer;
 }
 
 - (void)dealloc {
-	//  [dataDelegate_ release];
 	[[ThrobberTimer sharedThrobberTimer] removeThrobber:self];
-	
-	//  [super dealloc];
 }
 
 // Manages this ThrobberView's membership in the shared throbber timer set on

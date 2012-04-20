@@ -69,12 +69,6 @@ _synthRetain(NSImage*, Icon, icon);
   return [super init];
 }
 
-//-(void)destroy:(CTTabStripModel *)sender {
-//  // TODO: notify "disconnected"?
-//  [sender TabContentsWasDestroyed:self]; // TODO: NSNotification
-//  [self release];
-//}
-
 #pragma mark Properties impl.
 
 -(BOOL)hasIcon {
@@ -93,8 +87,6 @@ _synthRetain(NSImage*, Icon, icon);
                   name:CTTabContentsDidCloseNotification
                 object:parentOpener_];
   }
-//  kvo_change(parentOpener);
-//    parentOpener_ = parentOpener; // weak
     [self willChangeValueForKey:@"parentOpener"];
     parentOpener_ = parentOpener;
     [self didChangeValueForKey:@"parentOpener"];

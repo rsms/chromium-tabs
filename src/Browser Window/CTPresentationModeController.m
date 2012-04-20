@@ -237,22 +237,7 @@ const CGFloat kFloatingBarVerticalOffset = 22;
 	// Register for notifications.  Self is removed as an observer in |-cleanup|.
 	NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
 	NSWindow* window = [browserController_ window];
-	
-	// Disable these notifications on Lion as they cause crashes.
-	// TODO(rohitrao): Figure out what happens if a fullscreen window changes
-	// monitors on Lion.
-//	if (base::mac::IsOSSnowLeopardOrEarlier()) {
-//		[nc addObserver:self
-//			   selector:@selector(windowDidChangeScreen:)
-//				   name:NSWindowDidChangeScreenNotification
-//				 object:window];
-//		
-//		[nc addObserver:self
-//			   selector:@selector(windowDidMove:)
-//				   name:NSWindowDidMoveNotification
-//				 object:window];
-//	}
-	
+		
 	[nc addObserver:self
 		   selector:@selector(windowDidBecomeMain:)
 			   name:NSWindowDidBecomeMainNotification

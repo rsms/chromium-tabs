@@ -10,14 +10,10 @@
 #import "CTUtil.h"
 #import "NSImage+CTAdditions.h"
 
-//#import <limits>
-//#import <string>
-
 #import "NewTabButton.h"
 #import "CTTabStripView.h"
 #import "CTTabContentsController.h"
 #import "CTTabController.h"
-//#import "CTTabStripModelObserverBridge.h"
 #import "CTTabView.h"
 #import "ThrobberView.h"
 #import "CTTabStripModel.h"
@@ -294,14 +290,12 @@ const NSTimeInterval kAnimationDuration = 0.125;
 @synthesize indentForControls = indentForControls_;
 
 + (void)initialize {
-	//  NSAutoreleasePool* pool = [NSAutoreleasePool new];
 #define PIMG(name) [NSImage imageInAppOrCTFrameworkNamed:name]
 	kNewTabHoverImage = PIMG(@"newtab_h");
 	kNewTabImage = PIMG(@"newtab");
 	kNewTabPressedImage = PIMG(@"newtab_p");
 	kDefaultIconImage = PIMG(@"default-icon");
 #undef PIMG
-	//  [pool drain];
 }
 
 - (id)initWithView:(CTTabStripView*)view
@@ -312,10 +306,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		tabStripView_ = view;
 		switchView_ = switchView;
 		browser_ = browser;
-		//    tabStripModel_ = [browser_.tabStripModel retain];
 		tabStripModel_ = browser_.tabStripModel;
-		//    bridge_.reset(new CTTabStripModelObserverBridge(tabStripModel_, self));
-		//	[tabStripModel_ AddObserver:self];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(tabDidSelect:) 
@@ -461,9 +452,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (void)dealloc {
-	//  [tabStripModel_ RemoveObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	//  [tabStripModel_ release];
 	
 	if (trackingArea_)
 		[tabStripView_ removeTrackingArea:trackingArea_];
@@ -476,7 +465,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		[[[view animationForKey:@"frameOrigin"] delegate] invalidate];
 	}
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	//  [super dealloc];
 }
 
 + (CGFloat)defaultTabHeight {
@@ -537,11 +525,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	 static_cast<CTBrowserWindowController*>(controller));
 	 }
 	 }*/
-	
-	// Tell per-tab sheet manager about currently selected tab.
-	//  if (sheetController_.get()) {
-	//    [sheetController_ setActiveView:newView];
-	//  }
 }
 
 // Create a new tab view and set its cell correctly so it draws the way we want
@@ -1129,7 +1112,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// Register delegate (owned by the animation system).
 	NSView* tabView = [closingTab view];
 	CAAnimation* animation = [[tabView animationForKey:@"frameOrigin"] copy];
-	//  [animation autorelease];
 	TabCloseAnimationDelegate* delegate = [[TabCloseAnimationDelegate alloc] initWithTabStrip:self
 																				tabController:closingTab];
 	[animation setDelegate:delegate];  // Retains delegate.
@@ -1141,8 +1123,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// Periscope down! Animate the tab.
 	NSRect newFrame = [tabView frame];
 	newFrame = NSOffsetRect(newFrame, 0, -newFrame.size.height);
-	//  ScopedNSAnimationContextGroup animationGroup(true);
-	//  animationGroup.SetCurrentContextDuration(kAnimationDuration);
 	
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:kAnimationDuration];
@@ -1652,19 +1632,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	}
 }
 
-//- (GTMWindowSheetController*)sheetController {
-//  if (!sheetController_.get())
-//    sheetController_.reset([[GTMWindowSheetController alloc]
-//        initWithWindow:[switchView_ window] delegate:self]);
-//  return sheetController_.get();
-//}
-//
-//- (void)destroySheetController {
-//  // Make sure there are no open sheets.
-//  DCHECK_EQ(0U, [[sheetController_ viewsWithAttachedSheets] count]);
-//  sheetController_.reset();
-//}
-
 - (CTTabContentsController*)activeTabContentsController {
 	int modelIndex = tabStripModel_.selected_index;
 	if (modelIndex < 0)
@@ -1675,20 +1642,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		return nil;
 	return [tabContentsArray_ objectAtIndex:index];
 }
-//
-//- (void)gtm_systemRequestsVisibilityForView:(NSView*)view {
-//  // This implementation is required by GTMWindowSheetController.
-//
-//  // Raise window...
-//  [[switchView_ window] makeKeyAndOrderFront:self];
-//
-//  // ...and raise a tab with a sheet.
-//  NSInteger index = [self modelIndexForContentsView:view];
-//  assert(index >= 0);
-//  if (index >= 0)
-//    [tabStripModel_ selectTabContentsAtIndex:index 
-//								 userGesture:false] /* not a user gesture */;
-//}
 
 /*- (void)attachConstrainedWindow:(ConstrainedWindowMac*)window {
  // TODO(thakis, avi): Figure out how to make this work when tabs are dragged
@@ -2027,13 +1980,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		[self removeTab:tab];
 	}
 	
-	// Does nothing, purely for consistency with the windows/linux code.
-	//[self updateDevToolsForContents:NULL];
-	
 	// Send a broadcast that the number of tabs have changed.
-	[[NSNotificationCenter defaultCenter]
-	 postNotificationName:kTabStripNumberOfTabsChanged
-	 object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kTabStripNumberOfTabsChanged
+														object:self];
 }
 
 @end

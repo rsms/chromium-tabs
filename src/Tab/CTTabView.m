@@ -4,7 +4,6 @@
 
 #import "CTTabView.h"
 
-//#import "scoped_cftyperef.h"
 #import "CTTabController.h"
 #import "CTTabWindowController.h"
 #import "NSWindow+CTThemed.h"

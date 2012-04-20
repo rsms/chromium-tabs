@@ -47,17 +47,10 @@ static bool ShouldWindowsMiniaturizeOnDoubleClick() {
 		lastMouseUp_ = -1000.0;
 		
 		// Register to be an URL drop target.
-		//dropHandler_.reset([[URLDropTargetHandler alloc] initWithView:self]);
-		//[dropHandler_ release];
 		dropHandler_ = [[URLDropTargetHandler alloc] initWithView:self];
 	}
 	return self;
 }
-
-//- (void)dealloc {
-//	[dropHandler_ release];
-//	[super dealloc];
-//}
 
 // Draw bottom border (a dark border and light highlight). Each tab is
 // responsible for mimicking this bottom border, unless it's the selected

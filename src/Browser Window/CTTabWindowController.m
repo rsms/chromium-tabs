@@ -55,10 +55,7 @@
 	if (overlayWindow_) {
 		[self setUseOverlay:NO];
 	}
-	//  [lockedTabs_ release];
-	//  [super dealloc];
 }
-
 
 // Add the side tab strip to the left side of the window's content area,
 // making it fill the full height of the content area.
