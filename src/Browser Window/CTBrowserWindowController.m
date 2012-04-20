@@ -280,7 +280,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 // Updates the toolbar with the states of the specified |contents|.
-// If |shouldRestore| is true, we're switching (back?) to this tab and should
+// If |shouldRestore| is YES, we're switching (back?) to this tab and should
 // restore any previous state (such as user editing a text field) as well.
 - (void)updateToolbarWithContents:(CTTabContents*)contents
                shouldRestoreState:(BOOL)shouldRestore {
@@ -414,7 +414,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		CTBrowserWindowController* dragBWC = (CTBrowserWindowController*)dragController;
 		int index = [dragBWC->tabStripController_ modelIndexForTabView:view];
 		CTTabContents* contents =
-		[[dragBWC->browser_ tabStripModel] tabContentsAtIndex:index];
+			[[dragBWC->browser_ tabStripModel] tabContentsAtIndex:index];
 		// The tab contents may have gone away if given a window.close() while it
 		// is being dragged. If so, bail, we've got nothing to drop.
 		if (!contents)
@@ -435,7 +435,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		
 		// Before the tab is detached from its originating tab strip, store the
 		// pinned state so that it can be maintained between the windows.
-		bool isPinned = [[dragBWC->browser_ tabStripModel] IsTabPinned:index];
+		BOOL isPinned = [[dragBWC->browser_ tabStripModel] IsTabPinned:index];
 		
 		// Now that we have enough information about the tab, we can remove it from
 		// the dragging window. We need to do this *before* we add it to the new
@@ -492,7 +492,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		NSRect tabRect = [tabView frame];
 		
 		// Before detaching the tab, store the pinned state.
-		bool isPinned = [tabStripModel IsTabPinned:index];
+		BOOL isPinned = [tabStripModel IsTabPinned:index];
 		
 		// Detach it from the source window, which just updates the model without
 		// deleting the tab contents. This needs to come before creating the new
@@ -516,7 +516,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		// Add the tab to the browser (we do it here after creating the window
 		// controller so that notifications are properly delegated)
 		[newBrowser.tabStripModel appendTabContents:contents
-									   inForeground:true];
+									   inForeground:YES];
 		[newBrowser loadingStateDidChange:contents];
 		
 		// Set window frame
@@ -558,7 +558,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 // Default implementation of the below are both YES. Until we have fullscreen
-// support these will always be true.
+// support these will always be YES.
 - (BOOL)tabTearingAllowed {
 	return ![self isFullscreen];
 }

@@ -7,7 +7,7 @@
 #import "URLDropTarget.h"
 
 // ripped out from libbase mac_util.mm:
-static bool ShouldWindowsMiniaturizeOnDoubleClick() {
+static BOOL ShouldWindowsMiniaturizeOnDoubleClick() {
 	// We use an undocumented method in Cocoa; if it doesn't exist, default to
 	// |true|. If it ever goes away, we can do (using an undocumented pref key):
 	//   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

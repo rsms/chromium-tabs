@@ -40,7 +40,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 	BOOL isCrashed_;
 	BOOL isVisible_;
 	BOOL isSelected_;
-	BOOL isTeared_; // true while being "teared" (dragged between windows)
+	BOOL isTeared_; // YES while being "teared" (dragged between windows)
 	BOOL isPinned_;
 	BOOL isBlocked_;
 	id delegate_;
@@ -67,8 +67,8 @@ extern NSString *const CTTabContentsDidCloseNotification;
 @property(retain, nonatomic) CTBrowser *browser;
 @property(strong, nonatomic) CTTabContents* parentOpener;
 
-// If this returns true, special icons like throbbers and "crashed" is
-// displayed, even if |icon| is nil. By default this returns true.
+// If this returns YES, special icons like throbbers and "crashed" is
+// displayed, even if |icon| is nil. By default this returns YES.
 @property(readonly, nonatomic) BOOL hasIcon;
 
 // Initialize a new CTTabContents object.
@@ -100,7 +100,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 // Called when this tab was inserted into a browser
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
-                   inForeground:(bool)foreground;
+                   inForeground:(BOOL)foreground;
 // Called when this tab replaced another tab
 - (void)tabReplaced:(CTTabContents*)oldContents
           inBrowser:(CTBrowser*)browser

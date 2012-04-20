@@ -17,7 +17,7 @@
 // away. This also skips any phantom tabs.
 - (int)getValidIndex:(int)index
 		 afterRemove:(int)removing_index
-			isRemove:(bool)is_remove;
+			isRemove:(BOOL)is_remove;
 @end
 
 @implementation CTTabStripModelOrderController {
@@ -48,7 +48,7 @@
 
 - (int)determineInsertionIndexWithContents:(CTTabContents *)new_contents
 								transition:(CTPageTransition)transition
-							  inForeground:(bool)foreground {
+							  inForeground:(BOOL)foreground {
 	int tab_count = [tabStripModel_ count];
 	if (!tab_count)
 		return 0;
@@ -90,7 +90,7 @@
 }
 
 - (int)determineNewSelectedIndexAfterClose:(int)removing_index
-								  isRemove:(bool)is_remove {
+								  isRemove:(BOOL)is_remove {
 	int tab_count = [tabStripModel_ count];
 	assert(removing_index >= 0 && removing_index < tab_count);
 	
@@ -153,7 +153,7 @@
 - (void)tabSelectedWithContents:(CTTabContents*)new_contents
 					oldContents:(CTTabContents *)old_contents
 						atIndex:(int)index
-					userGesture:(bool)user_gesture {
+					userGesture:(BOOL)user_gesture {
 }
 
 #pragma mark private
@@ -162,7 +162,7 @@
 
 - (int)getValidIndex:(int)index
 		 afterRemove:(int)removing_index
-			isRemove:(bool)is_remove {
+			isRemove:(BOOL)is_remove {
 	if (is_remove && removing_index < index)
 		index = MAX(0, index - 1);
 	return index;

@@ -186,7 +186,7 @@ _synthRetain(NSImage*, Icon, icon);
 // Called when this tab was inserted into a browser
 - (void)tabDidInsertIntoBrowser:(CTBrowser*)browser
                         atIndex:(NSInteger)index
-                   inForeground:(bool)foreground {
+                   inForeground:(BOOL)foreground {
   self.browser = browser;
 }
 

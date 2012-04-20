@@ -44,8 +44,8 @@ static NSColor* kDefaultColorToolbarStrokeInactive = nil;
 
 + (void)load {
 	//  NSAutoreleasePool* pool = [NSAutoreleasePool new];
-	_gradientFaded = _mkGradient(true);
-	_gradientNotFaded = _mkGradient(false);
+	_gradientFaded = _mkGradient(YES);
+	_gradientNotFaded = _mkGradient(NO);
 	kDefaultColorToolbarStroke =
     [NSColor colorWithCalibratedWhite: 0x67 / 0xff alpha:1.0];
 	kDefaultColorToolbarStrokeInactive =

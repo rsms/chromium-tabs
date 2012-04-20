@@ -18,7 +18,7 @@
 	CTTabStripController *tabStripController_;
 	CTToolbarController *toolbarController_;
 @private
-	BOOL initializing_; // true if the instance is initializing
+	BOOL initializing_; // YES if the instance is initializing
 	
 	// The view that shows the presentation mode toggle when in Lion fullscreen
 	// mode.  Nil if not in fullscreen mode or not on Lion.
@@ -62,7 +62,7 @@
 @property(strong, readonly, nonatomic) CTBrowser *browser;
 
 // Called to check whether or not this window has a toolbar. By default returns
-// true if toolbarController_ is not nil.
+// YES if toolbarController_ is not nil.
 @property(readonly, nonatomic) BOOL hasToolbar;
 
 @property(readwrite, nonatomic, assign) BOOL shouldUsePresentationModeWhenEnteringFullscreen;
@@ -102,7 +102,7 @@
 - (int)selectedTabIndex;
 
 // Updates the toolbar with the states of the specified |contents|.
-// If |shouldRestore| is true, we're switching (back?) to this tab and should
+// If |shouldRestore| is YES, we're switching (back?) to this tab and should
 // restore any previous state (such as user editing a text field) as well.
 - (void)updateToolbarWithContents:(CTTabContents*)tab
                shouldRestoreState:(BOOL)shouldRestore;

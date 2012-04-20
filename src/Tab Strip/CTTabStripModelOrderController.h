@@ -28,7 +28,7 @@
 // transition and foreground flag to figure out how it was opened.
 - (int)determineInsertionIndexWithContents:(CTTabContents *)new_contents
 								transition:(CTPageTransition)transition
-							  inForeground:(bool)foreground;
+							  inForeground:(BOOL)foreground;
 
 // Returns the index to append tabs at.
 - (int)determineInsertionIndexForAppending;
@@ -37,12 +37,12 @@
 // If |is_remove| is false, the tab is not being removed but rather made
 // phantom (see description of phantom tabs in TabStripModel).
 - (int)determineNewSelectedIndexAfterClose:(int)removed_index
-								  isRemove:(bool)is_remove;
+								  isRemove:(BOOL)is_remove;
 
 // Overridden from TabStripModelObserver:
 - (void)tabSelectedWithContents:(CTTabContents *)new_contents
 					oldContents:(CTTabContents *)old_contents
 						atIndex:(int)index
-					userGesture:(bool)user_gesture;
+					userGesture:(BOOL)user_gesture;
 
 @end

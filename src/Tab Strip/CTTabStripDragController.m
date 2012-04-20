@@ -262,10 +262,10 @@ const NSTimeInterval kTearDuration = 0.333;
 		// to a new window.
 		NSWindowAnimationBehavior savedAnimationBehavior =
         NSWindowAnimationBehaviorDefault;
-		bool didSaveAnimationBehavior = false;
+		BOOL didSaveAnimationBehavior = NO;
 		if ([dragWindow_ respondsToSelector:@selector(animationBehavior)] &&
 			[dragWindow_ respondsToSelector:@selector(setAnimationBehavior:)]) {
-			didSaveAnimationBehavior = true;
+			didSaveAnimationBehavior = YES;
 			savedAnimationBehavior = [dragWindow_ animationBehavior];
 			[dragWindow_ setAnimationBehavior:NSWindowAnimationBehaviorNone];
 		}

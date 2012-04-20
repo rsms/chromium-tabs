@@ -86,7 +86,7 @@
 #define NOTIMPLEMENTED() errx(4, "[not implemented] %s (%s:%d)", \
                               __PRETTY_FUNCTION__, __SRC_FILENAME__, __LINE__)
 
-#define NOTREACHED() assert(false && "Should not have been reached")
+#define NOTREACHED() assert(NO && "Should not have been reached")
 
 // strrstr
 #ifdef __cplusplus

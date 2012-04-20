@@ -139,7 +139,7 @@ typedef enum {
 // call to CloseAllTabs). As tabs close, the selection in the tabstrip
 // changes which notifies observers, which can use this as an optimization to
 // avoid doing meaningless or unhelpful work.
-@property (readonly, nonatomic) bool closing_all;
+@property (readonly, nonatomic) BOOL closing_all;
 // Access the order controller. Exposed only for unit tests.
 @property (readonly) CTTabStripModelOrderController* order_controller;
 
@@ -153,7 +153,7 @@ typedef enum {
 // Returns true if there are any non-phantom tabs. When there are no
 // non-phantom tabs the delegate is notified by way of TabStripEmpty and the
 // browser closes.
-- (bool)hasNonPhantomTabs;
+- (BOOL)hasNonPhantomTabs;
 
 // Sets the insertion policy. Default is INSERT_AFTER.
 - (void)SetInsertionPolicy:(InsertionPolicy)policy;
@@ -161,7 +161,7 @@ typedef enum {
 
 // Returns true if |observer| is in the list of observers. This is intended
 // for debugging.
-//- (bool)HasObserver:(NSObject *)observer;
+//- (BOOL)HasObserver:(NSObject *)observer;
 
 #pragma mark -
 #pragma mark Basic API
@@ -173,7 +173,7 @@ typedef enum {
 // Adds the specified CTTabContents in the default location. Tabs opened in the
 // foreground inherit the group of the previously selected tab.
 - (void)appendTabContents:(CTTabContents *)contents
-			 inForeground:(bool)foreground;
+			 inForeground:(BOOL)foreground;
 
 // Adds the specified CTTabContents at the specified location. |add_types| is a
 // bitmask of AddTypes; see it for details.
@@ -195,7 +195,7 @@ typedef enum {
 // Returns true if the CTTabContents was closed immediately, false if it was not
 // closed (we may be waiting for a response from an onunload handler, or
 // waiting for the user to confirm closure).
-- (bool)closeTabContentsAtIndex:(int)index 
+- (BOOL)closeTabContentsAtIndex:(int)index 
 				 closeTypes:(uint32)close_types;
 
 // Replaces the entire state of a the tab at index by switching in a
@@ -237,7 +237,7 @@ typedef enum {
 // tabs mixing.
 - (void)moveTabContentsAtIndex:(int)index 
 					   toIndex:(int)to_position 
-			   selectAfterMove:(bool)select_after_move;
+			   selectAfterMove:(BOOL)select_after_move;
 
 // Returns the currently selected CTTabContents, or NULL if there is none.
 - (CTTabContents *)selectedTabContents;
@@ -261,7 +261,7 @@ typedef enum {
 // Make sure there is an auto-generated New Tab tab in the TabStripModel.
 // If |force_create| is true, the New Tab will be created even if the
 // preference is set to false (used by startup).
-//- (void)ensureNewTabVisible:(bool)force_create;
+//- (void)ensureNewTabVisible:(BOOL)force_create;
 
 // Close all tabs at once. Code can use closing_all() above to defer
 // operations that might otherwise by invoked by the flurry of detach/select
@@ -269,7 +269,7 @@ typedef enum {
 - (void)closeAllTabs;
 
 // Returns true if there are any CTTabContents that are currently loading.
-- (bool)tabsAreLoading;
+- (BOOL)tabsAreLoading;
 
 
 // Returns the controller controller that opened the CTTabContents at |index|.
@@ -283,7 +283,7 @@ typedef enum {
 // NOTE: this skips phantom tabs.
 //int GetIndexOfNextTabContentsOpenedBy(const NavigationController* opener,
 //                                      int start_index,
-//                                      bool use_group) const;
+//                                      BOOL use_group) const;
 
 // Returns the index of the first CTTabContents in the model opened by the
 // specified opener.
@@ -306,32 +306,32 @@ typedef enum {
 
 // Changes the blocked state of the tab at |index|.
 - (void)setTabAtIndex:(int)index 
-			  blocked:(bool)blocked;
+			  blocked:(BOOL)blocked;
 
 // Changes the pinned state of the tab at |index|. See description above
 // class for details on this.
 - (void)setTabAtIndex:(int)index 
-			   pinned:(bool)pinned;
+			   pinned:(BOOL)pinned;
 
 // Returns true if the tab at |index| is pinned.
 // See description above class for details on pinned tabs.
-- (bool)IsTabPinned:(int)index;
+- (BOOL)IsTabPinned:(int)index;
 
 // Is the tab a mini-tab?
 // See description above class for details on this.
-- (bool)IsMiniTab:(int)index;
+- (BOOL)IsMiniTab:(int)index;
 
 // Is the tab at |index| an app?
 // See description above class for details on app tabs.
-- (bool)IsAppTab:(int)index;
+- (BOOL)IsAppTab:(int)index;
 
 // Returns true if the tab is a phantom tab. A phantom tab is one where the
 // renderer has not been loaded.
 // See description above class for details on phantom tabs.
-- (bool)IsPhantomTab:(int)index;
+- (BOOL)IsPhantomTab:(int)index;
 
 // Returns true if the tab at |index| is blocked by a tab modal dialog.
-- (bool)IsTabBlocked:(int)index;
+- (BOOL)IsTabBlocked:(int)index;
 
 // Returns the index of the first tab that is not a mini-tab. This returns
 // |count()| if all of the tabs are mini-tabs, and 0 if none of the tabs are
@@ -344,7 +344,7 @@ typedef enum {
 // 0 and IndexOfFirstNonMiniTab. If |mini_tab| is false, the returned index
 // is between IndexOfFirstNonMiniTab and count().
 - (int)constrainInsertionIndex:(int)index 
-					   miniTab:(bool)mini_tab;
+					   miniTab:(BOOL)mini_tab;
 
 // Returns the index of the first tab that is not a phantom tab. This returns
 // kNoTab if all of the tabs are phantom tabs.
@@ -387,11 +387,11 @@ typedef enum {
 // View API //////////////////////////////////////////////////////////////////
 
 // Returns true if the specified command is enabled.
-- (bool)isContextMenuCommandEnabled:(int)context_index
+- (BOOL)isContextMenuCommandEnabled:(int)context_index
 						  commandID:(ContextMenuCommand)command_id;
 
 // Returns true if the specified command is checked.
-- (bool)isContextMenuCommandChecked:(int)context_index
+- (BOOL)isContextMenuCommandChecked:(int)context_index
 						  commandID:(ContextMenuCommand)command_id;
 
 // Performs the action associated with the specified command for the given

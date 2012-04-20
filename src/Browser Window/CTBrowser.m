@@ -133,7 +133,7 @@
 
 /*-(NSRect)savedWindowBounds {
  gfx::Rect restored_bounds = override_bounds_;
- bool maximized;
+ BOOL maximized;
  WindowSizer::GetBrowserWindowBounds(app_name_, restored_bounds, NULL,
  &restored_bounds, &maximized);
  return restored_bounds;
@@ -235,7 +235,7 @@
 -(void)selectTabAtIndex:(int)index {
 	if (index < [tabStripModel_ count]) {
 		[tabStripModel_ selectTabContentsAtIndex:index 
-									 userGesture:true];
+									 userGesture:YES];
 	}
 }
 
@@ -332,7 +332,7 @@
 	DLOG("create new strip");
 	CTBrowser* browser = [isa browser];
 	[browser.tabStripModel appendTabContents:contents
-								inForeground:true];
+								inForeground:YES];
 	[browser loadingStateDidChange:contents];
 	
 	// Orig impl:
@@ -340,7 +340,7 @@
 	//browser->set_maximized_state(
 	//    maximize ? MAXIMIZED_STATE_MAXIMIZED : MAXIMIZED_STATE_UNMAXIMIZED);
 	//browser->CreateBrowserWindow();
-	//browser->tabstrip_model()->AppendTabContents(contents, true);
+	//browser->tabstrip_model()->AppendTabContents(contents, YES);
 	
 	// Make sure the loading state is updated correctly, otherwise the throbber
 	// won't start if the page is loading.
@@ -387,19 +387,19 @@
 
 // Runs any unload listeners associated with the specified CTTabContents before
 // it is closed. If there are unload listeners that need to be run, this
-// function returns true and the TabStripModel will wait before closing the
-// CTTabContents. If it returns false, there are no unload listeners and the
+// function returns YES and the TabStripModel will wait before closing the
+// CTTabContents. If it returns NO, there are no unload listeners and the
 // TabStripModel can close the CTTabContents immediately.
 -(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
 	return NO;
 }
 
-// Returns true if a tab can be restored.
+// Returns YES if a tab can be restored.
 -(BOOL)canRestoreTab {
 	return NO;
 }
 
-// Restores the last closed tab if CanRestoreTab would return true.
+// Restores the last closed tab if CanRestoreTab would return YES.
 -(void)restoreTab {
 }
 
@@ -408,7 +408,7 @@
 	return YES;
 }
 
-// Returns true if any of the tabs can be closed.
+// Returns YES if any of the tabs can be closed.
 -(BOOL)canCloseTab {
 	return YES;
 }

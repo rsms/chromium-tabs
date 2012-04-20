@@ -646,7 +646,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	int index = [self modelIndexForTabView:sender];
 	if ([tabStripModel_ containsIndex:index])
 		[tabStripModel_ selectTabContentsAtIndex:index
-									 userGesture:true];
+									 userGesture:YES];
 }
 
 // Called when the user closes a tab. Asks the model to close the tab. |sender|
@@ -664,7 +664,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	//CTTabContents* contents = tabStripModel_->GetTabContentsAt(index);
 	const NSInteger numberOfOpenTabs = [self numberOfOpenTabs];
 	if (numberOfOpenTabs > 1) {
-		bool isClosingLastTab = index == numberOfOpenTabs - 1;
+		BOOL isClosingLastTab = index == numberOfOpenTabs - 1;
 		if (!isClosingLastTab) {
 			// Limit the width available for laying out tabs so that tabs are not
 			// resized until a later time (when the mouse leaves the tab strip).
@@ -826,7 +826,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	CGFloat offset = [self indentForControls];
 	NSUInteger i = 0;
-	bool hasPlaceholderGap = false;
+	BOOL hasPlaceholderGap = NO;
 	// Whether or not the last tab processed by the loop was a mini tab.
 	BOOL isLastTabMini = NO;
 	CGFloat tabWidthAccumulatedFraction = 0;
@@ -886,7 +886,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 				NSMinX(placeholderFrame_);
 			if (verticalLayout_) {
 				if (NSMidY(tabFrame) > placeholderMin) {
-					hasPlaceholderGap = true;
+					hasPlaceholderGap = YES;
 					offset += NSHeight(placeholderFrame_);
 					tabFrame.origin.y = availableSpace - tabFrame.size.height - offset;
 				}
@@ -894,7 +894,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 				// If the left edge is to the left of the placeholder's left, but the
 				// mid is to the right of it slide over to make space for it.
 				if (NSMidX(tabFrame) > placeholderMin) {
-					hasPlaceholderGap = true;
+					hasPlaceholderGap = YES;
 					offset += NSWidth(placeholderFrame_);
 					offset -= kTabOverlap;
 					tabFrame.origin.x = offset;
@@ -1179,8 +1179,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		[[tabController view] setNeedsDisplay:YES];
 	}
 	
-	bool oldHasIcon = [tabController iconView] != nil;
-	bool newHasIcon = contents.hasIcon ||
+	BOOL oldHasIcon = [tabController iconView] != nil;
+	BOOL newHasIcon = contents.hasIcon ||
 	[tabStripModel_ IsMiniTab:modelIndex];  // Always show icon if mini.
 	
 	CTTabLoadingState oldState = [tabController loadingState];
@@ -1188,7 +1188,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	NSImage* throbberImage = nil;
 	if (contents.isCrashed) {
 		newState = CTTabLoadingStateCrashed;
-		newHasIcon = true;
+		newHasIcon = YES;
 	} else if (contents.isWaitingForResponse) {
 		newState = CTTabLoadingStateWaiting;
 		throbberImage = throbberWaitingImage;
@@ -1286,7 +1286,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	int toIndex = [self indexOfPlaceholder];
 	[tabStripModel_ moveTabContentsAtIndex:from 
 								   toIndex:toIndex 
-						   selectAfterMove:true];
+						   selectAfterMove:YES];
 }
 
 // Drop a given CTTabContents at the location of the current placeholder. If there
@@ -1574,7 +1574,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	 browser_->profile());
 	 tabStripModel_->GetTabContentsAt(index)->OpenURL(url, GURL(), CURRENT_TAB,
 	 CTPageTransitionTyped);
-	 tabStripModel_->SelectTabContentsAt(index, true);
+	 tabStripModel_->SelectTabContentsAt(index, YES);
 	 break;
 	 default:
 	 NOTIMPLEMENTED();
@@ -1736,7 +1736,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 // at |modelIndex|.
 - (void)tabInsertedWithContents:(CTTabContents*)contents
                         atIndex:(NSInteger)modelIndex
-                   inForeground:(bool)inForeground {
+                   inForeground:(BOOL)inForeground {
 	assert(contents);
 	assert(modelIndex == kNoTab ||
 		   [tabStripModel_ containsIndex:modelIndex]);
@@ -1807,7 +1807,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 - (void)tabSelectedWithContents:(CTTabContents*)newContents
                previousContents:(CTTabContents*)oldContents
                         atIndex:(NSInteger)modelIndex
-                    userGesture:(bool)wasUserGesture {
+                    userGesture:(BOOL)wasUserGesture {
 	// Take closing tabs into account.
 	NSInteger index = [self indexFromModelIndex:modelIndex];
 	
@@ -1889,7 +1889,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		[self setTabTitle:tabController withContents:contents];
 	
 	// See if the change was to/from phantom.
-	bool isPhantom = [tabStripModel_ IsPhantomTab:modelIndex];
+	BOOL isPhantom = [tabStripModel_ IsPhantomTab:modelIndex];
 	if (isPhantom != [tabController phantom])
 		[tabController setPhantom:isPhantom];
 	
