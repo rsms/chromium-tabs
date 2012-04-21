@@ -29,9 +29,8 @@
 	IBOutlet CTTabStripView* sideTabStripView_;
 	NSWindow* overlayWindow_;  // Used during dragging for window opacity tricks
 	NSView* cachedContentView_;  // Used during dragging for identifying which
-	// view is the proper content area in the overlay
-	// (weak)
-	//scoped_nsobject<NSMutableSet> lockedTabs_;
+								 // view is the proper content area in the overlay
+								 // (weak)
 	NSMutableSet *lockedTabs_;
 	BOOL closeDeferred_;  // If YES, call performClose: in removeOverlay:.
 	// Difference between height of window content area and height of the
@@ -44,8 +43,6 @@
 
 - (id)initWithWindow:(NSWindow*)window {
 	if ((self = [super initWithWindow:window]) != nil) {
-		//lockedTabs_.reset([[NSMutableSet alloc] initWithCapacity:10]);
-		//[lockedTabs_ release];
 		lockedTabs_ = [[NSMutableSet alloc] initWithCapacity:10];
 	}
 	return self;
@@ -199,31 +196,28 @@
 											   object:nil];
 	NSWindow* window = [self window];
 	if (useOverlay && !overlayWindow_) {
-		assert(!cachedContentView_);
-		overlayWindow_ = [[TabWindowOverlayWindow alloc]
-						  initWithContentRect:[window frame]
-						  styleMask:NSBorderlessWindowMask
-						  backing:NSBackingStoreBuffered
-						  defer:YES];
+		DCHECK(!cachedContentView_);
+		overlayWindow_ = [[TabWindowOverlayWindow alloc] initWithContentRect:[window frame]
+																   styleMask:NSBorderlessWindowMask
+																	 backing:NSBackingStoreBuffered
+																	   defer:YES];
 		[overlayWindow_ setTitle:@"overlay"];
 		[overlayWindow_ setBackgroundColor:[NSColor clearColor]];
 		[overlayWindow_ setOpaque:NO];
 		[overlayWindow_ setDelegate:self];
 		cachedContentView_ = [window contentView];
 		[window addChildWindow:overlayWindow_ ordered:NSWindowAbove];
+		[window makeFirstResponder:nil];
 		[self moveViewsBetweenWindowAndOverlay:useOverlay];
 		[overlayWindow_ orderFront:nil];
 	} else if (!useOverlay && overlayWindow_) {
-		assert(cachedContentView_);
-		[overlayWindow_ setDelegate:nil];
-		[window setDelegate:nil];
+		DCHECK(cachedContentView_);
 		[window setContentView:cachedContentView_];
 		[self moveViewsBetweenWindowAndOverlay:useOverlay];
 		[window makeFirstResponder:cachedContentView_];
 		[window display];
 		[window removeChildWindow:overlayWindow_];
 		[overlayWindow_ orderOut:nil];
-		//    [overlayWindow_ release];
 		overlayWindow_ = nil;
 		cachedContentView_ = nil;
 	} else {
