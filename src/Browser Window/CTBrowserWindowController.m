@@ -110,7 +110,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	
 	// Our browser
 	browser_ = browser;
-	browser_.windowController = self;
     NSWindow* window = [self window];
 	
     // Lion will attempt to automagically save and restore the UI. This
@@ -501,23 +500,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		[tabStripModel detachTabContentsAtIndex:index];
 		
 		// Create the new browser with a single tab in its model, the one being
-		// dragged. Note that we do not retain the (autoreleased) reference since the
-		// new browser will be owned by a window controller (created later)
-		//--oldimpl--
-		//CTBrowser* newBrowser =
-		//    [tabStripModel->delegate() createNewStripWithContents:contents];
-//		CTBrowser* newBrowser = [[tabStripModel delegate] createNewStripWithContents:contents];
-		// New browser
-		CTBrowser* newBrowser = [[browser_ class] browser];
-		
-		// Create a new window controller with the browser.
-		CTBrowserWindowController* controller = [[[self class] alloc] initWithBrowser:newBrowser];
-		
-		// Add the tab to the browser (we do it here after creating the window
-		// controller so that notifications are properly delegated)
-		[newBrowser.tabStripModel appendTabContents:contents
-									   inForeground:YES];
-		[newBrowser loadingStateDidChange:contents];
+		// dragged.
+		CTBrowser* newBrowser = [browser_ createNewStripWithContents:contents];
+		CTBrowserWindowController* controller = [newBrowser windowController];
 		
 		// Set window frame
 		[controller.window setFrame:windowRect display:NO];

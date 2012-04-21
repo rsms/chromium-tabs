@@ -3,6 +3,7 @@
 #import "CTTabStripModel.h"
 #import "CTPageTransition.h"
 #import "CTBrowserCommand.h"
+#import "CTBrowserWindow.h"
 #import "CTBrowserWindowController.h"
 #import "CTTabContentsController.h"
 #import "CTToolbarController.h"
@@ -10,6 +11,8 @@
 
 @implementation CTBrowser {
 	CTTabStripModel *tabStripModel_;
+	
+	CTBrowserWindowController* windowController_;
 }
 
 @synthesize windowController = windowController_;
@@ -20,6 +23,18 @@
 	return [[self alloc] init];
 }
 
+// Create a new browser with window controller 
+// based on current window controller's class
+- (CTBrowser*)createNewBrowser {
+	// Create a new browser & window when we start
+	CTBrowser *browser = [isa browser];
+	Class cls = self.windowController ? 
+		[self.windowController class] :
+		[CTBrowserWindowController class];
+	browser.windowController =
+		[[cls alloc] initWithBrowser:browser];
+	return browser;
+}
 
 - (id)init {
 	if ((self = [super init])) {
@@ -28,7 +43,7 @@
 	return self;
 }
 
--(CTToolbarController *)createToolbarController {
+- (CTToolbarController *)createToolbarController {
 	// subclasses could override this -- returning nil means no toolbar
 	NSBundle *bundle = [CTUtil bundleForResource:@"Toolbar" ofType:@"nib"];
 	return [[CTToolbarController alloc] initWithNibName:@"Toolbar"
@@ -36,7 +51,7 @@
 												browser:self];
 }
 
--(CTTabContentsController*)createTabContentsControllerWithContents:
+- (CTTabContentsController*)createTabContentsControllerWithContents:
 (CTTabContents*)contents {
 	// subclasses could override this
 	return [[CTTabContentsController alloc] initWithContents:contents];
@@ -46,25 +61,25 @@
 #pragma mark -
 #pragma mark Accessors
 
--(NSWindow*)window {
+- (NSWindow*)window {
 	return [windowController_ window];
 }
 
 // TabStripModel convenience helpers
 
--(int)tabCount {
+- (int)tabCount {
 	return [tabStripModel_ count];
 }
 
--(int)selectedTabIndex {
+- (int)selectedTabIndex {
 	return tabStripModel_.selected_index;
 }
 
--(CTTabContents*)selectedTabContents {
+- (CTTabContents*)selectedTabContents {
 	return [tabStripModel_ selectedTabContents];
 }
 
--(CTTabContents*)tabContentsAtIndex:(int)index {
+- (CTTabContents*)tabContentsAtIndex:(int)index {
 	return [tabStripModel_ tabContentsAtIndex:index];
 }
 
@@ -77,21 +92,21 @@
 	return array;
 }
 
--(int)indexOfTabContents:(CTTabContents*)contents {
+- (int)indexOfTabContents:(CTTabContents*)contents {
 	return [tabStripModel_ indexOfTabContents:contents];
 }
 
--(void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
+- (void)selectTabContentsAtIndex:(int)index userGesture:(BOOL)userGesture {
 	[tabStripModel_ selectTabContentsAtIndex:index
 								 userGesture:userGesture];
 }
 
--(void)updateTabStateAtIndex:(int)index {
+- (void)updateTabStateAtIndex:(int)index {
 	[tabStripModel_ updateTabContentsStateAtIndex:index 
 									   changeType:CTTabChangeTypeAll];
 }
 
--(void)updateTabStateForContent:(CTTabContents*)contents {
+- (void)updateTabStateForContent:(CTTabContents*)contents {
 	int index = [tabStripModel_ indexOfTabContents:contents];
 	if (index != -1) {
 		[tabStripModel_ updateTabContentsStateAtIndex:index 
@@ -99,30 +114,31 @@
 	}
 }
 
--(void)replaceTabContentsAtIndex:(int)index
-                 withTabContents:(CTTabContents*)contents {
+- (void)replaceTabContentsAtIndex:(int)index
+				  withTabContents:(CTTabContents*)contents {
 	[tabStripModel_ replaceTabContentsAtIndex:index 
 								 withContents:contents 
 								  replaceType:(CTTabReplaceType)0];
 }
 
--(void)closeTabAtIndex:(int)index makeHistory:(BOOL)makeHistory {
+- (void)closeTabAtIndex:(int)index 
+			makeHistory:(BOOL)makeHistory {
 	[tabStripModel_ closeTabContentsAtIndex:index
 								 closeTypes:makeHistory ? CLOSE_CREATE_HISTORICAL_TAB : 0];
 }
 
--(void)closeAllTabs {
+- (void)closeAllTabs {
 	[tabStripModel_ closeAllTabs];
 }
 
 #pragma mark -
 #pragma mark Callbacks
 
--(void)loadingStateDidChange:(CTTabContents*)contents {
+- (void)loadingStateDidChange:(CTTabContents*)contents {
 	// TODO: Make sure the loading state is updated correctly
 }
 
--(void)windowDidBeginToClose {
+- (void)windowDidBeginToClose {
 	[tabStripModel_ closeAllTabs];
 }
 
@@ -143,24 +159,19 @@
 #pragma mark -
 #pragma mark Commands
 
--(void)newWindow {
-	// Create a new browser & window when we start
-	Class cls = self.windowController ? [self.windowController class] :
-	[CTBrowserWindowController class];
-	CTBrowser *browser = [isa browser];
-	CTBrowserWindowController* windowController =
-	[[cls alloc] initWithBrowser:browser];
+- (void)newWindow {
+	CTBrowser* browser = [self createNewBrowser];
 	[browser addBlankTabInForeground:YES];
-	[windowController showWindow:self];
+	[browser.windowController showWindow:self];
 }
 
--(void)closeWindow {
+- (void)closeWindow {
 	[self.windowController close];
 }
 
--(CTTabContents*)addTabContents:(CTTabContents*)contents
-                        atIndex:(int)index
-                   inForeground:(BOOL)foreground {
+- (CTTabContents*)addTabContents:(CTTabContents*)contents
+						 atIndex:(int)index
+					inForeground:(BOOL)foreground {
 	int addTypes = foreground ? (ADD_SELECTED | ADD_INHERIT_GROUP) : ADD_NONE;
 	[tabStripModel_ addTabContents:contents 
 						   atIndex:index 
@@ -174,18 +185,18 @@
 }
 
 
--(CTTabContents*)addTabContents:(CTTabContents*)contents
-                   inForeground:(BOOL)foreground {
+- (CTTabContents*)addTabContents:(CTTabContents*)contents
+					inForeground:(BOOL)foreground {
 	return [self addTabContents:contents atIndex:-1 inForeground:foreground];
 }
 
 
--(CTTabContents*)addTabContents:(CTTabContents*)contents {
+- (CTTabContents*)addTabContents:(CTTabContents*)contents {
 	return [self addTabContents:contents atIndex:-1 inForeground:YES];
 }
 
 
--(CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
+- (CTTabContents*)createBlankTabBasedOn:(CTTabContents*)baseContents {
 	// subclasses should override this to provide a custom CTTabContents type
 	// and/or initialization
 	//  return [[[CTTabContents alloc] initWithBaseTabContents:baseContents] autorelease];
@@ -193,22 +204,23 @@
 }
 
 // implementation conforms to CTTabStripModelDelegate
--(CTTabContents*)addBlankTabAtIndex:(int)index inForeground:(BOOL)foreground {
+- (CTTabContents*)addBlankTabAtIndex:(int)index 
+						inForeground:(BOOL)foreground {
 	CTTabContents* baseContents = [tabStripModel_ selectedTabContents];
 	CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
 	return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
 
 // implementation conforms to CTTabStripModelDelegate
--(CTTabContents*)addBlankTabInForeground:(BOOL)foreground {
+- (CTTabContents*)addBlankTabInForeground:(BOOL)foreground {
 	return [self addBlankTabAtIndex:-1 inForeground:foreground];
 }
 
--(CTTabContents*)addBlankTab {
+- (CTTabContents*)addBlankTab {
 	return [self addBlankTabInForeground:YES];
 }
 
--(void)closeTab {
+- (void)closeTab {
 	if ([self canCloseTab]) {
 		[tabStripModel_ closeTabContentsAtIndex:tabStripModel_.selected_index 
 									 closeTypes:CLOSE_USER_GESTURE |
@@ -216,41 +228,41 @@
 	}
 }
 
--(void)selectNextTab {
+- (void)selectNextTab {
 	[tabStripModel_ SelectNextTab];
 }
 
--(void)selectPreviousTab {
+- (void)selectPreviousTab {
 	[tabStripModel_ SelectPreviousTab];
 }
 
--(void)moveTabNext {
+- (void)moveTabNext {
 	[tabStripModel_ MoveTabNext];
 }
 
--(void)moveTabPrevious {
+- (void)moveTabPrevious {
 	[tabStripModel_ MoveTabPrevious];
 }
 
--(void)selectTabAtIndex:(int)index {
+- (void)selectTabAtIndex:(int)index {
 	if (index < [tabStripModel_ count]) {
 		[tabStripModel_ selectTabContentsAtIndex:index 
 									 userGesture:YES];
 	}
 }
 
--(void)selectLastTab {
+- (void)selectLastTab {
 	[tabStripModel_ SelectLastTab];
 }
 
--(void)duplicateTab {
+- (void)duplicateTab {
 	//[self duplicateContentsAt:tabStripModel_->selected_index()];
 	// can't do this currently
 }
 
 
--(void)executeCommand:(int)cmd
-      withDisposition:(CTWindowOpenDisposition)disposition {
+- (void)executeCommand:(int)cmd
+	   withDisposition:(CTWindowOpenDisposition)disposition {
 	//DLOG_EXPR(cmd); //< useful to debug incoming |cmd| values
 	// No commands are enabled if there is not yet any selected tab.
 	// TODO(pkasting): It seems like we should not need this, because either
@@ -306,11 +318,11 @@
 	}
 }
 
--(void)executeCommand:(int)cmd {
+- (void)executeCommand:(int)cmd {
 	[self executeCommand:cmd withDisposition:CTWindowOpenDispositionCurrentTab];
 }
 
-+(void)executeCommand:(int)cmd {
++ (void)executeCommand:(int)cmd {
 	switch (cmd) {
 		case CTBrowserCommandExit:      [NSApp terminate:self]; break;
 	}
@@ -321,7 +333,7 @@
 #pragma mark CTTabStripModelDelegate protocol implementation
 
 
--(CTBrowser*)createNewStripWithContents:(CTTabContents*)contents {
+- (CTBrowser*)createNewStripWithContents:(CTTabContents*)contents {
 	//assert(CanSupportWindowFeature(FEATURE_TABSTRIP));
 	
 	//gfx::Rect new_window_bounds = window_bounds;
@@ -330,21 +342,15 @@
 	
 	// Create an empty new browser window the same size as the old one.
 	DLOG("create new strip");
-	CTBrowser* browser = [isa browser];
+	CTBrowser* browser = [self createNewBrowser];
+	// Add the tab to the browser (we do it here after creating the window
+	// controller so that notifications are properly delegated
 	[browser.tabStripModel appendTabContents:contents
 								inForeground:YES];
-	[browser loadingStateDidChange:contents];
-	
-	// Orig impl:
-	//browser->set_override_bounds(new_window_bounds);
-	//browser->set_maximized_state(
-	//    maximize ? MAXIMIZED_STATE_MAXIMIZED : MAXIMIZED_STATE_UNMAXIMIZED);
-	//browser->CreateBrowserWindow();
-	//browser->tabstrip_model()->AppendTabContents(contents, YES);
 	
 	// Make sure the loading state is updated correctly, otherwise the throbber
 	// won't start if the page is loading.
-	//browser->LoadingStateChanged(contents);
+	[browser loadingStateDidChange:contents];
 	
 	return browser;
 }
@@ -355,33 +361,33 @@
 // screen coordinates, used to place the new window, and |tab_bounds| are the
 // bounds of the dragged Tab view in the source window, in screen coordinates,
 // used to place the new Tab in the new window.
--(void)continueDraggingDetachedTab:(CTTabContents*)contents
-                      windowBounds:(const NSRect)windowBounds
-                         tabBounds:(const NSRect)tabBounds {
+- (void)continueDraggingDetachedTab:(CTTabContents*)contents
+					   windowBounds:(const NSRect)windowBounds
+						  tabBounds:(const NSRect)tabBounds {
 	NOTIMPLEMENTED();
 }
 
 
 // Returns whether some contents can be duplicated.
--(BOOL)canDuplicateContentsAt:(int)index {
+- (BOOL)canDuplicateContentsAt:(int)index {
 	return NO;
 }
 
 // Duplicates the contents at the provided index and places it into its own
 // window.
--(void)duplicateContentsAt:(int)index {
+- (void)duplicateContentsAt:(int)index {
 	NOTIMPLEMENTED();
 }
 
 // Called when a drag session has completed and the frame that initiated the
 // the session should be closed.
--(void)closeFrameAfterDragSession {
+- (void)closeFrameAfterDragSession {
 	DLOG("[ChromiumTabs] closeFrameAfterDragSession");
 }
 
 // Creates an entry in the historical tab database for the specified
 // CTTabContents.
--(void)createHistoricalTab:(CTTabContents*)contents {
+- (void)createHistoricalTab:(CTTabContents*)contents {
 	DLOG("[ChromiumTabs] TODO createHistoricalTab %@", contents);
 }
 
@@ -390,26 +396,26 @@
 // function returns YES and the TabStripModel will wait before closing the
 // CTTabContents. If it returns NO, there are no unload listeners and the
 // TabStripModel can close the CTTabContents immediately.
--(BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
+- (BOOL)runUnloadListenerBeforeClosing:(CTTabContents*)contents {
 	return NO;
 }
 
 // Returns YES if a tab can be restored.
--(BOOL)canRestoreTab {
+- (BOOL)canRestoreTab {
 	return NO;
 }
 
 // Restores the last closed tab if CanRestoreTab would return YES.
--(void)restoreTab {
+- (void)restoreTab {
 }
 
 // Returns whether some contents can be closed.
--(BOOL)canCloseContentsAt:(int)index {
+- (BOOL)canCloseContentsAt:(int)index {
 	return YES;
 }
 
 // Returns YES if any of the tabs can be closed.
--(BOOL)canCloseTab {
+- (BOOL)canCloseTab {
 	return YES;
 }
 @end
