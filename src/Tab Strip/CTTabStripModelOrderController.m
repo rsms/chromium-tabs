@@ -145,7 +145,7 @@
 	[self tabSelectedWithContents:[userInfo valueForKey:CTTabNewContentsUserInfoKey] 
 					  oldContents:[userInfo valueForKey:CTTabContentsUserInfoKey] 
 						  atIndex:[[userInfo valueForKey:CTTabIndexUserInfoKey] intValue]
-					  userGesture:[userInfo valueForKey:CTTabOptionsUserInfoKey]];
+					  userGesture:(BOOL)[userInfo valueForKey:CTTabOptionsUserInfoKey]];
 }
 
 

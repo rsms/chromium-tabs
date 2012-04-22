@@ -825,7 +825,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	BOOL visible = [[tabStripView_ window] isVisible];
 	
 	CGFloat offset = [self indentForControls];
-	NSUInteger i = 0;
 	BOOL hasPlaceholderGap = NO;
 	// Whether or not the last tab processed by the loop was a mini tab.
 	BOOL isLastTabMini = NO;

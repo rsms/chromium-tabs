@@ -54,16 +54,6 @@
 	return sEllipsisString;
 }
 
-+ (NSString*)stringWithUUID {
-	NSString* uuidString = nil;
-	CFUUIDRef newUUID = CFUUIDCreate(kCFAllocatorDefault);
-	if (newUUID) {
-		uuidString = (__bridge NSString *)CFUUIDCreateString(kCFAllocatorDefault, newUUID);
-		CFRelease(newUUID);
-	}
-	return uuidString;
-}
-
 - (BOOL)isEqualToStringIgnoringCase:(NSString*)inString {
 	return ([self compare:inString options:NSCaseInsensitiveSearch] == NSOrderedSame);
 }
@@ -297,50 +287,6 @@
 	if (width != maxWidth)
 		[self truncateTo:hi at:truncationType];
 	//  [backup release];
-}
-
-@end
-
-@implementation NSString (ChimeraFilePathStringUtils)
-
-- (NSString*)volumeNamePathComponent {
-	// if the file doesn't exist, then componentsToDisplayForPath will return nil,
-	// so back up to the nearest existing dir
-	NSString* curPath = self;
-	while (![[NSFileManager defaultManager] fileExistsAtPath:curPath])
-	{
-		NSString* parentDirPath = [curPath stringByDeletingLastPathComponent];
-		if ([parentDirPath isEqualToString:curPath])
-			break;  // avoid endless loop
-		curPath = parentDirPath;
-	}
-	
-	NSArray* displayComponents = [[NSFileManager defaultManager] componentsToDisplayForPath:curPath];
-	if ([displayComponents count] > 0)
-		return [displayComponents objectAtIndex:0];
-	
-	return self;
-}
-
-- (NSString*)displayNameOfLastPathComponent {
-	return [[NSFileManager defaultManager] displayNameAtPath:self];
-}
-
-@end
-
-@implementation NSString (CaminoURLStringUtils)
-
-- (BOOL)isBlankURL {
-	return ([self isEqualToString:@"about:blank"] || [self isEqualToString:@""]);
-}
-
-// Excluded character list comes from RFC2396 and by examining Safari's behaviour
-- (NSString*)unescapedURI {
-	NSString *unescapedURI = (__bridge NSString*)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-																										 (__bridge CFStringRef)self,
-																										 CFSTR(" \"\';/?:@&=+$,#"),
-																										 kCFStringEncodingUTF8);
-	return unescapedURI ? unescapedURI : self;
 }
 
 @end

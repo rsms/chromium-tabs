@@ -315,12 +315,9 @@ const CGFloat kRapidCloseDist = 2.5;
 		
 		// Draw a mouse hover gradient for the default themes.
 		if (!selected && hoverAlpha > 0) {
-			NSGradient* glow = [NSGradient alloc];
-			[glow initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0
-																	alpha:1.0 * hoverAlpha]
-							endingColor:[NSColor colorWithCalibratedWhite:1.0
-																	alpha:0.0]];
-			
+			NSGradient* glow = [[NSGradient alloc] 
+				initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0	alpha:1.0 * hoverAlpha]
+						  endingColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.0]];
 			NSPoint point = hoverPoint_;
 			point.y = NSHeight(rect);
 			[glow drawFromCenter:point

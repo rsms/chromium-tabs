@@ -50,54 +50,6 @@ static void CGPathCallback(void *info, const CGPathElement *element) {
 	}
 }
 
-///  Category for extracting a CGPathRef from a NSBezierPath
-@implementation NSBezierPath (GTMBezierPathCGPathAdditions)
-
-//  Extract a CGPathRef from a NSBezierPath.
-//
-//  Args: 
-//
-//  Returns:
-//    Converted CGPathRef.
-//    nil if failure.
-- (CGPathRef)getCGPathRef {
-	CGMutablePathRef thePath = CGPathCreateMutable();
-	if (!thePath) return nil;
-	
-	NSInteger elementCount = [self elementCount];
-	
-	// The maximum number of points is 3 for a NSCurveToBezierPathElement.
-	// (controlPoint1, controlPoint2, and endPoint)
-	NSPoint controlPoints[3];
-	
-	for (NSInteger i = 0; i < elementCount; i++) {
-		switch ([self elementAtIndex:i associatedPoints:controlPoints]) {
-			case NSMoveToBezierPathElement:
-				CGPathMoveToPoint(thePath, &CGAffineTransformIdentity, 
-								  controlPoints[0].x, controlPoints[0].y);
-				break;
-			case NSLineToBezierPathElement:
-				CGPathAddLineToPoint(thePath, &CGAffineTransformIdentity, 
-									 controlPoints[0].x, controlPoints[0].y);
-				break;
-			case NSCurveToBezierPathElement:
-				CGPathAddCurveToPoint(thePath, &CGAffineTransformIdentity, 
-									  controlPoints[0].x, controlPoints[0].y,
-									  controlPoints[1].x, controlPoints[1].y,
-									  controlPoints[2].x, controlPoints[2].y);
-				break;
-			case NSClosePathBezierPathElement:
-				CGPathCloseSubpath(thePath);
-				break;
-			default:  // COV_NF_START
-				//				_GTMDevLog(@"Unknown element at [NSBezierPath (GTMBezierPathCGPathAdditions) cgPath]");
-				break;  // COV_NF_END
-		};
-	}
-	return (CGPathRef)thePath;
-}
-@end
-
 @implementation NSBezierPath (MCAdditions)
 
 + (NSBezierPath *)bezierPathWithCGPath:(CGPathRef)pathRef {
@@ -105,33 +57,6 @@ static void CGPathCallback(void *info, const CGPathElement *element) {
 	CGPathApply(pathRef, (__bridge void*)path, CGPathCallback);
 	
 	return path;
-}
-
-- (NSBezierPath *)pathWithStrokeWidth:(CGFloat)strokeWidth {
-#ifdef MCBEZIER_USE_PRIVATE_FUNCTION
-	NSBezierPath *path = [self copy];
-	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-	CGPathRef pathRef = [path getCGPathRef];
-	//  [path release];
-	
-	CGContextSaveGState(context);
-    
-	CGContextBeginPath(context);
-	CGContextAddPath(context, pathRef);
-	CGContextSetLineWidth(context, strokeWidth);
-	CGContextReplacePathWithStrokedPath(context);
-	CGPathRef strokedPathRef = CGContextCopyPath(context);
-	CGContextBeginPath(context);
-	NSBezierPath *strokedPath = [NSBezierPath bezierPathWithCGPath:strokedPathRef];
-	
-	CGContextRestoreGState(context);
-	
-	CFRelease(strokedPathRef);
-	
-	return strokedPath;
-#else
-	return nil;
-#endif  // MCBEZIER_USE_PRIVATE_FUNCTION
 }
 
 - (void)fillWithInnerShadow:(NSShadow *)shadow {

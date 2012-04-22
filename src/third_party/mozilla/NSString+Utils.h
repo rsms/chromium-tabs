@@ -49,7 +49,6 @@ typedef enum
 @interface NSString (ChimeraStringUtils)
 
 + (id)ellipsisString;
-+ (NSString*)stringWithUUID;
 
 - (BOOL)isEqualToStringIgnoringCase:(NSString*)inString;
 - (BOOL)hasCaseInsensitivePrefix:(NSString*)inString;
@@ -87,18 +86,3 @@ typedef enum
 
 @end
 
-@interface NSString (ChimeraFilePathStringUtils)
-
-- (NSString*)volumeNamePathComponent;
-- (NSString*)displayNameOfLastPathComponent;
-
-@end
-
-@interface NSString (CaminoURLStringUtils)
-
-// Returns true if the string represents a "blank" URL ("" or "about:blank")
-- (BOOL)isBlankURL;
-// Returns a URI that looks good in a location field
-- (NSString *)unescapedURI;
-
-@end
