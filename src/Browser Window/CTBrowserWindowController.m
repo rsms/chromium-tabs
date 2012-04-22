@@ -758,16 +758,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	DCHECK_GE(maxY, minY);
 	DCHECK_LE(maxY, NSMaxY(contentBounds) + yOffset);
 	
-	// The base class already positions the side tab strip on the left side
-	// of the window's content area and sizes it to take the entire vertical
-	// height. All that's needed here is to push everything over to the right,
-	// if necessary.
-	//if ([self useVerticalTabs]) {
-	//  const CGFloat sideTabWidth = [[self tabStripView] bounds].size.width;
-	//  minX += sideTabWidth;
-	//  width -= sideTabWidth;
-	//}
-	
 	// Place the toolbar at the top of the reserved area.
 	if ([self hasToolbar])
 		maxY = [self layoutToolbarAtMinX:minX maxY:maxY width:width];

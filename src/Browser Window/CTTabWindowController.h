@@ -17,12 +17,9 @@
 // because the CTTabStripController makes certain assumptions about how it can
 // swap out subviews.
 //
-// The tab strip can exist in different orientations and window locations,
-// depending on the return value of -usesVerticalTabs. If NO (the default),
-// the tab strip is placed outside the window's content area, overlapping the
+// The tab strip is placed outside the window's content area, overlapping the
 // title area and window controls and will be stretched to fill the width
-// of the window. If YES, the tab strip is vertical and lives within the
-// window's content area. It will be stretched to fill the window's height.
+// of the window.
 
 #import <Cocoa/Cocoa.h>
 

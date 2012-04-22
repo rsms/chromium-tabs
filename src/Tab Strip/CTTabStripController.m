@@ -439,9 +439,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			}
 		}
 		// Don't lay out the tabs until after the controller has been fully
-		// constructed. The |verticalLayout_| flag has not been initialized by
-		// subclasses at this point, which would cause layout to potentially use
-		// the wrong mode.
+		// constructed. 
 		if (existingTabCount) {
 			[self performSelectorOnMainThread:@selector(layoutTabs)
 								   withObject:nil
@@ -770,21 +768,18 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// if the user is quickly closing tabs. This may be negative, but that's okay
 	// (taken care of by |MAX()| when calculating tab sizes).
 	CGFloat availableSpace = 0;
-	if (verticalLayout_) {
-		availableSpace = NSHeight([tabStripView_ bounds]);
+	
+	if ([self inRapidClosureMode]) {
+		availableSpace = availableResizeWidth_;
 	} else {
-		if ([self inRapidClosureMode]) {
-			availableSpace = availableResizeWidth_;
-		} else {
-			availableSpace = NSWidth([tabStripView_ frame]);
-			
-			// Account for the width of the new tab button.
-			availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
-		}
+		availableSpace = NSWidth([tabStripView_ frame]);
 		
-		// Need to leave room for the left-side controls even in rapid closure mode.
-		availableSpace -= [self indentForControls];
+		// Account for the width of the new tab button.
+		availableSpace -= NSWidth([newTabButton_ frame]) + kNewTabButtonOffset;
 	}
+	
+	// Need to leave room for the left-side controls even in rapid closure mode.
+	availableSpace -= [self indentForControls];
 	
 	// If there are any mini tabs, account for the extra spacing between the last
 	// mini tab and the first regular tab.
@@ -795,17 +790,16 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// calculating tab sizes). "mini" tabs in horizontal mode just get a special
 	// section, they don't change size.
 	CGFloat availableSpaceForNonMini = availableSpace;
-	if (!verticalLayout_) {
-		availableSpaceForNonMini -= 
-			[self numberOfOpenMiniTabs] * (kMiniTabWidth - kTabOverlap);
-	}
-	
+
+	availableSpaceForNonMini -= 
+		[self numberOfOpenMiniTabs] * (kMiniTabWidth - kTabOverlap);
+
 	// Initialize |nonMiniTabWidth| in case there aren't any non-mini-tabs; this
 	// value shouldn't actually be used.
 	CGFloat nonMiniTabWidth = kMaxTabWidth;
 	CGFloat nonMiniTabWidthFraction = 0;
 	const NSInteger numberOfOpenNonMiniTabs = [self numberOfOpenNonMiniTabs];
-	if (!verticalLayout_ && numberOfOpenNonMiniTabs) {
+	if (numberOfOpenNonMiniTabs) {
 		// Find the width of a non-mini-tab. This only applies to horizontal
 		// mode. Add in the amount we "get back" from the tabs overlapping.
 		availableSpaceForNonMini += (numberOfOpenNonMiniTabs - 1) * kTabOverlap;
@@ -839,13 +833,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		BOOL isPlaceholder = [[tab view] isEqual:placeholderTab_];
 		NSRect tabFrame = [[tab view] frame];
 		tabFrame.size.height = [[self class] defaultTabHeight] + 1;
-		if (verticalLayout_) {
-			tabFrame.origin.y = availableSpace - tabFrame.size.height - offset;
-			tabFrame.origin.x = 0;
-		} else {
-			tabFrame.origin.y = 0;
-			tabFrame.origin.x = offset;
-		}
+		tabFrame.origin.y = 0;
+		tabFrame.origin.x = offset;
+		
 		// If the tab is hidden, we consider it a new tab. We make it visible
 		// and animate it in.
 		BOOL newTab = [[tab view] isHidden];
@@ -863,10 +853,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 				[[NSAnimationContext currentContext] setDuration:0];
 			}
 			
-			if (verticalLayout_)
-				tabFrame.origin.y = availableSpace - tabFrame.size.height - offset;
-			else
-				tabFrame.origin.x = placeholderFrame_.origin.x;
+			tabFrame.origin.x = placeholderFrame_.origin.x;
 			
 			id target = animate ? [[tab view] animator] : [tab view];
 			[target setFrame:tabFrame];
@@ -880,24 +867,14 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		}
 		
 		if (placeholderTab_ && !hasPlaceholderGap) {
-			const CGFloat placeholderMin =
-				verticalLayout_ ? NSMinY(placeholderFrame_) :
-				NSMinX(placeholderFrame_);
-			if (verticalLayout_) {
-				if (NSMidY(tabFrame) > placeholderMin) {
-					hasPlaceholderGap = YES;
-					offset += NSHeight(placeholderFrame_);
-					tabFrame.origin.y = availableSpace - tabFrame.size.height - offset;
-				}
-			} else {
-				// If the left edge is to the left of the placeholder's left, but the
-				// mid is to the right of it slide over to make space for it.
-				if (NSMidX(tabFrame) > placeholderMin) {
-					hasPlaceholderGap = YES;
-					offset += NSWidth(placeholderFrame_);
-					offset -= kTabOverlap;
-					tabFrame.origin.x = offset;
-				}
+			const CGFloat placeholderMin = NSMinX(placeholderFrame_);
+			// If the left edge is to the left of the placeholder's left, but the
+			// mid is to the right of it slide over to make space for it.
+			if (NSMidX(tabFrame) > placeholderMin) {
+				hasPlaceholderGap = YES;
+				offset += NSWidth(placeholderFrame_);
+				offset -= kTabOverlap;
+				tabFrame.origin.x = offset;
 			}
 		}
 		
@@ -942,7 +919,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		
 		// Animate a new tab in by putting it below the horizon unless told to put
 		// it in a specific location (i.e., from a drop).
-		// TODO(pinkerton): figure out vertical tab animations.
 		if (newTab && visible && animate) {
 			if (NSEqualRects(droppedTabFrame_, NSZeroRect)) {
 				[[tab view] setFrame:NSOffsetRect(tabFrame, 0, -NSHeight(tabFrame))];
@@ -965,12 +941,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		
 		enclosingRect = NSUnionRect(tabFrame, enclosingRect);
 		
-		if (verticalLayout_) {
-			offset += NSHeight(tabFrame);
-		} else {
-			offset += NSWidth(tabFrame);
-			offset -= kTabOverlap;
-		}
+		offset += NSWidth(tabFrame);
+		offset -= kTabOverlap;
 		
 		[NSAnimationContext endGrouping];
 	}

@@ -25,11 +25,7 @@
 //
 // For a full description of the design, see
 // http://www.chromium.org/developers/design-documents/tab-strip-mac
-@interface CTTabStripController : NSObject<CTTabControllerTarget, URLDropTargetController> {
-@protected
-	// YES if tabs are to be laid out vertically instead of horizontally.
-	BOOL verticalLayout_;
-}
+@interface CTTabStripController : NSObject<CTTabControllerTarget, URLDropTargetController>
 
 @property(nonatomic) CGFloat indentForControls;
 
