@@ -605,10 +605,6 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
-- (BOOL)useVerticalTabs {
-	return NO;
-}
-
 -(void)willStartTearingTab {
 	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
@@ -744,7 +740,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[self layoutPresentationModeToggleAtOverlayMaxX:NSMaxX([window frame])
 										overlayMaxY:overlayMaxY];
 	
-	if ([self hasTabStrip] && ![self useVerticalTabs]) {
+	if ([self hasTabStrip]) {
 		// If we need to lay out the top tab strip, replace |maxY| and |startMaxY|
 		// with higher values, and then lay out the tab strip.
 		NSRect windowFrame = [contentView convertRect:[window frame] fromView:nil];

@@ -54,19 +54,6 @@
 	}
 }
 
-// Add the side tab strip to the left side of the window's content area,
-// making it fill the full height of the content area.
-- (void)addSideTabStripToWindow {
-	NSView* contentView = [[self window] contentView];
-	NSRect contentFrame = [contentView frame];
-	NSRect sideStripFrame =
-	NSMakeRect(0, 0,
-			   NSWidth([sideTabStripView_ frame]),
-			   NSHeight(contentFrame));
-	[sideTabStripView_ setFrame:sideStripFrame];
-	[contentView addSubview:sideTabStripView_];
-}
-
 // Add the top tab strop to the window, above the content box and add it to the
 // view hierarchy as a sibling of the content view so it can overlap with the
 // window frame.
@@ -89,14 +76,7 @@
 	contentAreaHeightDelta_ = NSHeight(contentFrame) - NSHeight(tabFrame);
 	
 	if ([self hasTabStrip]) {
-		if ([self useVerticalTabs]) {
-			// No top tabstrip so remove the tabContentArea offset.
-			tabFrame.size.height = contentFrame.size.height;
-			[tabContentArea_ setFrame:tabFrame];
-			[self addSideTabStripToWindow];
-		} else {
-			[self addTopTabStripToWindow];
-		}
+		[self addTopTabStripToWindow];
 	} else {
 		// No top tabstrip so remove the tabContentArea offset.
 		tabFrame.size.height = contentFrame.size.height;
@@ -104,41 +84,9 @@
 	}
 }
 
-// Toggles from one display mode of the tab strip to another. Will automatically
-// call -layoutSubviews to reposition other content.
-- (void)toggleTabStripDisplayMode {
-	// Adjust the size of the tab contents to either use more or less space,
-	// depending on the direction of the toggle. This needs to be done prior to
-	// adding back in the top tab strip as its position is based off the MaxY
-	// of the tab content area.
-	BOOL useVertical = [self useVerticalTabs];
-	NSRect tabContentsFrame = [tabContentArea_ frame];
-	tabContentsFrame.size.height += useVertical ?
-	contentAreaHeightDelta_ : -contentAreaHeightDelta_;
-	[tabContentArea_ setFrame:tabContentsFrame];
-	
-	if (useVertical) {
-		// Remove the top tab strip and add the sidebar in.
-		[topTabStripView_ removeFromSuperview];
-		[self addSideTabStripToWindow];
-	} else {
-		// Remove the side tab strip and add the top tab strip as a sibling of the
-		// window's content area.
-		[sideTabStripView_ removeFromSuperview];
-		NSRect tabContentsFrame = [tabContentArea_ frame];
-		tabContentsFrame.size.height -= contentAreaHeightDelta_;
-		[tabContentArea_ setFrame:tabContentsFrame];
-		[self addTopTabStripToWindow];
-	}
-	
-	[self layoutSubviews];
-}
-
 // Return the appropriate tab strip based on whether or not side tabs are
 // enabled.
 - (CTTabStripView*)tabStripView {
-	if ([self useVerticalTabs])
-		return sideTabStripView_;
 	return topTabStripView_;
 }
 
@@ -326,12 +274,6 @@
 	// Subclasses should implement this.
 	NOTIMPLEMENTED();
 	return YES;
-}
-
-- (BOOL)useVerticalTabs {
-	// Subclasses should implement this.
-	NOTIMPLEMENTED();
-	return NO;
 }
 
 - (BOOL)isTabDraggable:(NSView*)tabView {

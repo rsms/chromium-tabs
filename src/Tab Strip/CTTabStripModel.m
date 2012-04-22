@@ -666,8 +666,6 @@ const int kNoTab = NSNotFound;
 			return [delegate_ canRestoreTab];
 		case CommandTogglePinned:
 			return ![self isAppTabAtIndex:contextIndex];
-			//case CommandUseVerticalTabs:
-			//  return true;
 		default:
 			NOTREACHED();
 	}
@@ -677,8 +675,6 @@ const int kNoTab = NSNotFound;
 - (BOOL)isContextMenuCommandChecked:(int)contextIndex
 						  commandID:(ContextMenuCommand)commandID {
 	switch (commandID) {
-			//case CommandUseVerticalTabs:
-			//  return delegate()->UseVerticalTabs();
 		default:
 			NOTREACHED();
 			break;
@@ -736,17 +732,7 @@ const int kNoTab = NSNotFound;
 			}
 			break;
 		}
-			
-			/*case CommandBookmarkAllTabs: {
-			 delegate_->BookmarkAllTabs();
-			 break;
-			 }*/
-			
-			/*case CommandUseVerticalTabs: {
-			 delegate()->ToggleUseVerticalTabs();
-			 break;
-			 }*/
-			
+
 		default:
 			NOTREACHED();
 	}

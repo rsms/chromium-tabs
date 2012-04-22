@@ -122,8 +122,6 @@ typedef enum {
 	CommandCloseTabsToRight,
 	CommandRestoreTab,
 	CommandTogglePinned,
-	CommandBookmarkAllTabs,
-	CommandUseVerticalTabs,
 	CommandLast,
 } ContextMenuCommand;
 

@@ -121,11 +121,6 @@
 // if it does, NO otherwise). The default implementation returns YES.
 - (BOOL)hasTabStrip;
 
-// Returns YES if the tab strip lives in the window content area alongside the
-// tab contents. Returns NO if the tab strip is outside the window content
-// area, along the top of the window.
-- (BOOL)useVerticalTabs;
-
 // Get/set whether a particular tab is draggable between windows.
 - (BOOL)isTabDraggable:(NSView*)tabView;
 - (void)setTab:(NSView*)tabView isDraggable:(BOOL)draggable;
@@ -141,10 +136,6 @@
 // Tells the tab strip to forget about this tab in preparation for it being
 // put into a different tab strip, such as during a drop on another window.
 - (void)detachTabView:(NSView*)view;
-
-// Toggles from one display mode of the tab strip to another. Will automatically
-// call -layoutSubviews to reposition other content.
-- (void)toggleTabStripDisplayMode;
 
 // Called when the size of the window content area has changed. Override to
 // position specific views. Base class implementation does nothing.

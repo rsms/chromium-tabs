@@ -32,7 +32,6 @@ typedef enum {
 	CTBrowserCommandExit                      = 34031,
 	CTBrowserCommandMoveTabNext               = 34032,
 	CTBrowserCommandMoveTabPrevious           = 34033,
-	//CTBrowserCommandToggleVerticalTabs        = 34034,
 	//CTBrowserCommandSearch                    = 34035,
 	//CTBrowserCommandTabpose                   = 34036,
 } CTBrowserCommand;
