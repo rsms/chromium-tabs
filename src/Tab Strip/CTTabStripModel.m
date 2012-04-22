@@ -19,7 +19,7 @@
 // forgotten for the New Tab page opened as a result of a New Tab gesture
 // (e.g. Ctrl+T, etc) since the user may open a tab transiently to look up
 // something related to their current activity.
-- (BOOL)IsNewTabAtEndOfTabStrip:(CTTabContents *)contents;
+- (BOOL)isNewTabAtEndOfTabStrip:(CTTabContents *)contents;
 
 // Closes the CTTabContents at the specified indices. This causes the
 // CTTabContents to be destroyed, but it may not happen immediately.  If the
@@ -48,7 +48,7 @@
 // active contents in |old_contents|, which may actually not be in
 // |contents_| anymore because it may have been removed by a call to say
 // DetachTabContentsAt...
-- (void)ChangeSelectedContentsFrom:(CTTabContents *)old_contents
+- (void)changeSelectedContentsFrom:(CTTabContents *)oldContents
 						   toIndex:(int)toIndex
 					   userGesture:(BOOL)userGesture;
 
@@ -57,7 +57,7 @@
 
 // Selects either the next tab (|foward| is true), or the previous tab
 // (|forward| is false).
-- (void)SelectRelativeTab:(BOOL)forward;
+- (void)selectRelativeTab:(BOOL)forward;
 
 // Returns the first non-phantom tab starting at |index|, skipping the tab at
 // |ignoreIndex|.
@@ -66,7 +66,7 @@
 
 // Returns true if the tab at the specified index should be made phantom when
 // the tab is closing.
-- (BOOL)ShouldMakePhantomOnClose:(int)index;
+- (BOOL)shouldMakePhantomOnClose:(int)index;
 
 // Makes the tab a phantom tab.
 //- (void)MakePhantom:(int)index;
@@ -76,14 +76,6 @@
 - (void)moveTabContentsAtImpl:(int)index
 				   toPosition:(int)toPosition
 			  selectAfterMove:(BOOL)selectAfterMove;
-
-// Returns true if the tab represented by the specified data has an opener
-// that matches the specified one. If |use_group| is true, then this will
-// fall back to check the group relationship as well.
-//struct TabContentsData;
-//static BOOL OpenerMatches(const TabContentsData* data,
-//                          const NavigationController* opener,
-//                          BOOL use_group);
 
 // Does the work for ReplaceTabContentsAt returning the old CTTabContents.
 // The caller owns the returned CTTabContents.
@@ -123,12 +115,6 @@
 	// An object that determines where new Tabs should be inserted and where
 	// selection should move when a Tab is closed.
 	CTTabStripModelOrderController *orderController_;
-	
-	// Our observers.
-	//	TabStripModelObservers observers_;
-	
-	// A scoped container for notification registries.
-	//NotificationRegistrar registrar_;	
 }
 
 @synthesize delegate = delegate_;
@@ -265,7 +251,7 @@ const int kNoTab = NSNotFound;
 													  userInfo:userInfo];
 	
 	if (foreground)
-		[self ChangeSelectedContentsFrom:activeContents
+		[self changeSelectedContentsFrom:activeContents
 								 toIndex:index
 							 userGesture:NO];
 }
@@ -308,7 +294,7 @@ const int kNoTab = NSNotFound;
     }
 	if ([self hasNonPhantomTabs]) {
 		if (index == activeIndex_) {
-			[self ChangeSelectedContentsFrom:removed_contents
+			[self changeSelectedContentsFrom:removed_contents
 									 toIndex:nextActiveIndex
 								 userGesture:NO];
 		} else if (index < activeIndex_) {
@@ -323,7 +309,7 @@ const int kNoTab = NSNotFound;
 - (void)selectTabContentsAtIndex:(int)index 
 					 userGesture:(BOOL)userGesture {
 	if ([self containsIndex:index]) {
-		[self ChangeSelectedContentsFrom:[self activeTabContents]
+		[self changeSelectedContentsFrom:[self activeTabContents]
 								 toIndex:index
 							 userGesture:userGesture];
 	} else {
@@ -601,11 +587,11 @@ const int kNoTab = NSNotFound;
 }
 
 - (void)selectNextTab {
-	[self SelectRelativeTab:YES];
+	[self selectRelativeTab:YES];
 }
 
 - (void)selectPreviousTab {
-	[self SelectRelativeTab:NO];
+	[self selectRelativeTab:NO];
 }
 
 - (void)selectLastTab {
@@ -773,7 +759,7 @@ const int kNoTab = NSNotFound;
 	
 #pragma mark -
 #pragma mark Private methods
-- (BOOL)IsNewTabAtEndOfTabStrip:(CTTabContents *)contents {
+- (BOOL)isNewTabAtEndOfTabStrip:(CTTabContents *)contents {
 	return !contents || contents == [self tabContentsAtIndex:([self count] - 1)];
 	/*return LowerCaseEqualsASCII(contents->GetURL().spec(),
 	 chrome::kChromeUINewTabURL) &&
@@ -788,8 +774,8 @@ const int kNoTab = NSNotFound;
 	// We now return to our regularly scheduled shutdown procedure.
 	for (size_t i = 0; i < indices.count; ++i) {
 		int index = [[indices objectAtIndex:i] intValue];
-		CTTabContents* detached_contents = [self tabContentsAtIndex:index];
-		[detached_contents closingOfTabDidStart:self]; // TODO notification
+		CTTabContents* detachedContents = [self tabContentsAtIndex:index];
+		[detachedContents closingOfTabDidStart:self]; // TODO notification
 		
 		if (![delegate_ canCloseContentsAt:index]) {
 			retval = NO;
@@ -800,17 +786,16 @@ const int kNoTab = NSNotFound;
 		// close the state is reset in CTBrowser. We don't update the explicitly
 		// closed state if already marked as explicitly closed as unload handlers
 		// call back to this if the close is allowed.
-		if (!detached_contents.closedByUserGesture) {
-			detached_contents.closedByUserGesture = closeTypes & CLOSE_USER_GESTURE;
+		if (!detachedContents.closedByUserGesture) {
+			detachedContents.closedByUserGesture = closeTypes & CLOSE_USER_GESTURE;
 		}
 		
-		//if (delegate_->RunUnloadListenerBeforeClosing(detached_contents)) {
-		if ([delegate_ runUnloadListenerBeforeClosing:detached_contents]) {
+		if ([delegate_ runUnloadListenerBeforeClosing:detachedContents]) {
 			retval = NO;
 			continue;
 		}
 		
-		[self internalCloseTab:detached_contents
+		[self internalCloseTab:detachedContents
 					   atIndex:index
 		   createHistoricalTab:((closeTypes & CLOSE_CREATE_HISTORICAL_TAB) != 0)];
 	}
@@ -841,7 +826,7 @@ const int kNoTab = NSNotFound;
 }
 
 
-- (void)ChangeSelectedContentsFrom:(CTTabContents *)oldContents
+- (void)changeSelectedContentsFrom:(CTTabContents *)oldContents
 						   toIndex:(int)toIndex
 					   userGesture:(BOOL)userGesture {
 	assert([self containsIndex:toIndex]);
@@ -863,7 +848,7 @@ const int kNoTab = NSNotFound;
 
 // Selects either the next tab (|foward| is true), or the previous tab
 // (|forward| is NO).
-- (void)SelectRelativeTab:(BOOL)forward {
+- (void)selectRelativeTab:(BOOL)forward {
 	// This may happen during automated testing or if a user somehow buffers
 	// many key accelerators.
 	if ([contents_data_ count] == 0)
@@ -905,8 +890,10 @@ const BOOL kPhantomTabsEnabled = NO;
 
 // Returns true if the tab at the specified index should be made phantom when
 // the tab is closing.
-- (BOOL)ShouldMakePhantomOnClose:(int)index {
-	if (kPhantomTabsEnabled && [self isTabPinnedAtIndex:index] && ![self isPhantomTabAtIndex:index] &&
+- (BOOL)shouldMakePhantomOnClose:(int)index {
+	if (kPhantomTabsEnabled && 
+		[self isTabPinnedAtIndex:index] && 
+		![self isPhantomTabAtIndex:index] &&
 		!closingAll_) {
 		if (![self isAppTabAtIndex:index])
 			return YES;  // Always make non-app tabs go phantom.
@@ -943,22 +930,22 @@ const BOOL kPhantomTabsEnabled = NO;
 }
 
 - (CTTabContents *)replaceTabContentsAtImpl:(int)index
-							   withContents:(CTTabContents *)new_contents
+							   withContents:(CTTabContents *)newContents
 								replaceType:(CTTabReplaceType)type {
 	assert([self containsIndex:index]);
-	CTTabContents* old_contents = [self tabContentsAtIndex:index];
+	CTTabContents* oldContents = [self tabContentsAtIndex:index];
 	TabContentsData* data = [contents_data_ objectAtIndex:index];
-	data->contents = new_contents;
+	data->contents = newContents;
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              old_contents, CTTabContentsUserInfoKey,
-                              new_contents, CTTabNewContentsUserInfoKey,
+                              oldContents, CTTabContentsUserInfoKey,
+                              newContents, CTTabNewContentsUserInfoKey,
                               [NSNumber numberWithInt:index], CTTabIndexUserInfoKey,
                               [NSNumber numberWithInt:type], CTTabOptionsUserInfoKey, 
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTTabReplacedNotification 
 														object:self 
 													  userInfo:userInfo];
-	return old_contents;
+	return oldContents;
 }
 @end
