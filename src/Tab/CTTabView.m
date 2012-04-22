@@ -48,7 +48,7 @@ const CGFloat kRapidCloseDist = 2.5;
 	// TODO(rohitrao): Add this button to a CoreAnimation layer so we can fade it
 	// in and out on mouseovers.
 	IBOutlet HoverCloseButton* closeButton_;
-	BOOL closing_;
+	BOOL isClosing_;
 	
 	// Tracking area for close button mouseover images.
 	NSTrackingArea* closeTrackingArea_;
@@ -75,7 +75,7 @@ const CGFloat kRapidCloseDist = 2.5;
 @synthesize state = state_;
 @synthesize hoverAlpha = hoverAlpha_;
 @synthesize alertAlpha = alertAlpha_;
-@synthesize closing = closing_;
+@synthesize isClosing = isClosing_;
 
 + (CGFloat)insetMultiplier {
 	return kInsetMultiplier;
@@ -266,7 +266,7 @@ const CGFloat kRapidCloseDist = 2.5;
 - (void)drawRect:(NSRect)dirtyRect {
 	// If this tab is phantom, do not draw the tab background itself. The only UI
 	// element that will represent this tab is the favicon.
-	if ([tabController_ phantom])
+	if ([tabController_ isPhantom])
 		return;
 	
 	NSGraphicsContext* context = [NSGraphicsContext currentContext];
@@ -276,10 +276,10 @@ const CGFloat kRapidCloseDist = 2.5;
 	NSRect rect = [self bounds];
 	NSBezierPath* path = [self bezierPathForRect:rect];
 	
-	BOOL selected = [self state];
-	// Don't draw the window/tab bar background when selected, since the tab
+	BOOL isActive = [self state];
+	// Don't draw the window/tab bar background when active, since the tab
 	// background overlay drawn over it (see below) will be fully opaque.
-	if (!selected) {
+	if (!isActive) {
 		// Use the window's background color rather than |[NSColor
 		// windowBackgroundColor]|, which gets confused by the fullscreen window.
 		// (The result is the same for normal, non-fullscreen windows.)
@@ -292,17 +292,17 @@ const CGFloat kRapidCloseDist = 2.5;
 	[context saveGraphicsState];
 	[path addClip];
 	
-	// Use the same overlay for the selected state and for hover and alert glows;
-	// for the selected state, it's fully opaque.
+	// Use the same overlay for the active state and for hover and alert glows;
+	// for the active state, it's fully opaque.
 	CGFloat hoverAlpha = [self hoverAlpha];
 	CGFloat alertAlpha = [self alertAlpha];
-	if (selected || hoverAlpha > 0 || alertAlpha > 0) {
-		// Draw the selected background / glow overlay.
+	if (isActive || hoverAlpha > 0 || alertAlpha > 0) {
+		// Draw the active background / glow overlay.
 		[context saveGraphicsState];
 		CGContextRef cgContext = [context graphicsPort];
 		CGContextBeginTransparencyLayer(cgContext, 0);
-		if (!selected) {
-			// The alert glow overlay is like the selected state but at most at most
+		if (!isActive) {
+			// The alert glow overlay is like the active state but at most at most
 			// 80% opaque. The hover glow brings up the overlay's opacity at most 50%.
 			CGFloat backgroundAlpha = 0.8 * alertAlpha;
 			backgroundAlpha += (1 - backgroundAlpha) * 0.5 * hoverAlpha;
@@ -314,7 +314,7 @@ const CGFloat kRapidCloseDist = 2.5;
 		[context restoreGraphicsState];
 		
 		// Draw a mouse hover gradient for the default themes.
-		if (!selected && hoverAlpha > 0) {
+		if (!isActive && hoverAlpha > 0) {
 			NSGradient* glow = [[NSGradient alloc] 
 				initWithStartingColor:[NSColor colorWithCalibratedWhite:1.0	alpha:1.0 * hoverAlpha]
 						  endingColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.0]];
@@ -334,13 +334,13 @@ const CGFloat kRapidCloseDist = 2.5;
 	}
 	
 	BOOL active = [[self window] isKeyWindow] || [[self window] isMainWindow];
-	CGFloat borderAlpha = selected ? (active ? 0.3 : 0.2) : 0.2;
+	CGFloat borderAlpha = isActive ? (active ? 0.3 : 0.2) : 0.2;
 	// TODO: cache colors
 	NSColor* borderColor = [NSColor colorWithDeviceWhite:0.0 alpha:borderAlpha];
 	NSColor* highlightColor = [NSColor colorWithCalibratedWhite:0xf7/255.0 alpha:1.0];
-	// Draw the top inner highlight within the currently selected tab if using
+	// Draw the top inner highlight within the currently active tab if using
 	// the default theme.
-	if (selected) {
+	if (isActive) {
 		NSAffineTransform* highlightTransform = [NSAffineTransform transform];
 		[highlightTransform translateXBy:1.0 yBy:-1.0];
 		NSBezierPath* highlightPath = [path copy];
@@ -365,7 +365,7 @@ const CGFloat kRapidCloseDist = 2.5;
 	
 	// Mimic the tab strip's bottom border, which consists of a dark border
 	// and light highlight.
-	if (!selected) {
+	if (!isActive) {
 		[path addClip];
 		NSRect borderRect = rect;
 		borderRect.origin.y = 1;
@@ -389,7 +389,7 @@ const CGFloat kRapidCloseDist = 2.5;
 }
 
 - (void)setClosing:(BOOL)closing {
-	closing_ = closing;  // Safe because the property is nonatomic.
+	isClosing_ = closing;  // Safe because the property is nonatomic.
 	// When closing, ensure clicks to the close button go nowhere.
 	if (closing) {
 		[closeButton_ setTarget:nil];

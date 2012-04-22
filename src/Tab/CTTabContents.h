@@ -16,14 +16,14 @@ extern NSString *const CTTabContentsDidCloseNotification;
 //               - tabDidBecomeVisible
 //               - tabDidResignVisible
 //
-// - isSelected: if the tab is the selected tab in its window. Note that a tab
-//               can be selected withouth being visible (i.e. the window is
+// - isActive:   if the tab is the active tab in its window. Note that a tab
+//               can be active withouth being visible (i.e. the window is
 //               minimized or the app is hidden). If your tabs contain
 //               user-interactive components, you should save and restore focus
 //               by sublcassing the callbacks.
 //               Callbacks:
-//               - tabDidBecomeSelected
-//               - tabDidResignSelected
+//               - tabDidBecomeActive
+//               - tabDidResignActive
 //
 // - isKey:      if the tab has the users focus. Only one tab in the application
 //               can be key at a given time. (Note that the OS will automatically
@@ -39,7 +39,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 	BOOL isWaitingForResponse_;
 	BOOL isCrashed_;
 	BOOL isVisible_;
-	BOOL isSelected_;
+	BOOL isActive_;
 	BOOL isTeared_; // YES while being "teared" (dragged between windows)
 	BOOL isPinned_;
 	BOOL isBlocked_;
@@ -56,9 +56,9 @@ extern NSString *const CTTabContentsDidCloseNotification;
 @property(assign, nonatomic) BOOL isLoading;
 @property(assign, nonatomic) BOOL isCrashed;
 @property(assign, nonatomic) BOOL isWaitingForResponse;
-@property(assign, nonatomic) BOOL isVisible;
-@property(assign, nonatomic) BOOL isSelected;
-@property(assign, nonatomic) BOOL isTeared;
+@property(assign, nonatomic, setter = setVisible:) BOOL isVisible;
+@property(assign, nonatomic, setter = setActive:) BOOL isActive;
+@property(assign, nonatomic, setter = setTeared:) BOOL isTeared;
 @property(retain, nonatomic) id delegate;
 @property(assign, nonatomic) unsigned int closedByUserGesture;
 @property(retain, nonatomic) IBOutlet NSView *view;
@@ -73,7 +73,7 @@ extern NSString *const CTTabContentsDidCloseNotification;
 
 // Initialize a new CTTabContents object.
 // The default implementation does nothing with |baseContents| but subclasses
-// can use |baseContents| (the selected CTTabContents, if any) to perform
+// can use |baseContents| (the active CTTabContents, if any) to perform
 // customized initialization.
 -(id)initWithBaseTabContents:(CTTabContents*)baseContents;
 
@@ -122,22 +122,22 @@ extern NSString *const CTTabContentsDidCloseNotification;
 // pause animations.
 -(void)tabDidResignVisible;
 
-// Called when this tab is about to become the selected tab. Followed by a call
-// to |tabDidBecomeSelected|
--(void)tabWillBecomeSelected;
+// Called when this tab is about to become the active tab. Followed by a call
+// to |tabDidBecomeActive|
+-(void)tabWillBecomeActive;
 
-// Called when this tab is about to resign as the selected tab. Followed by a
-// call to |tabDidResignSelected|
--(void)tabWillResignSelected;
+// Called when this tab is about to resign as the active tab. Followed by a
+// call to |tabDidResignActive|
+-(void)tabWillResignActive;
 
-// Called when this tab became the selected tab in its window. This does
+// Called when this tab became the active tab in its window. This does
 // neccessarily not mean it's visible (app might be hidden or window might be
 // minimized). The default implementation makes our view the first responder, if
 // visible.
--(void)tabDidBecomeSelected;
+-(void)tabDidBecomeActive;
 
 // Called when another tab in our window "stole" the selection.
--(void)tabDidResignSelected;
+-(void)tabDidResignActive;
 
 // Called when this tab is about to being "teared" (when dragging a tab from one
 // window to another).

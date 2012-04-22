@@ -11,7 +11,7 @@
 #import "CTTabContents.h"
 
 @interface CTTabStripModelOrderController (PrivateMethods)
-// Returns a valid index to be selected after the tab at |removing_index| is
+// Returns a valid index to be active after the tab at |removing_index| is
 // closed. If |index| is after |removing_index| and |is_remove| is true,
 // |index| is adjusted to reflect the fact that |removing_index| is going
 // away. This also skips any phantom tabs.
@@ -23,20 +23,15 @@
 @implementation CTTabStripModelOrderController {
 	CTTabStripModel *tabStripModel_;
 	
-	InsertionPolicy insertion_policy_;
+	InsertionPolicy insertionPolicy_;
 }
-@synthesize insertionPolicy = insertion_policy_;
+@synthesize insertionPolicy = insertionPolicy_;
 
 - (id)initWithTabStripModel:(CTTabStripModel *)tab_strip_model {
     self = [super init];
     if (self) {
 		tabStripModel_ = tab_strip_model;
-		insertion_policy_ = INSERT_AFTER;
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(tabDidSelect:) 
-													 name:CTTabSelectedNotification 
-												   object:nil];
+		insertionPolicy_ = INSERT_AFTER;
     }
     
     return self;
@@ -56,37 +51,24 @@
 	// NOTE: TabStripModel enforces that all non-mini-tabs occur after mini-tabs,
 	// so we don't have to check here too.
 	if (transition == CTPageTransitionLink &&
-		[tabStripModel_ selected_index] != -1) {
-		int delta = (insertion_policy_ == INSERT_AFTER) ? 1 : 0;
+		[tabStripModel_ activeIndex] != -1) {
+		int delta = (insertionPolicy_ == INSERT_AFTER) ? 1 : 0;
 		if (foreground) {
 			// If the page was opened in the foreground by a link click in another
 			// tab, insert it adjacent to the tab that opened that link.
-			return [tabStripModel_ selected_index] + delta;
+			return [tabStripModel_ activeIndex] + delta;
 		}
-		/*NavigationController* opener =
-		 &tabStripModel_->GetSelectedTabContents()->controller();
-		 // Get the index of the next item opened by this tab, and insert after
-		 // it...
-		 int index;
-		 if (insertion_policy_ == TabStripModel::INSERT_AFTER) {
-		 index = tabStripModel_->GetIndexOfLastTabContentsOpenedBy(
-		 opener, tabStripModel_->selected_index());
-		 } else {
-		 index = tabStripModel_->GetIndexOfFirstTabContentsOpenedBy(
-		 opener, tabStripModel_->selected_index());
-		 }
-		 if (index != TabStripModel::kNoTab)
-		 return index + delta;*/
+		
 		// Otherwise insert adjacent to opener...
-		return [tabStripModel_ selected_index] + delta;
+		return [tabStripModel_ activeIndex] + delta;
 	}
 	// In other cases, such as Ctrl+T, open at the end of the strip.
 	return [self determineInsertionIndexForAppending];	
 }
 
 - (int)determineInsertionIndexForAppending {
-	return (insertion_policy_ == INSERT_AFTER) ?
-	[tabStripModel_ count] : 0;
+	return (insertionPolicy_ == INSERT_AFTER) ?
+		[tabStripModel_ count] : 0;
 }
 
 - (int)determineNewSelectedIndexAfterClose:(int)removing_index
@@ -106,10 +88,10 @@
 	}
 	
 	// No opener set, fall through to the default handler...
-	int selected_index = [tabStripModel_ selected_index];
-	if (is_remove && selected_index >= (tab_count - 1))
-		return selected_index - 1;
-	return selected_index;
+	int activeIndex = [tabStripModel_ activeIndex];
+	if (is_remove && activeIndex >= (tab_count - 1))
+		return activeIndex - 1;
+	return activeIndex;
 	
 	// Chromium legacy code keept for documentation purposes
 	/*NavigationController* parent_opener =
@@ -138,22 +120,6 @@
 	 if (index != TabStripModel::kNoTab)
 	 return GetValidIndex(index, removing_index, is_remove);
 	 }*/
-}
-
-- (void)tabDidSelect:(NSNotification *)notification {
-	NSDictionary *userInfo = notification.userInfo;
-	[self tabSelectedWithContents:[userInfo valueForKey:CTTabNewContentsUserInfoKey] 
-					  oldContents:[userInfo valueForKey:CTTabContentsUserInfoKey] 
-						  atIndex:[[userInfo valueForKey:CTTabIndexUserInfoKey] intValue]
-					  userGesture:(BOOL)[userInfo valueForKey:CTTabOptionsUserInfoKey]];
-}
-
-
-// Overridden from TabStripModelObserver:
-- (void)tabSelectedWithContents:(CTTabContents*)new_contents
-					oldContents:(CTTabContents *)old_contents
-						atIndex:(int)index
-					userGesture:(BOOL)user_gesture {
 }
 
 #pragma mark private

@@ -38,8 +38,6 @@ extern NSString* const CTTabOptionsUserInfoKey;
 
 extern const int kNoTab;
 
-//typedef std::vector<CTTabContents*> TabContentsDataVector;
-//typedef ObserverList<NSObject <CTTabStripModelObserver> > TabStripModelObservers;
 // Policy for how new tabs are inserted.
 typedef enum {
 	// Newly created tabs are created after the selection. This is the default.
@@ -54,7 +52,7 @@ typedef enum {
 	CLOSE_NONE                     = 0,
 	
 	// Indicates the tab was closed by the user. If true,
-	// CTTabContents::set_closed_by_user_gesture(true) is invoked.
+	// CTTabContents::set_closed_by_userGesture(true) is invoked.
 	CLOSE_USER_GESTURE             = 1 << 0,
 	
 	// If true the history is recorded so that the tab can be reopened later.
@@ -68,8 +66,8 @@ typedef enum {
 	// tab.
 	ADD_NONE          = 0,
 	
-	// The tab should be selected.
-	ADD_SELECTED      = 1 << 0,
+	// The tab should be active.
+	ADD_ACTIVE      = 1 << 0,
 	
 	// The tab should be pinned.
 	ADD_PINNED        = 1 << 1,
@@ -80,11 +78,11 @@ typedef enum {
 	ADD_FORCE_INDEX   = 1 << 2,
 	
 	// If set the newly inserted tab inherits the group of the currently
-	// selected tab. If not set the tab may still inherit the group under
+	// active tab. If not set the tab may still inherit the group under
 	// certain situations.
 	ADD_INHERIT_GROUP = 1 << 3,
 	
-	// If set the newly inserted tab's opener is set to the currently selected
+	// If set the newly inserted tab's opener is set to the currently active
 	// tab. If not set the tab may still inherit the group/opener under certain
 	// situations.
 	// NOTE: this is ignored if ADD_INHERIT_GROUP is set.
@@ -133,19 +131,15 @@ typedef enum {
 
 // The CTTabStripModelDelegate associated with this TabStripModel.
 @property (readonly) NSObject<CTTabStripModelDelegate> *delegate;
-// The index of the currently selected CTTabContents.
-@property (readonly, nonatomic) int selected_index;
+// The index of the currently active CTTabContents.
+@property (readonly, nonatomic) int activeIndex;
 // Returns true if the tabstrip is currently closing all open tabs (via a
 // call to CloseAllTabs). As tabs close, the selection in the tabstrip
 // changes which notifies observers, which can use this as an optimization to
 // avoid doing meaningless or unhelpful work.
-@property (readonly, nonatomic) BOOL closing_all;
-// Access the order controller. Exposed only for unit tests.
-@property (readonly) CTTabStripModelOrderController* order_controller;
+@property (readonly, nonatomic) BOOL closingAll;
 
 - (id)initWithDelegate:(NSObject<CTTabStripModelDelegate> *)delegate;
-//- (void)AddObserver:(NSObject <CTTabStripModelObserver> *)observer;
-//- (void)RemoveObserver:(NSObject <CTTabStripModelObserver> *)observer;
 
 // Retrieve the number of CTTabContentses/emptiness of the TabStripModel.
 - (NSUInteger)count;
@@ -156,12 +150,8 @@ typedef enum {
 - (BOOL)hasNonPhantomTabs;
 
 // Sets the insertion policy. Default is INSERT_AFTER.
-- (void)SetInsertionPolicy:(InsertionPolicy)policy;
-- (InsertionPolicy)insertion_policy;
-
-// Returns true if |observer| is in the list of observers. This is intended
-// for debugging.
-//- (BOOL)HasObserver:(NSObject *)observer;
+- (void)setInsertionPolicy:(InsertionPolicy)policy;
+- (InsertionPolicy)insertionPolicy;
 
 #pragma mark -
 #pragma mark Basic API
@@ -171,11 +161,11 @@ typedef enum {
 - (BOOL)containsIndex:(NSInteger)index;
 
 // Adds the specified CTTabContents in the default location. Tabs opened in the
-// foreground inherit the group of the previously selected tab.
+// foreground inherit the group of the previously active tab.
 - (void)appendTabContents:(CTTabContents *)contents
 			 inForeground:(BOOL)foreground;
 
-// Adds the specified CTTabContents at the specified location. |add_types| is a
+// Adds the specified CTTabContents at the specified location. |addTypes| is a
 // bitmask of AddTypes; see it for details.
 //
 // All append/insert methods end up in this method.
@@ -187,16 +177,16 @@ typedef enum {
 // See also AddTabContents.
 - (void)insertTabContents:(CTTabContents *)contents
 				  atIndex:(int)index 
-			 withAddTypes:(int)add_types;
+			 withAddTypes:(int)addTypes;
 
 // Closes the CTTabContents at the specified index. This causes the CTTabContents
 // to be destroyed, but it may not happen immediately (e.g. if it's a
-// CTTabContents). |close_types| is a bitmask of CloseTypes.
+// CTTabContents). |closeTypes| is a bitmask of CloseTypes.
 // Returns true if the CTTabContents was closed immediately, false if it was not
 // closed (we may be waiting for a response from an onunload handler, or
 // waiting for the user to confirm closure).
 - (BOOL)closeTabContentsAtIndex:(int)index 
-				 closeTypes:(uint32)close_types;
+				 closeTypes:(uint32)closeTypes;
 
 // Replaces the entire state of a the tab at index by switching in a
 // different NavigationController. This is used through the recently
@@ -220,7 +210,7 @@ typedef enum {
 // strip).
 - (CTTabContents*)detachTabContentsAtIndex:(int)index;
 
-// Select the CTTabContents at the specified index. |user_gesture| is true if
+// Select the CTTabContents at the specified index. |userGesture| is true if
 // the user actually clicked on the tab or navigated to it using a keyboard
 // command, false if the tab was selected as a by-product of some other
 // action.
@@ -230,17 +220,17 @@ typedef enum {
 // Move the CTTabContents at the specified index to another index. This method
 // does NOT send Detached/Attached notifications, rather it moves the
 // CTTabContents inline and sends a Moved notification instead.
-// If |select_after_move| is false, whatever tab was selected before the move
-// will still be selected, but it's index may have incremented or decremented
+// If |selectAfterMove| is false, whatever tab was active before the move
+// will still be active, but it's index may have incremented or decremented
 // one slot.
 // NOTE: this does nothing if the move would result in app tabs and non-app
 // tabs mixing.
 - (void)moveTabContentsAtIndex:(int)index 
-					   toIndex:(int)to_position 
-			   selectAfterMove:(BOOL)select_after_move;
+					   toIndex:(int)toPosition 
+			   selectAfterMove:(BOOL)selectAfterMove;
 
-// Returns the currently selected CTTabContents, or NULL if there is none.
-- (CTTabContents *)selectedTabContents;
+// Returns the currently active CTTabContents, or NULL if there is none.
+- (CTTabContents *)activeTabContents;
 
 // Returns the CTTabContents at the specified index, or NULL if there is none.
 - (CTTabContents *)tabContentsAtIndex:(int)index;
@@ -254,9 +244,9 @@ typedef enum {
 //int GetIndexOfController(const NavigationController* controller) const;
 
 // Notify any observers that the CTTabContents at the specified index has
-// changed in some way. See TabChangeType for details of |change_type|.
+// changed in some way. See TabChangeType for details of |changeType|.
 - (void)updateTabContentsStateAtIndex:(int)index 
-						   changeType:(CTTabChangeType)change_type;
+						   changeType:(CTTabChangeType)changeType;
 
 // Make sure there is an auto-generated New Tab tab in the TabStripModel.
 // If |force_create| is true, the New Tab will be created even if the
@@ -301,7 +291,7 @@ typedef enum {
 // CTTabContents. Depending on the tab, and the transition type of the
 // navigation, the TabStripModel may adjust its selection and grouping
 // behavior.
-- (void)TabNavigating:(CTTabContents *)contents
+- (void)tabNavigating:(CTTabContents *)contents
 	   withTransition:(CTPageTransition)transition;
 
 // Changes the blocked state of the tab at |index|.
@@ -315,40 +305,40 @@ typedef enum {
 
 // Returns true if the tab at |index| is pinned.
 // See description above class for details on pinned tabs.
-- (BOOL)IsTabPinned:(int)index;
+- (BOOL)isTabPinnedAtIndex:(int)index;
 
 // Is the tab a mini-tab?
 // See description above class for details on this.
-- (BOOL)IsMiniTab:(int)index;
+- (BOOL)isMiniTabAtIndex:(int)index;
 
 // Is the tab at |index| an app?
 // See description above class for details on app tabs.
-- (BOOL)IsAppTab:(int)index;
+- (BOOL)isAppTabAtIndex:(int)index;
 
 // Returns true if the tab is a phantom tab. A phantom tab is one where the
 // renderer has not been loaded.
 // See description above class for details on phantom tabs.
-- (BOOL)IsPhantomTab:(int)index;
+- (BOOL)isPhantomTabAtIndex:(int)index;
 
 // Returns true if the tab at |index| is blocked by a tab modal dialog.
-- (BOOL)IsTabBlocked:(int)index;
+- (BOOL)isTabBlockedAtIndex:(int)index;
 
 // Returns the index of the first tab that is not a mini-tab. This returns
 // |count()| if all of the tabs are mini-tabs, and 0 if none of the tabs are
 // mini-tabs.
-- (int)IndexOfFirstNonMiniTab;
+- (int)indexOfFirstNonMiniTab;
 
 // Returns a valid index for inserting a new tab into this model. |index| is
-// the proposed index and |mini_tab| is true if inserting a tab will become
-// mini (pinned or app). If |mini_tab| is true, the returned index is between
-// 0 and IndexOfFirstNonMiniTab. If |mini_tab| is false, the returned index
+// the proposed index and |miniTab| is true if inserting a tab will become
+// mini (pinned or app). If |miniTab| is true, the returned index is between
+// 0 and IndexOfFirstNonMiniTab. If |miniTab| is false, the returned index
 // is between IndexOfFirstNonMiniTab and count().
 - (int)constrainInsertionIndex:(int)index 
-					   miniTab:(BOOL)mini_tab;
+					   miniTab:(BOOL)miniTab;
 
 // Returns the index of the first tab that is not a phantom tab. This returns
 // kNoTab if all of the tabs are phantom tabs.
-- (int)IndexOfFirstNonPhantomTab;
+- (int)indexOfFirstNonPhantomTab;
 
 // Returns the number of non phantom tabs in the TabStripModel.
 - (int)nonPhantomTabCount;
@@ -359,27 +349,27 @@ typedef enum {
 // Command level API /////////////////////////////////////////////////////////
 
 // Adds a CTTabContents at the best position in the TabStripModel given the
-// specified insertion index, transition, etc. |add_types| is a bitmask of
+// specified insertion index, transition, etc. |addTypes| is a bitmask of
 // AddTypes; see it for details. This method ends up calling into
 // InsertTabContentsAt to do the actual inertion.
 - (int)addTabContents:(CTTabContents *)contents 
 			  atIndex:(int)index
 	   withTransition:(CTPageTransition)transition
-			 addTypes:(int)add_types;
+			 addTypes:(int)addTypes;
 
-// Closes the selected CTTabContents.
-- (void)CloseSelectedTab;
+// Closes the active CTTabContents.
+- (void)closeActiveTab;
 
 // Select adjacent tabs
-- (void)SelectNextTab;
-- (void)SelectPreviousTab;
+- (void)selectNextTab;
+- (void)selectPreviousTab;
 
 // Selects the last tab in the tab strip.
-- (void)SelectLastTab;
+- (void)selectLastTab;
 
 // Swap adjacent tabs.
-- (void)MoveTabNext;
-- (void)MoveTabPrevious;
+- (void)moveTabNext;
+- (void)moveTabPrevious;
 
 #pragma mark -
 #pragma mark View API
@@ -387,29 +377,26 @@ typedef enum {
 // View API //////////////////////////////////////////////////////////////////
 
 // Returns true if the specified command is enabled.
-- (BOOL)isContextMenuCommandEnabled:(int)context_index
-						  commandID:(ContextMenuCommand)command_id;
+- (BOOL)isContextMenuCommandEnabled:(int)contextIndex
+						  commandID:(ContextMenuCommand)commandID;
 
 // Returns true if the specified command is checked.
-- (BOOL)isContextMenuCommandChecked:(int)context_index
-						  commandID:(ContextMenuCommand)command_id;
+- (BOOL)isContextMenuCommandChecked:(int)contextIndex
+						  commandID:(ContextMenuCommand)commandID;
 
 // Performs the action associated with the specified command for the given
-// TabStripModel index |context_index|.
-- (void)executeContextMenuCommand:(int)context_index
-						commandID:(ContextMenuCommand)command_id;
+// TabStripModel index |contextIndex|.
+- (void)executeContextMenuCommand:(int)contextIndex
+						commandID:(ContextMenuCommand)commandID;
 
 // Returns a vector of indices of the tabs that will close when executing the
 // command |id| for the tab at |index|. The returned indices are sorted in
 // descending order.
-- (NSArray *)GetIndicesClosedByCommand:(ContextMenuCommand)command_id
+- (NSArray *)getIndicesClosedByCommand:(ContextMenuCommand)commandID
 						 forTabAtIndex:(int)index;
 
 // Overridden from notificationObserver:
-/*virtual void Observe(NotificationType type,
- const NotificationSource& source,
- const NotificationDetails& details);*/
 // TODO replace with NSNotification if possible:
-- (void)TabContentsWasDestroyed:(CTTabContents *)contents;
+- (void)tabContentsWasDestroyed:(CTTabContents *)contents;
 
 @end

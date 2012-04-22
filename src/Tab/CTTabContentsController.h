@@ -15,12 +15,7 @@
 // to avoid multiple resize messages to the renderer. You must call
 // |-ensureContentsVisible| to display the render widget host view.
 
-@interface CTTabContentsController : NSViewController {
-@private
-	CTTabContents* contents_;  // weak
-	
-	IBOutlet NSSplitView* contentsContainer_;
-}
+@interface CTTabContentsController : NSViewController
 
 // Create the contents of a tab represented by |contents| and loaded from the
 // nib given by |name|.
@@ -43,14 +38,14 @@
 // Returns YES if the tab represented by this controller is the front-most.
 - (BOOL)isCurrentTab;
 
-// Called when the tab contents is the currently selected tab and is about to be
+// Called when the tab contents is the currently active tab and is about to be
 // removed from the view hierarchy.
-- (void)willResignSelectedTab;
+- (void)willResignActiveTab;
 
 // Called when the tab contents is about to be put into the view hierarchy as
-// the selected tab. Handles things such as ensuring the toolbar is correctly
+// the active tab. Handles things such as ensuring the toolbar is correctly
 // enabled.
-- (void)willBecomeSelectedTab;
+- (void)willBecomeActiveTab;
 
 // Call when the tab view is properly sized and the render widget host view
 // should be put into the view hierarchy.

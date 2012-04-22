@@ -39,10 +39,4 @@
 - (int)determineNewSelectedIndexAfterClose:(int)removed_index
 								  isRemove:(BOOL)is_remove;
 
-// Overridden from TabStripModelObserver:
-- (void)tabSelectedWithContents:(CTTabContents *)new_contents
-					oldContents:(CTTabContents *)old_contents
-						atIndex:(int)index
-					userGesture:(BOOL)user_gesture;
-
 @end

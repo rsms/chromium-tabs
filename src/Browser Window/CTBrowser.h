@@ -100,8 +100,8 @@ typedef enum {
 
 // Convenience helpers (proxy for TabStripModel)
 - (int)tabCount;
-- (int)selectedTabIndex;
-- (CTTabContents*)selectedTabContents;
+- (int)activeTabIndex;
+- (CTTabContents*)activeTabContents;
 - (CTTabContents*)tabContentsAtIndex:(int)index;
 - (NSArray*)allTabContents;
 - (int)indexOfTabContents:(CTTabContents*)contents; // -1 if not found

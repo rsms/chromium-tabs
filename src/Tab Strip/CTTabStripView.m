@@ -53,7 +53,7 @@ static BOOL ShouldWindowsMiniaturizeOnDoubleClick() {
 }
 
 // Draw bottom border (a dark border and light highlight). Each tab is
-// responsible for mimicking this bottom border, unless it's the selected
+// responsible for mimicking this bottom border, unless it's the active
 // tab.
 - (void)drawBorder:(NSRect)bounds {
 	NSRect borderRect, contentRect;

@@ -36,19 +36,19 @@ typedef enum {
 @property(assign, nonatomic) CTTabLoadingState loadingState;
 
 @property(assign, nonatomic) SEL action;
-@property(assign, nonatomic) BOOL app;
-@property(assign, nonatomic) BOOL mini;
-@property(assign, nonatomic) BOOL phantom;
-@property(assign, nonatomic) BOOL pinned;
-@property(assign, nonatomic) BOOL selected;
+@property(assign, nonatomic, setter = setApp:) BOOL isApp;
+@property(assign, nonatomic, setter = setMini:) BOOL isMini;
+@property(assign, nonatomic, setter = setPhantom:) BOOL isPhantom;
+@property(assign, nonatomic, setter = setPinned:) BOOL isPinned;
+@property(assign, nonatomic, setter = setActive:) BOOL isActive;
 @property(retain, nonatomic) id target;
 
 // Minimum and maximum allowable tab width. The minimum width does not show
-// the icon or the close button. The selected tab always has at least a close
+// the icon or the close button. The active tab always has at least a close
 // button so it has a different minimum width.
 + (CGFloat)minTabWidth;
 + (CGFloat)maxTabWidth;
-+ (CGFloat)minSelectedTabWidth;
++ (CGFloat)minActiveTabWidth;
 + (CGFloat)miniTabWidth;
 + (CGFloat)appTabWidth;
 
@@ -80,7 +80,7 @@ typedef enum {
 - (BOOL)inRapidClosureMode;
 
 // Updates the visibility of certain subviews, such as the icon and close
-// button, based on criteria such as the tab's selected state and its current
+// button, based on criteria such as the tab's active state and its current
 // width.
 - (void)updateVisibility;
 

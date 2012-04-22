@@ -46,11 +46,11 @@
         switchView:(NSView*)switchView
            browser:(CTBrowser*)browser;
 
-// Return the view for the currently selected tab.
+// Return the view for the currently active tab.
 - (NSView*)activeTabView;
 
-// Set the frame of the selected tab, also updates the internal frame dict.
-- (void)setFrameOfSelectedTab:(NSRect)frame;
+// Set the frame of the active tab, also updates the internal frame dict.
+- (void)setFrameOfActiveTab:(NSRect)frame;
 
 // Move the given tab at index |from| in this window to the location of the
 // current placeholder.

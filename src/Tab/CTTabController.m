@@ -20,11 +20,11 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	NSRect originalIconFrame_;  // frame of iconView_ as loaded from nib
 	BOOL isIconShowing_;  // last state of iconView_ in updateVisibility
 	
-	BOOL app_;
-	BOOL mini_;
-	BOOL pinned_;
-	BOOL phantom_;
-	BOOL selected_;
+	BOOL isApp_;
+	BOOL isMini_;
+	BOOL isPinned_;
+	BOOL isPhantom_;
+	BOOL isActive_;
 	CTTabLoadingState loadingState_;
 	CGFloat iconTitleXOffset_;  // between left edges of icon and title
 	CGFloat titleCloseWidthOffset_;  // between right edges of icon and close btn.
@@ -33,18 +33,19 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 @synthesize action = action_;
-@synthesize app = app_;
+@synthesize isApp = isApp_;
 @synthesize loadingState = loadingState_;
-@synthesize mini = mini_;
-@synthesize phantom = phantom_;
-@synthesize pinned = pinned_;
+@synthesize isMini = isMini_;
+@synthesize isPhantom = isPhantom_;
+@synthesize isPinned = isPinned_;
 @synthesize target = target_;
+@synthesize isActive = isActive_;
 
 // The min widths match the windows values and are sums of left + right
 // padding, of which we have no comparable constants (we draw using paths, not
-// images). The selected tab width includes the close button width.
+// images). The active tab width includes the close button width.
 + (CGFloat)minTabWidth { return 31; }
-+ (CGFloat)minSelectedTabWidth { return 46; }
++ (CGFloat)minActiveTabWidth { return 46; }
 + (CGFloat)maxTabWidth { return 220; }
 + (CGFloat)miniTabWidth { return 53; }
 + (CGFloat)appTabWidth { return 66; }
@@ -82,14 +83,14 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	//  [super dealloc];
 }
 
-// The internals of |-setSelected:| but doesn't check if we're already set
-// to |selected|. Pass the selection change to the subviews that need it and
+// The internals of |-setActive:| but doesn't check if we're already set
+// to |active|. Pass the selection change to the subviews that need it and
 // mark ourselves as needing a redraw.
-- (void)internalSetSelected:(BOOL)selected {
-	selected_ = selected;
+- (void)internalSetActive:(BOOL)active {
+	isActive_ = active;
 	CTTabView* tabView = (CTTabView*)[self view];
 	assert([tabView isKindOfClass:[CTTabView class]]);
-	[tabView setState:selected];
+	[tabView setState:active];
 	[tabView cancelAlert];
 	[self updateVisibility];
 	[self updateTitleColor];
@@ -109,7 +110,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	iconTitleXOffset_ = NSMinX(titleFrame) - NSMinX(originalIconFrame_);
 	titleCloseWidthOffset_ = NSMaxX([closeButton_ frame]) - NSMaxX(titleFrame);
 	
-	[self internalSetSelected:selected_];
+	[self internalSetActive:isActive_];
 }
 
 // Called when Cocoa wants to display the context menu. Lazily instantiate
@@ -136,7 +137,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 
 - (void)setTitle:(NSString*)title {
 	[[self view] setToolTip:title];
-	if ([self mini] && ![self selected]) {
+	if ([self isMini] && ![self isActive]) {
 		CTTabView* tabView = (CTTabView*)[self view];
 		assert([tabView isKindOfClass:[CTTabView class]]);
 		[tabView startAlert];
@@ -144,19 +145,15 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	[super setTitle:title];
 }
 
-- (void)setSelected:(BOOL)selected {
-	if (selected_ != selected)
-		[self internalSetSelected:selected];
-}
-
-- (BOOL)selected {
-	return selected_;
+- (void)setActive:(BOOL)active {
+	if (isActive_ != active)
+		[self internalSetActive:active];
 }
 
 - (void)setIconView:(NSView*)iconView {
 	[iconView_ removeFromSuperview];
 	iconView_ = iconView;
-	if ([self app]) {
+	if ([self isApp]) {
 		NSRect appIconFrame = [iconView frame];
 		appIconFrame.origin = originalIconFrame_.origin;
 		// Center the icon.
@@ -193,28 +190,28 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 // Returns YES if we should show the icon. When tabs get too small, we clip
-// the favicon before the close button for selected tabs, and prefer the
-// favicon for unselected tabs.  The icon can also be suppressed more directly
+// the favicon before the close button for active tabs, and prefer the
+// favicon for inactive tabs.  The icon can also be suppressed more directly
 // by clearing iconView_.
 - (BOOL)shouldShowIcon {
 	if (!iconView_)
 		return NO;
 	
-	if ([self mini])
+	if ([self isMini])
 		return YES;
 	
 	CGFloat iconCapacity = [self iconCapacity];
-	if ([self selected])
+	if ([self isActive])
 		return iconCapacity >= 2.0;
 	return iconCapacity >= 1.0;
 }
 
-// Returns YES if we should be showing the close button. The selected tab
+// Returns YES if we should be showing the close button. The active tab
 // always shows the close button.
 - (BOOL)shouldShowCloseButton {
-	if ([self mini])
+	if ([self isMini])
 		return NO;
-	return ([self selected] || [self iconCapacity] >= 3.0);
+	return ([self isActive] || [self iconCapacity] >= 3.0);
 }
 
 - (void)updateVisibility {
@@ -228,7 +225,7 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	isIconShowing_ = newShowIcon;
 	
 	// If the tab is a mini-tab, hide the title.
-	[titleView_ setHidden:[self mini]];
+	[titleView_ setHidden:[self isMini]];
 	
 	BOOL oldShowCloseButton = [closeButton_ isHidden] ? NO : YES;
 	BOOL newShowCloseButton = [self shouldShowCloseButton] ? YES : NO;
@@ -265,13 +262,13 @@ static NSString* const kBrowserThemeDidChangeNotification =
 }
 
 - (void)updateTitleColor {
-	NSColor* titleColor = [self selected] ? [NSColor blackColor] :
+	NSColor* titleColor = [self isActive] ? [NSColor blackColor] :
 	[NSColor darkGrayColor];
 	[titleView_ setTextColor:titleColor];
 }
 
 // Called when our view is resized. If it gets too small, start by hiding
-// the close button and only show it if tab is selected. Eventually, hide the
+// the close button and only show it if tab is active. Eventually, hide the
 // icon as well. We know that this is for our view because we only registered
 // for notifications from our specific view.
 - (void)viewResized:(NSNotification*)info {

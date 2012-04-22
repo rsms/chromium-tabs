@@ -40,8 +40,11 @@ _synthRetain(NSImage*, Icon, icon);
 @synthesize delegate = delegate_;
 @synthesize closedByUserGesture = closedByUserGesture_;
 @synthesize view = view_;
-@synthesize isApp = isApp_;
 @synthesize browser = browser_;
+@synthesize isApp = isApp_;
+@synthesize isActive = isActive_;
+@synthesize isTeared = isTeared_;
+@synthesize isVisible = isVisible_;
 
 #undef _synth
 
@@ -55,7 +58,7 @@ _synthRetain(NSImage*, Icon, icon);
       [key isEqualToString:@"title"] ||
       [key isEqualToString:@"icon"] ||
       [key isEqualToString:@"parentOpener"] ||
-      [key isEqualToString:@"isSelected"] ||
+      [key isEqualToString:@"isActive"] ||
       [key isEqualToString:@"isTeared"]) {
     return YES;
   }
@@ -74,7 +77,6 @@ _synthRetain(NSImage*, Icon, icon);
 -(BOOL)hasIcon {
   return YES;
 }
-
 
 - (CTTabContents*)parentOpener {
   return parentOpener_;
@@ -106,8 +108,7 @@ _synthRetain(NSImage*, Icon, icon);
   }
 }
 
-
--(void)setIsVisible:(BOOL)visible {
+- (void)setVisible:(BOOL)visible {
   if (isVisible_ != visible && !isTeared_) {
     isVisible_ = visible;
     if (isVisible_) {
@@ -118,41 +119,28 @@ _synthRetain(NSImage*, Icon, icon);
   }
 }
 
--(BOOL)isVisible {
-  return isVisible_;
-}
-
--(void)setIsSelected:(BOOL)selected {
-  if (isSelected_ != selected && !isTeared_) {
-    isSelected_ = selected;
-    if (isSelected_) {
-      [self tabDidBecomeSelected];
+- (void)setActive:(BOOL)active {
+  if (isActive_ != active && !isTeared_) {
+    isActive_ = active;
+    if (isActive_) {
+      [self tabDidBecomeActive];
     } else {
-      [self tabDidResignSelected];
+      [self tabDidResignActive];
     }
   }
 }
 
--(BOOL)isSelected {
-  return isSelected_;
-}
-
--(void)setIsTeared:(BOOL)teared {
+- (void)setTeared:(BOOL)teared {
   if (isTeared_ != teared) {
     isTeared_ = teared;
     if (isTeared_) {
       [self tabWillBecomeTeared];
     } else {
       [self tabWillResignTeared];
-      [self tabDidBecomeSelected];
+      [self tabDidBecomeActive];
     }
   }
 }
-
--(BOOL)isTeared {
-  return isTeared_;
-}
-
 
 #pragma mark Actions
 
@@ -208,27 +196,27 @@ _synthRetain(NSImage*, Icon, icon);
   self.browser = nil;
 }
 
--(void)tabWillBecomeSelected {}
--(void)tabWillResignSelected {}
+-(void)tabWillBecomeActive {}
+-(void)tabWillResignActive {}
 
--(void)tabDidBecomeSelected {
+-(void)tabDidBecomeActive {
   [self becomeFirstResponder];
 }
 
--(void)tabDidResignSelected {}
+-(void)tabDidResignActive {}
 -(void)tabDidBecomeVisible {}
 -(void)tabDidResignVisible {}
 
 -(void)tabWillBecomeTeared {
-  // Teared tabs should always be visible and selected since tearing is invoked
+  // Teared tabs should always be visible and active since tearing is invoked
   // by the user selecting the tab on screen.
   assert(isVisible_);
-  assert(isSelected_);
+  assert(isActive_);
 }
 
 -(void)tabWillResignTeared {
   assert(isVisible_);
-  assert(isSelected_);
+  assert(isActive_);
 }
 
 // Unlike the above callbacks, this one is explicitly called by

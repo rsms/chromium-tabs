@@ -423,7 +423,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		// means the tab model is already fully formed with tabs. Need to walk the
 		// list and create the UI for each.
 		const int existingTabCount = [tabStripModel_ count];
-		const CTTabContents* selection = [tabStripModel_ selectedTabContents];
+		const CTTabContents* selection = [tabStripModel_ activeTabContents];
 		for (int i = 0; i < existingTabCount; ++i) {
 			CTTabContents* currentContents = [tabStripModel_ tabContentsAtIndex:i];
 			[self tabInsertedWithContents:currentContents
@@ -553,7 +553,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// Ask the model for the number of mini tabs. Note that tabs which are in
 	// the process of closing (i.e., whose controllers are in
 	// |closingControllers_|) have already been removed from the model.
-	return [tabStripModel_ IndexOfFirstNonMiniTab];
+	return [tabStripModel_ indexOfFirstNonMiniTab];
 }
 
 // (Private) Returns the number of open, non-mini tabs.
@@ -748,7 +748,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	const CGFloat kMaxTabWidth = [CTTabController maxTabWidth];
 	const CGFloat kMinTabWidth = [CTTabController minTabWidth];
-	const CGFloat kMinSelectedTabWidth = [CTTabController minSelectedTabWidth];
+	const CGFloat kMinActiveTabWidth = [CTTabController minActiveTabWidth];
 	const CGFloat kMiniTabWidth = [CTTabController miniTabWidth];
 	const CGFloat kAppTabWidth = [CTTabController appTabWidth];
 	
@@ -901,11 +901,11 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			}
 		}
 		
-		// Set the width. Selected tabs are slightly wider when things get really
+		// Set the width. Active tabs are slightly wider when things get really
 		// small and thus we enforce a different minimum width.
-		BOOL isMini = [tab mini];
+		BOOL isMini = [tab isMini];
 		if (isMini) {
-			tabFrame.size.width = [tab app] ? kAppTabWidth : kMiniTabWidth;
+			tabFrame.size.width = [tab isApp] ? kAppTabWidth : kMiniTabWidth;
 		} else {
 			// Tabs have non-integer widths. Assign the integer part to the tab, and
 			// keep an accumulation of the fractional parts. When the fractional
@@ -929,8 +929,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			++laidOutNonMiniTabs;
 		}
 		
-		if ([tab selected])
-			tabFrame.size.width = MAX(tabFrame.size.width, kMinSelectedTabWidth);
+		if ([tab isActive])
+			tabFrame.size.width = MAX(tabFrame.size.width, kMinActiveTabWidth);
 		
 		// If this is the first non-mini tab, then add a bit of spacing between this
 		// and the last mini tab.
@@ -1173,14 +1173,14 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	CTTabController* tabController = [tabArray_ objectAtIndex:index];
 	
 	// Since the tab is loading, it cannot be phantom any more.
-	if ([tabController phantom]) {
+	if ([tabController isPhantom]) {
 		[tabController setPhantom:NO];
 		[[tabController view] setNeedsDisplay:YES];
 	}
 	
 	BOOL oldHasIcon = [tabController iconView] != nil;
 	BOOL newHasIcon = contents.hasIcon ||
-	[tabStripModel_ IsMiniTab:modelIndex];  // Always show icon if mini.
+	[tabStripModel_ isMiniTabAtIndex:modelIndex];  // Always show icon if mini.
 	
 	CTTabLoadingState oldState = [tabController loadingState];
 	CTTabLoadingState newState = CTTabLoadingStateDone;
@@ -1228,7 +1228,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	}
 }
 
-- (void)setFrameOfSelectedTab:(NSRect)frame {
+- (void)setFrameOfActiveTab:(NSRect)frame {
 	NSView* view = [self activeTabView];
 	NSValue* identifier = [NSValue valueWithPointer:(__bridge const void*)view];
 	[targetFrames_ setObject:[NSValue valueWithRect:frame]
@@ -1237,10 +1237,10 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (NSView*)activeTabView {
-	int selectedIndex = tabStripModel_.selected_index;
-	// Take closing tabs into account. They can't ever be selected.
-	selectedIndex = [self indexFromModelIndex:selectedIndex];
-	return [self viewAtIndex:selectedIndex];
+	int activeIndex = tabStripModel_.activeIndex;
+	// Take closing tabs into account. They can't ever be active.
+	activeIndex = [self indexFromModelIndex:activeIndex];
+	return [self viewAtIndex:activeIndex];
 }
 
 // Find the model index based on the x coordinate of the placeholder. If there
@@ -1310,7 +1310,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// inherit the current tab's group.
 	[tabStripModel_ insertTabContents:contents 
 							  atIndex:modelIndex 
-						 withAddTypes:ADD_SELECTED |
+						 withAddTypes:ADD_ACTIVE |
 	 (pinned ? ADD_PINNED : 0)];
 }
 
@@ -1462,19 +1462,19 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// ones.
 	NSMutableArray* subviews = [NSMutableArray arrayWithArray:permanentSubviews_];
 	
-	NSView* selectedTabView = nil;
+	NSView* activeTabView = nil;
 	// Go through tabs in reverse order, since |subviews| is bottom-to-top.
 	for (CTTabController* tab in [tabArray_ reverseObjectEnumerator]) {
 		NSView* tabView = [tab view];
-		if ([tab selected]) {
-			assert(!selectedTabView);
-			selectedTabView = tabView;
+		if ([tab isActive]) {
+			assert(!activeTabView);
+			activeTabView = tabView;
 		} else {
 			[subviews addObject:tabView];
 		}
 	}
-	if (selectedTabView) {
-		[subviews addObject:selectedTabView];
+	if (activeTabView) {
+		[subviews addObject:activeTabView];
 	}
 	[tabStripView_ setSubviews:subviews];
 	[self setTabTrackingAreasEnabled:mouseInside_];
@@ -1632,7 +1632,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (CTTabContentsController*)activeTabContentsController {
-	int modelIndex = tabStripModel_.selected_index;
+	int modelIndex = tabStripModel_.activeIndex;
 	if (modelIndex < 0)
 		return nil;
 	NSInteger index = [self indexFromModelIndex:modelIndex];
@@ -1751,9 +1751,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	// Make a new tab and add it to the strip. Keep track of its controller.
 	CTTabController* newController = [self newTab];
-	[newController setMini:[tabStripModel_ IsMiniTab:modelIndex]];
-	[newController setPinned:[tabStripModel_ IsTabPinned:modelIndex]];
-	[newController setApp:[tabStripModel_ IsAppTab:modelIndex]];
+	[newController setMini:[tabStripModel_ isMiniTabAtIndex:modelIndex]];
+	[newController setPinned:[tabStripModel_ isTabPinnedAtIndex:modelIndex]];
+	[newController setApp:[tabStripModel_ isAppTabAtIndex:modelIndex]];
 	[tabArray_ insertObject:newController atIndex:index];
 	NSView* newView = [newController view];
 	
@@ -1817,7 +1817,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			NSInteger oldIndex = [self indexFromModelIndex:oldModelIndex];
 			CTTabContentsController* oldController =
 			[tabContentsArray_ objectAtIndex:oldIndex];
-			[oldController willResignSelectedTab];
+			[oldController willResignActiveTab];
 			//oldContents->view()->StoreFocus();
 			// If the selection changed because the tab was made phantom, update the
 			// Cocoa side of the state.
@@ -1829,19 +1829,19 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	// De-select all other tabs and select the new tab.
 	int i = 0;
 	for (CTTabController* current in tabArray_) {
-		[current setSelected:(i == index) ? YES : NO];
+		[current setActive:(i == index) ? YES : NO];
 		++i;
 	}
 	
-	// Tell the new tab contents it is about to become the selected tab. Here it
+	// Tell the new tab contents it is about to become the active tab. Here it
 	// can do things like make sure the toolbar is up to date.
 	CTTabContentsController *newController =
 	[tabContentsArray_ objectAtIndex:index];
-	[newController willBecomeSelectedTab];
+	[newController willBecomeActiveTab];
 	
-	// Relayout for new tabs and to let the selected tab grow to be larger in
+	// Relayout for new tabs and to let the active tab grow to be larger in
 	// size than surrounding tabs if the user has many. This also raises the
-	// selected tab to the top.
+	// active tab to the top.
 	[self layoutTabs];
 	
 	// Swap in the contents for the new tab.
@@ -1851,11 +1851,11 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		// TODO: if [<parent window> isMiniaturized] or if app is hidden the tab is
 		// not visible
 		newContents.isVisible = oldContents.isVisible;
-		newContents.isSelected = YES;
+		newContents.isActive = YES;
 	}
 	if (oldContents) {
 		oldContents.isVisible = NO;
-		oldContents.isSelected = NO;
+		oldContents.isActive = NO;
 	}
 }
 
@@ -1888,8 +1888,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 		[self setTabTitle:tabController withContents:contents];
 	
 	// See if the change was to/from phantom.
-	BOOL isPhantom = [tabStripModel_ IsPhantomTab:modelIndex];
-	if (isPhantom != [tabController phantom])
+	BOOL isPhantom = [tabStripModel_ isPhantomTabAtIndex:modelIndex];
+	if (isPhantom != [tabController isPhantom])
 		[tabController setPhantom:isPhantom];
 	
 	[self updateFavIconForContents:contents atIndex:modelIndex];
@@ -1927,7 +1927,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	[tabArray_ insertObject:movedTabController atIndex:to];
 	
 	// The tab moved, which means that the mini-tab state may have changed.
-	if ([tabStripModel_ IsMiniTab:modelTo] != [movedTabController mini])
+	if ([tabStripModel_ isMiniTabAtIndex:modelTo] != [movedTabController isMini])
 		[self tabMiniStateChangedWithContents:contents atIndex:modelTo];
 }
 
@@ -1946,9 +1946,9 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	CTTabController* tabController = [tabArray_ objectAtIndex:index];
 	assert([tabController isKindOfClass:[CTTabController class]]);
-	[tabController setMini:[tabStripModel_ IsMiniTab:modelIndex]];
-	[tabController setPinned:[tabStripModel_ IsTabPinned:modelIndex]];
-	[tabController setApp:[tabStripModel_ IsAppTab:modelIndex]];
+	[tabController setMini:[tabStripModel_ isMiniTabAtIndex:modelIndex]];
+	[tabController setPinned:[tabStripModel_ isTabPinnedAtIndex:modelIndex]];
+	[tabController setApp:[tabStripModel_ isAppTabAtIndex:modelIndex]];
 	[self updateFavIconForContents:contents atIndex:modelIndex];
 	// If the tab is being restored and it's pinned, the mini state is set after
 	// the tab has already been rendered, so re-layout the tabstrip. In all other

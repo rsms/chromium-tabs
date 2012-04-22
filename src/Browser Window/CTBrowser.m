@@ -71,12 +71,12 @@
 	return [tabStripModel_ count];
 }
 
-- (int)selectedTabIndex {
-	return tabStripModel_.selected_index;
+- (int)activeTabIndex {
+	return tabStripModel_.activeIndex;
 }
 
-- (CTTabContents*)selectedTabContents {
-	return [tabStripModel_ selectedTabContents];
+- (CTTabContents*)activeTabContents {
+	return [tabStripModel_ activeTabContents];
 }
 
 - (CTTabContents*)tabContentsAtIndex:(int)index {
@@ -172,12 +172,12 @@
 - (CTTabContents*)addTabContents:(CTTabContents*)contents
 						 atIndex:(int)index
 					inForeground:(BOOL)foreground {
-	int addTypes = foreground ? (ADD_SELECTED | ADD_INHERIT_GROUP) : ADD_NONE;
+	int addTypes = foreground ? (ADD_ACTIVE | ADD_INHERIT_GROUP) : ADD_NONE;
 	[tabStripModel_ addTabContents:contents 
 						   atIndex:index 
 					withTransition:CTPageTransitionTyped 
 						  addTypes:addTypes];
-	if ((addTypes & ADD_SELECTED) == 0) {
+	if ((addTypes & ADD_ACTIVE) == 0) {
 		// TabStripModel::AddTabContents invokes HideContents if not foreground.
 		contents.isVisible = NO;
 	}
@@ -206,7 +206,7 @@
 // implementation conforms to CTTabStripModelDelegate
 - (CTTabContents*)addBlankTabAtIndex:(int)index 
 						inForeground:(BOOL)foreground {
-	CTTabContents* baseContents = [tabStripModel_ selectedTabContents];
+	CTTabContents* baseContents = [tabStripModel_ activeTabContents];
 	CTTabContents* contents = [self createBlankTabBasedOn:baseContents];
 	return [self addTabContents:contents atIndex:index inForeground:foreground];
 }
@@ -222,26 +222,26 @@
 
 - (void)closeTab {
 	if ([self canCloseTab]) {
-		[tabStripModel_ closeTabContentsAtIndex:tabStripModel_.selected_index 
+		[tabStripModel_ closeTabContentsAtIndex:tabStripModel_.activeIndex 
 									 closeTypes:CLOSE_USER_GESTURE |
 		 CLOSE_CREATE_HISTORICAL_TAB];
 	}
 }
 
 - (void)selectNextTab {
-	[tabStripModel_ SelectNextTab];
+	[tabStripModel_ selectNextTab];
 }
 
 - (void)selectPreviousTab {
-	[tabStripModel_ SelectPreviousTab];
+	[tabStripModel_ selectPreviousTab];
 }
 
 - (void)moveTabNext {
-	[tabStripModel_ MoveTabNext];
+	[tabStripModel_ moveTabNext];
 }
 
 - (void)moveTabPrevious {
-	[tabStripModel_ MoveTabPrevious];
+	[tabStripModel_ moveTabPrevious];
 }
 
 - (void)selectTabAtIndex:(int)index {
@@ -252,11 +252,11 @@
 }
 
 - (void)selectLastTab {
-	[tabStripModel_ SelectLastTab];
+	[tabStripModel_ selectLastTab];
 }
 
 - (void)duplicateTab {
-	//[self duplicateContentsAt:tabStripModel_->selected_index()];
+	[self duplicateContentsAt:tabStripModel_.activeIndex];
 	// can't do this currently
 }
 
@@ -264,22 +264,22 @@
 - (void)executeCommand:(int)cmd
 	   withDisposition:(CTWindowOpenDisposition)disposition {
 	//DLOG_EXPR(cmd); //< useful to debug incoming |cmd| values
-	// No commands are enabled if there is not yet any selected tab.
+	// No commands are enabled if there is not yet any active tab.
 	// TODO(pkasting): It seems like we should not need this, because either
 	// most/all commands should not have been enabled yet anyway or the ones that
-	// are enabled should be global, or safe themselves against having no selected
+	// are enabled should be global, or safe themselves against having no active
 	// tab.  However, Ben says he tried removing this before and got lots of
 	// crashes, e.g. from Windows sending WM_COMMANDs at random times during
 	// window construction.  This probably could use closer examination someday.
-	if (![self selectedTabContents])
+	if (![self activeTabContents])
 		return;
 	
 	// If command execution is blocked then just record the command and return.
 	/*if (block_command_execution_) {
 	 // We actually only allow no more than one blocked command, otherwise some
 	 // commands maybe lost.
-	 DCHECK_EQ(last_blocked_command_id_, -1);
-	 last_blocked_command_id_ = id;
+	 DCHECK_EQ(last_blocked_commandID_, -1);
+	 last_blocked_commandID_ = id;
 	 last_blocked_command_disposition_ = disposition;
 	 return;
 	 }*/

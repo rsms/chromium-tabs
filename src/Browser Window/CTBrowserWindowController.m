@@ -334,7 +334,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[NSDocumentController sharedDocumentController];
 	NSError *error = nil;
 	DCHECK(browser_);
-	CTTabContents *baseTabContents = browser_.selectedTabContents;
+	CTTabContents *baseTabContents = browser_.activeTabContents;
 	CTTabContents *tabContents =
 	[docController openUntitledDocumentWithWindowController:self
 													display:YES
@@ -434,7 +434,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		
 		// Before the tab is detached from its originating tab strip, store the
 		// pinned state so that it can be maintained between the windows.
-		BOOL isPinned = [[dragBWC->browser_ tabStripModel] IsTabPinned:index];
+		BOOL isPinned = [[dragBWC->browser_ tabStripModel] isTabPinnedAtIndex:index];
 		
 		// Now that we have enough information about the tab, we can remove it from
 		// the dragging window. We need to do this *before* we add it to the new
@@ -491,7 +491,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		NSRect tabRect = [tabView frame];
 		
 		// Before detaching the tab, store the pinned state.
-		BOOL isPinned = [tabStripModel IsTabPinned:index];
+		BOOL isPinned = [tabStripModel isTabPinnedAtIndex:index];
 		
 		// Detach it from the source window, which just updates the model without
 		// deleting the tab contents. This needs to come before creating the new
@@ -516,7 +516,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		tabRect.size.height = [CTTabStripController defaultTabHeight];
 		
 		// And make sure we use the correct frame in the new view.
-		[[controller tabStripController] setFrameOfSelectedTab:tabRect];
+		[[controller tabStripController] setFrameOfActiveTab:tabRect];
 		return controller;
 	}
 	@finally {
@@ -584,18 +584,18 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 
-- (int)selectedTabIndex {
-	return [browser_ tabStripModel].selected_index;
+- (int)activeTabIndex {
+	return [browser_ tabStripModel].activeIndex;
 }
 
 
-- (CTTabContents*)selectedTabContents {
-	return [[browser_ tabStripModel] selectedTabContents];
+- (CTTabContents*)activeTabContents {
+	return [[browser_ tabStripModel] activeTabContents];
 }
 
 
-- (NSString*)selectedTabTitle {
-	CTTabContents* contents = [self selectedTabContents];
+- (NSString*)activeTabTitle {
+	CTTabContents* contents = [self activeTabContents];
 	return contents ? contents.title : nil;
 }
 
@@ -610,28 +610,28 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 }
 
 -(void)willStartTearingTab {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		contents.isTeared = YES;
 	}
 }
 
 -(void)willEndTearingTab {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		contents.isTeared = NO;
 	}
 }
 
 -(void)didEndTearingTab {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		[contents tabDidResignTeared];
 	}
 }
 
 - (void)focusTabContents {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		[[self window] makeFirstResponder:contents.view];
 	}
@@ -706,7 +706,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	[tabContentView setFrame:tabContentFrame];
 	// If the relayout shifts the content area up or down, let the renderer know.
 	if (contentShifted) {
-		CTTabContents* contents = [browser_ selectedTabContents];
+		CTTabContents* contents = [browser_ activeTabContents];
 		if (contents) {
 			[contents viewFrameDidChange:newFrame];
 		}
@@ -930,7 +930,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 // Called when we are activated (when we gain focus).
 - (void)windowDidBecomeKey:(NSNotification*)notification {
 	if (![[self window] isMiniaturized]) {
-		CTTabContents* contents = [browser_ selectedTabContents];
+		CTTabContents* contents = [browser_ activeTabContents];
 		if (contents) {
 			contents.isVisible = YES;
 		}
@@ -945,17 +945,11 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	// lose key window status.
 	if ([NSApp isActive] && ([NSApp keyWindow] == [self window]))
 		return;
-	
-	// We need to deactivate the controls (in the "WebView"). To do this, get the
-	// selected TabContents's RenderWidgetHostView and tell it to deactivate.
-	/*if (CTTabContents* contents = [browser_ selectedTabContents]) {
-	 contents.isKey = NO;
-	 }*/
 }
 
 // Called when we have been minimized.
 - (void)windowDidMiniaturize:(NSNotification *)notification {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		contents.isVisible = NO;
 	}
@@ -963,7 +957,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Called when we have been unminimized.
 - (void)windowDidDeminiaturize:(NSNotification *)notification {
-	CTTabContents* contents = [browser_ selectedTabContents];
+	CTTabContents* contents = [browser_ activeTabContents];
 	if (contents) {
 		contents.isVisible = YES;
 	}
@@ -971,10 +965,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Called when the application has been hidden.
 - (void)applicationDidHide:(NSNotification *)notification {
-	// Let the selected tab know (unless we are minimized, in which case nothing
+	// Let the active tab know (unless we are minimized, in which case nothing
 	// has really changed).
 	if (![[self window] isMiniaturized]) {
-		CTTabContents* contents = [browser_ selectedTabContents];
+		CTTabContents* contents = [browser_ activeTabContents];
 		if (contents) {
 			contents.isVisible = NO;
 		}
@@ -983,10 +977,10 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 // Called when the application has been unhidden.
 - (void)applicationDidUnhide:(NSNotification *)notification {
-	// Let the selected tab know
+	// Let the active tab know
 	// (unless we are minimized, in which case nothing has really changed).
 	if (![[self window] isMiniaturized]) {
-		CTTabContents* contents = [browser_ selectedTabContents];
+		CTTabContents* contents = [browser_ activeTabContents];
 		if (contents) {
 			contents.isVisible = YES;
 		}
@@ -1024,7 +1018,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
 	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
 	[contents tabWillCloseInBrowser:browser_ atIndex:index];
-	if (contents.isSelected)
+	if (contents.isActive)
 		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 
@@ -1044,7 +1038,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	CTTabContents *oldContents = [userInfo valueForKey:CTTabContentsUserInfoKey];
 	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
 	[newContents tabReplaced:oldContents inBrowser:browser_ atIndex:index];
-	if ([self selectedTabIndex] == index) {
+	if ([self activeTabIndex] == index) {
 		[self updateToolbarWithContents:newContents
 					 shouldRestoreState:!!oldContents];
 	}
@@ -1055,7 +1049,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	CTTabContents *contents = [userInfo valueForKey:CTTabContentsUserInfoKey];
 	NSInteger index = [[userInfo valueForKey:CTTabIndexUserInfoKey] intValue];
 	[contents tabDidDetachFromBrowser:browser_ atIndex:index];
-	if (contents.isSelected)
+	if (contents.isActive)
 		[self updateToolbarWithContents:nil shouldRestoreState:NO];
 }
 

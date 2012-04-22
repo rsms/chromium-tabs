@@ -19,7 +19,7 @@
 // the mouse) and when they are _alerted_ (to show that the tab's title has
 // changed).
 
-// The state of alerting (to show a title change on an unselected, pinned tab).
+// The state of alerting (to show a title change on an inactive, pinned tab).
 // This is more complicated than a simple on/off since we want to allow the
 // alert glow to go through a full rise-hold-fall cycle to avoid flickering (or
 // always holding).
@@ -46,7 +46,7 @@ typedef enum {
 // be visible on-screen, but should not respond to/initiate any events. Upon
 // setting to NO, clears the target/action of the close button to prevent
 // clicks inside it from sending messages.
-@property(assign, nonatomic, getter=isClosing) BOOL closing;
+@property(assign, nonatomic, setter = setClosing:) BOOL isClosing;
 
 // Returns the inset multiplier used to compute the inset of the top of the tab.
 + (CGFloat)insetMultiplier;
@@ -54,7 +54,7 @@ typedef enum {
 // Enables/Disables tracking regions for the tab.
 - (void)setTrackingEnabled:(BOOL)enabled;
 
-// Begin showing an "alert" glow (shown to call attention to an unselected
+// Begin showing an "alert" glow (shown to call attention to an inactive
 // pinned tab whose title changed).
 - (void)startAlert;
 

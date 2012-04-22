@@ -316,7 +316,7 @@
 	return NO;
 }
 
-- (NSString*)selectedTabTitle {
+- (NSString*)activeTabTitle {
 	// subclass must implement
 	NOTIMPLEMENTED();
 	return @"";

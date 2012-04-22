@@ -6,7 +6,11 @@
 #import "CTTabContents.h"
 #import "CTUtil.h"
 
-@implementation CTTabContentsController
+@implementation CTTabContentsController {
+	CTTabContents* contents_;  // weak
+	
+	IBOutlet NSSplitView* contentsContainer_;
+}
 
 - (id)initWithContents:(CTTabContents*)contents {
 	// subclasses might override this to load a different nib
@@ -51,12 +55,12 @@
 	return [[self view] superview] ? YES : NO;
 }
 
-- (void)willBecomeSelectedTab {
-	[contents_ tabWillBecomeSelected];
+- (void)willBecomeActiveTab {
+	[contents_ tabWillBecomeActive];
 }
 
-- (void)willResignSelectedTab {
-	[contents_ tabWillResignSelected];
+- (void)willResignActiveTab {
+	[contents_ tabWillResignActive];
 }
 
 - (void)tabDidChange:(CTTabContents*)updatedContents {
@@ -64,7 +68,7 @@
 	// the view may have, so avoid changing the view hierarchy unless
 	// the view is different.
 	if (contents_ != updatedContents) {
-		updatedContents.isSelected = contents_.isSelected;
+		updatedContents.isActive = contents_.isActive;
 		updatedContents.isVisible = contents_.isVisible;
 		//updatedContents.isKey = contents_.isKey;
 		contents_ = updatedContents;

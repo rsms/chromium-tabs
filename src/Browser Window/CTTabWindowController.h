@@ -114,11 +114,11 @@
 // currently have no content.
 - (BOOL)hasLiveTabs;
 
-// Return the view of the selected tab.
+// Return the view of the active tab.
 - (NSView *)activeTabView;
 
-// The title of the selected tab.
-- (NSString*)selectedTabTitle;
+// The title of the active tab.
+- (NSString*)activeTabTitle;
 
 // Called to check whether or not this controller's window has a tab strip (YES
 // if it does, NO otherwise). The default implementation returns YES.

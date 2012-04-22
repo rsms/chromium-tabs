@@ -95,11 +95,11 @@
 - (IBAction)openDocument:(id)sender;
 - (IBAction)newDocument:(id)sender;
 
-// Returns the selected (active) tab, or nil if there are no tabs.
-- (CTTabContents*)selectedTabContents;
+// Returns the active tab, or nil if there are no tabs.
+- (CTTabContents*)activeTabContents;
 
-// Returns the index of the selected (active) tab, or -1 if there are no tabs.
-- (int)selectedTabIndex;
+// Returns the index of the active tab, or -1 if there are no tabs.
+- (int)activeTabIndex;
 
 // Updates the toolbar with the states of the specified |contents|.
 // If |shouldRestore| is YES, we're switching (back?) to this tab and should
@@ -110,7 +110,7 @@
 // Brings this controller's window to the front.
 - (void)activate;
 
-// Make the (currently-selected) tab contents the first responder, if possible.
+// Make the (currently-active) tab contents the first responder, if possible.
 - (void)focusTabContents;
 
 // Lays out the tab content area in the given frame. If the height changes,
