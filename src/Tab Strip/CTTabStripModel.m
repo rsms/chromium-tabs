@@ -299,9 +299,9 @@ const int kNoTab = NSNotFound;
 	if (index == toPosition)
 		return;
 	
-	int first_non_miniTab = [self indexOfFirstNonMiniTab];
-	if ((index < first_non_miniTab && toPosition >= first_non_miniTab) ||
-		(toPosition < first_non_miniTab && index >= first_non_miniTab)) {
+	int firstNonMiniTab = [self indexOfFirstNonMiniTab];
+	if ((index < firstNonMiniTab && toPosition >= firstNonMiniTab) ||
+		(toPosition < firstNonMiniTab && index >= firstNonMiniTab)) {
 		// This would result in mini tabs mixed with non-mini tabs. We don't allow
 		// that.
 		return;
