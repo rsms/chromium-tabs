@@ -38,7 +38,6 @@ typedef enum {
 @property(assign, nonatomic) SEL action;
 @property(assign, nonatomic, setter = setApp:) BOOL isApp;
 @property(assign, nonatomic, setter = setMini:) BOOL isMini;
-@property(assign, nonatomic, setter = setPhantom:) BOOL isPhantom;
 @property(assign, nonatomic, setter = setPinned:) BOOL isPinned;
 @property(assign, nonatomic, setter = setActive:) BOOL isActive;
 @property(retain, nonatomic) id target;

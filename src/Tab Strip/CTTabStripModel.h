@@ -101,16 +101,6 @@ typedef enum {
 	CTTabChangeTypeAll
 } CTTabChangeType;
 
-// Enum used by ReplaceTabContentsAt.
-typedef enum {
-	// The replace is the result of the tab being made phantom.
-	REPLACE_MADE_PHANTOM,
-	
-	// The replace is the result of the match preview being committed.
-	REPLACE_MATCH_PREVIEW
-} CTTabReplaceType;
-
-
 // Context menu functions.
 typedef enum {
 	CommandFirst = 0,
@@ -141,11 +131,6 @@ typedef enum {
 
 // Retrieve the number of CTTabContentses/emptiness of the TabStripModel.
 - (NSUInteger)count;
-
-// Returns true if there are any non-phantom tabs. When there are no
-// non-phantom tabs the delegate is notified by way of TabStripEmpty and the
-// browser closes.
-- (BOOL)hasNonPhantomTabs;
 
 // Sets the insertion policy. Default is INSERT_AFTER.
 - (void)setInsertionPolicy:(InsertionPolicy)policy;
@@ -196,11 +181,10 @@ typedef enum {
 //void ReplaceNavigationControllerAt(int index,
 //                                   NavigationController* controller);
 
-// Replaces the tab contents at |index| with |new_contents|. |type| is passed
-// to the observer. This deletes the CTTabContents currently at |index|.
+// Replaces the tab contents at |index| with |newContents|.
+// This deletes the CTTabContents currently at |index|.
 - (void)replaceTabContentsAtIndex:(int)index
-					 withContents:(CTTabContents *)new_contents 
-					  replaceType:(CTTabReplaceType)type;
+					 withContents:(CTTabContents *)newContents;
 
 // Detaches the CTTabContents at the specified index from this strip. The
 // CTTabContents is not destroyed, just removed from display. The caller is
@@ -268,20 +252,17 @@ typedef enum {
 // If |use_group| is true, the group property of the tab is used instead of
 // the opener to find the next tab. Under some circumstances the group
 // relationship may exist but the opener may not.
-// NOTE: this skips phantom tabs.
 //int GetIndexOfNextTabContentsOpenedBy(const NavigationController* opener,
 //                                      int start_index,
 //                                      BOOL use_group) const;
 
 // Returns the index of the first CTTabContents in the model opened by the
 // specified opener.
-// NOTE: this skips phantom tabs.
 //int GetIndexOfFirstTabContentsOpenedBy(const NavigationController* opener,
 //                                       int start_index) const;
 
 // Returns the index of the last CTTabContents in the model opened by the
 // specified opener, starting at |start_index|.
-// NOTE: this skips phantom tabs.
 //int GetIndexOfLastTabContentsOpenedBy(const NavigationController* opener,
 //                                      int start_index) const;
 
@@ -313,11 +294,6 @@ typedef enum {
 // See description above class for details on app tabs.
 - (BOOL)isAppTabAtIndex:(int)index;
 
-// Returns true if the tab is a phantom tab. A phantom tab is one where the
-// renderer has not been loaded.
-// See description above class for details on phantom tabs.
-- (BOOL)isPhantomTabAtIndex:(int)index;
-
 // Returns true if the tab at |index| is blocked by a tab modal dialog.
 - (BOOL)isTabBlockedAtIndex:(int)index;
 
@@ -333,13 +309,6 @@ typedef enum {
 // is between IndexOfFirstNonMiniTab and count().
 - (int)constrainInsertionIndex:(int)index 
 					   miniTab:(BOOL)miniTab;
-
-// Returns the index of the first tab that is not a phantom tab. This returns
-// kNoTab if all of the tabs are phantom tabs.
-- (int)indexOfFirstNonPhantomTab;
-
-// Returns the number of non phantom tabs in the TabStripModel.
-- (int)nonPhantomTabCount;
 
 #pragma mark -
 #pragma mark Command level API

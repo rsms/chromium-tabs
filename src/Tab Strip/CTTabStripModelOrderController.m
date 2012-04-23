@@ -11,13 +11,11 @@
 #import "CTTabContents.h"
 
 @interface CTTabStripModelOrderController (PrivateMethods)
-// Returns a valid index to be active after the tab at |removing_index| is
-// closed. If |index| is after |removing_index| and |is_remove| is true,
-// |index| is adjusted to reflect the fact that |removing_index| is going
-// away. This also skips any phantom tabs.
+// Returns a valid index to be active after the tab at |removingIndex| is
+// closed. If |index| is after |removingIndex|, |index| is adjusted to 
+// reflect the fact that |removingIndex| is going away.
 - (int)getValidIndex:(int)index
-		 afterRemove:(int)removing_index
-		   isRemoved:(BOOL)isRemoved;
+		 afterRemove:(int)removingIndex;
 @end
 
 @implementation CTTabStripModelOrderController {
@@ -71,8 +69,7 @@
 		[tabStripModel_ count] : 0;
 }
 
-- (int)determineNewSelectedIndexAfterClose:(int)removedIndex
-								 isRemoved:(BOOL)isRemoved {
+- (int)determineNewSelectedIndexAfterClose:(int)removedIndex {
 	int tab_count = [tabStripModel_ count];
 	assert(removedIndex >= 0 && removedIndex < tab_count);
 	
@@ -83,13 +80,12 @@
 		int index = [tabStripModel_ indexOfTabContents:parentOpener];
 		if (index != kNoTab)
 			return [self getValidIndex:index
-						   afterRemove:removedIndex
-							  isRemoved:isRemoved];
+						   afterRemove:removedIndex];
 	}
 	
 	// No opener set, fall through to the default handler...
 	int activeIndex = [tabStripModel_ activeIndex];
-	if (isRemoved && activeIndex >= (tab_count - 1))
+	if (activeIndex >= (tab_count - 1))
 		return activeIndex - 1;
 	return activeIndex;
 	
@@ -127,9 +123,8 @@
 // CTTabStripModelOrderController, private:
 
 - (int)getValidIndex:(int)index
-		 afterRemove:(int)removingIndex
-		   isRemoved:(BOOL)isRemoved {
-	if (isRemoved && removingIndex < index)
+		 afterRemove:(int)removingIndex {
+	if (removingIndex < index)
 		index = MAX(0, index - 1);
 	return index;
 }

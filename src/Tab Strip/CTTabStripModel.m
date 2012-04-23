@@ -59,18 +59,6 @@
 // (|forward| is false).
 - (void)selectRelativeTab:(BOOL)forward;
 
-// Returns the first non-phantom tab starting at |index|, skipping the tab at
-// |ignoreIndex|.
-- (int)indexOfNextNonPhantomTabFromIndex:(int)index
-							 ignoreIndex:(int)ignoreIndex;
-
-// Returns true if the tab at the specified index should be made phantom when
-// the tab is closing.
-- (BOOL)shouldMakePhantomOnClose:(int)index;
-
-// Makes the tab a phantom tab.
-//- (void)MakePhantom:(int)index;
-
 // Does the work of MoveTabContentsAt. This has no checks to make sure the
 // position is valid, those are done in MoveTabContentsAt.
 - (void)moveTabContentsAtImpl:(int)index
@@ -80,8 +68,7 @@
 // Does the work for ReplaceTabContentsAt returning the old CTTabContents.
 // The caller owns the returned CTTabContents.
 - (CTTabContents *)replaceTabContentsAtImpl:(int)index
-							   withContents:(CTTabContents *)new_contents
-								replaceType:(CTTabReplaceType)type;
+							   withContents:(CTTabContents *)newContents;
 @end
 
 @interface TabContentsData : NSObject {
@@ -177,15 +164,6 @@ const int kNoTab = NSNotFound;
 	return [contentsData_ count];
 }
 
-- (BOOL)hasNonPhantomTabs {
-	/*for (int i = 0; i < count(); i++) {
-	 if (!IsPhantomTab(i))
-	 return YES;
-	 }
-	 return NO;*/
-	return !![self count];
-}
-
 // Sets the insertion policy. Default is INSERT_AFTER.
 - (void)setInsertionPolicy:(InsertionPolicy)policy {
 	[orderController_ setInsertionPolicy:policy];
@@ -258,11 +236,9 @@ const int kNoTab = NSNotFound;
 
 
 - (void)replaceTabContentsAtIndex:(int)index 
-					withContents:(CTTabContents *)new_contents 
-					 replaceType:(CTTabReplaceType)type {
+					withContents:(CTTabContents *)newContents {
 	[self replaceTabContentsAtImpl:index
-					  withContents:new_contents
-					   replaceType:type];
+					  withContents:newContents];
 }
 
 - (CTTabContents *)detachTabContentsAtIndex:(int)index {
@@ -271,17 +247,15 @@ const int kNoTab = NSNotFound;
 	
 	assert([self containsIndex:index]);
 	
-	CTTabContents* removed_contents = [self tabContentsAtIndex:index];
+	CTTabContents* removedContents = [self tabContentsAtIndex:index];
 	int nextActiveIndex =
-	[orderController_ determineNewSelectedIndexAfterClose:index 
-												  isRemoved:YES];
+		[orderController_ determineNewSelectedIndexAfterClose:index];
 	[contentsData_ removeObjectAtIndex:index];
-	nextActiveIndex = [self indexOfNextNonPhantomTabFromIndex:nextActiveIndex ignoreIndex:-1];
-	if ([self hasNonPhantomTabs])
+	if ([self count] > 0)
 		closingAll_ = YES;
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              removed_contents, CTTabContentsUserInfoKey,
+                              removedContents, CTTabContentsUserInfoKey,
                               [NSNumber numberWithInt:index], CTTabIndexUserInfoKey,
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTTabDetachedNotification 
@@ -292,9 +266,9 @@ const int kNoTab = NSNotFound;
 															object:self 
 														  userInfo:nil];
     }
-	if ([self hasNonPhantomTabs]) {
+	if ([self count] > 0) {
 		if (index == activeIndex_) {
-			[self changeSelectedContentsFrom:removed_contents
+			[self changeSelectedContentsFrom:removedContents
 									 toIndex:nextActiveIndex
 								 userGesture:NO];
 		} else if (index < activeIndex_) {
@@ -303,7 +277,7 @@ const int kNoTab = NSNotFound;
 			--activeIndex_;
 		}
 	}
-	return removed_contents;
+	return removedContents;
 }
 
 - (void)selectTabContentsAtIndex:(int)index 
@@ -487,12 +461,6 @@ const int kNoTab = NSNotFound;
 	return contents && contents.isApp;
 }
 
-- (BOOL)isPhantomTabAtIndex:(int)index {
-	/*return IsTabPinned(index) &&
-	 GetTabContentsAt(index)->controller().needs_reload();*/
-	return NO;
-}
-
 - (BOOL)isTabBlockedAtIndex:(int)index {
 	return ((TabContentsData *)[contentsData_ objectAtIndex:index])->isBlocked;
 }
@@ -511,27 +479,6 @@ const int kNoTab = NSNotFound;
 //	return miniTab ? std::min(std::max(0, index), [self IndexOfFirstNonMiniTab]) :
 //	std::min([self count], std::max(index, [self IndexOfFirstNonMiniTab]));
     return miniTab ? MIN(MAX(0, index), [self indexOfFirstNonMiniTab]) : MIN(self.count, MAX(index, [self indexOfFirstNonMiniTab]));
-}
-
-// Returns the index of the first tab that is not a phantom tab. This returns
-// kNoTab if all of the tabs are phantom tabs.
-- (int)indexOfFirstNonPhantomTab {
-	/*for (int i = 0; i < count(); ++i) {
-	 if (!IsPhantomTab(i))
-	 return i;
-	 }*/
-	return [self count] ? 0 : kNoTab;
-}
-
-// Returns the number of non phantom tabs in the TabStripModel.
-- (int)nonPhantomTabCount {
-	/*int tabs = 0;
-	 for (int i = 0; i < count(); ++i) {
-	 if (!IsPhantomTab(i))
-	 ++tabs;
-	 }
-	 return tabs;*/
-	return [self count];
 }
 
 #pragma mark -
@@ -706,16 +653,10 @@ const int kNoTab = NSNotFound;
 			break;
 		}
 		case CommandTogglePinned: {
-			if ([self isPhantomTabAtIndex:contextIndex]) {
-				// The tab is a phantom tab, close it.
-				[self closeTabContentsAtIndex:contextIndex 
-							   closeTypes:CLOSE_USER_GESTURE | CLOSE_CREATE_HISTORICAL_TAB];
-			} else {
-				[self selectTabContentsAtIndex:contextIndex
-								   userGesture:YES];
-				[self setTabAtIndex:contextIndex 
-							 pinned:![self isTabPinnedAtIndex:contextIndex]];
-			}
+			[self selectTabContentsAtIndex:contextIndex
+							   userGesture:YES];
+			[self setTabAtIndex:contextIndex 
+						 pinned:![self isTabPinnedAtIndex:contextIndex]];
 			break;
 		}
 
@@ -747,13 +688,7 @@ const int kNoTab = NSNotFound;
 	if (index != kNoTab) {
 		// Note that we only detach the contents here, not close it - it's
 		// already been closed. We just want to undo our bookkeeping.
-		//if (ShouldMakePhantomOnClose(index)) {
-		//  // We don't actually allow pinned tabs to close. Instead they become
-		//  // phantom.
-		//  MakePhantom(index);
-		//} else {
 		[self detachTabContentsAtIndex:index];
-		//}
 	}
 }
 	
@@ -854,53 +789,12 @@ const int kNoTab = NSNotFound;
 	if ([contentsData_ count] == 0)
 		return;
 	
-	// Skip pinned-app-phantom tabs when iterating.
 	int index = activeIndex_;
 	int delta = forward ? 1 : -1;
-	do {
-		index = (index + [self count] + delta) % [self count];
-	} while (index != activeIndex_ && [self isPhantomTabAtIndex:index]);
+	index = (index + [self count] + delta) % [self count];
+	
 	[self selectTabContentsAtIndex:index 
 					   userGesture:YES];
-}
-
-// Returns the first non-phantom tab starting at |index|, skipping the tab at
-// |ignoreIndex|.
-- (int)indexOfNextNonPhantomTabFromIndex:(int)index
-							 ignoreIndex:(int)ignoreIndex {
-	if (index == kNoTab)
-		return kNoTab;
-	
-	if ([contentsData_ count] == 0)
-		return index;
-	
-	index = MIN([self count] - 1, MAX(0, index));
-	int start = index;
-	do {
-		if (index != ignoreIndex && ![self isPhantomTabAtIndex:index])
-			return index;
-		index = (index + 1) % [self count];
-	} while (index != start);
-	
-	// All phantom tabs.
-	return start;
-}
-
-const BOOL kPhantomTabsEnabled = NO;
-
-// Returns true if the tab at the specified index should be made phantom when
-// the tab is closing.
-- (BOOL)shouldMakePhantomOnClose:(int)index {
-	if (kPhantomTabsEnabled && 
-		[self isTabPinnedAtIndex:index] && 
-		![self isPhantomTabAtIndex:index] &&
-		!closingAll_) {
-		if (![self isAppTabAtIndex:index])
-			return YES;  // Always make non-app tabs go phantom.
-		
-		return NO;
-	}
-	return NO;
 }
 
 - (void)moveTabContentsAtImpl:(int)index
@@ -930,8 +824,7 @@ const BOOL kPhantomTabsEnabled = NO;
 }
 
 - (CTTabContents *)replaceTabContentsAtImpl:(int)index
-							   withContents:(CTTabContents *)newContents
-								replaceType:(CTTabReplaceType)type {
+							   withContents:(CTTabContents *)newContents {
 	assert([self containsIndex:index]);
 	CTTabContents* oldContents = [self tabContentsAtIndex:index];
 	TabContentsData* data = [contentsData_ objectAtIndex:index];
@@ -941,7 +834,6 @@ const BOOL kPhantomTabsEnabled = NO;
                               oldContents, CTTabContentsUserInfoKey,
                               newContents, CTTabNewContentsUserInfoKey,
                               [NSNumber numberWithInt:index], CTTabIndexUserInfoKey,
-                              [NSNumber numberWithInt:type], CTTabOptionsUserInfoKey, 
                               nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:CTTabReplacedNotification 
 														object:self 

@@ -33,10 +33,7 @@
 // Returns the index to append tabs at.
 - (int)determineInsertionIndexForAppending;
 
-// Determine where to shift selection after a tab is closed is made phantom.
-// If |is_remove| is false, the tab is not being removed but rather made
-// phantom (see description of phantom tabs in TabStripModel).
-- (int)determineNewSelectedIndexAfterClose:(int)removedIndex
-								 isRemoved:(BOOL)isRemoved;
+// Determine where to shift selection after a tab is closed.
+- (int)determineNewSelectedIndexAfterClose:(int)removedIndex;
 
 @end

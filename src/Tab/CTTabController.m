@@ -23,7 +23,6 @@ static NSString* const kBrowserThemeDidChangeNotification =
 	BOOL isApp_;
 	BOOL isMini_;
 	BOOL isPinned_;
-	BOOL isPhantom_;
 	BOOL isActive_;
 	CTTabLoadingState loadingState_;
 	CGFloat iconTitleXOffset_;  // between left edges of icon and title
@@ -36,7 +35,6 @@ static NSString* const kBrowserThemeDidChangeNotification =
 @synthesize isApp = isApp_;
 @synthesize loadingState = loadingState_;
 @synthesize isMini = isMini_;
-@synthesize isPhantom = isPhantom_;
 @synthesize isPinned = isPinned_;
 @synthesize target = target_;
 @synthesize isActive = isActive_;

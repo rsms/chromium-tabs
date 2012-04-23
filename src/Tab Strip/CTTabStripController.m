@@ -1143,13 +1143,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	NSInteger index = [self indexFromModelIndex:modelIndex];
 	
 	CTTabController* tabController = [tabArray_ objectAtIndex:index];
-	
-	// Since the tab is loading, it cannot be phantom any more.
-	if ([tabController isPhantom]) {
-		[tabController setPhantom:NO];
-		[[tabController view] setNeedsDisplay:YES];
-	}
-	
+		
 	BOOL oldHasIcon = [tabController iconView] != nil;
 	BOOL newHasIcon = contents.hasIcon ||
 	[tabStripModel_ isMiniTabAtIndex:modelIndex];  // Always show icon if mini.
@@ -1791,10 +1785,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 			[tabContentsArray_ objectAtIndex:oldIndex];
 			[oldController willResignActiveTab];
 			//oldContents->view()->StoreFocus();
-			// If the selection changed because the tab was made phantom, update the
-			// Cocoa side of the state.
-			/*CTTabController* tabController = [tabArray_ objectAtIndex:oldIndex];
-			 [tabController setPhantom:tabStripModel_->IsPhantomTab(oldModelIndex)];*/
 		}
 	}
 	
@@ -1858,11 +1848,6 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	if (change != CTTabChangeTypeLoadingOnly)
 		[self setTabTitle:tabController withContents:contents];
-	
-	// See if the change was to/from phantom.
-	BOOL isPhantom = [tabStripModel_ isPhantomTabAtIndex:modelIndex];
-	if (isPhantom != [tabController isPhantom])
-		[tabController setPhantom:isPhantom];
 	
 	[self updateFavIconForContents:contents atIndex:modelIndex];
 	

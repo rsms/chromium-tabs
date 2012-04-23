@@ -574,13 +574,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 - (NSInteger)numberOfTabs {
-	// count() includes pinned tabs (both live and phantom).
+	// count includes pinned tabs.
 	return [[browser_ tabStripModel] count];
 }
 
 
 - (BOOL)hasLiveTabs {
-	return [[browser_ tabStripModel] hasNonPhantomTabs];
+	return [self numberOfTabs] > 0;
 }
 
 
@@ -856,7 +856,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 		//       bounds in a custom manner we have to do it here, before we call
 		//       orderOut:
 		
-		if ([browser_.tabStripModel hasNonPhantomTabs]) {
+		if ([browser_.tabStripModel count] > 0) {
 			// Tab strip isn't empty.  Hide the frame (so it appears to have closed
 			// immediately) and close all the tabs, allowing them to shut down. When the
 			// tab strip is empty we'll be called back again.

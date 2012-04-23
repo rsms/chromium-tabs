@@ -117,8 +117,7 @@
 - (void)replaceTabContentsAtIndex:(int)index
 				  withTabContents:(CTTabContents*)contents {
 	[tabStripModel_ replaceTabContentsAtIndex:index 
-								 withContents:contents 
-								  replaceType:(CTTabReplaceType)0];
+								 withContents:contents];
 }
 
 - (void)closeTabAtIndex:(int)index 
