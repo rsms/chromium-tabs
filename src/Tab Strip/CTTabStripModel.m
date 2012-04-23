@@ -101,7 +101,7 @@
     NSObject<CTTabStripModelDelegate> *delegate_;
 	
 	// The CTTabContents data currently hosted within this TabStripModel.
-	NSMutableArray *contents_data_;
+	NSMutableArray *contentsData_;
 	
 	// The index of the CTTabContents in |contents_| that is currently active.
 	int activeIndex_;
@@ -148,7 +148,7 @@ const int kNoTab = NSNotFound;
 - (id)initWithDelegate:(NSObject <CTTabStripModelDelegate>*)delegate {
 	self = [super init];
 	if (self) {	
-		contents_data_ = [[NSMutableArray alloc] init];
+		contentsData_ = [[NSMutableArray alloc] init];
 		activeIndex_ = kNoTab;
 		closingAll_ = NO;
 		
@@ -174,7 +174,7 @@ const int kNoTab = NSNotFound;
 #pragma mark -
 #pragma mark getters/setters
 - (NSUInteger)count {
-	return [contents_data_ count];
+	return [contentsData_ count];
 }
 
 - (BOOL)hasNonPhantomTabs {
@@ -233,7 +233,7 @@ const int kNoTab = NSNotFound;
 	data->contents = contents;
 	data->isPinned = pin;
 	
-	[contents_data_ insertObject:data atIndex:index];
+	[contentsData_ insertObject:data atIndex:index];
 	
 	if (index <= activeIndex_) {
 		// If a tab is inserted before the current active index,
@@ -266,7 +266,7 @@ const int kNoTab = NSNotFound;
 }
 
 - (CTTabContents *)detachTabContentsAtIndex:(int)index {
-	if ([contents_data_ count] == 0)
+	if ([contentsData_ count] == 0)
 		return NULL;
 	
 	assert([self containsIndex:index]);
@@ -275,7 +275,7 @@ const int kNoTab = NSNotFound;
 	int nextActiveIndex =
 	[orderController_ determineNewSelectedIndexAfterClose:index 
 												  isRemove:YES];
-	[contents_data_ removeObjectAtIndex:index];
+	[contentsData_ removeObjectAtIndex:index];
 	nextActiveIndex = [self indexOfNextNonPhantomTabFromIndex:nextActiveIndex ignoreIndex:-1];
 	if ([self hasNonPhantomTabs])
 		closingAll_ = YES;
@@ -344,7 +344,7 @@ const int kNoTab = NSNotFound;
 
 - (CTTabContents *)tabContentsAtIndex:(int)index {
     if ([self containsIndex:index]) {
-		TabContentsData* data = [contents_data_ objectAtIndex:index];
+		TabContentsData* data = [contentsData_ objectAtIndex:index];
 		return data->contents;
     }
     return nil;
@@ -352,7 +352,7 @@ const int kNoTab = NSNotFound;
 
 - (int)indexOfTabContents:(const CTTabContents *)contents {
 	int index = 0;
-    for (TabContentsData* data in contents_data_) {
+    for (TabContentsData* data in contentsData_) {
         if (data->contents == contents) {
             return index;
         }
@@ -391,7 +391,7 @@ const int kNoTab = NSNotFound;
 }
 
 - (BOOL)tabsAreLoading {
-	for (TabContentsData *data in contents_data_) {
+	for (TabContentsData *data in contentsData_) {
 		if (data->contents.isLoading)
 			return YES;
 	}
@@ -406,7 +406,7 @@ const int kNoTab = NSNotFound;
 - (void)setTabAtIndex:(int)index 
 			  blocked:(BOOL)blocked {
 	assert([self containsIndex:index]);
-	TabContentsData *data = [contents_data_ objectAtIndex:index];
+	TabContentsData *data = [contentsData_ objectAtIndex:index];
 	CTTabContents *contents = data->contents;
 	if (data->isBlocked == blocked) {
 		return;
@@ -425,7 +425,7 @@ const int kNoTab = NSNotFound;
 
 - (void)setTabAtIndex:(int)index 
 			   pinned:(BOOL)pinned {
-	TabContentsData *data = [contents_data_ objectAtIndex:index];
+	TabContentsData *data = [contentsData_ objectAtIndex:index];
 	CTTabContents *contents = data->contents;
 	if (data->isPinned == pinned)
 		return;
@@ -475,7 +475,7 @@ const int kNoTab = NSNotFound;
 }
 
 - (BOOL)isTabPinnedAtIndex:(int)index {
-	return ((TabContentsData *)[contents_data_ objectAtIndex:index])->isPinned;
+	return ((TabContentsData *)[contentsData_ objectAtIndex:index])->isPinned;
 }
 
 - (BOOL)isMiniTabAtIndex:(int)index {
@@ -494,11 +494,11 @@ const int kNoTab = NSNotFound;
 }
 
 - (BOOL)isTabBlockedAtIndex:(int)index {
-	return ((TabContentsData *)[contents_data_ objectAtIndex:index])->isBlocked;
+	return ((TabContentsData *)[contentsData_ objectAtIndex:index])->isBlocked;
 }
 
 - (int)indexOfFirstNonMiniTab {
-	for (int i = 0; i < [contents_data_ count]; ++i) {
+	for (int i = 0; i < [contentsData_ count]; ++i) {
 		if (![self isMiniTabAtIndex:i])
 			return i;
 	}
@@ -851,7 +851,7 @@ const int kNoTab = NSNotFound;
 - (void)selectRelativeTab:(BOOL)forward {
 	// This may happen during automated testing or if a user somehow buffers
 	// many key accelerators.
-	if ([contents_data_ count] == 0)
+	if ([contentsData_ count] == 0)
 		return;
 	
 	// Skip pinned-app-phantom tabs when iterating.
@@ -871,7 +871,7 @@ const int kNoTab = NSNotFound;
 	if (index == kNoTab)
 		return kNoTab;
 	
-	if ([contents_data_ count] == 0)
+	if ([contentsData_ count] == 0)
 		return index;
 	
 	index = MIN([self count] - 1, MAX(0, index));
@@ -906,9 +906,9 @@ const BOOL kPhantomTabsEnabled = NO;
 - (void)moveTabContentsAtImpl:(int)index
 				   toPosition:(int)toPosition
 			  selectAfterMove:(BOOL)selectAfterMove {
-	TabContentsData* movedData = [contents_data_ objectAtIndex:index];
-	[contents_data_ removeObjectAtIndex:index];
-	[contents_data_ insertObject:movedData atIndex:toPosition];
+	TabContentsData* movedData = [contentsData_ objectAtIndex:index];
+	[contentsData_ removeObjectAtIndex:index];
+	[contentsData_ insertObject:movedData atIndex:toPosition];
 	
 	// if !selectAfterMove, keep the same tab active as was active before.
 	if (selectAfterMove || index == activeIndex_) {
@@ -934,7 +934,7 @@ const BOOL kPhantomTabsEnabled = NO;
 								replaceType:(CTTabReplaceType)type {
 	assert([self containsIndex:index]);
 	CTTabContents* oldContents = [self tabContentsAtIndex:index];
-	TabContentsData* data = [contents_data_ objectAtIndex:index];
+	TabContentsData* data = [contentsData_ objectAtIndex:index];
 	data->contents = newContents;
 	
     NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
