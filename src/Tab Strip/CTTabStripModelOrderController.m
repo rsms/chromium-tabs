@@ -17,7 +17,7 @@
 // away. This also skips any phantom tabs.
 - (int)getValidIndex:(int)index
 		 afterRemove:(int)removing_index
-			isRemove:(BOOL)is_remove;
+		   isRemoved:(BOOL)isRemoved;
 @end
 
 @implementation CTTabStripModelOrderController {
@@ -27,10 +27,10 @@
 }
 @synthesize insertionPolicy = insertionPolicy_;
 
-- (id)initWithTabStripModel:(CTTabStripModel *)tab_strip_model {
+- (id)initWithTabStripModel:(CTTabStripModel *)tabStripModel {
     self = [super init];
     if (self) {
-		tabStripModel_ = tab_strip_model;
+		tabStripModel_ = tabStripModel;
 		insertionPolicy_ = INSERT_AFTER;
     }
     
@@ -41,7 +41,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (int)determineInsertionIndexWithContents:(CTTabContents *)new_contents
+- (int)determineInsertionIndexWithContents:(CTTabContents *)newContents
 								transition:(CTPageTransition)transition
 							  inForeground:(BOOL)foreground {
 	int tab_count = [tabStripModel_ count];
@@ -71,25 +71,25 @@
 		[tabStripModel_ count] : 0;
 }
 
-- (int)determineNewSelectedIndexAfterClose:(int)removing_index
-								  isRemove:(BOOL)is_remove {
+- (int)determineNewSelectedIndexAfterClose:(int)removedIndex
+								 isRemoved:(BOOL)isRemoved {
 	int tab_count = [tabStripModel_ count];
-	assert(removing_index >= 0 && removing_index < tab_count);
+	assert(removedIndex >= 0 && removedIndex < tab_count);
 	
 	// if the closing tab has a valid parentOpener tab, return its index
 	CTTabContents* parentOpener =
-	[tabStripModel_ tabContentsAtIndex:removing_index].parentOpener;
+	[tabStripModel_ tabContentsAtIndex:removedIndex].parentOpener;
 	if (parentOpener) {
 		int index = [tabStripModel_ indexOfTabContents:parentOpener];
 		if (index != kNoTab)
 			return [self getValidIndex:index
-						   afterRemove:removing_index
-							  isRemove:is_remove];
+						   afterRemove:removedIndex
+							  isRemoved:isRemoved];
 	}
 	
 	// No opener set, fall through to the default handler...
 	int activeIndex = [tabStripModel_ activeIndex];
-	if (is_remove && activeIndex >= (tab_count - 1))
+	if (isRemoved && activeIndex >= (tab_count - 1))
 		return activeIndex - 1;
 	return activeIndex;
 	
@@ -127,9 +127,9 @@
 // CTTabStripModelOrderController, private:
 
 - (int)getValidIndex:(int)index
-		 afterRemove:(int)removing_index
-			isRemove:(BOOL)is_remove {
-	if (is_remove && removing_index < index)
+		 afterRemove:(int)removingIndex
+		   isRemoved:(BOOL)isRemoved {
+	if (isRemoved && removingIndex < index)
 		index = MAX(0, index - 1);
 	return index;
 }

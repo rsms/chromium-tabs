@@ -274,7 +274,7 @@ const int kNoTab = NSNotFound;
 	CTTabContents* removed_contents = [self tabContentsAtIndex:index];
 	int nextActiveIndex =
 	[orderController_ determineNewSelectedIndexAfterClose:index 
-												  isRemove:YES];
+												  isRemoved:YES];
 	[contentsData_ removeObjectAtIndex:index];
 	nextActiveIndex = [self indexOfNextNonPhantomTabFromIndex:nextActiveIndex ignoreIndex:-1];
 	if ([self hasNonPhantomTabs])
