@@ -45,7 +45,7 @@
 // passed URL. Supports .url, .webloc and .ftploc files.
 + (NSURL*)decodeLocalFileURL:(NSURL*)url;
 
-+(NSURL*)URLFromInetloc:(NSString*)inFile;
-+(NSURL*)URLFromIEURLFile:(NSString*)inFile;
++ (NSURL*)URLFromInetloc:(NSString*)inFile;
++ (NSURL*)URLFromIEURLFile:(NSString*)inFile;
 
 @end

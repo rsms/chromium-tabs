@@ -47,14 +47,15 @@ extern NSString* const kWebURLsWithTitlesPboardType;
 
 @interface NSPasteboard(ChimeraPasteboardURLUtils)
 
-- (int) declareURLPasteboardWithAdditionalTypes:(NSArray*)additionalTypes owner:(id)newOwner;
-- (void) setDataForURL:(NSString*)url title:(NSString*)title;
+- (int)declareURLPasteboardWithAdditionalTypes:(NSArray*)additionalTypes 
+										 owner:(id)newOwner;
+- (void)setDataForURL:(NSString*)url title:(NSString*)title;
 
-- (void) setURLs:(NSArray*)inUrls withTitles:(NSArray*)inTitles;
-- (void) getURLs:(NSArray**)outUrls
-    andTitles:(NSArray**)outTitles
-    convertingFilenames:(BOOL)convertFilenames;
-- (BOOL) containsURLData;
+- (void)setURLs:(NSArray*)inUrls withTitles:(NSArray*)inTitles;
+- (void)getURLs:(NSArray**)outUrls
+	  andTitles:(NSArray**)outTitles
+convertingFilenames:(BOOL)convertFilenames;
+- (BOOL)containsURLData;
 
 @end
 
