@@ -29,7 +29,6 @@
 		3A3ED9EF1225E3C2009E2908 /* throbber_waiting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFA1222D94600F1BB78 /* throbber_waiting.png */; };
 		3A3ED9F01225E3C2009E2908 /* sadfavicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A286FFD1222D99B00F1BB78 /* sadfavicon.png */; };
 		3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3ED35012256F06009E2908 /* throbber.png */; };
-		3A3EDA501225EAE7009E2908 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
 		3A3EDA521225EAEA009E2908 /* ChromiumTabs.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
 		3A3EDA7B1225EBFF009E2908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA711225EBBB009E2908 /* AppDelegate.m */; };
 		3A3EDA7C1225EBFF009E2908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EDA771225EBBB009E2908 /* main.m */; };
@@ -47,71 +46,72 @@
 		3A9291B21229BF0100DA7E43 /* GTMNSAnimation+Duration.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6811225CE7A009E2908 /* GTMNSAnimation+Duration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B31229BF0100DA7E43 /* GTMNSColor+Luminance.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6831225CE7A009E2908 /* GTMNSColor+Luminance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A9291B61229BF0100DA7E43 /* NSBezierPath+MCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3ED6891225CE7A009E2908 /* NSBezierPath+MCAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5A142BBF1540483D00E6B055 /* CTTabStripDragController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A142BBD1540483D00E6B055 /* CTTabStripDragController.h */; };
+		5A142BBF1540483D00E6B055 /* CTTabStripDragController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A142BBD1540483D00E6B055 /* CTTabStripDragController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A142BC01540483D00E6B055 /* CTTabStripDragController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A142BBE1540483D00E6B055 /* CTTabStripDragController.m */; };
-		5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */; };
+		5A163432153FEC1600B6D159 /* CTFloatingBarBackingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A163430153FEC1600B6D159 /* CTFloatingBarBackingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A163433153FEC1600B6D159 /* CTFloatingBarBackingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A163431153FEC1600B6D159 /* CTFloatingBarBackingView.m */; };
-		5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A535248153F282200123D9D /* CTPresentationModeController.h */; };
+		5A53524A153F282200123D9D /* CTPresentationModeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A535248153F282200123D9D /* CTPresentationModeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A53524B153F282200123D9D /* CTPresentationModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A535249153F282200123D9D /* CTPresentationModeController.m */; };
-		5AE304B4153F0AFA001FCF20 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */; };
+		5AE304B4153F0AFA001FCF20 /* CTToolbarController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B0153F0AFA001FCF20 /* CTToolbarController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304B5153F0AFA001FCF20 /* CTToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304B1153F0AFA001FCF20 /* CTToolbarController.m */; };
-		5AE304B6153F0AFA001FCF20 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */; };
+		5AE304B6153F0AFA001FCF20 /* CTToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B2153F0AFA001FCF20 /* CTToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304B7153F0AFA001FCF20 /* CTToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304B3153F0AFA001FCF20 /* CTToolbarView.m */; };
-		5AE304BD153F0B78001FCF20 /* CTTabStripController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B9153F0B78001FCF20 /* CTTabStripController.h */; };
+		5AE304BD153F0B78001FCF20 /* CTTabStripController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304B9153F0B78001FCF20 /* CTTabStripController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304BE153F0B78001FCF20 /* CTTabStripController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304BA153F0B78001FCF20 /* CTTabStripController.m */; };
-		5AE304BF153F0B78001FCF20 /* CTTabStripView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304BB153F0B78001FCF20 /* CTTabStripView.h */; };
+		5AE304BF153F0B78001FCF20 /* CTTabStripView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304BB153F0B78001FCF20 /* CTTabStripView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304C0153F0B78001FCF20 /* CTTabStripView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304BC153F0B78001FCF20 /* CTTabStripView.m */; };
-		5AE304C5153F0C17001FCF20 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C1153F0C17001FCF20 /* CTTabStripModel.h */; };
+		5AE304C5153F0C17001FCF20 /* CTTabStripModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C1153F0C17001FCF20 /* CTTabStripModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304C6153F0C17001FCF20 /* CTTabStripModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304C2153F0C17001FCF20 /* CTTabStripModel.m */; };
-		5AE304C7153F0C17001FCF20 /* CTTabStripModelOrderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C3153F0C17001FCF20 /* CTTabStripModelOrderController.h */; };
+		5AE304C7153F0C17001FCF20 /* CTTabStripModelOrderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C3153F0C17001FCF20 /* CTTabStripModelOrderController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304C8153F0C17001FCF20 /* CTTabStripModelOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304C4153F0C17001FCF20 /* CTTabStripModelOrderController.m */; };
-		5AE304CA153F0C24001FCF20 /* CTTabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C9153F0C24001FCF20 /* CTTabStripModelDelegate.h */; };
-		5AE304D6153F0C8C001FCF20 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304CC153F0C8C001FCF20 /* CTBrowser.h */; };
+		5AE304CA153F0C24001FCF20 /* CTTabStripModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304C9153F0C24001FCF20 /* CTTabStripModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE304D6153F0C8C001FCF20 /* CTBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304CC153F0C8C001FCF20 /* CTBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304D7153F0C8C001FCF20 /* CTBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304CD153F0C8C001FCF20 /* CTBrowser.m */; };
-		5AE304D9153F0C8C001FCF20 /* CTBrowserCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304CF153F0C8C001FCF20 /* CTBrowserCommand.h */; };
-		5AE304DA153F0C8C001FCF20 /* CTBrowserFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D0153F0C8C001FCF20 /* CTBrowserFrameView.h */; };
+		5AE304D9153F0C8C001FCF20 /* CTBrowserCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304CF153F0C8C001FCF20 /* CTBrowserCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE304DA153F0C8C001FCF20 /* CTBrowserFrameView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D0153F0C8C001FCF20 /* CTBrowserFrameView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304DB153F0C8C001FCF20 /* CTBrowserFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304D1153F0C8C001FCF20 /* CTBrowserFrameView.m */; };
-		5AE304DC153F0C8C001FCF20 /* CTBrowserWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D2153F0C8C001FCF20 /* CTBrowserWindow.h */; };
+		5AE304DC153F0C8C001FCF20 /* CTBrowserWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D2153F0C8C001FCF20 /* CTBrowserWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304DD153F0C8C001FCF20 /* CTBrowserWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304D3153F0C8C001FCF20 /* CTBrowserWindow.m */; };
-		5AE304DE153F0C8C001FCF20 /* CTBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D4153F0C8C001FCF20 /* CTBrowserWindowController.h */; };
+		5AE304DE153F0C8C001FCF20 /* CTBrowserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304D4153F0C8C001FCF20 /* CTBrowserWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304DF153F0C8C001FCF20 /* CTBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304D5153F0C8C001FCF20 /* CTBrowserWindowController.m */; };
-		5AE304E2153F0C9B001FCF20 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E0153F0C9B001FCF20 /* CTTabWindowController.h */; };
+		5AE304E2153F0C9B001FCF20 /* CTTabWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E0153F0C9B001FCF20 /* CTTabWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304E3153F0C9B001FCF20 /* CTTabWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304E1153F0C9B001FCF20 /* CTTabWindowController.m */; };
-		5AE304E7153F0CF7001FCF20 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E5153F0CF7001FCF20 /* CTTabContents.h */; };
+		5AE304E7153F0CF7001FCF20 /* CTTabContents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E5153F0CF7001FCF20 /* CTTabContents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304E8153F0CF7001FCF20 /* CTTabContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304E6153F0CF7001FCF20 /* CTTabContents.m */; };
-		5AE304F0153F0D01001FCF20 /* CTTabContentsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E9153F0D01001FCF20 /* CTTabContentsController.h */; };
+		5AE304F0153F0D01001FCF20 /* CTTabContentsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304E9153F0D01001FCF20 /* CTTabContentsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304F1153F0D01001FCF20 /* CTTabContentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EA153F0D01001FCF20 /* CTTabContentsController.m */; };
-		5AE304F2153F0D01001FCF20 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EB153F0D01001FCF20 /* CTTabController.h */; };
+		5AE304F2153F0D01001FCF20 /* CTTabController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EB153F0D01001FCF20 /* CTTabController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304F3153F0D01001FCF20 /* CTTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EC153F0D01001FCF20 /* CTTabController.m */; };
-		5AE304F4153F0D01001FCF20 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304ED153F0D01001FCF20 /* CTTabControllerTarget.h */; };
-		5AE304F5153F0D01001FCF20 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EE153F0D01001FCF20 /* CTTabView.h */; };
+		5AE304F4153F0D01001FCF20 /* CTTabControllerTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304ED153F0D01001FCF20 /* CTTabControllerTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE304F5153F0D01001FCF20 /* CTTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304EE153F0D01001FCF20 /* CTTabView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304F6153F0D01001FCF20 /* CTTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304EF153F0D01001FCF20 /* CTTabView.m */; };
-		5AE304FE153F0D41001FCF20 /* HoverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304F8153F0D41001FCF20 /* HoverButton.h */; };
+		5AE304FE153F0D41001FCF20 /* HoverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304F8153F0D41001FCF20 /* HoverButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE304FF153F0D41001FCF20 /* HoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304F9153F0D41001FCF20 /* HoverButton.m */; };
-		5AE30500153F0D41001FCF20 /* HoverCloseButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FA153F0D41001FCF20 /* HoverCloseButton.h */; };
+		5AE30500153F0D41001FCF20 /* HoverCloseButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FA153F0D41001FCF20 /* HoverCloseButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30501153F0D41001FCF20 /* HoverCloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304FB153F0D41001FCF20 /* HoverCloseButton.m */; };
-		5AE30502153F0D41001FCF20 /* NewTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FC153F0D41001FCF20 /* NewTabButton.h */; };
+		5AE30502153F0D41001FCF20 /* NewTabButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE304FC153F0D41001FCF20 /* NewTabButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30503153F0D41001FCF20 /* NewTabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE304FD153F0D41001FCF20 /* NewTabButton.m */; };
-		5AE3050C153F0D8E001FCF20 /* BackgroundGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */; };
+		5AE3050C153F0D8E001FCF20 /* BackgroundGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30506153F0D8E001FCF20 /* BackgroundGradientView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE3050D153F0D8E001FCF20 /* BackgroundGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30507153F0D8E001FCF20 /* BackgroundGradientView.m */; };
-		5AE3050E153F0D8E001FCF20 /* FastResizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30508153F0D8E001FCF20 /* FastResizeView.h */; };
+		5AE3050E153F0D8E001FCF20 /* FastResizeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30508153F0D8E001FCF20 /* FastResizeView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE3050F153F0D8E001FCF20 /* FastResizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30509153F0D8E001FCF20 /* FastResizeView.m */; };
-		5AE30510153F0D8E001FCF20 /* ThrobberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3050A153F0D8E001FCF20 /* ThrobberView.h */; };
+		5AE30510153F0D8E001FCF20 /* ThrobberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3050A153F0D8E001FCF20 /* ThrobberView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30511153F0D8E001FCF20 /* ThrobberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3050B153F0D8E001FCF20 /* ThrobberView.m */; };
-		5AE30516153F0DB2001FCF20 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30512153F0DB2001FCF20 /* URLDropTarget.h */; };
+		5AE30516153F0DB2001FCF20 /* URLDropTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30512153F0DB2001FCF20 /* URLDropTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30517153F0DB2001FCF20 /* URLDropTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30513153F0DB2001FCF20 /* URLDropTarget.m */; };
 		5AE30518153F0DB2001FCF20 /* CTPageTransition.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE30514153F0DB2001FCF20 /* CTPageTransition.c */; };
-		5AE30519153F0DB2001FCF20 /* CTPageTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30515153F0DB2001FCF20 /* CTPageTransition.h */; };
-		5AE30520153F0DD6001FCF20 /* CTUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051A153F0DD6001FCF20 /* CTUtil.h */; };
+		5AE30519153F0DB2001FCF20 /* CTPageTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE30515153F0DB2001FCF20 /* CTPageTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE30520153F0DD6001FCF20 /* CTUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051A153F0DD6001FCF20 /* CTUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30521153F0DD6001FCF20 /* CTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051B153F0DD6001FCF20 /* CTUtil.m */; };
-		5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051C153F0DD6001FCF20 /* NSImage+CTAdditions.h */; };
+		5AE30522153F0DD6001FCF20 /* NSImage+CTAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051C153F0DD6001FCF20 /* NSImage+CTAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30523153F0DD6001FCF20 /* NSImage+CTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051D153F0DD6001FCF20 /* NSImage+CTAdditions.m */; };
-		5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */; };
+		5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */; };
+		65B60C461557CF12008B0072 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3A3EDA541225EB02009E2908 /* PBXContainerItemProxy */ = {
+		65B60C441557CEFF008B0072 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -264,7 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3ED8A71225DF45009E2908 /* Cocoa.framework in Frameworks */,
-				3A3EDA501225EAE7009E2908 /* ChromiumTabs.framework in Frameworks */,
+				65B60C461557CF12008B0072 /* ChromiumTabs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +617,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				3A3EDA551225EB02009E2908 /* PBXTargetDependency */,
+				65B60C451557CEFF008B0072 /* PBXTargetDependency */,
 			);
 			name = "Chromium Tabs";
 			productInstallPath = "$(HOME)/Applications";
@@ -743,10 +743,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3A3EDA551225EB02009E2908 /* PBXTargetDependency */ = {
+		65B60C451557CEFF008B0072 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3A3ED9821225E27E009E2908 /* ChromiumTabs */;
-			targetProxy = 3A3EDA541225EB02009E2908 /* PBXContainerItemProxy */;
+			targetProxy = 65B60C441557CEFF008B0072 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -887,7 +887,7 @@
 				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fvisibility=hidden",
 					"$(OTHER_CFLAGS)",
@@ -924,7 +924,7 @@
 				INFOPLIST_FILE = "examples/simple-app/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fvisibility=hidden",
 					"$(OTHER_CFLAGS)",
