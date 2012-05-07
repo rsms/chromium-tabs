@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">11D50d</string>
+		<int key="IBDocument.SystemTarget">1070</int>
+		<string key="IBDocument.SystemVersion">11D50b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.32</string>
 		<string key="IBDocument.HIToolboxVersion">568.00</string>
@@ -59,12 +59,14 @@
 							<string key="NSFrameSize">{750, 586}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">FastResizeView</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{750, 600}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView" ref="1858870"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{400, 272}</string>
@@ -74,7 +76,7 @@
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSCustomView" id="1029219716">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -83,7 +85,6 @@
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{295, 0}, {40, 27}}</string>
 						<reference key="NSSuperview" ref="1029219716"/>
-						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="517448702">
 							<int key="NSCellFlags">-2080244224</int>
@@ -105,8 +106,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{483, 36}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<string key="NSClassName">CTTabStripView</string>
 			</object>
 		</object>
@@ -414,10 +413,6 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
-		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
 			<integer value="3000" key="NS.object.0"/>
