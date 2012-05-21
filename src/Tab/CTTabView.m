@@ -233,11 +233,14 @@ const CGFloat kRapidCloseDist = 2.5;
 		}
 	}
 	
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	// Fire the action to select the tab.
 	if ([[tabController_ target] respondsToSelector:[tabController_ action]])
 		[[tabController_ target] performSelector:[tabController_ action]
 									  withObject:self];
-	
+	#pragma clang diagnostic pop
+    
 	// Messaging the drag controller with |-endDrag:| would seem like the right
 	// thing to do here. But, when a tab has been detached, the controller's
 	// target is nil until the drag is finalized. Since |-mouseUp:| gets called
