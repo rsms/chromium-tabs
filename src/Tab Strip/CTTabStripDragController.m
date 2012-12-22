@@ -144,9 +144,10 @@ const NSTimeInterval kTearDuration = 0.333;
 		} else if (type == NSLeftMouseDragged) {
 			[self continueDrag:theEvent];
 		} else if (type == NSLeftMouseUp) {
-			DCHECK(![tab inRapidClosureMode]);
-			[[tab view] mouseUp:theEvent];
-			[self endDrag:theEvent];
+			if(![tab inRapidClosureMode]) {
+                [[tab view] mouseUp:theEvent];
+                [self endDrag:theEvent];
+            }
 			break;
 		} else {
 			// TODO(viettrungluu): [crbug.com/23830] We can receive right-mouse-ups
