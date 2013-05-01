@@ -154,7 +154,7 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
 
 -(void)dealloc {
-  DLOG("[ChromiumTabs] dealloc window controller");
+  DLOG("[ChromiumTabs] dealloc window controller %@", self);
   if (_currentMain == self) {
     ct_casid(&_currentMain, nil);
   }
@@ -171,8 +171,12 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  [browser_ release];
+  // Very important to release tabStripController_ BEFORE
+  // browser_. Since the tabStripController has a pointer to CTTabStripModel
+  // which is owned by the browser, when the browser gets deleted, that
+  // gets deleted. Since CTTabStripModel isn't refcounted, then things explode.
   [tabStripController_ release];
+  [browser_ release];
   ct_casid(&toolbarController_, nil);
   [super dealloc];
 }
@@ -292,7 +296,9 @@ static CTBrowserWindowController* _currentMain = nil; // weak
   if ([sender respondsToSelector:@selector(window)])
     targetController = [[sender window] windowController];
   assert([targetController isKindOfClass:[CTBrowserWindowController class]]);
+  [targetController retain];
   [targetController.browser executeCommand:[sender tag]];
+  [targetController autorelease];
 }
 
 

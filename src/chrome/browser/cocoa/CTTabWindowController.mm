@@ -28,11 +28,13 @@
 - (id)initWithWindow:(NSWindow*)window {
   if ((self = [super initWithWindow:window]) != nil) {
     lockedTabs_.reset([[NSMutableSet alloc] initWithCapacity:10]);
+    deallocInProcess = NO;
   }
   return self;
 }
 
 - (void)dealloc {
+  deallocInProcess = YES;
   if (overlayWindow_) {
     [self setUseOverlay:NO];
   }
@@ -202,8 +204,10 @@
     [window setDelegate:nil];
     [window setContentView:cachedContentView_];
     [self moveViewsBetweenWindowAndOverlay:useOverlay];
-    [window makeFirstResponder:cachedContentView_];
-    [window display];
+    if (!deallocInProcess) {
+        [window makeFirstResponder:cachedContentView_];
+        [window display];
+    }
     [window removeChildWindow:overlayWindow_];
     [overlayWindow_ orderOut:nil];
     [overlayWindow_ release];

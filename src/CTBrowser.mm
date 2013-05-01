@@ -173,7 +173,6 @@
       [[cls alloc] initWithBrowser:browser];
   [browser addBlankTabInForeground:YES];
   [windowController showWindow:self];
-  [windowController autorelease];
 }
 
 -(void)closeWindow {

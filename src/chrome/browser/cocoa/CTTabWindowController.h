@@ -54,6 +54,7 @@
   CGFloat contentAreaHeightDelta_;
   
   BOOL didShowNewTabButtonBeforeTemporalAction_;
+  BOOL deallocInProcess;
 }
 @property(readonly, nonatomic) CTTabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;

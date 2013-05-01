@@ -357,7 +357,7 @@ const CGFloat kRapidCloseDist = 2.5;
       // (and maybe even others?) for reasons I don't understand. So we
       // explicitly check for both events we're expecting, and log others. We
       // should figure out what's going on.
-      WLOG("Spurious event received of type %d", type);
+      WLOG("Spurious event received of type %lu", type);
     }
   }
 }
