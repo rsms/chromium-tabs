@@ -21,18 +21,18 @@
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 
 enum {
-  GTMColorationBaseHighlight,
-  GTMColorationBaseMidtone,
-  GTMColorationBaseShadow,
-  GTMColorationBasePenumbra,
-  GTMColorationLightHighlight,
-  GTMColorationLightMidtone,
-  GTMColorationLightShadow,
-  GTMColorationLightPenumbra,
-  GTMColorationDarkHighlight,
-  GTMColorationDarkMidtone,
-  GTMColorationDarkShadow,
-  GTMColorationDarkPenumbra
+	GTMColorationBaseHighlight,
+	GTMColorationBaseMidtone,
+	GTMColorationBaseShadow,
+	GTMColorationBasePenumbra,
+	GTMColorationLightHighlight,
+	GTMColorationLightMidtone,
+	GTMColorationLightShadow,
+	GTMColorationLightPenumbra,
+	GTMColorationDarkHighlight,
+	GTMColorationDarkMidtone,
+	GTMColorationDarkShadow,
+	GTMColorationDarkPenumbra
 };
 typedef NSUInteger GTMColorationUse;
 
