@@ -508,7 +508,7 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	
 	// Make sure the new tabs's sheets are visible (necessary when a background
 	// tab opened a sheet while it was in the background and now becomes active).
-	CTTabContents* newTab = [tabStripModel_ tabContentsAtIndex:modelIndex];
+	CTTabContents* newTab __attribute__((unused)) = [tabStripModel_ tabContentsAtIndex:modelIndex];
 	assert(newTab);
 	// TODO: Possibly need to implement this for sheets to function properly
 	/*if (newTab) {
