@@ -285,6 +285,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
 	return !!toolbarController_;
 }
 
+- (void)setDisableNewTabButton:(BOOL)disable {
+	tabStripController_.disableNewTabButton = disable;
+}
+
+- (BOOL)disableNewTabButton {
+	return tabStripController_.disableNewTabButton;
+}
 
 // Updates the toolbar with the states of the specified |contents|.
 // If |shouldRestore| is YES, we're switching (back?) to this tab and should

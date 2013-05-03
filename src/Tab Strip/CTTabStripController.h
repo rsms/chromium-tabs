@@ -33,6 +33,9 @@
 // waits until the next call to |-layoutTabs| to show it again.
 @property(nonatomic, assign) BOOL showsNewTabButton;
 
+// Ensure that the new tab button is never shown if set.
+@property(nonatomic, assign) BOOL disableNewTabButton;
+
 // Initialize the controller with a view and browser that contains
 // everything else we'll need. |switchView| is the view whose contents get
 // "switched" every time the user switches tabs. The children of this view

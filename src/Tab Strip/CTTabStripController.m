@@ -254,6 +254,8 @@ const NSTimeInterval kAnimationDuration = 0.125;
 	NSRect newTabTargetFrame_;
 	// If YES, do not show the new tab button during layout.
 	BOOL forceNewTabButtonHidden_;
+	// If YES, do not EVER show the new tab button
+	BOOL forceDisableNewTabButton_;
 	// YES if we've successfully completed the initial layout. When this is
 	// NO, we probably don't want to do any animation because we're just coming
 	// into being.
@@ -722,14 +724,27 @@ const NSTimeInterval kAnimationDuration = 0.125;
 }
 
 - (void)setShowsNewTabButton:(BOOL)show {
-	if (!!forceNewTabButtonHidden_ == !!show) {
+	if (!forceDisableNewTabButton_ &&
+        !!forceNewTabButtonHidden_ == !!show) {
 		forceNewTabButtonHidden_ = !show;
 		[newTabButton_ setHidden:forceNewTabButtonHidden_];
 	}
 }
 
 - (BOOL)showsNewTabButton {
-	return !forceNewTabButtonHidden_ && newTabButton_;
+	return !forceDisableNewTabButton_ && !forceNewTabButtonHidden_ && newTabButton_;
+}
+
+- (void)setDisableNewTabButton:(BOOL)disable {
+	if (!!forceDisableNewTabButton_ != !!disable) {
+		forceDisableNewTabButton_ = disable;
+        forceNewTabButtonHidden_ = disable;
+		[newTabButton_ setHidden:forceNewTabButtonHidden_];
+	}
+}
+
+- (BOOL)disableNewTabButton {
+	return forceDisableNewTabButton_;
 }
 
 // Lay out all tabs in the order of their TabContentsControllers, which matches

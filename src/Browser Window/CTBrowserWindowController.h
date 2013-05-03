@@ -65,6 +65,9 @@
 // YES if toolbarController_ is not nil.
 @property(readonly, nonatomic) BOOL hasToolbar;
 
+// Ensure that the new tab button is never shown if set.
+@property(nonatomic, assign) BOOL disableNewTabButton;
+
 @property(readwrite, nonatomic, assign) BOOL shouldUsePresentationModeWhenEnteringFullscreen;
 
 //@property(readonly, nonatomic) BOOL shouldShowPresentationModeToggle;
