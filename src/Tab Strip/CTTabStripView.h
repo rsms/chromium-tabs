@@ -16,7 +16,7 @@
 
 @interface CTTabStripView : NSView<URLDropTarget>
 
-@property(retain, nonatomic) IBOutlet NewTabButton* addTabButton;
+@property(weak, nonatomic) IBOutlet NewTabButton* addTabButton;
 @property(assign, nonatomic) BOOL dropArrowShown;
 @property(assign, nonatomic) NSPoint dropArrowPosition;
 

@@ -40,7 +40,7 @@ typedef enum {
 @property(assign, nonatomic, setter = setMini:) BOOL isMini;
 @property(assign, nonatomic, setter = setPinned:) BOOL isPinned;
 @property(assign, nonatomic, setter = setActive:) BOOL isActive;
-@property(retain, nonatomic) id target;
+@property(weak, nonatomic) id target;
 
 // Minimum and maximum allowable tab width. The minimum width does not show
 // the icon or the close button. The active tab always has at least a close

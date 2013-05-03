@@ -116,9 +116,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     // functionality appears to be leaky (or at least interacts badly with our
     // architecture) and thus BrowserWindowController never gets released. This
     // prevents the browser from being able to quit <http://crbug.com/79113>.
-    if ([window respondsToSelector:@selector(setRestorable:)])
-		[window setRestorable:NO];
-	
+    //
+    // As of 2013/05/03, with ARC and the latest retain cycle fixups, I don't
+    // see restorable windows causing any more trouble, so I'm re-enabling this
+    // functionality.
+    // if ([window respondsToSelector:@selector(setRestorable:)])
+	// 	[window setRestorable:NO];
+
     // Create the bar visibility lock set; 10 is arbitrary, but should hopefully
     // be big enough to hold all locks that'll ever be needed.
 	barVisibilityLocks_ = [NSMutableSet setWithCapacity:10];
@@ -140,9 +144,13 @@ static CTBrowserWindowController* _currentMain = nil; // weak
     // functionality appears to be leaky (or at least interacts badly with our
     // architecture) and thus BrowserWindowController never gets released. This
     // prevents the browser from being able to quit <http://crbug.com/79113>.
-    if ([window respondsToSelector:@selector(setRestorable:)])
-		[window setRestorable:NO];
-	
+    //
+    // As of 2013/05/03, with ARC and the latest retain cycle fixups, I don't
+    // see restorable windows causing any more trouble, so I'm re-enabling this
+    // functionality.
+    // if ([window respondsToSelector:@selector(setRestorable:)])
+	// 	[window setRestorable:NO];
+
 	// Note: when using the default BrowserWindow.xib, window bounds are saved and
 	// restored by Cocoa using NSUserDefaults key "browserWindow".
 	

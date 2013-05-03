@@ -85,7 +85,7 @@
 
 @implementation CTTabStripModel {
 	// Our delegate.
-    NSObject<CTTabStripModelDelegate> *delegate_;
+    __weak NSObject<CTTabStripModelDelegate> *delegate_;
 	
 	// The CTTabContents data currently hosted within this TabStripModel.
 	NSMutableArray *contentsData_;

@@ -28,7 +28,7 @@
 	IBOutlet CTTabStripView* topTabStripView_;
 	IBOutlet CTTabStripView* sideTabStripView_;
 	NSWindow* overlayWindow_;  // Used during dragging for window opacity tricks
-	NSView* cachedContentView_;  // Used during dragging for identifying which
+	__weak NSView* cachedContentView_;  // Used during dragging for identifying which
 								 // view is the proper content area in the overlay
 								 // (weak)
 	NSMutableSet *lockedTabs_;

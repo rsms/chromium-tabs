@@ -16,7 +16,7 @@
 @end  // @interface URLDropTargetHandler(Private)
 
 @implementation URLDropTargetHandler {
-	NSView<URLDropTarget>* view_;  // weak
+	__weak NSView<URLDropTarget>* view_;  // weak
 }
 
 - (id)initWithView:(NSView<URLDropTarget>*)view {

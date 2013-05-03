@@ -19,7 +19,7 @@
 @end
 
 @implementation CTTabStripModelOrderController {
-	CTTabStripModel *tabStripModel_;
+	__weak CTTabStripModel *tabStripModel_;
 	
 	InsertionPolicy insertionPolicy_;
 }

@@ -27,7 +27,7 @@ static BOOL ShouldWindowsMiniaturizeOnDoubleClick() {
 	URLDropTargetHandler *dropHandler_;
 	
 	// Weak; the following come from the nib.
-	NewTabButton* addTabButton_;
+	__weak NewTabButton* addTabButton_;
 	
 	// Whether the drop-indicator arrow is shown, and if it is, the coordinate of
 	// its tip.

@@ -10,7 +10,7 @@
 @end
 
 @implementation CTToolbarController {
-	CTBrowser* browser_;  // weak, one per window
+	__weak CTBrowser* browser_;  // weak, one per window
 }
 
 @synthesize browser = browser_;

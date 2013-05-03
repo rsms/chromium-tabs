@@ -14,7 +14,7 @@
 @end
 
 @interface CTBrowserWindowController : CTTabWindowController {
-	CTBrowser* browser_; // we own the browser
+	__weak CTBrowser* browser_; // we own the browser
 	CTTabStripController *tabStripController_;
 	CTToolbarController *toolbarController_;
 @private
@@ -59,7 +59,7 @@
 
 @property(strong, readonly, nonatomic) CTTabStripController *tabStripController;
 @property(strong, readonly, nonatomic) CTToolbarController *toolbarController;
-@property(strong, readonly, nonatomic) CTBrowser *browser;
+@property(weak,   readonly, nonatomic) CTBrowser *browser;
 
 // Called to check whether or not this window has a toolbar. By default returns
 // YES if toolbarController_ is not nil.

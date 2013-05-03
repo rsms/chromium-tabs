@@ -20,7 +20,7 @@
 //
 @interface CTToolbarController : NSViewController <URLDropTargetController>
 
-@property (nonatomic, readonly) CTBrowser *browser;
+@property (weak, nonatomic, readonly) CTBrowser *browser;
 
 - (id)initWithNibName:(NSString*)nibName
                bundle:(NSBundle*)bundle

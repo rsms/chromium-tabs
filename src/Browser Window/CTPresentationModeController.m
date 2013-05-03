@@ -42,7 +42,7 @@ const CGFloat kFloatingBarVerticalOffset = 22;
 // animation step.
 @interface DropdownAnimation : NSAnimation {
 @private
-	CTPresentationModeController* controller_;
+	__weak CTPresentationModeController* controller_;
 	CGFloat startFraction_;
 	CGFloat endFraction_;
 }
@@ -166,11 +166,11 @@ const CGFloat kFloatingBarVerticalOffset = 22;
 @implementation CTPresentationModeController  {
 @private
 	// Our parent controller.
-	CTBrowserWindowController* browserController_;  // weak
+	__weak CTBrowserWindowController* browserController_;  // weak
 	
 	// The content view for the window.  This is nil when not in presentation
 	// mode.
-	NSView* contentView_;  // weak
+	__weak NSView* contentView_;  // weak
 	
 	// YES while this controller is in the process of entering presentation mode.
 	BOOL enteringPresentationMode_;

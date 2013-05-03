@@ -31,7 +31,7 @@
 // all the logic for tab dragging from the TabView's events.
 @interface CTTabStripDragController : NSObject<TabDraggingEventTarget> {
 @private
-	CTTabStripController* tabStrip_;  // Weak; owns this.
+	__weak CTTabStripController* tabStrip_;  // Weak; owns this.
 	
 	// These are released on mouseUp:
 	BOOL moveWindowOnDrag_;  // Set if the only tab of a window is dragged.
@@ -43,18 +43,18 @@
 	NSPoint tearOrigin_;  // Origin of the tear rect
 	NSPoint dragOrigin_;  // Origin point of the drag
 	
-	CTTabWindowController* sourceController_;  // weak. controller starting the drag
-	NSWindow* sourceWindow_;  // Weak. The window starting the drag.
+	__weak CTTabWindowController* sourceController_;  // weak. controller starting the drag
+	__weak NSWindow* sourceWindow_;  // Weak. The window starting the drag.
 	NSRect sourceWindowFrame_;
 	NSRect sourceTabFrame_;
 	
-	CTTabController* draggedTab_;  // Weak. The tab controller being dragged.
+	__weak CTTabController* draggedTab_;  // Weak. The tab controller being dragged.
 	
-	CTTabWindowController* draggedController_;  // Weak. Controller being dragged.
-	NSWindow* dragWindow_;  // Weak. The window being dragged
-	NSWindow* dragOverlay_;  // Weak. The overlay being dragged
+	__weak CTTabWindowController* draggedController_;  // Weak. Controller being dragged.
+	__weak NSWindow* dragWindow_;  // Weak. The window being dragged
+	__weak NSWindow* dragOverlay_;  // Weak. The overlay being dragged
 	
-	CTTabWindowController* targetController_;  // weak. Controller being targeted
+	__weak CTTabWindowController* targetController_;  // weak. Controller being targeted
 }
 
 // Designated initializer.

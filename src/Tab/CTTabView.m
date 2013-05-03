@@ -44,7 +44,7 @@ const CGFloat kRapidCloseDist = 2.5;
 
 @implementation CTTabView {
 @private
-	IBOutlet CTTabController* tabController_;
+	__weak IBOutlet CTTabController* tabController_;
 	// TODO(rohitrao): Add this button to a CoreAnimation layer so we can fade it
 	// in and out on mouseovers.
 	IBOutlet HoverCloseButton* closeButton_;
