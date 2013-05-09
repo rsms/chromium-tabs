@@ -108,6 +108,8 @@
 		5AE30524153F0DD6001FCF20 /* NSWindow+CTThemed.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AE30525153F0DD6001FCF20 /* NSWindow+CTThemed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */; };
 		65B60C461557CF12008B0072 /* ChromiumTabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3ED9831225E27E009E2908 /* ChromiumTabs.framework */; };
+		F1733CC0173B7D8400021BDE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = F1733CBE173B7D8400021BDE /* LICENSE */; };
+		F1733CC1173B7D8400021BDE /* LICENSE-chromium in Resources */ = {isa = PBXBuildFile; fileRef = F1733CBF173B7D8400021BDE /* LICENSE-chromium */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +248,8 @@
 		5AE3051E153F0DD6001FCF20 /* NSWindow+CTThemed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+CTThemed.h"; sourceTree = "<group>"; };
 		5AE3051F153F0DD6001FCF20 /* NSWindow+CTThemed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+CTThemed.m"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Chromium Tabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chromium Tabs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1733CBE173B7D8400021BDE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F1733CBF173B7D8400021BDE /* LICENSE-chromium */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "LICENSE-chromium"; path = "../LICENSE-chromium"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +327,8 @@
 				3A286FA01222CDBE00F1BB78 /* TabView.xib */,
 				3A92907512295BC400DA7E43 /* Toolbar.xib */,
 				3A3EDAA71225F192009E2908 /* Localizable.strings */,
+				F1733CBE173B7D8400021BDE /* LICENSE */,
+				F1733CBF173B7D8400021BDE /* LICENSE-chromium */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -671,6 +677,8 @@
 				3A3ED9F11225E3C2009E2908 /* throbber.png in Resources */,
 				3A3EDAA91225F192009E2908 /* Localizable.strings in Resources */,
 				3A92907612295BC400DA7E43 /* Toolbar.xib in Resources */,
+				F1733CC0173B7D8400021BDE /* LICENSE in Resources */,
+				F1733CC1173B7D8400021BDE /* LICENSE-chromium in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
