@@ -6,6 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "BackgroundGradientView.h"
 #import "URLDropTarget.h"
 
 @class NewTabButton;
@@ -14,11 +15,12 @@
 // A view class that handles rendering the tab strip and drops of URLS with
 // a positioning locator for drop feedback.
 
-@interface CTTabStripView : NSView<URLDropTarget>
+@interface CTTabStripView : BackgroundGradientView<URLDropTarget>
 
 @property(weak, nonatomic) IBOutlet NewTabButton* addTabButton;
 @property(assign, nonatomic) BOOL dropArrowShown;
 @property(assign, nonatomic) NSPoint dropArrowPosition;
+@property(assign, nonatomic) BOOL allowGradient;
 
 @end
 

@@ -33,11 +33,13 @@ static BOOL ShouldWindowsMiniaturizeOnDoubleClick() {
 	// its tip.
 	BOOL dropArrowShown_;
 	NSPoint dropArrowPosition_;
+	BOOL allowGradient_;
 }
 
 @synthesize addTabButton = addTabButton_;
 @synthesize dropArrowShown = dropArrowShown_;
 @synthesize dropArrowPosition = dropArrowPosition_;
+@synthesize allowGradient = allowGradient_;
 
 - (id)initWithFrame:(NSRect)frame {
 	self = [super initWithFrame:frame];
@@ -74,7 +76,23 @@ static BOOL ShouldWindowsMiniaturizeOnDoubleClick() {
 
 - (void)drawRect:(NSRect)rect {
 	NSRect boundsRect = [self bounds];
-	
+
+    if (allowGradient_)
+    {
+        NSGraphicsContext* context = [NSGraphicsContext currentContext];
+        [context saveGraphicsState];
+
+        // Set up our clip.
+        float cornerRadius = 4.0;
+        [[NSBezierPath bezierPathWithRoundedRect:boundsRect
+                                         xRadius:cornerRadius
+                                         yRadius:cornerRadius] addClip];
+        [[NSBezierPath bezierPathWithRect:rect] addClip];
+
+        [super drawBackground];
+        [context restoreGraphicsState];
+    }
+
 	[self drawBorder:boundsRect];
 	
 	// Draw drop-indicator arrow (if appropriate).

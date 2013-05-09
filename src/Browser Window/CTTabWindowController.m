@@ -37,6 +37,7 @@
 	// |tabContentArea_|. Calculated when the window is loaded from the nib and
 	// cached in order to restore the delta when switching tab modes.
 	CGFloat contentAreaHeightDelta_;
+	BOOL enableTransparentContent_;
 }
 
 @synthesize tabContentArea = tabContentArea_;
@@ -65,7 +66,7 @@
 			   NSHeight([topTabStripView_ frame]));
 	[topTabStripView_ setFrame:tabFrame];
 	NSView* contentParent = [[[self window] contentView] superview];
-	[contentParent addSubview:topTabStripView_];
+	[contentParent addSubview:topTabStripView_ positioned:NSWindowBelow relativeTo:nil];
 }
 
 - (void)windowDidLoad {
@@ -108,6 +109,7 @@
 // content.
 - (void)moveViewsBetweenWindowAndOverlay:(BOOL)useOverlay {
 	if (useOverlay) {
+        [[self tabStripView] setAllowGradient:NO];
 		[[[overlayWindow_ contentView] superview] addSubview:[self tabStripView]];
 		// Add the original window's content view as a subview of the overlay
 		// window's content view.  We cannot simply use setContentView: here because
@@ -119,7 +121,10 @@
 		// The CTTabStripView always needs to be in front of the window's content
 		// view and therefore it should always be added after the content view is
 		// set.
-		[[[[self window] contentView] superview] addSubview:[self tabStripView]];
+        [[self tabStripView] setAllowGradient:enableTransparentContent_];
+		[[[[self window] contentView] superview] addSubview:[self tabStripView]
+                                                 positioned:NSWindowBelow
+                                                 relativeTo:nil];
 		[[[[self window] contentView] superview] updateTrackingAreas];
 	}
 }
@@ -246,6 +251,23 @@
 	NOTIMPLEMENTED();
 }
 
+- (void)setEnableTransparentContent:(BOOL)enable {
+    enableTransparentContent_ = enable;
+
+    if (enableTransparentContent_) {
+        [self.window setOpaque:NO];
+    } else {
+        [self.window setOpaque:YES];
+    }
+
+	if (!overlayWindow_) {
+        [topTabStripView_ setAllowGradient:enable];
+    }
+}
+
+- (BOOL)enableTransparentContent {
+	return enableTransparentContent_;
+}
 
 - (void)detachTabView:(NSView*)view {
 	// subclass must implement

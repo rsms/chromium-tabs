@@ -81,6 +81,11 @@
 // waits until the next call to |-layoutTabs| to show it again.
 @property(nonatomic, assign) BOOL showsNewTabButton;
 
+// Enables the content views to be transparent, showing the desktop behind the
+// window if set. Also controls how the CTTabStripView draws itself (so that it
+// will NOT draw transparently)
+@property(nonatomic, assign) BOOL enableTransparentContent;
+
 // Returns whether or not |tab| can still be fully seen in the tab strip or if
 // its current position would cause it be obscured by things such as the edge
 // of the window or the window decorations. Returns YES only if the entire tab
