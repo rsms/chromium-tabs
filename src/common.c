@@ -16,15 +16,15 @@
  * University of Illinois at Urbana-Champaign
  */
 const char *common_strrstr(const char *string, const char *find) {
-  size_t stringlen, findlen;
-  char *cp;
-  findlen = strlen(find);
-  stringlen = strlen(string);
-  if (findlen > stringlen)
-    return NULL;
-  for (cp = (char*)string + stringlen - findlen; cp >= string; cp--)
-    if (strncmp(cp, find, findlen) == 0)
-      return cp;
-  return NULL;
+	size_t stringlen, findlen;
+	char *cp;
+	findlen = strlen(find);
+	stringlen = strlen(string);
+	if (findlen > stringlen)
+		return NULL;
+	for (cp = (char*)string + stringlen - findlen; cp >= string; cp--)
+		if (strncmp(cp, find, findlen) == 0)
+			return cp;
+	return NULL;
 }
 // TODO: check if the system have strrstr and use that instead

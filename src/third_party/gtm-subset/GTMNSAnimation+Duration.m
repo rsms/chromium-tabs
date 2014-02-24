@@ -19,38 +19,38 @@
 #import "GTMNSAnimation+Duration.h"
 
 const NSUInteger kGTMLeftMouseUpAndKeyDownMask
-  = NSLeftMouseUpMask | NSKeyDownMask;
+= NSLeftMouseUpMask | NSKeyDownMask;
 
 NSTimeInterval GTMModifyDurationBasedOnCurrentState(NSTimeInterval duration,
                                                     NSUInteger eventMask) {
-  NSEvent *currentEvent = [NSApp currentEvent];
-  NSUInteger currentEventMask = NSEventMaskFromType([currentEvent type]);
-  if (eventMask & currentEventMask) {
-    NSUInteger modifiers = [currentEvent modifierFlags];
-    if (!(modifiers & (NSAlternateKeyMask |
-                       NSCommandKeyMask))) {
-      if (modifiers & NSShiftKeyMask) {
-        // 25 is the ascii code generated for a shift-tab (End-of-message)
-        // The shift modifier is ignored if it is applied to a Tab key down/up.
-        // Tab and shift-tab are often used for navigating around UI elements,
-        // and in the majority of cases slowing down the animations while
-        // navigating around UI elements is not desired.
-        if ((currentEventMask & (NSKeyDownMask | NSKeyUpMask))
-            && !(modifiers & NSControlKeyMask)
-            && ([[currentEvent characters] length] == 1)
-            && ([[currentEvent characters] characterAtIndex:0] == 25)) {
-          duration = duration;
-        } else {
-          duration *= 5.0;
-        }
-      }
-      // These are additive, so shift+control returns 10 * duration.
-      if (modifiers & NSControlKeyMask) {
-        duration *= 2.0;
-      }
-    }
-  }
-  return duration;
+	NSEvent *currentEvent = [NSApp currentEvent];
+	NSUInteger currentEventMask = NSEventMaskFromType([currentEvent type]);
+	if (eventMask & currentEventMask) {
+		NSUInteger modifiers = [currentEvent modifierFlags];
+		if (!(modifiers & (NSAlternateKeyMask |
+						   NSCommandKeyMask))) {
+			if (modifiers & NSShiftKeyMask) {
+				// 25 is the ascii code generated for a shift-tab (End-of-message)
+				// The shift modifier is ignored if it is applied to a Tab key down/up.
+				// Tab and shift-tab are often used for navigating around UI elements,
+				// and in the majority of cases slowing down the animations while
+				// navigating around UI elements is not desired.
+				if ((currentEventMask & (NSKeyDownMask | NSKeyUpMask))
+					&& !(modifiers & NSControlKeyMask)
+					&& ([[currentEvent characters] length] == 1)
+					&& ([[currentEvent characters] characterAtIndex:0] == 25)) {
+					duration = duration;
+				} else {
+					duration *= 5.0;
+				}
+			}
+			// These are additive, so shift+control returns 10 * duration.
+			if (modifiers & NSControlKeyMask) {
+				duration *= 2.0;
+			}
+		}
+	}
+	return duration;
 }
 
 @implementation NSAnimation (GTMNSAnimationDurationAdditions)
@@ -58,15 +58,15 @@ NSTimeInterval GTMModifyDurationBasedOnCurrentState(NSTimeInterval duration,
 - (id)gtm_initWithDuration:(NSTimeInterval)duration
                  eventMask:(NSUInteger)eventMask
             animationCurve:(NSAnimationCurve)animationCurve {
-  return [self initWithDuration:GTMModifyDurationBasedOnCurrentState(duration,
-                                                                     eventMask)
-                 animationCurve:animationCurve];
+	return [self initWithDuration:GTMModifyDurationBasedOnCurrentState(duration,
+																	   eventMask)
+				   animationCurve:animationCurve];
 }
 
 - (void)gtm_setDuration:(NSTimeInterval)duration
               eventMask:(NSUInteger)eventMask {
-  [self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
-                                                         eventMask)];
+	[self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
+														   eventMask)];
 }
 
 @end
@@ -77,8 +77,8 @@ NSTimeInterval GTMModifyDurationBasedOnCurrentState(NSTimeInterval duration,
 
 - (void)gtm_setDuration:(NSTimeInterval)duration
               eventMask:(NSUInteger)eventMask {
-  [self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
-                                                         eventMask)];
+	[self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
+														   eventMask)];
 }
 
 @end
@@ -87,8 +87,8 @@ NSTimeInterval GTMModifyDurationBasedOnCurrentState(NSTimeInterval duration,
 
 - (void)gtm_setDuration:(CFTimeInterval)duration
               eventMask:(NSUInteger)eventMask {
-  [self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
-                                                         eventMask)];
+	[self setDuration:GTMModifyDurationBasedOnCurrentState(duration,
+														   eventMask)];
 }
 
 @end
